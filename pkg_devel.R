@@ -11,9 +11,12 @@ if(length(pkgs_install) > 0L) {
 
 #### Add functions ####
 ##### Setting up #####
-usethis::use_r("is_number") # Write function and documentation
-devtools::document() # Save documentation as ...; also runs devtools::load_all()
-?is_number()
+# Write function and documentation
+usethis::use_r("is_number")
+
+# Save documentation as ...
+devtools::document() # also runs devtools::load_all()
+?is_number() # view help-page of the function
 
 ##### Components of documentation #####
 #' Title
@@ -66,9 +69,9 @@ tinytest::run_test_file("./inst/tinytest/test_funcname.R") # Run specific file
 
 expect_silent(expect_true(func_name(x = x, arg = arg)))
 expect_warning(
-  expect_equal(func_name(x = x, arg = arg), 3),
-  pattern = "is_number(x) is not TRUE", strict = TRUE, fixed = TRUE)
-expect_error(func_name(x = x, arg = arg),
+  expect_equal(func_name(x = "a", arg = arg), 3),
+  pattern = "...", strict = TRUE, fixed = TRUE)
+expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 
 ##### Using temporary files #####
@@ -88,8 +91,9 @@ usethis::use_vignette("my_vignette", title = "Some title")
 devtools::document()
 browseVignettes(package = basename(getwd()))
 devtools::build_vignettes()
+
 # If no vignettes are visible, devtools::install() was probably run with the
-# default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE'
+# default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE:
 devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
 
 
@@ -100,9 +104,11 @@ devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
 #   rmarkdown::html_vignette:
 #     toc: true
 #     toc_depth: 3
-?progutils::...()
 
 ##### Linking #####
+# For internal links to other sections in the same document ('Section', 'above',
+# 'below'): [<Section title>] or [<link text>][<Section title>]
+
 # To link from help-pages to vignettes, use:
 # The [vignette about <some description>](../doc/<filename>.html).
 # If no vignettes are visible, run devtools::build_vignettes(), which possibly
