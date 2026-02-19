@@ -30,7 +30,9 @@ path_to_package <- file.path("D:", "Userdata", "Jesse Nieuw", "Documents", "R",
 # usethis::use_description and https://usethis.r-lib.org/articles/usethis-setup.html.
 usethis::create_package(path = path_to_package)
 
-# Manually update the 'Title' and 'Description' fields of the DESCRIPTION file
+# Do:
+# - Update the 'Title' field of the DESCRIPTION file.
+# - Update the 'Description' field of the DESCRIPTION file.
 
 
 #### Add package-wide documentation ####
@@ -40,11 +42,20 @@ usethis::create_package(path = path_to_package)
 usethis::use_mit_license()
 # See also https://citation-file-format.github.io/cff-initializer-javascript/
 cffr::cff_write()
-# Creates R/<pkgname>-package.R to list imported functions.
+# Creates R/<pkgname>-package.R to list imported functions. That file can also
+# be used as help-page such that help(<pkgname>) produces a description of the
+# package with an overview of its functions.
 usethis::use_package_doc()
-# Creates README.Rmd and README.md: manually update README.Rmd, then run
-# devtools::build_readme() to update README.md.
+# Creates README.Rmd and README.md
+
 usethis::use_readme_rmd()
+
+# Do:
+# - Manually update README.Rmd
+# - Add a badge with the version number by including the following line:
+#   ![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>)
+# - Run devtools::build_readme() to update README.md.
+
 # Create a NEWS-file.
 usethis::use_news_md()
 
