@@ -51,7 +51,11 @@ usethis::use_package_doc()
 usethis::use_readme_rmd()
 
 # Do:
-# - Manually update README.Rmd
+# - Manually update README.Rmd, then use devtools::build_readme() to update
+#   README.md. To override the requirement to have README.Rmd and README.md
+#   staged at the same time, delete the (hidden) file .git/hooks/pre-commit from
+#   the project folder, see https://github.com/r-lib/usethis/issues/312.
+devtools::build_readme()
 # - Add a badge with the version number by including the following line:
 #   ![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>)
 # - Run devtools::build_readme() to update README.md.
@@ -73,6 +77,8 @@ devtools::document()
 
 #### Set up testing ####
 tinytest::setup_tinytest(pkgdir = ".")
+usethis::use_package(package = "tinytest", type = "Suggests")
+devtools::document()
 
 
 #### Set up a GitHub repository ####
