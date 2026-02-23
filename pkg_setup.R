@@ -62,6 +62,7 @@ devtools::build_readme()
 
 # Create a NEWS-file.
 usethis::use_news_md()
+# Update the NEWS-file: see the template NEWS_template.txt.
 
 
 #### Importing packages or functions ####
