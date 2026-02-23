@@ -18,6 +18,7 @@ collection of scripts.
 - `pkg_devel.R` contains code to use during package development. This is needed
   during package development, including when preparing to release a package and
   setting up for a new version.
+- `NEWS_template.txt` contains a template for a NEWS file.
 
 If you want to copy code from this repository, download it as a ZIP file (use
 the green `Code` button and choose `Download ZIP`) and unzip the folder. You can
