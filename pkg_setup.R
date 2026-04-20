@@ -39,7 +39,9 @@ usethis::create_package(path = path_to_package)
 # Run R as administrator
 
 # Keep 'license.Rmd': it is required by R CMD check.
-usethis::use_mit_license()
+# For an overview of licenses, see https://choosealicense.com/ and
+# https://www.gnu.org/licenses/gpl-faq.html.
+usethis::use_mit_license() # A permissive license.
 # See also https://citation-file-format.github.io/cff-initializer-javascript/
 cffr::cff_write()
 # Creates R/<pkgname>-package.R to list imported functions. That file can also
@@ -56,8 +58,9 @@ usethis::use_readme_rmd()
 #   staged at the same time, delete the (hidden) file .git/hooks/pre-commit from
 #   the project folder, see https://github.com/r-lib/usethis/issues/312.
 devtools::build_readme()
-# - Add a badge with the version number by including the following line:
-#   ![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>)
+# - Add a badge with the version number by including the following code (replace
+#   <pkgname>; the badge does not yet work if the GitHub repository is private):
+#   ![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)
 # - Run devtools::build_readme() to update README.md.
 
 # Create a NEWS-file.
@@ -85,4 +88,41 @@ devtools::document()
 #### Set up a GitHub repository ####
 # See vignette(topic = "git_github", package = "checkrpkgs")
 usethis::use_git(message = "Initial commit")
+# If you get the error message you are not the current owner of the GitHub
+# repository, restart R as administrator and try again.
 usethis::use_github(private = TRUE)
+
+
+#### Use GitHub Actions ####
+# GitHub Actions (GHA) is a continuous integration service to automatically run
+# code upon certain triggers. Setting GHA to run 'check-standard' from
+# https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml
+# ensures the code passes R-CMD check on various platforms.
+usethis::use_github_action("check-standard")
+
+# Then adjust the YAML file (i.e., <pkg>\.github\workflows\R-CMD-check.yaml) to
+# include some other useful triggers for GHAs:
+# - you made changes to code in the current repository: add 'push:' to 'on:' to
+#   run GHA on pushes.
+# - someone else proposed changes to code in the current repository: add
+#   'pull_request:' to 'on:' to run GHA on pull requests.
+# - you changed package A and want to check if package B, which depends on
+#   package A, is still working fine): add 'workflow_dispatch:' to 'on:' to be
+#   able to manually trigger GHA. See the section 'Use GitHub Actions' in
+#   pkg_devel.R on how to use it.
+# - someone else made changes to packages your package depends on: add e.g.
+#   'schedule: - cron: "23 4 * * 6"' to 'on:' to run every Saturday on 04:23 UTC.
+#   The cron specification consists of five elements that indicate the minute
+#   (0 - 59), hour (0 - 23), day of the month (1 - 31), month (1 - 12), and day
+#   of the week (0 - 6).
+
+# If the package declares a dependency on a specific R version, it is useful to
+# specify the minimum declared R version to run in addition to the ones that are
+# by default used in the template: add '- {os: ubuntu-latest,   r: '4.0.0'}' to
+# the 'matrix: config:' part to run R 4.0.0.
+
+##### Further documentation #####
+# The file progutils\.github\workflows\R-CMD-check.yaml is a good example.
+# https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha
+# GitHub documentation at
+# https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
