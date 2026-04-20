@@ -28,11 +28,18 @@ devtools::document() # also runs devtools::load_all()
 #' @inheritParams utils::installed.packages # from a function in another package
 #' @param x Vector of names to test.
 #' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
+#' @param x,y Separate arguments by a comma without a space to create a single
+#' description for multiple arguments.
 #'
 #' @details
 #'
 #' @returns
 #' `TRUE` or `FALSE`, returned [invisibly][invisible].
+#'
+#' @section Side effects:
+#' Values in `x` are identified in an [error][stop], [warning], or [message] if
+#' `signal` is `error`, `warn`, or `message`, respectively. Set `signal` to
+#' `quiet` to suppress this.
 #'
 #' @section Notes:
 #' Some notes.
@@ -46,8 +53,7 @@ devtools::document() # also runs devtools::load_all()
 #' https://CRAN.R-project.org/doc/manuals/R-FAQ.html#What-are-valid-names_003f)
 #' on the syntactical validity of names.
 #'
-#' @family
-#' collections of checks on type and length
+#' @family collections of checks on type and length
 #'
 #' @examples
 #' all_names(x = c("a", "b1a")) # TRUE
@@ -58,10 +64,14 @@ func_name <- function(x, allow_underscores = TRUE) {
 }
 
 ##### To inherit sections #####
+#' @inherit outcome return
 #' @inherit is_number details
 #' @inheritSection is_logical Programming notes
 #' @inheritSection is_logical @note
 
+
+##### Adding README #####
+# To provide a nice overview of functions: see https://github.com/MJobinASU/MontyHall
 
 #### Add tests ####
 library(tinytest)
@@ -99,7 +109,11 @@ devtools::build_vignettes()
 # default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE:
 devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
 
-# See also: tools::pkgVignettes(package = "checkrpkgs")
+# See also: tools::pkgVignettes(package = "checkrpkgs") and
+# utils::vignette(<"vignette_title">)
+# Rendering Rd-file as plain-text help in the R console:
+# tools::Rd2txt("path/to/file.Rd")
+
 
 ##### Styling #####
 # Put the next lines in the header of vignettes to get a table of contents:
@@ -114,10 +128,11 @@ devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
 # For internal links to other sections in the same document ('Section', 'above',
 # 'below'): [<Section title>] or [<link text>][<Section title>]
 
-# To link from vignettes to help-pages, use [someFun](../help/someFun) (from
-# https://stackoverflow.com/questions/34946219). Text between angled brackets
-# (e.g., <pkgname>) disappears when used in link text, so instead of
-# [library(<pkgname>)](../help/library), use [library](../help/library)`(<pkgname>)`.
+# To link from vignettes to help-pages in the same package, use
+# [someFun](../help/someFun) (from https://stackoverflow.com/questions/34946219).
+# Text between angled brackets (e.g., <pkgname>) disappears when used in link
+# text, so instead of [library(<pkgname>)](../help/library), use
+# [library](../help/library)`(<pkgname>)`.
 # For a more advanced way of linking from vignettes to help-pages see
 # https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f
 
@@ -140,25 +155,28 @@ tinytest::test_all()
 
 
 #### Updating dependencies ####
+# To declare a minimum version for R itself:
+usethis::use_package("R", type = "Depends", min_version = "4.0.0")
+# It is useful to specify the minimum declared R version as workflow in GitHub
+# Actions, see the section 'Use GitHub Actions'.
+
 # 'use_package()' to declare minimum version and 'use_dev_package()' to set remote.
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
                          remote = "github::JesseAlderliesten/checkinput")
 
 ##### Importing packages or functions #####
-# Packages from which functions are imported should ALSO be listed in the
-# Imports field of the DESCRIPTION file. For example, to import 'osVersion'
-# from package 'utils', one should add a line in R/<pkgname>-package.R:
-# #' @importFrom utils osVersion
-# and add a line in the DESCRIPTION file:
-# Imports: utils
-# Both are done by usethis::use_import_from(), might have to use
-# devtools::document() for this to take effect.
-pkg_to_import <- "checkinput"
-# NB. Modifies <pkgname>-package.R in the R/ directory that was created by usethis::use_package_doc().
-usethis::use_import_from(package = pkg_to_import,
-                         fun = list.files(
-                           file.path(dirname(getwd()), pkg_to_import, "R")))
+# There are two ways to use functions from packages that are imported (i.e., are
+# in the 'Imports:' field of the DESCRIPTION file): (1) use the package name
+# followed by two colons and the function name, e.g., utils::osVersion(...);
+# (2) In addition to the 'Imports:' field of the DESCRIPTION file, list the
+# function in the NAMESPACE file, e.g., importFrom(utils, osVersion). With
+# 'usethis', this can be achieved by  the following line:
+# usethis::use_import_from(package = "utils", fun = "osVersion"). That adds the
+# line `#' @importFrom utils osVersion` in R/<pkgname>-package.R that was
+# created by usethis::use_package_doc(), and adds the line `Imports: utils` to
+# the DESCRIPTION file (you might have to use devtools::document() for this to
+# take effect).
 usethis::use_import_from(package = "BiocManager", fun = "valid")
 
 
@@ -179,6 +197,7 @@ devtools::document()
 devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
 
 .libPaths() # Check if output of .libPaths() is correct.
+devtools::install(quick = FALSE, upgrade = "ask", build_vignettes = TRUE)
 devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
 
 # Load the package and view the help files as usual outside devtools:
@@ -187,6 +206,21 @@ library(basename(getwd()), character.only = TRUE)
 browseVignettes(package = basename(getwd()))
 # If no vignettes are visible, devtools::install() was probably run with the
 # default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE'.
+
+
+#### Use GitHub Actions ####
+# To manually run GitHub Actions (GHA) set up 'workflow_dispatch' (see section
+# 'Use GitHub Actions' in pkg_setup.R). To check if package B, which depends on
+# package A, is still working fine, go to the 'Actions' tab of repository B,
+# select the action you want to trigger (e.g., R-CMD-check.yaml), and use the
+# 'Run workflow' button to run the GHA. You can select which branch it should
+# run on, but you need to trigger it once manually on the main branch to be
+# able to trigger it manually on other branches.
+
+# If the package declares a dependency on a specific R version, it is useful to
+# specify the minimum declared r version to run in addition to the ones that are
+# by default used in the template: add '- {os: ubuntu-latest,   r: '4.0.0'}' to
+# the 'matrix: config:' part to run R 4.0.0.
 
 
 #### Merging devel-branch with master ####
@@ -221,11 +255,14 @@ browseVignettes(package = basename(getwd()))
 #### Setting up new GitHub branch ####
 # Then set up a new GitHub branch:
 # - At the GitHub page of the package:
-#   'Branch' icon > green `New branch` button > `<pkgname>_devel > green `Create new branch` button.
-# - Go back to the GitHub page of the package, and at the green `Code` button > copy URL to clipboard.
+#   `Branch` icon > green `New branch` button > use `devel` as branch name >
+#   green `Create new branch` button.
+# - Go back to the GitHub page of the package, and at the green `Code` button >
+#   copy URL to clipboard.
 # - In RStudio: `File` > `New project` > `Version control` > `Git` and paste the
 #   copied URL in the `Repository URL` > `Create Project`.
-# - Then (still in RStudio) in the `Git` menu change from `master` to the `<pkgname>_devel-branch.
+# - Then (still in RStudio) in the `Git` menu change from `master` to the
+#   `devel`-branch.
 
 
 #### Troubleshooting ####
@@ -233,3 +270,7 @@ browseVignettes(package = basename(getwd()))
 # which leads to the error '@section Could not resolve link to topic ":blank:"
 # in the dependencies or base packages' when running devtools::document(), use
 # backticks to format a line as code, or wrap consecutive lines in \code{...}.
+
+#### Guidelines ####
+# See https://developer.r-project.org/,
+# https://developer.r-project.org/devel-guidelines.txt
