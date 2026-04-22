@@ -160,6 +160,9 @@ usethis::use_package("R", type = "Depends", min_version = "4.0.0")
 # It is useful to specify the minimum declared R version as workflow in GitHub
 # Actions, see the section 'Use GitHub Actions'.
 
+# To use a function that is present in 'new' versions of R also in older versions
+# of R, see https://github.com/yihui/xfun/blob/main/R/zzz.R
+
 # 'use_package()' to declare minimum version and 'use_dev_package()' to set remote.
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
@@ -178,6 +181,7 @@ usethis::use_dev_package(package = "checkinput", type = "Imports",
 # the DESCRIPTION file (you might have to use devtools::document() for this to
 # take effect).
 usethis::use_import_from(package = "BiocManager", fun = "valid")
+usethis::use_package("tinytest", type = "Suggests", min_version = "1.4.1")
 
 
 #### Increment package version ####
