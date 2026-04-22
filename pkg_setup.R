@@ -42,8 +42,10 @@ usethis::create_package(path = path_to_package)
 # For an overview of licenses, see https://choosealicense.com/ and
 # https://www.gnu.org/licenses/gpl-faq.html.
 usethis::use_mit_license() # A permissive license.
+
 # See also https://citation-file-format.github.io/cff-initializer-javascript/
 cffr::cff_write()
+
 # Creates R/<pkgname>-package.R to list imported functions. That file can also
 # be used as help-page such that help(<pkgname>) produces a description of the
 # package with an overview of its functions.
@@ -51,9 +53,9 @@ usethis::use_package_doc()
 # Creates README.Rmd and README.md
 
 usethis::use_readme_rmd()
-
 # Do:
-# - Manually update README.Rmd, then use devtools::build_readme() to update
+# - Manually update README.Rmd (see the template file `README_template.Rmd` in
+#   the folder `templates`), then use devtools::build_readme() to update
 #   README.md. To override the requirement to have README.Rmd and README.md
 #   staged at the same time, delete the (hidden) file .git/hooks/pre-commit from
 #   the project folder, see https://github.com/r-lib/usethis/issues/312.
@@ -65,7 +67,8 @@ devtools::build_readme()
 
 # Create a NEWS-file.
 usethis::use_news_md()
-# Update the NEWS-file: see the template NEWS_template.txt.
+# Update the NEWS-file (see the template file `README_template.Rmd` in the
+# folder `templates`).
 
 
 #### Importing packages or functions ####
@@ -95,13 +98,15 @@ usethis::use_github(private = TRUE)
 
 #### Use GitHub Actions ####
 # GitHub Actions (GHA) is a continuous integration service to automatically run
-# code upon certain triggers. Setting GHA to run 'check-standard' from
+# code upon certain triggers. Setting GHA to run 'check-no-suggests' from
 # https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml
-# ensures the code passes R-CMD check on various platforms.
-usethis::use_github_action("check-standard")
+# ensures the code passes R-CMD check when dependencies in `Suggests` are not
+# installed.
+usethis::use_github_action("check-no-suggests")
 
-# Then adjust the YAML file (i.e., <pkg>\.github\workflows\R-CMD-check.yaml) to
-# include some other useful triggers for GHAs:
+# Then adjust the YAML file (i.e., <pkg>\.github\workflows\check-no-suggests.yaml)
+# to include some other useful triggers for GHAs (see the template file
+# `check-no-suggests.yaml` in the folder `templates`):
 # - you made changes to code in the current repository: add 'push:' to 'on:' to
 #   run GHA on pushes.
 # - someone else proposed changes to code in the current repository: add
