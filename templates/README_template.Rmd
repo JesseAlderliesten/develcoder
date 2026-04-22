@@ -1,0 +1,155 @@
+# TitleRepository
+
+
+## Table of Contents
+
+* [About the Project](#Description)
+* [Folder structure](#Folder structure)
+* [Workflow](#Workflow)
+  * [Data](#Data)
+  * [Analyses](#Analyses)
+  * [Output](#Output)
+  * [Test](#Test)
+* [Usage](#Usage)
+* [License](#License)
+* [Contributing](#contributing)
+* [Citation](#Citation)
+* [Contact](#contact)
+* [Acknowledgements](#acknowledgements)
+
+< To do >  
+synchronise Table of Contents with actual headings, check if crosslinks work.
+
+## About the Project
+< Briefly describe why the repository is needed (not yet describe *how* the
+repository fulfils those needs).  
+Can also briefly describe the methods of data collection, raw data and data
+processing used in the project. >
+
+Data and code used for analysis of ... in the [... project](URL to project website).
+Used in [ref to pre-print](with URL) / [ref to publication](with DOI).
+
+
+## Folder structure
+The diagram of the folder structure in the local directory can be created using
+fs::dir_tree(find.package("packagename"), recurse = FALSE) but should be adjusted
+to reflect the file structure on GitHub.
+```
+.
+└── Repository name
+      ├── archive
+      ├── code
+      |     ├── bin [compiled binaries]
+      |     └── src [uncompiled source code]
+      ├── data
+      |     ├── pre-processed [cleaned-up data]
+      |     └── raw [read-only datasets, accompanied by a readme-file]
+      ├── docs
+      |     ├── manuscript
+      |     └── reports [project reports and code notebook files]
+      ├── examples
+      |     ├── test data     
+      |     └── test output      
+      └── results [output of computational experiments]
+            ├── data     
+            └── figures
+```
+
+< Briefly describe the relation of each folder to the project or publication,
+indicating what files it contains. For archived files, indicate why they were
+archived. The `data` folder can have its own `README` file to more fully
+describe what data is in each data file, to make sure the data can be re-used.
+To that end, list the column headings, row labels, and data types (e.g.,
+dichotomous (`yes`/`no`), categorical, numeric, text), measurement units, valid
+data range (e.g., the categories for categorical data, can numeric values be
+negative), and data codes (e.g., `NA` for missing data). For more detailed
+discussion, see https://ucdavisdatalab.github.io/workshop_how-to-data-documentation/ >
+
+Subfolder `raw` contains raw data.
+Folder `code` contains various R-scripts:
+
+- `NiceNameMain.R`: The R script to perform the simulation studies.
+- `ScriptFuncs.R`: R script that contains the functions used by the main script,
+  with their documentation. ODE-models in file `xyz.R` are still under
+  development.
+- `ScriptFuncsTesting.R`: R script containing unit tests of the functions.
+  File `xyz.R` is archived because ... .
+
+< If a package needs to do something special when it loads, the required actions
+are specified in functions .onLoad() and .onAttach() that are located in file
+zzz.R in the R-directory of the package (the name zzz.R is a convention, see the
+section 'When you do need side-effect' at 
+https://r-pkgs.org/Code.html#when-you-do-need-side-effects) >
+
+
+## Workflow
+< In the script where packages are installed, point to correct version (i.e.,
+`remotes::install_version(...)`). >
+
+To use this repository, download it as a ZIP file (use the green `<> Code`
+button and choose `Download ZIP`) and unzip the folder. The scripts require
+[R](https://www.r-project.org/) and were run with `R` x.y.z and
+[RStudio](https://posit.co/download/rstudio-desktop/) YYYY.MM.BB on Windows 11
+Home version YYHX. See the GitHub repository
+[checkrpkgs](https://github.com/JesseAlderliesten/checkrpkgs) for details on
+installing R and RStudio.
+
+Run R as administrator and open the project using the **R Project (.Rproj)**
+file to automatically set the working directory to the directory the R Project
+file is in. Then open the R-script `install_pkgs.R` in the folder
+`Code/code_experiment` to install the required R-packages from
+[CRAN](https://cran.r-project.org/web/packages/index.html)
+/ [BioConductor](https://www.bioconductor.org/) / [GitHub](https://github.com/).
+During the installation you might be asked to close R and restart the project
+several times to install everything.
+
+### Data
+If you opened R using its project file as described in section [Workflow] above,
+the data files are present in folder `Data`.
+
+### Analyses
+To run the script `NiceNameMain.R`, set the settings ... < indicate any manual
+settings that have to / can be changed inside that file >. This script sources
+the R-script `process_data.R`, which reads the ... data on ... from the file
+`some_datafile.csv` in the (sub)folder `Data` and performs processing steps.
+
+### Output
+Results are saved as .csv-files to subfolder ... . If the variable `saveplots`
+in the section 'Settings' is set to `TRUE` , plots are saved as .png-files. The
+filenames start with a datetimestamp in the format `YYYY_MM_DD_hh_mm_ss`.
+
+### Test
+Could provide a test R-script, e.g., that checks if all required packages have
+been installed and are functional, and performs a short example analysis,
+comparing the output to an .txt / .csv file that is also included. The same
+example could then be used to show what the repository looks like in action.
+
+
+## Usage
+Build on the example in section [Test] above with a more elaborate example.
+Describe how the package compares to other similar packages.
+
+
+## License
+< Assuming there is a license file in the repository. See
+https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line for details
+on the MIT License and usethis::use_mit_license() to make one from R. >
+
+This project is licensed under the terms of the [MIT License](/LICENSE.md).
+
+
+## Citation
+< Assuming there is a citation file in the repository; see
+https://citation-file-format.github.io/ on the structure of a citation file and
+cffr::cff_write() to make one from R. >
+
+Please as [Citation](/CITATION.MD).
+
+
+## Contact
+PI:  
+- some_name@some_mail.nl
+
+Researchers:  
+- some_name@some_mail.nl  
+- some_name@some_mail.nl 
