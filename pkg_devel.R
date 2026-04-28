@@ -64,6 +64,8 @@ func_name <- function(x, allow_underscores = TRUE) {
 }
 
 ##### To inherit sections #####
+# Inherited sections are *silently* ignored if a section is also defined.
+
 #' @inherit outcome return
 #' @inherit is_number details
 #' @inheritSection is_logical Programming notes
@@ -102,8 +104,8 @@ usethis::use_vignette("my_vignette", title = "Some title")
 usethis::use_package(package = "knitr", type = "Suggests")
 usethis::use_package(package = "rmarkdown", type = "Suggests")
 devtools::document()
-browseVignettes(package = basename(getwd()))
 devtools::build_vignettes()
+browseVignettes(package = basename(getwd()))
 
 # If no vignettes are visible, devtools::install() was probably run with the
 # default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE:
@@ -212,6 +214,16 @@ browseVignettes(package = basename(getwd()))
 # default 'build_vignettes = FALSE': change it to use 'build_vignettes = TRUE'.
 
 
+#### Using pkgdown ####
+# See https://r-pkgs.org/website.html and https://pkgdown.r-lib.org/
+
+# Updating website
+pkgdown::build_site()
+
+# Open docs/index.html in a webbrowser to preview the website, or look at the
+# files that constitute your package’s website are in the local docs/ directory.
+
+
 #### Use GitHub Actions ####
 # To manually run GitHub Actions (GHA) set up 'workflow_dispatch' (see section
 # 'Use GitHub Actions' in pkg_setup.R). To check if package B, which depends on
@@ -220,6 +232,9 @@ browseVignettes(package = basename(getwd()))
 # 'Run workflow' button to run the GHA. You can select which branch it should
 # run on, but you need to trigger it once manually on the main branch to be
 # able to trigger it manually on other branches.
+
+# Scheduled jobs that failed can be rerun through the button 'Re-run jobs' >
+# 'Re-run failed jobs' > 'Re-run jobs'.
 
 # If the package declares a dependency on a specific R version, it is useful to
 # specify the minimum declared r version to run in addition to the ones that are

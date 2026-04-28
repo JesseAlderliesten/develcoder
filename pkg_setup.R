@@ -131,3 +131,12 @@ usethis::use_github_action("check-no-suggests")
 # https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha
 # GitHub documentation at
 # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+
+
+#### Using pkgdown ####
+# See https://r-pkgs.org/website.html and https://pkgdown.r-lib.org/
+usethis::use_pkgdown_github_pages() # (which first calls usethis::use_pkgdown())
+
+# After a few minutes, the website should be present. The URL has the structure
+# https://USERNAME.github.io/REPONAME/, e.g.,
+# https://jessealderliesten.github.io/checkrpkgs/
