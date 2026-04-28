@@ -1,0 +1,177 @@
+---
+title: "pkg_setup"
+output: html_document
+---
+
+## Introduction
+This file contains code and annotations that are useful when creating a package.
+
+## Install packages used in this file
+```{r prepare, eval = FALSE}
+required_pkgs <- c("cffr", "devtools", "pkgdepends", "tinytest", "usethis")
+bool_install <- !vapply(X = required_pkgs, FUN = requireNamespace, FUN.VALUE = logical(1), quietly = TRUE)
+pkgs_install <- required_pkgs[bool_install]
+if(length(pkgs_install) > 0L) {
+  utils::install.packages(pkgs = pkgs_install, lib = NULL, dependencies = NA, quiet = FALSE)
+}
+```
+
+## Choose a name
+```{r name, eval = FALSE}
+pkgname <- "develcoder"
+
+# Is the intended name valid?
+stopifnot(pkgdepends::is_valid_package_name(nm = pkgname))
+
+# Is the intended name available?
+unlist(pkgdepends::pkg_name_check(name = pkgname)$basics)
+browseURL(url = paste0("https://github.com/search?q=", pkgname, "&type=repositories"))
+browseURL(url = paste0("https://github.com/search?q=", pkgname, "+language%3AR+&type=repositories"))
+```
+
+## Create the package
+This uses information stored in your `.Rprofile` file (located at
+`D:\Userdata\Jesse Nieuw\Documents\.Rprofile`, see `help(Startup)` for details),
+see `usethis::use_description()` and the
+[usethis vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
+
+```{r create, eval = FALSE}
+path_to_package <- file.path("D:", "Userdata", "Jesse Nieuw", "Documents", "R", pkgname)
+usethis::create_package(path = path_to_package)
+```
+
+Do:
+
+- Update the `Title` field of the `DESCRIPTION` file.
+- Update the `Description` field of the `DESCRIPTION` file.
+
+## Add package-wide documentation
+A license file makes clear what use of your package is allowed. See
+[choosealicense](https://choosealicense.com/) and the
+[GNU FAQ](https://www.gnu.org/licenses/gpl-faq.html) for overviews of licenses.
+
+A citation file makes clear how your package should be cited.
+
+`R/<pkgname>-package.R` is used by `usethis` to list imported functions and can
+also be used as help-page such that `help(<pkgname>)` produces a description of
+the package with an overview of its functions.
+
+```{r license, eval = FALSE}
+# Run R as administrator
+usethis::use_mit_license() # Create license files for a permissive license
+cffr::cff_write() # Create a citation file
+usethis::use_package_doc() # Create R/<pkgname>-package.R
+usethis::use_readme_rmd() # Create README.Rmd
+usethis::use_news_md() # Create NEWS.md
+```
+
+Do:
+
+- Keep `license.Rmd`: it is required by `R CMD check`.
+- Manually update `README.Rmd`
+  - See the template file `README_template.Rmd` in the folder `templates`.
+  - Add a badge with the version number by including the following code in the
+    `README.Rmd` file (replace `<pkgname>` with the actual package name; the
+    badge does not work if the GitHub repository is private):
+    `![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)`
+  - `Knit` the `README.Rmd` file to produce a `README.Md` file.
+- Update the `NEWS`-file (see the template file `README_template.Rmd` in the
+  folder `templates`).
+
+NB. I do *not* follow the `usethis` practise of using `devtools::build_readme()`
+to update `README.md` because that imposes the requirement to have `README.Rmd`
+and `README.md` staged at the same time. To remove this requirement if it was
+accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
+from the R-project folder (as done in a
+[GitHub issue](https://github.com/r-lib/usethis/issues/312).
+
+## Importing packages or functions
+Specifying a minimum package version when importing packages ensures that used
+features are actually present. `min_version = TRUE` uses the currently installed
+package version. Alternatively, check which features are used and in which
+version those were introduced to find a minimum version. That can also be done
+afterwards by specifying minimum versions in checks through GitHub actions.
+
+```{r dependencies, eval = FALSE}
+usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
+usethis::use_dev_package(package = "checkinput", type = "Imports",
+                         remote = "github::JesseAlderliesten/checkinput")
+
+usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
+usethis::use_dev_package(package = "progutils", type = "Imports",
+                         remote = "github::JesseAlderliesten/progutils")
+devtools::document()
+```
+
+
+## Set up testing
+```{r testing, eval = FALSE}
+tinytest::setup_tinytest(pkgdir = ".")
+usethis::use_package(package = "tinytest", type = "Suggests")
+devtools::document()
+```
+
+## Set up a GitHub repository
+For more information about setting up and using GitHub and Git, see
+`vignette(topic = "git_github", package = "checkrpkgs")`.
+
+```{r GitHub, eval = FALSE}
+usethis::use_git(message = "Initial commit")
+# If you get the error message you are not the current owner of the GitHub
+# repository, restart R as administrator and try again.
+usethis::use_github(private = TRUE)
+```
+
+## Use GitHub Actions
+GitHub Actions (GHA) is a continuous integration service to automatically run
+code upon certain triggers. Setting GHA to run `check-no-suggests.yaml` from
+[r-lib](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
+ensures the code passes `R-CMD check` when dependencies in `Suggests` are not
+installed.
+
+```{r GitHub Actions, eval = FALSE}
+usethis::use_github_action("check-no-suggests")
+```
+
+Then adjust the YAML file (i.e., `<pkg>\.github\workflows\check-no-suggests.yaml`)
+to include some other useful triggers for GHAs (see the template file
+`check-no-suggests.yaml` in the folder `templates`):
+
+- you made changes to code in the current repository: add `'push:'` to section
+  `'on:'` to run GHA on pushes.
+- someone else proposed changes to code in the current repository: add
+  `'pull_request:'` to section `'on:'` to run GHA on pull requests.
+- you changed package `A` and want to check if package `B`, which depends on
+  package `A`, is still working fine): add `'workflow_dispatch:'` to section
+  `'on:'` to be able to manually trigger GHA. See section `Use GitHub Actions`
+  in `pkg_devel.R` on how to use it.
+- someone else made changes to packages your package depends on: add e.g.
+  `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every Saturday on
+  04:23 UTC. The cron specification consists of five elements that indicate the
+  minute (0 - 59), hour (0 - 23), day of the month (1 - 31), month (1 - 12), and
+  day of the week (0 - 6).
+- If the package declares a dependency on a specific `R` version, it is useful
+  to specify the minimum declared `R` version to run in addition to the ones
+  that are by default used in the template: add e.g.,
+  `'- {os: ubuntu-latest,   r: '4.0.0'}'` to section `'matrix: config:'` to run
+  `R` version 4.0.0.
+
+### Further documentation
+The file `progutils\.github\workflows\R-CMD-check.yaml` is a good example. See
+the section about
+[GitHub Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
+from [R packages](https://r-pkgs.org/) and the GitHub documentation about
+[workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+
+## Using pkgdown
+See the chapter about [pkgdown](https://r-pkgs.org/website.html) from
+[R packages](https://r-pkgs.org/) and the documentation for package
+[pkgdown](https://pkgdown.r-lib.org/).
+
+```{r pkgdown, eval = FALSE}
+usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
+```
+
+After a few minutes, the website should be present. The URL has the structure
+`https://USERNAME.github.io/REPONAME/`, e.g.,
+`https://jessealderliesten.github.io/checkrpkgs/`.
