@@ -5,22 +5,32 @@ Authors@R:
     person("Jesse", "Alderliesten", , "jessealderliesten@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1132-4310"))
 Description:
-    This package collects code and templates I use to develop R packages. The
-    code makes heavy use of the R packages devtools and usethis, following the
-    book 'R packages' by Hadley Wickham and Jennifer Bryan. I use `tinytest`
-    instead of `testthat` for my unit tests.
+    A collection of code and templates to develop R packages. Based on the R
+    packages 'devtools' and 'usethis', following the book 'R packages' by Hadley
+    Wickham and Jennifer Bryan.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Suggests: 
-    cffr,
+Imports:
     devtools,
-    knitr,
-    pkgdepends,
-    rmarkdown,
     tinytest,
     usethis
+Suggests: 
+    cffr,
+    checkinput,
+    checkrpkgs,
+    knitr,
+    pkgdepends,
+    pkgdown,
+    progutils,
+    rmarkdown,
+    tools,
+    utils
+Remotes:
+    github::JesseAlderliesten/checkinput,
+    github::JesseAlderliesten/checkrpkgs
+    github::JesseAlderliesten/progutils,
 URL: https://github.com/JesseAlderliesten/develcoder
 BugReports: https://github.com/JesseAlderliesten/develcoder/issues
 VignetteBuilder: knitr

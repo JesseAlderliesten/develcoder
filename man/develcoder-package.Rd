@@ -6,7 +6,7 @@
 \alias{develcoder-package}
 \title{develcoder: Code And Templates To Develop R Packages}
 \description{
-This package collects code and templates I use to develop R packages. The code makes heavy use of the R packages devtools and usethis, following the book 'R packages' by Hadley Wickham and Jennifer Bryan. I use `tinytest` instead of `testthat` for my unit tests.
+A collection of code and templates to develop R packages. Based on the R packages 'devtools' and 'usethis', following the book 'R packages' by Hadley Wickham and Jennifer Bryan.
 }
 \seealso{
 Useful links:
