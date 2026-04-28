@@ -10,10 +10,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Introduction
 This file contains information about using
 [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
