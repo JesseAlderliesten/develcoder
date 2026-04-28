@@ -1,3 +1,9 @@
+<!-- badges: start -->
+
+![](https://img.shields.io/github/r-package/v/JesseAlderliesten/develcoder?color=blue)
+[![R-CMD-check](https://github.com/JesseAlderliesten/develcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JesseAlderliesten/checkrpkgs/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 # develcoder
 
 `develcoder` is an R package where I store code and templates used to develop
@@ -9,7 +15,26 @@ use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 [testthat](https://cran.r-project.org/package=testthat) for my unit tests.
 
 ## Structure
-The package consists of vignettes and templates.
+```
+├── .github
+│   └── workflows: workflows to run tests with GitHub Actions
+├── R: functions
+├── inst
+│   ├── templates: templates for NEWS, README, and yaml files (see below).
+│   └── tinytest: tests
+├── man: help-files
+├── tests: setup to use 'tinytest' for testing
+└── vignettes: vignettes (see below) 
+```
+
+The following templates are present in `inst/templates` (in the installed
+package these are in `<pkgname>/templates`):
+
+- `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
+- `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
+- `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
+  `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
+  `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
 
 The following vignettes are present in folder `vignettes`:
 
@@ -22,21 +47,20 @@ The following vignettes are present in folder `vignettes`:
   [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
   [knitr](https://yihui.org/knitr/).
 
-The following templates are present in folder `templates`:
+## Installation
 
-- `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
-- `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
-- `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
-  `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
-  `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
+You can install `develcoder` from
+[GitHub](https://github.com/JesseAlderliesten/develcoder) with:
 
-## Workflow
-If you want to copy code from this repository, download it as a ZIP file (use
-the green `Code` button and choose `Download ZIP`) and unzip the folder. You can
-move the folder to your preferred location, but the R-scripts should be in the
-same folder as the R-project file `develcoder.Rproj`.
+``` r
+if(!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages(pkgs = "remotes", quiet = FALSE)
+}
+remotes::install_github(repo = "JesseAlderliesten/develcoder", dependencies = TRUE,
+                        upgrade = FALSE, force = FALSE, quiet = FALSE,
+                        build_vignettes = TRUE, lib = NULL,
+                        verbose = getOption("verbose"))
+```
 
-## Troubleshooting
-For information about installing and configuring [R](https://www.r-project.org/)
-and [RStudio](https://posit.co/products/open-source/rstudio), see my repository
-[checkrpkgs](https://github.com/JesseAlderliesten/checkrpkgs).
+For information about installing and configuring R and RStudio, see my
+repository [checkrpkgs](https://github.com/JesseAlderliesten/checkrpkgs).
