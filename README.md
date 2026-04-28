@@ -14,12 +14,12 @@ of R scripts.
 ## Structure
 The project consists of two scripts and a collection of templates:
 
-- `pkg_setup.R` contains code to set up a package from scratch. It will be
+- `pkg_setup.Rmd` contains code to set up a package from scratch. It will be
   needed only once for a package.
-- `pkg_devel.R` contains code to use during package development. This is needed
+- `pkg_devel.Rmd` contains code to use during package development. This is needed
   during package development, including when preparing to release a package and
   setting up for a new version.
-- `rmarkdown_knitr.txt` contains information about using
+- `rmarkdown_knitr.Rmd` contains information about using
   [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
   [knitr](https://yihui.org/knitr/).
 
@@ -29,7 +29,7 @@ The following templates are present in folder `templates`:
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
 - `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
   `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
-  `pkg_setup.R` and `pkg_devel.R` for details).
+  `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
 
 ## Workflow
 If you want to copy code from this repository, download it as a ZIP file (use
