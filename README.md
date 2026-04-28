@@ -10,9 +10,9 @@
 [R](https://www.r-project.org/) packages. It makes heavy use of the R packages
 [devtools](https://CRAN.R-project.org/package=devtools) and
 [usethis](https://CRAN.R-project.org/package=usethis), following the
-[R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan. I
-use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
-[testthat](https://cran.r-project.org/package=testthat) for my unit tests.
+[R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan. It
+uses [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
+[testthat](https://cran.r-project.org/package=testthat) for unit tests.
 
 ## Structure
 ```
@@ -27,8 +27,8 @@ use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 └── vignettes: vignettes (see below) 
 ```
 
-The following templates are present in `inst/templates` (in the installed
-package these are in `<pkgname>/templates`):
+Folder `inst/templates` contains the following templates (in the installed
+package these are in `develcoder/templates`):
 
 - `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
@@ -36,7 +36,7 @@ package these are in `<pkgname>/templates`):
   `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
   `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
 
-The following vignettes are present in folder `vignettes`:
+Folder `vignettes` contains the following vignettes:
 
 - `pkg_setup.Rmd` contains code to set up a package from scratch. It will be
   needed only once for a package.
