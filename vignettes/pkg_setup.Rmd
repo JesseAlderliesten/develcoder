@@ -79,7 +79,7 @@ NB. I do *not* follow the `usethis` practise of using `devtools::build_readme()`
 to update `README.md` because that imposes the requirement to have `README.Rmd`
 and `README.md` staged at the same time. To remove this requirement if it was
 accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
-from the R-project folder (see the `Descrption` section in
+from the R-project folder (see the `Description` section in
 `help(devtools::build_readme())`.
 
 ## Importing packages or functions
@@ -155,14 +155,13 @@ to include some other useful triggers for GHAs (see the template file
   `R` version 4.1.0.
 
 ### Further documentation
-The file `progutils\.github\workflows\R-CMD-check.yaml` is a good example. See
-the section about
+See the section about
 [GitHub Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
 in [R packages](https://r-pkgs.org/) and the GitHub documentation about
 [workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 
 ## Using pkgdown
-See the chapter about [pkgdown](https://r-pkgs.org/website.html) from
+See the chapter about [pkgdown](https://r-pkgs.org/website.html) from the book
 [R packages](https://r-pkgs.org/) and the documentation for package
 [pkgdown](https://pkgdown.r-lib.org/).
 
