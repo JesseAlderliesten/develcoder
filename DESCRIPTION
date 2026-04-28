@@ -28,8 +28,8 @@ Suggests:
     utils
 Remotes:
     github::JesseAlderliesten/checkinput,
-    github::JesseAlderliesten/checkrpkgs
-    github::JesseAlderliesten/progutils,
+    github::JesseAlderliesten/checkrpkgs,
+    github::JesseAlderliesten/progutils
 URL: https://github.com/JesseAlderliesten/develcoder
 BugReports: https://github.com/JesseAlderliesten/develcoder/issues
 VignetteBuilder: knitr
