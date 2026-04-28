@@ -105,7 +105,19 @@ expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
-### Updating dependencies
+### Using temporary files
+- See `testthat::test_path()` on changing paths depending on how a check is run.
+- On using temporary files, see `local(...)`,
+  [this](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html) R-mail,
+  and `withr::with_tempfile()`:
+```{r tempfile, eval = FALSE}
+\dontshow{
+  my_tempdir <- tempdir()
+  example_dir <- file.path(my_tempdir, example_dir)
+}
+```
+
+### Update dependencies
 ``` {r dependencies, eval = FALSE}
 # Declare a minimum version for R itself
 usethis::use_package("R", type = "Depends", min_version = "4.1.0")
@@ -121,23 +133,21 @@ usethis::use_dev_package(package = "checkinput", type = "Imports",
 Do:
 
 - Specify the minimum declared `R` version as workflow in GitHub Actions, see
-  the section `Use GitHub Actions`.
+the section `Use GitHub Actions`.
 
 To use a function that is present in 'new' versions of R also in older versions
 of R, see https://github.com/yihui/xfun/blob/main/R/zzz.R
 
 #### Importing packages or functions
-There are two ways to use functions from packages that are imported (i.e., are
-in the `Imports:` field of the `DESCRIPTION` file): (1) use the package name
-followed by two colons and the function name, e.g., `utils::osVersion(...)`;
-(2) In addition to the `Imports:` field of the `DESCRIPTION` file, list the
-function in the `NAMESPACE` file, e.g., `importFrom(utils, osVersion)`. With
-`usethis`, this can be achieved by the following line:
-`usethis::use_import_from(package = "utils", fun = "osVersion")`. That adds the
-line `#' @importFrom utils osVersion` in `R/<pkgname>-package.R` that was
-created by `usethis::use_package_doc()`, and adds the line `Imports: utils` to
-the `DESCRIPTION` file (you might have to use `devtools::document()` for this to
-take effect).
+The standard way to use functions from other packages is to import the package
+(i.e., put it in the `Imports:` field of the `DESCRIPTION` file) and in code use
+the package name followed by two colons and the function name, e.g.,
+`utils::osVersion(...)`. If that is not possible, for example because the
+function is an operator, it is necessary to also list the function in the
+`NAMESPACE` file, e.g., to add the line `#' @importFrom utils osVersion` to
+`R/<pkgname>-package.R` that was created by `usethis::use_package_doc()`. This
+is done by `usethis::use_import_from(package = "utils", fun = "osVersion")` (you
+might have to use `devtools::document()` for this to take effect).
 
 ``` {r imports, eval = FALSE}
 usethis::use_import_from(package = "BiocManager", fun = "valid")
@@ -145,7 +155,7 @@ usethis::use_package("tinytest", type = "Suggests", min_version = "1.4.1")
 ```
 
 ## Add vignettes
-### Setting up
+### Set up
 ``` {r vignettes, eval = FALSE}
 usethis::use_vignette("my_vignette", title = "Some title")
 usethis::use_package(package = "knitr", type = "Suggests")
@@ -168,8 +178,8 @@ Put the next lines in the header of vignettes to get a table of contents:
 ``` {r vignette style, eval = FALSE}
 output:
   rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 3
+  toc: true
+toc_depth: 3
 ```
 See also my Chrome Bookmarks: `R` > `CreatePkgs` > `RMarkdown`.
 
@@ -196,19 +206,62 @@ The `[vignette about <some description>](../doc/<filename>.html)`.
 If no vignettes are visible, run `devtools::build_vignettes()`, which possibly
 needs to be followed by `install(..., build_vignettes = TRUE)`.
 
+## Preparing for updates
 
-## Update package-wide documentation
+### Check tests
+Check for which functions no test file has been written.
 
-### Updating the README
+``` {r update tests, eval = FALSE}
+devtools::document()
+tinytest::test_all()
+
+files_R <- list.files(file.path(".", "R"))
+files_man <- list.files(path = file.path(".", "man"), pattern = "\\.Rd$")
+expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
+expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
+expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
+```
+
+### Locally test update
+``` {r update, eval = FALSE}
+devtools::document()
+# Using `manual = FALSE` because building the manual leads to `latex` errors
+devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
+.libPaths() # Check if output of .libPaths() is correct.
+devtools::install(quick = FALSE, upgrade = "ask", build_vignettes = TRUE)
+devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
+
+# Load the package and view the help files as usual outside devtools:
+library(basename(getwd()), character.only = TRUE)
+browseVignettes(package = basename(getwd()))
+?reorder_levels
+```
+
+If no vignettes are visible, `devtools::install()` was probably run with the
+default `build_vignettes = FALSE`: change it to use `build_vignettes = TRUE`.
+
+### Update package-wide documentation
+
+#### NEWS
+Restyle and publish the `NEWS`-file at each new package release.
+
+#### README
 To provide a nice overview of functions: see
 [this example](https://github.com/MJobinASU/MontyHall). After adjusting the
 `README.Rmd`, `Knit` it to produce a `README.Md` file.
 
+#### Increment package version
+To increment the package version, adjust the package version in the `DESCRIPTION`
+file, or run `R` as administrator and then use `usethis::use_version()`. In the
+latter case, do not automatically `commit` the change, but do so manually to
+adjust the commit message to something like
+`Bump to version x.y.z. Breaking change: <func> no longer ...`. Indicating the
+version number in the commit title makes it easier to find back changes later on.
 
-## Use GitHub Actions
+### Use GitHub Actions
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see section
-`Use GitHub Actions` in `pkg_setup.Rmd`). To check if package `B`, which depends on
-package `A`, is still working fine, go to the `Actions` tab of repository `B`,
+`Use GitHub Actions` in `pkg_setup.Rmd`). To check if package `B`, which depends
+on package `A`, is still working fine, go to the `Actions` tab of repository `B`,
 select the action you want to trigger (e.g., `R-CMD-check.yaml`), and use the
 `Run workflow` button to run the GHA. You can select which branch it should
 run on, but you need to trigger it once manually on the `main` branch to be
@@ -222,7 +275,7 @@ specify the minimum declared `R` version to run in addition to the ones that are
 by default used in the template: add `- {os: ubuntu-latest,   r: '4.0.0'}` to
 the section `matrix: config:` to run `R` 4.0.0.
 
-## Using pkgdown
+### Update pkgdown website
 See https://r-pkgs.org/website.html and https://pkgdown.r-lib.org/
 
 Updating website
@@ -231,3 +284,53 @@ pkgdown::build_site()
 ```
 Open `docs/index.html` in a webbrowser to preview the website, or look at the
 files that constitute your package's website are in the local `docs/` directory.
+
+### Merge devel-branch with master
+To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
+`<Contribute>` > `Open Pull Request`. Copy the updated `NEWS` in the
+`description` field and use the button `Create pull request`.
+
+If you see
+`No conflicts with base branch: Merging can be performed automatically`, you can
+use the green `Merge pull request` button, or change to `Squash and merge`.
+
+Otherwise, you will see `This branch has conflicts that must be resolved`:
+follow the instructions to resolve the conflicts. Then push the button
+`Commit merge`. Then you should see `No conflicts with base branch` and you can
+proceed as described in the previous paragraph.
+
+After a successful merge, you will see a message that you can delete the
+`devel`-branch, which you can do. To do so later, go to `Pull requests`, select
+the `closed` tab, and scroll down to the button `Delete branch`.
+
+In `RStudio`, open the relevant project to check there are no commits left. Then
+you can move to the `master` branch and `Pull` to get all updates you just
+committed to the `master` branch, or first delete the project and `Pull` the
+fresh one.
+
+Then you can delete the old package versions (see `getwd()` for its location)
+and install the updated versions following your own instructions on the GitHub
+pages of the relevant packages.
+
+### Set up a new GitHub branch
+Then set up a new GitHub branch:
+- At the GitHub page of the package:
+`Branch` icon > green `New branch` button > use `devel` as branch name >
+green `Create new branch` button.
+- Go back to the GitHub page of the package, and at the green `Code` button >
+`copy URL to clipboard`.
+- In `RStudio`: `File` > `New project` > `Version control` > `Git` and paste the
+copied URL in the `Repository URL` > `Create Project`.
+- Then (still in `RStudio`) in the `Git` menu change from `master` to the
+`devel`-branch.
+
+## Troubleshooting
+To prevent `regex`-classes in example code from being interpreted as links
+(which leads to the error
+`@section Could not resolve link to topic ":blank:" in the dependencies or base packages`)
+when running `devtools::document()`, use backticks (`) to format a line as code,
+or wrap consecutive lines in `\code{...}`.
+
+## Guidelines
+See https://developer.r-project.org/ and 
+https://developer.r-project.org/devel-guidelines.txt
