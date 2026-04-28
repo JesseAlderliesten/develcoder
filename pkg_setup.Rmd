@@ -1,5 +1,5 @@
 ---
-title: "pkg_setup"
+title: "Package setup"
 output: html_document
 ---
 
@@ -144,7 +144,7 @@ to include some other useful triggers for GHAs (see the template file
 - you changed package `A` and want to check if package `B`, which depends on
   package `A`, is still working fine): add `'workflow_dispatch:'` to section
   `'on:'` to be able to manually trigger GHA. See section `Use GitHub Actions`
-  in `pkg_devel.R` on how to use it.
+  in `pkg_devel.Rmd` on how to use it.
 - someone else made changes to packages your package depends on: add e.g.
   `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every Saturday on
   04:23 UTC. The cron specification consists of five elements that indicate the
@@ -153,14 +153,14 @@ to include some other useful triggers for GHAs (see the template file
 - If the package declares a dependency on a specific `R` version, it is useful
   to specify the minimum declared `R` version to run in addition to the ones
   that are by default used in the template: add e.g.,
-  `'- {os: ubuntu-latest,   r: '4.0.0'}'` to section `'matrix: config:'` to run
-  `R` version 4.0.0.
+  `'- {os: ubuntu-latest,   r: '4.1.0'}'` to section `'matrix: config:'` to run
+  `R` version 4.1.0.
 
 ### Further documentation
 The file `progutils\.github\workflows\R-CMD-check.yaml` is a good example. See
 the section about
 [GitHub Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-from [R packages](https://r-pkgs.org/) and the GitHub documentation about
+in [R packages](https://r-pkgs.org/) and the GitHub documentation about
 [workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 
 ## Using pkgdown
