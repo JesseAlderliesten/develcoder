@@ -6,16 +6,6 @@ output: html_document
 ## Introduction
 This file contains code and annotations that are useful when creating a package.
 
-## Install packages used in this file
-```{r prepare, eval = FALSE}
-required_pkgs <- c("cffr", "devtools", "pkgdepends", "tinytest", "usethis")
-bool_install <- !vapply(X = required_pkgs, FUN = requireNamespace, FUN.VALUE = logical(1), quietly = TRUE)
-pkgs_install <- required_pkgs[bool_install]
-if(length(pkgs_install) > 0L) {
-  utils::install.packages(pkgs = pkgs_install, lib = NULL, dependencies = NA, quiet = FALSE)
-}
-```
-
 ## Choose a name
 ```{r name, eval = FALSE}
 pkgname <- "develcoder"
@@ -61,7 +51,7 @@ the package with an overview of its functions.
 usethis::use_mit_license() # Create license files for a permissive license
 cffr::cff_write() # Create a citation file
 usethis::use_package_doc() # Create R/<pkgname>-package.R
-usethis::use_readme_rmd() # Create README.Rmd
+usethis::use_readme_Rmd() # Create README.Rmd
 usethis::use_news_md() # Create NEWS.md
 ```
 
@@ -82,8 +72,8 @@ NB. I do *not* follow the `usethis` practise of using `devtools::build_readme()`
 to update `README.md` because that imposes the requirement to have `README.Rmd`
 and `README.md` staged at the same time. To remove this requirement if it was
 accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
-from the R-project folder (as done in a
-[GitHub issue](https://github.com/r-lib/usethis/issues/312).
+from the R-project folder (see the `Descrption` section in
+`help(devtools::build_readme())`.
 
 ## Importing packages or functions
 Specifying a minimum package version when importing packages ensures that used
@@ -130,6 +120,7 @@ ensures the code passes `R-CMD check` when dependencies in `Suggests` are not
 installed.
 
 ```{r GitHub Actions, eval = FALSE}
+usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
