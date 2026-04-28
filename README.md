@@ -23,7 +23,7 @@ The project consists of two scripts and a collection of templates:
   [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
   [knitr](https://yihui.org/knitr/).
 
-Folder `templates` contains the following templates:
+The following templates are present in folder `templates`:
 
 - `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
