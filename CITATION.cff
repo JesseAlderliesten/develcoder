@@ -1,0 +1,26 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "develcoder" in publications use:'
+type: software
+license: MIT
+title: 'develcoder: Code And Templates To Develop R Packages'
+version: 0.0.1
+abstract: This package collects code and templates I use to develop R packages. The
+  code makes heavy use of the R packages devtools and usethis, following the book
+  'R packages' by Hadley Wickham and Jennifer Bryan. I use `tinytest` instead of `testthat`
+  for my unit tests.
+authors:
+- family-names: Alderliesten
+  given-names: Jesse
+  email: jessealderliesten@hotmail.com
+  orcid: https://orcid.org/0000-0003-1132-4310
+contact:
+- family-names: Alderliesten
+  given-names: Jesse
+  email: jessealderliesten@hotmail.com
+  orcid: https://orcid.org/0000-0003-1132-4310
+
