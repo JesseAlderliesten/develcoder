@@ -217,6 +217,11 @@ The `[vignette about <some description>](../doc/<filename>.html)`.
 If no vignettes are visible, run `devtools::build_vignettes()`, which possibly
 needs to be followed by `install(..., build_vignettes = TRUE)`.
 
+## Adding miscellaneous files
+Non-standard files or folders should be added in the `inst/` directory to pass
+`R cmd check`. Those files and folders will be in the top directory in the
+installed package.
+
 ## Preparing for updates
 
 ### Check tests
