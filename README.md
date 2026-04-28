@@ -1,18 +1,17 @@
 # develcoder
 
-Here I store code and templates I use to develop [R](https://www.r-project.org/)
-packages. The code makes heavy use of the R packages
+`develcoder` is an R package where I store code and templates used to develop
+[R](https://www.r-project.org/) packages. It makes heavy use of the R packages
 [devtools](https://CRAN.R-project.org/package=devtools) and
 [usethis](https://CRAN.R-project.org/package=usethis), following the
 [R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan. I
 use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 [testthat](https://cran.r-project.org/package=testthat) for my unit tests.
 
-`develcoder` itself is not an R *package* but an R *project*, i.e., a collection
-of R scripts.
-
 ## Structure
-The project consists of two scripts and a collection of templates:
+The package consists of vignettes and templates.
+
+The following vignettes are present in folder `vignettes`:
 
 - `pkg_setup.Rmd` contains code to set up a package from scratch. It will be
   needed only once for a package.
