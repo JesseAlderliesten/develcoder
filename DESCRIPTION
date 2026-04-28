@@ -21,4 +21,6 @@ Suggests:
     rmarkdown,
     tinytest,
     usethis
+URL: https://github.com/JesseAlderliesten/develcoder
+BugReports: https://github.com/JesseAlderliesten/develcoder/issues
 VignetteBuilder: knitr
