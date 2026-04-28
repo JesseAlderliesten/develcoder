@@ -8,6 +8,14 @@
 \description{
 This package collects code and templates I use to develop R packages. The code makes heavy use of the R packages devtools and usethis, following the book 'R packages' by Hadley Wickham and Jennifer Bryan. I use `tinytest` instead of `testthat` for my unit tests.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/JesseAlderliesten/develcoder}
+  \item Report bugs at \url{https://github.com/JesseAlderliesten/develcoder/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Jesse Alderliesten \email{jessealderliesten@hotmail.com} (\href{https://orcid.org/0000-0003-1132-4310}{ORCID})
 
