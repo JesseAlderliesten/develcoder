@@ -133,7 +133,7 @@ usethis::use_dev_package(package = "checkinput", type = "Imports",
 Do:
 
 - Specify the minimum declared `R` version as workflow in GitHub Actions, see
-the section `Use GitHub Actions`.
+the section [Use GitHub Actions].
 
 To use a function that is present in 'new' versions of R also in older versions
 of R, see https://github.com/yihui/xfun/blob/main/R/zzz.R
@@ -272,8 +272,8 @@ Scheduled jobs that failed can be rerun through the button `Re-run jobs` >
 
 If the package declares a dependency on a specific `R` version, it is useful to
 specify the minimum declared `R` version to run in addition to the ones that are
-by default used in the template: add `- {os: ubuntu-latest,   r: '4.0.0'}` to
-the section `matrix: config:` to run `R` 4.0.0.
+by default used in the template: add `- {os: ubuntu-latest,   r: '4.1.0'}` to
+section `matrix: config:` to run `R` 4.1.0.
 
 ### Update pkgdown website
 See https://r-pkgs.org/website.html and https://pkgdown.r-lib.org/
@@ -314,15 +314,15 @@ pages of the relevant packages.
 
 ### Set up a new GitHub branch
 Then set up a new GitHub branch:
-- At the GitHub page of the package:
-`Branch` icon > green `New branch` button > use `devel` as branch name >
-green `Create new branch` button.
+
+- At the GitHub page of the package: `Branch` icon > green `New branch` button >
+  use `devel` as branch name > green `Create new branch` button.
 - Go back to the GitHub page of the package, and at the green `Code` button >
-`copy URL to clipboard`.
+  `copy URL to clipboard`.
 - In `RStudio`: `File` > `New project` > `Version control` > `Git` and paste the
-copied URL in the `Repository URL` > `Create Project`.
+  copied URL in the `Repository URL` > `Create Project`.
 - Then (still in `RStudio`) in the `Git` menu change from `master` to the
-`devel`-branch.
+  `devel`-branch.
 
 ## Troubleshooting
 To prevent `regex`-classes in example code from being interpreted as links
