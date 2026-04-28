@@ -9,7 +9,7 @@
 #   https://docs.github.com/en/actions/how-tos/manage-workflow-runs).
 
 # Need help debugging build failures? Start at
-https://github.com/r-lib/actions#where-to-find-help
+# https://github.com/r-lib/actions#where-to-find-help
 
 on:
   pull_request:
