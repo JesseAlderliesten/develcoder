@@ -45,9 +45,13 @@ Do:
 ## Add package-wide documentation
 A license file makes clear what use of your package is allowed. See
 [choosealicense](https://choosealicense.com/) and the
-[GNU FAQ](https://www.gnu.org/licenses/gpl-faq.html) for overviews of licenses.
+[GNU FAQ](https://www.gnu.org/licenses/gpl-faq.html) for overviews of licenses and
+[this blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
+for details on the MIT License.
 
-A citation file makes clear how your package should be cited.
+A citation file makes clear how your package should be cited, see the
+[Citation file format GitHub page](https://citation-file-format.github.io/) for
+details on the format.
 
 `R/<pkgname>-package.R` is used by `usethis` to list imported functions and can
 also be used as help-page such that `help(<pkgname>)` produces a description of
