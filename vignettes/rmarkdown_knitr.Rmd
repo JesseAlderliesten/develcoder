@@ -130,7 +130,7 @@ running the R Markdown file, see the note in `help("knitr::purl())` about that.
 
 
 ## Formatting in R Markdown
-```{r format, eval = FALSE}
+```` {formatting example}
 To create lists, an empty line before the is needed:
 
 * unordered list
@@ -144,13 +144,20 @@ To create lists, an empty line before the is needed:
 + sub-item 2
 
 
-Making text bold
+Making text italic or bold
+*italic text* and _italic text_
 ** bold text **
+_Some **bold words** in italic text_
 
-Formatting text as r-code:
+Formatting text as R code:
 ``` r
 <some code here>
-\```
+```
+
+To not evaluate a code chunk:
+``` {r, example, eval = FALSE}
+<some code here>
+```
 
 Bullets for a list:
 * Item one
@@ -165,4 +172,4 @@ Inserting a table:
 | `Colname1` | Some description                 |
 | `Colname2` | Some description                 |
 | `Colname3` | Some description                 |
-```
+````
