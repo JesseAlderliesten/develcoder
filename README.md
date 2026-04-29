@@ -6,12 +6,12 @@
 
 # develcoder
 
-`develcoder` is an R package where I store code and templates used to develop
-[R](https://www.r-project.org/) packages. It makes heavy use of the R packages
-[devtools](https://CRAN.R-project.org/package=devtools) and
-[usethis](https://CRAN.R-project.org/package=usethis), following the
-[R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan. It
-uses [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
+`develcoder` is an R package where I store code and templates to develop
+[R](https://www.r-project.org/) packages. It is based on the
+[R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan,
+using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
+[usethis](https://CRAN.R-project.org/package=usethis), although I use
+[tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 [testthat](https://cran.r-project.org/package=testthat) for unit tests.
 
 ## Structure
@@ -38,14 +38,14 @@ package these are in `develcoder/templates`):
 
 Folder `vignettes` contains the following vignettes:
 
-- `pkg_setup.Rmd` contains code to set up a package from scratch. It will be
-  needed only once for a package.
-- `pkg_devel.Rmd` contains code to use during package development. This is needed
-  during package development, including when preparing to release a package and
-  setting up for a new version.
+- `pkg_setup.Rmd` contains code that is needed only once to set up a package
+  from scratch.
+- `pkg_devel.Rmd` contains code that is needed during package development,
+  including when preparing to release a new package version and setting up for a
+  new version.
 - `rmarkdown_knitr.Rmd` contains information about using
   [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
-  [knitr](https://yihui.org/knitr/).
+  [knitr](https://yihui.org/knitr/) to style vignettes.
 
 ## Installation
 
