@@ -1,0 +1,11 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  pkg_devel: pkg_devel.html
+  pkg_setup: pkg_setup.html
+  rmarkdown_knitr: rmarkdown_knitr.html
+last_built: 2026-05-10T19:15Z
+urls:
+  reference: https://jessealderliesten.github.io/develcoder/reference
+  article: https://jessealderliesten.github.io/develcoder/articles
