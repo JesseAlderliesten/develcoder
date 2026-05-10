@@ -43,11 +43,14 @@ Do:
 - Update the `Description` field of the `DESCRIPTION` file.
 
 ## Add package-wide documentation
-A license file makes clear what use of your package is allowed. See
-[choosealicense](https://choosealicense.com/) and the
-[GNU FAQ](https://www.gnu.org/licenses/gpl-faq.html) for overviews of licenses and
-[this blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
-for details on the MIT License.
+A license file makes clear what use of your package is allowed. Overview of
+licenses are available at [choosealicense](https://choosealicense.com/appendix/),
+[GNU.org](https://www.gnu.org/licenses/license-list.html),
+[Open Source Initiative](https://opensource.org/licenses), and
+[System Package Data Exchange](https://spdx.org/licenses/). Some legal details
+are provided in [The Legal Side of Open Source](https://opensource.guide/legal/)
+and [this blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
+gives details on the MIT License.
 
 A citation file makes clear how your package should be cited, see the
 [Citation file format GitHub page](https://citation-file-format.github.io/) for
