@@ -12,12 +12,18 @@ A collection of code and templates to develop R packages. Based on the R package
 Useful links:
 \itemize{
   \item \url{https://github.com/JesseAlderliesten/develcoder}
+  \item \url{https://jessealderliesten.github.io/develcoder/}
   \item Report bugs at \url{https://github.com/JesseAlderliesten/develcoder/issues}
 }
 
 }
 \author{
 \strong{Maintainer}: Jesse Alderliesten \email{jessealderliesten@hotmail.com} (\href{https://orcid.org/0000-0003-1132-4310}{ORCID})
+
+Authors:
+\itemize{
+  \item Jesse Alderliesten \email{jessealderliesten@hotmail.com} (\href{https://orcid.org/0000-0003-1132-4310}{ORCID})
+}
 
 }
 \keyword{internal}

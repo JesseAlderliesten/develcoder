@@ -36,7 +36,9 @@ package these are in `develcoder/templates`):
   `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
   `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
 
-Folder `vignettes` contains the following vignettes:
+Folder `vignettes` contains the following vignettes (which can be viewed at
+its [pkgdown](https://jessealderliesten.github.io/develcoder/) version under
+`Articles`, without installing the `develcoder` package):
 
 - `pkg_setup.Rmd` contains code that is needed only once to set up a package
   from scratch.
