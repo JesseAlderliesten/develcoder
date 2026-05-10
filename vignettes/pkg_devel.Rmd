@@ -157,13 +157,13 @@ usethis::use_vignette("my_vignette", title = "Some title")
 usethis::use_package(package = "knitr", type = "Suggests")
 usethis::use_package(package = "rmarkdown", type = "Suggests")
 devtools::document()
-devtools::build_vignettes()
+pkgdown::build_article()
 browseVignettes(package = basename(getwd()))
 ```
 
 If no vignettes are visible, `devtools::install()` was probably run with the
 default argument `build_vignettes = FALSE`, use `build_vignettes = TRUE` instead:
-`devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)`.
+`devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
 
 See also `tools::pkgVignettes(package = "checkrpkgs")` and
 `utils::vignette(<"vignette_title">)`. To render a `Rd`-file as plain-text help
@@ -203,7 +203,7 @@ For a more advanced way of linking from vignettes to help-pages see
 
 To link from help-pages to vignettes, use:
 The `[vignette about <some description>](../doc/<filename>.html)`.
-If no vignettes are visible, run `devtools::build_vignettes()`, which possibly
+If no vignettes are visible, run `pkgdown::build_article()`, which possibly
 needs to be followed by `install(..., build_vignettes = TRUE)`.
 
 ## Adding miscellaneous files
@@ -233,8 +233,13 @@ devtools::document()
 # Using `manual = FALSE` because building the manual leads to `latex` errors
 devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
 .libPaths() # Check if output of .libPaths() is correct.
-devtools::install(quick = FALSE, upgrade = "ask", build_vignettes = TRUE)
-devtools::install(quick = FALSE, upgrade = "never", build_vignettes = TRUE)
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
+
+# Note:
+# The lintr issue `Use == instead of %in% for scalar comparison` should be
+# ignored for x %in% y if x or y might contain NA that should be ignored:
+# x %in% NA and NA %in% y return FALSE, whereas x == NA and NA == y return NA
+goodpractice::gp() # Check for issues.
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
@@ -262,6 +267,8 @@ latter case, do not automatically `commit` the change, but do so manually to
 adjust the commit message to something like
 `Bump to version x.y.z. Breaking change: <func> no longer ...`. Indicating the
 version number in the commit title makes it easier to find back changes later on.
+
+## Performing updates
 
 ### Use GitHub Actions
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see section
@@ -308,26 +315,34 @@ After a successful merge, you will see a message that you can delete the
 `devel`-branch, which you can do. To do so later, go to `Pull requests`, select
 the `closed` tab, and scroll down to the button `Delete branch`.
 
+### Overwrite devel-branch after merge
 In `RStudio`, open the relevant project to check there are no commits left. Then
 you can move to the `master` branch and `Pull` to get all updates you just
-committed to the `master` branch, or first delete the project and `Pull` the
-fresh one.
+committed to the `master` branch. Then click the `New branch` button in `RStudio`
+(besides the `Switch branch` icon indicating which branch (e.g., `master` or
+`devel`) you are using), use `devel` as branch name and click `Create`. You will
+be notified that `devel` already exists and asked if you want to overwrite it.
+**If** you have just merged `devel` into `master`, you can choose to overwrite
+it to have a new `devel` branch.
 
-Then you can delete the old package versions (see `getwd()` for its location)
-and install the updated versions following your own instructions on the GitHub
-pages of the relevant packages.
-
-### Set up a new GitHub branch
-Then set up a new GitHub branch:
+#### Set up a new branch
+Instead of overwriting the `devel`-branch after merging into `main`, you can
+also create a completely new branch:
 
 - At the GitHub page of the package: `Branch` icon > green `New branch` button >
-  use `devel` as branch name > green `Create new branch` button.
+  specify a name for the branch > green `Create new branch` button.
 - Go back to the GitHub page of the package, and at the green `Code` button >
   `copy URL to clipboard`.
 - In `RStudio`: `File` > `New project` > `Version control` > `Git` and paste the
   copied URL in the `Repository URL` > `Create Project`.
 - Then (still in `RStudio`) in the `Git` menu change from `master` to the
-  `devel`-branch.
+  just-created branch.
+
+### Installing the updated package
+Then you can delete the old package version from your PC (see `getwd()` for its
+location) and install the updated version following your own instructions on the
+GitHub pages of the relevant packages.
+
 
 ## Troubleshooting
 To prevent `regex`-classes in example code from being interpreted as links
@@ -339,3 +354,5 @@ or wrap consecutive lines in `\code{...}`.
 ## Guidelines
 See https://developer.r-project.org/ and 
 https://developer.r-project.org/devel-guidelines.txt
+See alsoe https://cran.r-project.org/web/packages/policies.html and
+https://github.com/JesseAlderliesten/pkg-dev-ctv/blob/main/proposal.md#links-links
