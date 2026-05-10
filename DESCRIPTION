@@ -32,7 +32,7 @@ Remotes:
     github::JesseAlderliesten/checkinput,
     github::JesseAlderliesten/checkrpkgs,
     github::JesseAlderliesten/progutils
-URL: https://github.com/JesseAlderliesten/develcoder
+URL: https://github.com/JesseAlderliesten/develcoder, https://jessealderliesten.github.io/develcoder/
 BugReports: https://github.com/JesseAlderliesten/develcoder/issues
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.0.0

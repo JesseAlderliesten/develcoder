@@ -12,6 +12,7 @@ A collection of code and templates to develop R packages. Based on the R package
 Useful links:
 \itemize{
   \item \url{https://github.com/JesseAlderliesten/develcoder}
+  \item \url{https://jessealderliesten.github.io/develcoder/}
   \item Report bugs at \url{https://github.com/JesseAlderliesten/develcoder/issues}
 }
 
