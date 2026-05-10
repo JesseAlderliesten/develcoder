@@ -174,8 +174,17 @@ See the chapter about [pkgdown](https://r-pkgs.org/website.html) from the book
 
 ```{r pkgdown, eval = FALSE}
 usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
+devtools::document() # To update package-level documentation
 ```
 
 After a few minutes, the website should be present. The URL has the structure
 `https://USERNAME.github.io/REPONAME/`, e.g.,
 `https://jessealderliesten.github.io/checkrpkgs/`.
+
+Refer from the `README` to the pkgdown website and add the line
+`light-switch: true` below the `template` heading in the `_pkgdown.YML-file`
+(located in the top-level package folder) to add a light-switch to the
+pkgdown-website (see
+https://pkgdown.r-lib.org/articles/customise.html#light-switch for documentation
+and D:\Userdata\Jesse Nieuw\Documents\R\checkrpkgs\.github\workflows\pkgdown for
+an example).
