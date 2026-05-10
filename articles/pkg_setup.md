@@ -200,11 +200,13 @@ devtools::document() # To update package-level documentation
 
 After a few minutes, the website should be present. The URL has the
 structure `https://USERNAME.github.io/REPONAME/`, e.g.,
-`https://jessealderliesten.github.io/checkrpkgs/`.
+`https://jessealderliesten.github.io/develcoder/`.
 
 Refer from the `README` to the pkgdown website and add the line
 `light-switch: true` below the `template` heading in the
 `_pkgdown.YML-file` (located in the top-level package folder) to add a
-light-switch to the pkgdown-website (see
-<https://pkgdown.r-lib.org/articles/customise.html#light-switch> for
-documentation and D:Nieuw.githubfor an example).
+light-switch to the pkgdown-website (see the
+[documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
+and the [example
+code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
+for this repository).
