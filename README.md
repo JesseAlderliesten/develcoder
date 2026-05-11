@@ -4,9 +4,10 @@
 [![R-CMD-check](https://github.com/JesseAlderliesten/develcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JesseAlderliesten/checkrpkgs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+
 # develcoder
 
-`develcoder` is an R package where I store code and templates to develop
+`develcoder` is an R package storing code and templates to develop
 [R](https://www.r-project.org/) packages. It is based on the
 [R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan,
 using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
@@ -27,42 +28,51 @@ using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 └── vignettes: vignettes (see below) 
 ```
 
-Folder `inst/templates` contains the following templates (in the installed
-package these are in `develcoder/templates`):
+Folder
+[inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
+contains the following templates (in the installed package these are in
+`develcoder/templates`):
 
 - `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
 - `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
-  `<pkgname>\.github\workflows` (see section `Use GitHub Actions` in files
-  `pkg_setup.Rmd` and `pkg_devel.Rmd` for details).
+  `<pkgname>\.github\workflows` (see the section `Use GitHub Actions` in the
+  vignettes
+  [package setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
+  and
+  [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
+  for details).
 
-Folder `vignettes` contains the following vignettes (which can be viewed at
-its [pkgdown](https://jessealderliesten.github.io/develcoder/) version under
-`Articles`, without installing the `develcoder` package):
+Folder `vignettes` contains the following vignettes:
 
-- `pkg_setup.Rmd` contains code that is needed only once to set up a package
-  from scratch.
-- `pkg_devel.Rmd` contains code that is needed during package development,
-  including when preparing to release a new package version and setting up for a
-  new version.
-- `rmarkdown_knitr.Rmd` contains information about using
-  [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
+- [package setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
+  `vignette("pkg_setup", package = "develcoder")` contains code that is needed
+  only once to set up a package from scratch.
+- [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
+  `vignette("pkg_devel", package = "develcoder")` contains code that is needed
+  during package development, including when preparing to release a new package
+  version and setting up for a new version.
+- [package development](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
+  `vignette("rmarkdown_knitr", package = "develcoder")` contains information
+  about using [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
   [knitr](https://yihui.org/knitr/) to style vignettes.
 
 ## Installation
-
-You can install `develcoder` from
-[GitHub](https://github.com/JesseAlderliesten/develcoder) with:
+You can visit the
+[develcoder website](https://jessealderliesten.github.io/develcoder/) to explore
+the package. To use `develcoder`, you have to install it from
+[GitHub](https://github.com/JesseAlderliesten/develcoder) using the following
+code in R (you need to run R as administrator):
 
 ``` r
 if(!requireNamespace("remotes", quietly = TRUE)) {
   install.packages(pkgs = "remotes", quiet = FALSE)
 }
-remotes::install_github(repo = "JesseAlderliesten/develcoder", dependencies = TRUE,
-                        upgrade = FALSE, force = FALSE, quiet = FALSE,
-                        build_vignettes = TRUE, lib = NULL,
+remotes::install_github(repo = "JesseAlderliesten/develcoder",
+                        dependencies = NA, upgrade = FALSE, force = FALSE,
+                        quiet = FALSE, build_vignettes = TRUE, lib = NULL,
                         verbose = getOption("verbose"))
 ```
 
-For information about installing and configuring R and RStudio, see my
-repository [checkrpkgs](https://github.com/JesseAlderliesten/checkrpkgs).
+For more information about installing and configuring R and RStudio, see my
+package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
