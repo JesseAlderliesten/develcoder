@@ -28,8 +28,10 @@ using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 └── vignettes: vignettes (see below) 
 ```
 
-Folder `inst/templates` contains the following templates (in the installed
-package these are in `develcoder/templates`):
+Folder
+[inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
+contains the following templates (in the installed package these are in
+`develcoder/templates`):
 
 - `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
