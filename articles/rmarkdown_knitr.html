@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,6 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This file contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link">R Markdown</a> and <a href="https://yihui.org/knitr/" class="external-link">knitr</a>.</p>
-<p>See also my Chrome Bookmarks R &gt; Workflow &gt; RMarkdown.</p>
 <p>An R Markdown file is an R script with markup to enable to combine
 the script (including the comments) together with its output and
 additional text in a single document. The R-package <a href="https://cran.r-project.org/package=rmarkdown" class="external-link">rmarkdown</a>, as
@@ -97,7 +96,7 @@ to be installed. See the ‘Rmarkdown cookbook’ and the ‘Definitive guide’
 Markdown cookbook</a> by Y. Xie, C. Dervieux, and E. Riederer</li>
 <li>the <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">Definitive
 guide</a> by Y. Xie, J.J. Allaire, and G. Grolemund</li>
-<li>the <a href="https://posit.co/" class="external-link">R-studio/Posit</a> website on <a href="http://rmarkdown.rstudio.com" class="external-link">R Markdown</a>
+<li>the <a href="https://posit.co/" class="external-link">Posit</a> website on <a href="http://rmarkdown.rstudio.com" class="external-link">R Markdown</a>
 </li>
 <li>the maintainer’s website on <a href="https://yihui.org/knitr/" class="external-link">knitr</a>
 </li>
@@ -157,7 +156,7 @@ changed using <code><a href="https://rdrr.io/r/base/getwd.html" class="external-
 <p>An inferior alternative to including <code>file = ...</code> in the
 header is including</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"FilenameRScript.R"</span>, local <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit_global.html" class="external-link">knit_global</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"&lt;path/to/file&gt;.R"</span>, local <span class="op">=</span> <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit_global.html" class="external-link">knit_global</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>       echo <span class="op">=</span> <span class="cn">TRUE</span>, max.deparse.length <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
 <p>in the body of the chunk. That method has the disadvantages that bare
 source code is included in the knitted file without the accompanying
@@ -195,14 +194,14 @@ before using it and final files should be created by using the
 </h2>
 <p>Add a new chunk by (1) clicking the <code>Insert Chunk</code> button
 on the toolbar, (2) pressing <code>Ctrl+Alt+I</code>, or (3) typing the
-delimiters <code>{r} and</code></p>
+delimiters <code>```{r} and ```</code></p>
 <p>To collect all chunks in a R Markdown document that contain R-code in
 a conventional R-script use
 <code>knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)</code></p>
 <p>Note that the various R Markdown options are not incorporated in such
 an R-script, which might hamper exactly reproducing the analyses as
 executed when running the R Markdown file, see the note in
-<code>help("knitr::purl())</code> about that.</p>
+<code>help("knitr::purl()")</code> about that.</p>
 </div>
 <div class="section level2">
 <h2 id="formatting-in-r-markdown">Formatting in R Markdown<a class="anchor" aria-label="anchor" href="#formatting-in-r-markdown"></a>

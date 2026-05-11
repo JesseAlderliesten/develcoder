@@ -105,9 +105,10 @@ expect_error(func_name(x = "a", arg = arg),
 - See
   [testthat::test_path()](https://testthat.r-lib.org/reference/test_path.html)
   on changing paths depending on how a check is run.
-- On using temporary files, see `local(...)`,
-  [this](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html)
-  R-mail, and
+- On using temporary files, see
+  [`local()`](https://rdrr.io/r/base/eval.html), this
+  [R-mail](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html),
+  and
   [withr::with_tempfile()](https://withr.r-lib.org/reference/with_tempfile.html):
 
 ``` r
@@ -145,17 +146,15 @@ versions of R, see <https://github.com/yihui/xfun/blob/main/R/zzz.R>
 The standard way to use functions from other packages is to import the
 package (i.e., put it in the `Imports:` field of the `DESCRIPTION` file)
 and in code use the package name followed by two colons and the function
-name, e.g., `utils::osVersion(...)`. If that is not possible, for
-example because the function is an operator, it is necessary to also
-list the function in the `NAMESPACE` file, e.g., to add the line
-`#' @importFrom utils osVersion` to `R/<pkgname>-package.R` that was
-created by
+name, e.g.,
+[`utils::osVersion()`](https://rdrr.io/r/utils/sessionInfo.html). If
+that is not possible, for example because the function is an operator,
+it is necessary to also list the function in the `NAMESPACE` file, e.g.,
+to add the line `#' @importFrom utils osVersion` to
+`R/<pkgname>-package.R` that was created by
 [`usethis::use_package_doc()`](https://usethis.r-lib.org/reference/use_package_doc.html).
 This is done by
-`usethis::use_import_from(package = "utils", fun = "osVersion")` (you
-might have to use
-[`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
-for this to take effect).
+`usethis::use_import_from(package = "utils", fun = "osVersion")`.
 
 ``` r
 
@@ -211,9 +210,15 @@ For internal links to other sections in the same document (‘Section’,
 ‘above’, ‘below’): `[<Section title>]` or
 `[<link text>][<Section title>]`
 
-To link from vignettes to help-pages in the same package, use
-`[someFun](../help/someFun)` (from a [StackOverflow
-answer](https://stackoverflow.com/questions/34946219)).
+There is **no** official way to link from vignettes to help-pages
+(<https://r-pkgs.org/vignettes.html#links>). Using relative paths (e.g.,
+`[someFun](../help/someFun)`, as proposed in a [StackOverflow
+answer](https://stackoverflow.com/questions/34946219)) is impaired by
+the change in the location of files when the package is installed. In
+addition, linking on the `pkgdown` website does **not** work in that
+format. For more advanced way of linking from vignettes to help-pages
+that might work, see
+[here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
 
 Text between angled brackets (e.g., `<pkgname>`) disappears when used in
 link text, so instead of `[library(<pkgname>)](../help/library)`, use
@@ -222,12 +227,13 @@ link text, so instead of `[library(<pkgname>)](../help/library)`, use
 [library](../help/library)`(<pkgname>)`
 ```
 
-For a more advanced way of linking from vignettes to help-pages see
-[here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
+To link from help-pages to vignettes, use
 
-To link from help-pages to vignettes, use: The
-`[vignette about <some description>](../doc/<filename>.html)`. If no
-vignettes are visible, run
+``` r
+The vignette *<vignette name>*: `vignette("<vignette name>", package = "<pkgname>")` 
+```
+
+If no vignettes are visible, run
 [`pkgdown::build_article()`](https://pkgdown.r-lib.org/reference/build_articles.html),
 which possibly needs to be followed by
 `install(..., build_vignettes = TRUE)`.
@@ -330,7 +336,9 @@ the ones that are by default used in the template: add
 
 ### Update pkgdown website
 
-See <https://r-pkgs.org/website.html> and <https://pkgdown.r-lib.org/>
+See the documentation about package
+[pkgdown](https://pkgdown.r-lib.org/) and the
+[chapter](https://r-pkgs.org/website.html) from the R packages book.
 
 Updating website
 
@@ -342,6 +350,11 @@ pkgdown::build_site()
 Open `docs/index.html` in a webbrowser to preview the website, or look
 at the files that constitute your package’s website are in the local
 `docs/` directory.
+
+Instead of manually updating the pkgdown website, one can use a [GitHub
+Action](#use-github-actions) workflow (e.g.,
+[pkgdown.yaml](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
+that updates the website after a pull request or push.
 
 ### Merge devel-branch with master
 

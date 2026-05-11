@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="develcoder">develcoder<a class="anchor" aria-label="anchor" href="#develcoder"></a>
 </h1></div>
-<p><code>develcoder</code> is an R package where I store code and templates to develop <a href="https://www.r-project.org/" class="external-link">R</a> packages. It is based on the <a href="https://r-pkgs.org/" class="external-link">R packages</a> book by Hadley Wickham and Jennifer Bryan, using R packages <a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a> and <a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a>, although I use <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> instead of <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a> for unit tests.</p>
+<p><code>develcoder</code> is an R package storing code and templates to develop <a href="https://www.r-project.org/" class="external-link">R</a> packages. It is based on the <a href="https://r-pkgs.org/" class="external-link">R packages</a> book by Hadley Wickham and Jennifer Bryan, using R packages <a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a> and <a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a>, although I use <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> instead of <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a> for unit tests.</p>
 <div class="section level2">
 <h2 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
 </h2>
@@ -79,38 +79,38 @@
 ├── man: help-files
 ├── tests: setup to use 'tinytest' for testing
 └── vignettes: vignettes (see below) </code></pre>
-<p>Folder <code>inst/templates</code> contains the following templates (in the installed package these are in <code>develcoder/templates</code>):</p>
+<p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">inst/templates</a> contains the following templates (in the installed package these are in <code>develcoder/templates</code>):</p>
 <ul>
 <li>
 <code>NEWS_template.txt</code> for a <code>NEWS.txt</code> file, to be put in <code>&lt;pkgname&gt;</code>.</li>
 <li>
 <code>README_template.Rmd</code> for a <code>README.Rmd</code> file, to be put in <code>&lt;pkgname&gt;</code>.</li>
 <li>
-<code>check-no-suggests.yaml</code> for a GitHub Actions workflow, to be put in <code>&lt;pkgname&gt;\.github\workflows</code> (see section <code>Use GitHub Actions</code> in files <code>pkg_setup.Rmd</code> and <code>pkg_devel.Rmd</code> for details).</li>
+<code>check-no-suggests.yaml</code> for a GitHub Actions workflow, to be put in <code>&lt;pkgname&gt;\.github\workflows</code> (see the section <code>Use GitHub Actions</code> in the vignettes <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a> and <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a> for details).</li>
 </ul>
-<p>Folder <code>vignettes</code> contains the following vignettes (which can be viewed at its <a href="https://jessealderliesten.github.io/develcoder/">pkgdown</a> version under <code>Articles</code>, without installing the <code>develcoder</code> package):</p>
+<p>Folder <code>vignettes</code> contains the following vignettes:</p>
 <ul>
 <li>
-<code>pkg_setup.Rmd</code> contains code that is needed only once to set up a package from scratch.</li>
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a> <code><a href="articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code> contains code that is needed only once to set up a package from scratch.</li>
 <li>
-<code>pkg_devel.Rmd</code> contains code that is needed during package development, including when preparing to release a new package version and setting up for a new version.</li>
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a> <code><a href="articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code> contains code that is needed during package development, including when preparing to release a new package version and setting up for a new version.</li>
 <li>
-<code>rmarkdown_knitr.Rmd</code> contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link">R Markdown</a> and <a href="https://yihui.org/knitr/" class="external-link">knitr</a> to style vignettes.</li>
+<a href="https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html">package development</a> <code><a href="articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code> contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link">R Markdown</a> and <a href="https://yihui.org/knitr/" class="external-link">knitr</a> to style vignettes.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install <code>develcoder</code> from <a href="https://github.com/JesseAlderliesten/develcoder" class="external-link">GitHub</a> with:</p>
+<p>You can visit the <a href="https://jessealderliesten.github.io/develcoder/">develcoder website</a> to explore the package. To use <code>develcoder</code>, you have to install it from <a href="https://github.com/JesseAlderliesten/develcoder" class="external-link">GitHub</a> using the following code in R (you need to run R as administrator):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"remotes"</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"JesseAlderliesten/develcoder"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                        upgrade <span class="op">=</span> <span class="cn">FALSE</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                        build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, lib <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"JesseAlderliesten/develcoder"</span>,</span>
+<span>                        dependencies <span class="op">=</span> <span class="cn">NA</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        quiet <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, lib <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>                        verbose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"verbose"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>For information about installing and configuring R and RStudio, see my repository <a href="https://github.com/JesseAlderliesten/checkrpkgs" class="external-link">checkrpkgs</a>.</p>
+<p>For more information about installing and configuring R and RStudio, see my package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link">checkrpkgs</a>.</p>
 </div>
 </div>
 

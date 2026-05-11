@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,7 +140,7 @@ developing a package.</p>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' @export</span></span>
 <span><span class="va">func_name</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">allow_underscores</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu">checkinput</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/checkinput/man/is_logical.html" class="external-link">is_logical</a></span><span class="op">(</span><span class="va">allow_underscores</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu">checkinput</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/checkinput/reference/is_logical.html" class="external-link">is_logical</a></span><span class="op">(</span><span class="va">allow_underscores</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="section level4">
@@ -178,8 +178,8 @@ also defined in the file itself.</p>
 <ul>
 <li>See <a href="https://testthat.r-lib.org/reference/test_path.html" class="external-link">testthat::test_path()</a>
 on changing paths depending on how a check is run.</li>
-<li>On using temporary files, see <code>local(...)</code>, <a href="https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html" class="external-link">this</a>
-R-mail, and <a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">withr::with_tempfile()</a>:</li>
+<li>On using temporary files, see <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, this <a href="https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html" class="external-link">R-mail</a>,
+and <a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">withr::with_tempfile()</a>:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>\dontshow{</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  my_tempdir <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
@@ -214,15 +214,13 @@ older versions of R, see <a href="https://github.com/yihui/xfun/blob/main/R/zzz.
 the package (i.e., put it in the <code>Imports:</code> field of the
 <code>DESCRIPTION</code> file) and in code use the package name followed
 by two colons and the function name, e.g.,
-<code>utils::osVersion(...)</code>. If that is not possible, for example
+<code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">utils::osVersion()</a></code>. If that is not possible, for example
 because the function is an operator, it is necessary to also list the
 function in the <code>NAMESPACE</code> file, e.g., to add the line
 <code>#' @importFrom utils osVersion</code> to
 <code>R/&lt;pkgname&gt;-package.R</code> that was created by
 <code><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">usethis::use_package_doc()</a></code>. This is done by
-<code>usethis::use_import_from(package = "utils", fun = "osVersion")</code>
-(you might have to use <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> for this to
-take effect).</p>
+<code>usethis::use_import_from(package = "utils", fun = "osVersion")</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_import_from.html" class="external-link">use_import_from</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"utils"</span>, fun <span class="op">=</span> <span class="st">"osVersion"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span><span class="st">"utils"</span>, type <span class="op">=</span> <span class="st">"Suggests"</span>, min_version <span class="op">=</span> <span class="st">"4.1.0"</span><span class="op">)</span></span></code></pre></div>
@@ -273,20 +271,23 @@ contents:</p>
 <p>For internal links to other sections in the same document (‘Section’,
 ‘above’, ‘below’): <code>[&lt;Section title&gt;]</code> or
 <code>[&lt;link text&gt;][&lt;Section title&gt;]</code></p>
-<p>To link from vignettes to help-pages in the same package, use
-<code>[someFun](../help/someFun)</code> (from a <a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
-answer</a>).</p>
+<p>There is <strong>no</strong> official way to link from vignettes to
+help-pages (<a href="https://r-pkgs.org/vignettes.html#links" class="external-link uri">https://r-pkgs.org/vignettes.html#links</a>). Using relative
+paths (e.g., <code>[someFun](../help/someFun)</code>, as proposed in a
+<a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
+answer</a>) is impaired by the change in the location of files when the
+package is installed. In addition, linking on the <code>pkgdown</code>
+website does <strong>not</strong> work in that format. For more advanced
+way of linking from vignettes to help-pages that might work, see <a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f" class="external-link">here</a>.</p>
 <p>Text between angled brackets (e.g., <code>&lt;pkgname&gt;</code>)
 disappears when used in link text, so instead of
 <code>[library(&lt;pkgname&gt;)](../help/library)</code>, use</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>[library](..<span class="sc">/</span>help<span class="sc">/</span>library)<span class="st">`</span><span class="at">(&lt;pkgname&gt;)</span><span class="st">`</span></span></code></pre></div>
-<p>For a more advanced way of linking from vignettes to help-pages see
-<a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f" class="external-link">here</a>.</p>
-<p>To link from help-pages to vignettes, use: The
-<code>[vignette about &lt;some description&gt;](../doc/&lt;filename&gt;.html)</code>.
-If no vignettes are visible, run <code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>,
-which possibly needs to be followed by
-<code>install(..., build_vignettes = TRUE)</code>.</p>
+<p>To link from help-pages to vignettes, use</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>The vignette <span class="sc">*</span><span class="er">&lt;</span>vignette name<span class="sc">&gt;</span><span class="er">*:</span> <span class="st">`</span><span class="at">vignette("&lt;vignette name&gt;", package = "&lt;pkgname&gt;")</span><span class="st">`</span> </span></code></pre></div>
+<p>If no vignettes are visible, run
+<code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>, which possibly needs to be
+followed by <code>install(..., build_vignettes = TRUE)</code>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -304,7 +305,7 @@ package.</p>
 <h3 id="check-tests">Check tests<a class="anchor" aria-label="anchor" href="#check-tests"></a>
 </h3>
 <p>Check for which functions no test file has been written.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -317,7 +318,7 @@ package.</p>
 <div class="section level3">
 <h3 id="locally-test-update">Locally test update<a class="anchor" aria-label="anchor" href="#locally-test-update"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Using `manual = FALSE` because building the manual leads to `latex` errors</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">FALSE</span>, force_suggests <span class="op">=</span> <span class="cn">TRUE</span>, run_dont_test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -396,13 +397,16 @@ section <code>matrix: config:</code> to run <code>R</code> 4.1.0.</p>
 <div class="section level3">
 <h3 id="update-pkgdown-website">Update pkgdown website<a class="anchor" aria-label="anchor" href="#update-pkgdown-website"></a>
 </h3>
-<p>See <a href="https://r-pkgs.org/website.html" class="external-link uri">https://r-pkgs.org/website.html</a> and <a href="https://pkgdown.r-lib.org/" class="external-link uri">https://pkgdown.r-lib.org/</a></p>
+<p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and the <a href="https://r-pkgs.org/website.html" class="external-link">chapter</a> from the R packages
+book.</p>
 <p>Updating website</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Open <code>docs/index.html</code> in a webbrowser to preview the
 website, or look at the files that constitute your package’s website are
 in the local <code>docs/</code> directory.</p>
+<p>Instead of manually updating the pkgdown website, one can use a <a href="#use-github-actions">GitHub Action</a> workflow (e.g., <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml" class="external-link">pkgdown.yaml</a>)
+that updates the website after a pull request or push.</p>
 </div>
 <div class="section level3">
 <h3 id="merge-devel-branch-with-master">Merge devel-branch with master<a class="anchor" aria-label="anchor" href="#merge-devel-branch-with-master"></a>

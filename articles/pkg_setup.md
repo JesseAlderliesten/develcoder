@@ -80,14 +80,14 @@ Do:
     `templates`.
   - Add a badge with the version number by including the following code
     in the `README.Rmd` file (replace `<pkgname>` with the actual
-    package name; the badge does not work if the GitHub repository is
-    private):
+    package name; the badge does **not** work if the GitHub repository
+    is private):
     `![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
 - Update the `NEWS`-file (see the template file `README_template.Rmd` in
   the folder `templates`).
 
-NB. I do *not* follow the `usethis` practise of using
+NB. I do **not** follow the `usethis` practise of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` because that imposes the requirement to have
 `README.Rmd` and `README.md` staged at the same time. To remove this
@@ -171,7 +171,8 @@ in the folder `templates`):
   e.g. `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run
   every Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
-  month (1 - 31), month (1 - 12), and day of the week (0 - 6).
+  month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
+  timing is approximate and depends on the business of the servers.
 - If the package declares a dependency on a specific `R` version, it is
   useful to specify the minimum declared `R` version to run in addition
   to the ones that are by default used in the template: add e.g.,

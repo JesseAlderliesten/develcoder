@@ -1,5 +1,13 @@
 # Changelog
 
+## develcoder 0.0.4.
+
+#### Miscellaneous
+
+- `README`: refer to website when appropriate. Stylistic update.
+- `NEWS`: stylistic update.
+- Vignettes: rely on `pkgdown` to create links to functions.
+
 ## develcoder 0.0.3
 
 #### Breaking changes
@@ -11,7 +19,7 @@
 
 #### Miscellaneous
 
-- Added pkgdown website:
+- Add pkgdown website:
   `https://jessealderliesten.github.io/develcoder/`.
 - Vignette `Package development`: describe a faster way to create a new
   `devel`-branch. Replace deprecated
@@ -24,8 +32,8 @@
 
 #### Breaking changes
 
-- Added `fs` and `remotes` as dependencies in `Suggests` because they
-  are used in `README_template.Rmd`.
+- Add `fs` and `remotes` as dependencies in `Suggests` because they are
+  used in `README_template.Rmd`.
 
 #### Miscellaneous
 

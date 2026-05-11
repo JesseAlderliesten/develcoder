@@ -6,8 +6,6 @@ This file contains information about using [R
 Markdown](https://pkgs.rstudio.com/rmarkdown/) and
 [knitr](https://yihui.org/knitr/).
 
-See also my Chrome Bookmarks R \> Workflow \> RMarkdown.
-
 An R Markdown file is an R script with markup to enable to combine the
 script (including the comments) together with its output and additional
 text in a single document. The R-package
@@ -27,7 +25,7 @@ mentioned at \[Useful resources\] below) for extensive help.
   Xie, C. Dervieux, and E. Riederer
 - the [Definitive guide](https://bookdown.org/yihui/rmarkdown/) by Y.
   Xie, J.J. Allaire, and G. Grolemund
-- the [R-studio/Posit](https://posit.co/) website on [R
+- the [Posit](https://posit.co/) website on [R
   Markdown](http://rmarkdown.rstudio.com)
 - the maintainer’s website on [knitr](https://yihui.org/knitr/)
 
@@ -90,7 +88,7 @@ including
 
 ``` r
 
-source("FilenameRScript.R", local = knitr::knit_global(),
+source("<path/to/file>.R", local = knitr::knit_global(),
        echo = TRUE, max.deparse.length = 1000)
 ```
 
@@ -131,7 +129,7 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 
 Add a new chunk by (1) clicking the `Insert Chunk` button on the
 toolbar, (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters
-`{r} and`
+```` ```{r} and ``` ````
 
 To collect all chunks in a R Markdown document that contain R-code in a
 conventional R-script use
@@ -140,7 +138,7 @@ conventional R-script use
 Note that the various R Markdown options are not incorporated in such an
 R-script, which might hamper exactly reproducing the analyses as
 executed when running the R Markdown file, see the note in
-`help("knitr::purl())` about that.
+`help("knitr::purl()")` about that.
 
 ## Formatting in R Markdown
 
