@@ -7,6 +7,8 @@
 # - enable manually triggering GHA: added 'workflow_dispatch:' at 'on:' (see
 #   https://docs.github.com/en/actions/reference/workflows-and-actions and
 #   https://docs.github.com/en/actions/how-tos/manage-workflow-runs).
+# - run GHA with the currently released version of R on macOS, Windows, and
+#   Ubuntu. In addition, run GHA with the devel-version of R on Ubuntu.
 
 # Need help debugging build failures? Start at
 # https://github.com/r-lib/actions#where-to-find-help
@@ -14,7 +16,7 @@
 on:
   pull_request:
   schedule:
-      - cron: "23 4 * * 6" # run GHA every Saturday on 04:23 (UTC)
+      - cron: "23 4 * * 6" # run GHA every Saturday on 04:23 UTC
   workflow_dispatch: # to be able to manually trigger GHA
 
 name: R-CMD-check.yaml
@@ -35,7 +37,6 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
