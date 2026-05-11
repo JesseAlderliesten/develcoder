@@ -44,14 +44,14 @@ package these are in `develcoder/templates`):
 Folder `vignettes` contains the following vignettes:
 
 - [package setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
-  `vignette("pkg_setup", package = "checkrpkgs")` contains code that is needed
+  `vignette("pkg_setup", package = "develcoder")` contains code that is needed
   only once to set up a package from scratch.
 - [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-  `vignette("pkg_devel", package = "checkrpkgs")` contains code that is needed
+  `vignette("pkg_devel", package = "develcoder")` contains code that is needed
   during package development, including when preparing to release a new package
   version and setting up for a new version.
 - [package development](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
-  `vignette("rmarkdown_knitr", package = "checkrpkgs")` contains information
+  `vignette("rmarkdown_knitr", package = "develcoder")` contains information
   about using [R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
   [knitr](https://yihui.org/knitr/) to style vignettes.
 
