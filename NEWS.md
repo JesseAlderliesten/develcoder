@@ -1,3 +1,11 @@
+# develcoder 0.0.4.
+
+### Miscellaneous
+- `README`: refer to website when appropriate. Stylistic update.
+- `NEWS`: stylistic update.
+- Vignettes: rely on `pkgdown` to create links to functions.
+
+
 # develcoder 0.0.3
 
 ### Breaking changes
