@@ -188,11 +188,14 @@ For internal links to other sections in the same document ('Section', 'above',
 
 There is **no** official way to link from vignettes to help-pages
 (https://r-pkgs.org/vignettes.html#links). Using relative paths (e.g.,
-`[someFun](../help/someFun)`, as proposed in a
+`[<funcname>](../help/<funcname>)`, as proposed in a
 [StackOverflow answer](https://stackoverflow.com/questions/34946219)) is
 impaired by the change in the location of files when the package is installed.
-In addition, linking on the `pkgdown` website does **not** work in that format.
-For more advanced way of linking from vignettes to help-pages that might work, see
+In addition, linking on the `pkgdown` website does **not** work in that format
+(`pkgdown` recognises calls like `` `<funcname>()` `` and
+`` `<pkgname>::<funcname>()` ``, see the
+[documentation](https://pkgdown.r-lib.org/articles/linking.html)). For a more
+advanced way of linking from vignettes to help-pages that might work, see
 [here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
 
 Text between angled brackets (e.g., `<pkgname>`) disappears when used in link
@@ -291,7 +294,7 @@ specify the minimum declared `R` version to run in addition to the ones that are
 by default used in the template: add `- {os: ubuntu-latest,   r: '4.1.0'}` to
 section `matrix: config:` to run `R` 4.1.0.
 
-### Update pkgdown website
+### pkgdown website
 See the documentation about package [pkgdown](https://pkgdown.r-lib.org/) and
 the [chapter](https://r-pkgs.org/website.html) from the R packages book.
 
@@ -305,8 +308,13 @@ files that constitute your package's website are in the local `docs/` directory.
 Instead of manually updating the pkgdown website, one can use a
 [GitHub Action][Use GitHub Actions] workflow (e.g.,
 [pkgdown.yaml](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
-that updates the website after a pull request or push.
+that updates the website after a pull request or push. To set this up, run
+`usethis::use_pkgdown_github_pages()`.
 
+#### Styling
+To create a thematic index instead of the default alphabetically ordered one,
+see https://pkgdown.r-lib.org/reference/build_reference.html and the example at
+https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml.
 
 ### Merge devel-branch with master
 To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
