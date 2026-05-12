@@ -28,7 +28,7 @@ browseURL(url = paste0("https://github.com/search?q=", pkgname, "+language%3AR+&
 
 ## Create the package
 This uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\<username>\Documents\.Rprofile`, see `help(Startup)` for details),
+`D:\Userdata\<username>\Documents\.Rprofile`, see `help("Startup")` for details),
 see `usethis::use_description()` and the
 [usethis vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
 
@@ -57,8 +57,8 @@ A citation file makes clear how your package should be cited, see the
 details on the format.
 
 `R/<pkgname>-package.R` is used by `usethis` to list imported functions and can
-also be used as help-page such that `help(<pkgname>)` produces a description of
-the package with an overview of its functions.
+also be used as help-page such that `help("<pkgname>")` produces a description
+of the package with an overview of its functions.
 
 ```{r license, eval = FALSE}
 # Run R as administrator
@@ -90,7 +90,7 @@ to update `README.md` because that imposes the requirement to have `README.Rmd`
 and `README.md` staged at the same time. To remove this requirement if it was
 accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
 from the R-project folder (see the `Description` section in
-`help(devtools::build_readme)`.
+`help("build_readme", package = "devtools")`.
 
 ## Importing packages or functions
 Specifying a minimum package version when importing packages ensures that used
@@ -121,7 +121,7 @@ devtools::document()
 
 ## Set up a GitHub repository
 For more information about setting up and using GitHub and Git, see
-`vignette(topic = "git_github", package = "checkrpkgs")`.
+`vignette("git_github", package = "checkrpkgs")`.
 
 ```{r GitHub, eval = FALSE}
 usethis::use_git(message = "Initial commit")

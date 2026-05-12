@@ -103,7 +103,7 @@ expect_error(func_name(x = "a", arg = arg),
 ### Using temporary files
 - See [testthat::test_path()](https://testthat.r-lib.org/reference/test_path.html)
   on changing paths depending on how a check is run.
-- On using temporary files, see `local()`, this
+- On using temporary files, see `help("local")`, this
   [R-mail](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html),
   and [withr::with_tempfile()](https://withr.r-lib.org/reference/with_tempfile.html):
 ```{r tempfile, eval = FALSE}
@@ -185,7 +185,10 @@ toc_depth: 3
 
 ### Linking
 For internal links to other sections in the same document ('Section', 'above',
-'below'): `[<Section title>]` or `[<link text>][<Section title>]`
+'below'): `[<Section title>]` or `[<link text>][<Section title>]`.
+
+Linking to a help page of a package: `help("<funcname>", package = "<pkgname>")`
+(`help("<funcname>::<pkgname>")` does **not** work).
 
 There is [**no**](https://r-pkgs.org/vignettes.html#links) official way to link
 from vignettes to help-pages. Using relative paths (e.g.,
@@ -198,13 +201,6 @@ In addition, linking on the `pkgdown` website does **not** work in that format
 [documentation](https://pkgdown.r-lib.org/articles/linking.html)). For a more
 advanced way of linking from vignettes to help-pages that might work, see
 [here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
-
-Text between angled brackets (e.g., `<pkgname>`) disappears when used in link
-text, so instead of `[library(<pkgname>)](../help/library)`, use
-
-``` {r link help, eval = FALSE}
-[library](../help/library)`(<pkgname>)`
-```
 
 To link from help-pages to vignettes, use
 ``` {r link vignettes, eval = FALSE}
