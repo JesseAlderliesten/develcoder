@@ -1,3 +1,12 @@
+# develcoder 0.0.5
+
+### Miscellaneous
+- Vignettes: Stylistic updates (fix and add links).
+- Vignette `Package development`: add section about styling the `pkgdown`
+  website. Elaborate on linking on the `pkgdown` website and on failed GitHub
+  Actions.
+
+
 # develcoder 0.0.4.
 
 ### Miscellaneous

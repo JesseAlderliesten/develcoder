@@ -35,7 +35,7 @@ help.
 - the [Posit](https://posit.co/) website on
   [R Markdown](http://rmarkdown.rstudio.com)
 - the maintainer's website on [knitr](https://yihui.org/knitr/)
-
+- the [Markdown guide](https://www.markdownguide.org/)
 
 ## Installing
 When installing [MikTex](https://miktex.org/) as LaTex distribution, set
@@ -80,7 +80,7 @@ sourced, data files that are read) should be placed in the same directory as the
 R Markdown file, because the working directory when evaluating R code chunks is
 the directory of the input document by default. The working directory can be
 changed using `opts_knit$set(root.dir = ...)` but should *not* be changed using
-`setwd()`, see the `Note` in `help(knitr::knit())`.
+`setwd()`, see the `Note` in `help("knit", package = "knitr")`.
 
 An inferior alternative to including `file = ...` in the header is including
 ```{r source, eval = FALSE}
@@ -116,16 +116,17 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 ```
 
 ## Adding and collecting code chuncks
-Add a new chunk by (1) clicking the `Insert Chunk` button on the toolbar,
-(2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters ```` ```{r} and ``` ````
+Add a new chunk by either (1) clicking the `Insert Chunk` button on the toolbar,
+(2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters ```` ```{r} ```` above
+and ```` ``` ```` below the code chunk.
 
 To collect all chunks in a R Markdown document that contain R-code in a
 conventional R-script use 
-`knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`
+`knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`.
 
 Note that the various R Markdown options are not incorporated in such an
 R-script, which might hamper exactly reproducing the analyses as executed when
-running the R Markdown file, see the note in `help("knitr::purl()")` about that.
+running the R Markdown file, see the note in `help("purl", package = "knitr")`.
 
 
 ## Formatting in R Markdown

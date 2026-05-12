@@ -2,3 +2,11 @@ url: https://jessealderliesten.github.io/develcoder/
 template:
   bootstrap: 5
   light-switch: true
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - pkg_setup
+  - pkg_devel
+  - rmarkdown_knitr
