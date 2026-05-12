@@ -28,7 +28,7 @@ browseURL(url = paste0("https://github.com/search?q=", pkgname, "+language%3AR+&
 
 ## Create the package
 This uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\Jesse Nieuw\Documents\.Rprofile`, see `help(Startup)` for details),
+`D:\Userdata\<username>\Documents\.Rprofile`, see `help(Startup)` for details),
 see `usethis::use_description()` and the
 [usethis vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
 
@@ -65,7 +65,7 @@ the package with an overview of its functions.
 usethis::use_mit_license() # Create license files for a permissive license
 cffr::cff_write() # Create a citation file
 usethis::use_package_doc() # Create R/<pkgname>-package.R
-usethis::use_readme_Rmd() # Create README.Rmd
+usethis::use_readme_rmd() # Create README.Rmd
 usethis::use_news_md() # Create NEWS.md
 ```
 
@@ -73,25 +73,29 @@ Do:
 
 - Keep `license.Rmd`: it is required by `R CMD check`.
 - Manually update `README.Rmd`
-  - See the template file `README_template.Rmd` in the folder `templates`.
+  - See the template file
+    [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
+    in the folder `inst/templates`.
   - Add a badge with the version number by including the following code in the
     `README.Rmd` file (replace `<pkgname>` with the actual package name; the
     badge does **not** work if the GitHub repository is private):
     `![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
-- Update the `NEWS`-file (see the template file `README_template.Rmd` in the
-  folder `templates`).
+- Update the `NEWS`-file (see the template file
+  [NEWS_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt)
+  in the folder `inst/templates`).
 
 NB. I do **not** follow the `usethis` practise of using `devtools::build_readme()`
 to update `README.md` because that imposes the requirement to have `README.Rmd`
 and `README.md` staged at the same time. To remove this requirement if it was
 accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
 from the R-project folder (see the `Description` section in
-`help(devtools::build_readme())`.
+`help(devtools::build_readme)`.
 
 ## Importing packages or functions
 Specifying a minimum package version when importing packages ensures that used
-features are actually present. `min_version = TRUE` uses the currently installed
+features are actually present. Setting `min_version = TRUE` in
+`usethis::use_package()` uses the currently installed
 package version. Alternatively, check which features are used and in which
 version those were introduced to find a minimum version. That can also be done
 afterwards by specifying minimum versions in checks through GitHub actions.
