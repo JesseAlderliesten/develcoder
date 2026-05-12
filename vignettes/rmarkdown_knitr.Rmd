@@ -116,7 +116,7 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 ```
 
 ## Adding and collecting code chuncks
-Add a new chunk by (1) clicking the `Insert Chunk` button on the toolbar,
+Add a new chunk by either (1) clicking the `Insert Chunk` button on the toolbar,
 (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters ```` ```{r} and ``` ````
 
 To collect all chunks in a R Markdown document that contain R-code in a
@@ -125,7 +125,7 @@ conventional R-script use
 
 Note that the various R Markdown options are not incorporated in such an
 R-script, which might hamper exactly reproducing the analyses as executed when
-running the R Markdown file, see the note in `help("knitr::purl()")` about that.
+running the R Markdown file, see the note in `help(purl, package = knitr)`.
 
 
 ## Formatting in R Markdown
