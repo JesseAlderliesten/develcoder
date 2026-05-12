@@ -35,7 +35,7 @@ help.
 - the [Posit](https://posit.co/) website on
   [R Markdown](http://rmarkdown.rstudio.com)
 - the maintainer's website on [knitr](https://yihui.org/knitr/)
-
+- the [Markdown guide](https://www.markdownguide.org/)
 
 ## Installing
 When installing [MikTex](https://miktex.org/) as LaTex distribution, set
