@@ -172,7 +172,7 @@ the help-pane of RStudio, respectively.
 
 ### Styling
 See the vignette *RMarkdown and knitr*:
-`vignette("RMarkdown and knitr", package = "develcoder")`) on using RMarkdown to
+`vignette("rmarkdown_knitr", package = "develcoder")`) on using RMarkdown to
 style vignettes.
 
 Put the next lines in the header of vignettes to get a table of contents:
@@ -320,7 +320,8 @@ see the [documentation](https://pkgdown.r-lib.org/reference/build_reference.html
 and the [example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml).
 
 To customise the order in which `Articles` are listed, specify their order in
-the `_pkgdown.yml` file (see the
+the `_pkgdown.yml` file (run `tools::pkgVignettes(package = "<pkgname>")$names`
+to get their names; see the
 [documentation](https://pkgdown.r-lib.org/reference/build_articles.html) and for
 example the `_pkgdown.yml`
 [file](https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml)
