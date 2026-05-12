@@ -114,6 +114,13 @@ expect_error(func_name(x = "a", arg = arg),
 ```
 
 ### Update dependencies
+Specifying a minimum package version when importing packages ensures that used
+features are actually present. Setting `min_version = TRUE` in 
+`usethis::use_package()` uses the currently installed package version.
+Alternatively, check which features are used and in which version those were
+introduced to find a minimum version. That can also be done by specifying
+minimum versions in checks through GitHub actions.
+
 ``` {r dependencies, eval = FALSE}
 # Declare a minimum version for R itself
 usethis::use_package("R", type = "Depends", min_version = "4.1.0")
