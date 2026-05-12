@@ -23,8 +23,9 @@ browseURL(url = paste0("https://github.com/search?q=", pkgname, "+language%3AR+&
 ## Create the package
 
 This uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\Jesse Nieuw\Documents\.Rprofile`, see
-[`help(Startup)`](https://rdrr.io/r/base/Startup.html) for details), see
+`D:\Userdata\<username>\Documents\.Rprofile`, see
+[`help("Startup")`](https://rdrr.io/r/base/Startup.html) for details),
+see
 [`usethis::use_description()`](https://usethis.r-lib.org/reference/use_description.html)
 and the [usethis
 vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
@@ -42,6 +43,8 @@ Do:
 
 ## Add package-wide documentation
 
+### License
+
 A license file makes clear what use of your package is allowed. Overview
 of licenses are available at
 [choosealicense](https://choosealicense.com/appendix/),
@@ -53,14 +56,29 @@ in [The Legal Side of Open Source](https://opensource.guide/legal/) and
 blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
 gives details on the MIT License.
 
+I do **not** follow the `usethis` practise of using
+[`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
+to update `README.md` because that imposes the requirement to have
+`README.Rmd` and `README.md` staged at the same time. To remove this
+requirement if it was accidentally introduced, delete the the (hidden)
+file `.git/hooks/pre-commit` from the R-project folder (see the
+`Description` section in
+[`help("build_readme", package = "devtools")`](https://devtools.r-lib.org/reference/build_readme.html).
+
+### Citation
+
 A citation file makes clear how your package should be cited, see the
 [Citation file format GitHub
 page](https://citation-file-format.github.io/) for details on the
 format.
 
+### Package overview
+
 `R/<pkgname>-package.R` is used by `usethis` to list imported functions
-and can also be used as help-page such that `help(<pkgname>)` produces a
-description of the package with an overview of its functions.
+and can also be used as help-page such that `help("<pkgname>")` produces
+a description of the package with an overview of its functions.
+
+### Code and remarks
 
 ``` r
 
@@ -68,7 +86,7 @@ description of the package with an overview of its functions.
 usethis::use_mit_license() # Create license files for a permissive license
 cffr::cff_write() # Create a citation file
 usethis::use_package_doc() # Create R/<pkgname>-package.R
-usethis::use_readme_Rmd() # Create README.Rmd
+usethis::use_readme_rmd() # Create README.Rmd
 usethis::use_news_md() # Create NEWS.md
 ```
 
@@ -76,33 +94,25 @@ Do:
 
 - Keep `license.Rmd`: it is required by `R CMD check`.
 - Manually update `README.Rmd`
-  - See the template file `README_template.Rmd` in the folder
-    `templates`.
+  - See the template file
+    [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
+    in the folder `inst/templates`.
   - Add a badge with the version number by including the following code
     in the `README.Rmd` file (replace `<pkgname>` with the actual
     package name; the badge does **not** work if the GitHub repository
     is private):
     `![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
-- Update the `NEWS`-file (see the template file `README_template.Rmd` in
-  the folder `templates`).
-
-NB. I do **not** follow the `usethis` practise of using
-[`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
-to update `README.md` because that imposes the requirement to have
-`README.Rmd` and `README.md` staged at the same time. To remove this
-requirement if it was accidentally introduced, delete the the (hidden)
-file `.git/hooks/pre-commit` from the R-project folder (see the
-`Description` section in `help(devtools::build_readme())`.
+- Update the `NEWS`-file (see the template file
+  [NEWS_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt)
+  in the folder `inst/templates`).
 
 ## Importing packages or functions
 
 Specifying a minimum package version when importing packages ensures
-that used features are actually present. `min_version = TRUE` uses the
-currently installed package version. Alternatively, check which features
-are used and in which version those were introduced to find a minimum
-version. That can also be done afterwards by specifying minimum versions
-in checks through GitHub actions.
+that used features are actually present. Setting `min_version = TRUE` in
+[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
+uses the currently installed package version.
 
 ``` r
 
@@ -128,7 +138,7 @@ devtools::document()
 ## Set up a GitHub repository
 
 For more information about setting up and using GitHub and Git, see
-[`vignette(topic = "git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
+[`vignette("git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
 
 ``` r
 
@@ -183,11 +193,14 @@ in the folder `templates`):
 
 See the section about [GitHub
 Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-in [R packages](https://r-pkgs.org/) and the GitHub documentation about
+in [R packages](https://r-pkgs.org/), the GitHub documentation about
 [workflow
-syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),’
+and the section `Use GitHub Actions` in the vignette *Package
+development*:
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
-## Using pkgdown
+## Use pkgdown
 
 See the chapter about [pkgdown](https://r-pkgs.org/website.html) from
 the book [R packages](https://r-pkgs.org/) and the documentation for
@@ -195,6 +208,7 @@ package [pkgdown](https://pkgdown.r-lib.org/).
 
 ``` r
 
+# Set up a GitHub action to automatically build and publish your site
 usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
 devtools::document() # To update package-level documentation
 ```
@@ -204,9 +218,10 @@ structure `https://USERNAME.github.io/REPONAME/`, e.g.,
 `https://jessealderliesten.github.io/develcoder/`.
 
 Refer from the `README` to the pkgdown website and add the line
-`light-switch: true` below the `template` heading in the
-`_pkgdown.YML-file` (located in the top-level package folder) to add a
-light-switch to the pkgdown-website (see the
+`light-switch: true` below the `template` heading in the `_pkgdown.YML`
+file (located in the top-level package folder or in folder `pkgdown`;
+can also have extension `.YAML`) to add a light-switch to the
+pkgdown-website (see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/pkg_devel.html">Package development</a></li>
-    <li><a class="dropdown-item" href="../articles/pkg_setup.html">Package setup</a></li>
+<li><a class="dropdown-item" href="../articles/pkg_setup.html">Package setup</a></li>
+    <li><a class="dropdown-item" href="../articles/pkg_devel.html">Package development</a></li>
     <li><a class="dropdown-item" href="../articles/rmarkdown_knitr.html">RMarkdown and knitr</a></li>
   </ul>
 </li>
@@ -99,8 +99,9 @@ a package.</p>
 <h2 id="create-the-package">Create the package<a class="anchor" aria-label="anchor" href="#create-the-package"></a>
 </h2>
 <p>This uses information stored in your <code>.Rprofile</code> file
-(located at <code>D:\Userdata\Jesse Nieuw\Documents\.Rprofile</code>,
-see <code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help(Startup)</a></code> for details), see
+(located at
+<code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>, see
+<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code> for details), see
 <code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">usethis::use_description()</a></code> and the <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link">usethis
 vignette</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -117,25 +118,48 @@ file.</li>
 <div class="section level2">
 <h2 id="add-package-wide-documentation">Add package-wide documentation<a class="anchor" aria-label="anchor" href="#add-package-wide-documentation"></a>
 </h2>
+<div class="section level3">
+<h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h3>
 <p>A license file makes clear what use of your package is allowed.
 Overview of licenses are available at <a href="https://choosealicense.com/appendix/" class="external-link">choosealicense</a>, <a href="https://www.gnu.org/licenses/license-list.html" class="external-link">GNU.org</a>, <a href="https://opensource.org/licenses" class="external-link">Open Source Initiative</a>, and
 <a href="https://spdx.org/licenses/" class="external-link">System Package Data Exchange</a>.
 Some legal details are provided in <a href="https://opensource.guide/legal/" class="external-link">The Legal Side of Open Source</a>
 and <a href="https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line" class="external-link">this
 blogpost</a> gives details on the MIT License.</p>
+<p>I do <strong>not</strong> follow the <code>usethis</code> practise of
+using <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update
+<code>README.md</code> because that imposes the requirement to have
+<code>README.Rmd</code> and <code>README.md</code> staged at the same
+time. To remove this requirement if it was accidentally introduced,
+delete the the (hidden) file <code>.git/hooks/pre-commit</code> from the
+R-project folder (see the <code>Description</code> section in
+<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">help("build_readme", package = "devtools")</a></code>.</p>
+</div>
+<div class="section level3">
+<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
 <p>A citation file makes clear how your package should be cited, see the
 <a href="https://citation-file-format.github.io/" class="external-link">Citation file format
 GitHub page</a> for details on the format.</p>
+</div>
+<div class="section level3">
+<h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
+</h3>
 <p><code>R/&lt;pkgname&gt;-package.R</code> is used by
 <code>usethis</code> to list imported functions and can also be used as
-help-page such that <code>help(&lt;pkgname&gt;)</code> produces a
+help-page such that <code>help("&lt;pkgname&gt;")</code> produces a
 description of the package with an overview of its functions.</p>
+</div>
+<div class="section level3">
+<h3 id="code-and-remarks">Code and remarks<a class="anchor" aria-label="anchor" href="#code-and-remarks"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run R as administrator</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create license files for a permissive license</span></span>
 <span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create a citation file</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">use_package_doc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create R/&lt;pkgname&gt;-package.R</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_readme_Rmd</span><span class="op">(</span><span class="op">)</span> <span class="co"># Create README.Rmd</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create README.Rmd</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create NEWS.md</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
@@ -143,8 +167,8 @@ description of the package with an overview of its functions.</p>
 <code>R CMD check</code>.</li>
 <li>Manually update <code>README.Rmd</code>
 <ul>
-<li>See the template file <code>README_template.Rmd</code> in the folder
-<code>templates</code>.</li>
+<li>See the template file <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link">README_template.Rmd</a>
+in the folder <code>inst/templates</code>.</li>
 <li>Add a badge with the version number by including the following code
 in the <code>README.Rmd</code> file (replace
 <code>&lt;pkgname&gt;</code> with the actual package name; the badge
@@ -156,28 +180,18 @@ does <strong>not</strong> work if the GitHub repository is private):
 <code>README.Md</code> file.</li>
 </ul>
 </li>
-<li>Update the <code>NEWS</code>-file (see the template file
-<code>README_template.Rmd</code> in the folder
-<code>templates</code>).</li>
+<li>Update the <code>NEWS</code>-file (see the template file <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt" class="external-link">NEWS_template.Rmd</a>
+in the folder <code>inst/templates</code>).</li>
 </ul>
-<p>NB. I do <strong>not</strong> follow the <code>usethis</code>
-practise of using <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update
-<code>README.md</code> because that imposes the requirement to have
-<code>README.Rmd</code> and <code>README.md</code> staged at the same
-time. To remove this requirement if it was accidentally introduced,
-delete the the (hidden) file <code>.git/hooks/pre-commit</code> from the
-R-project folder (see the <code>Description</code> section in
-<code>help(devtools::build_readme())</code>.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="importing-packages-or-functions">Importing packages or functions<a class="anchor" aria-label="anchor" href="#importing-packages-or-functions"></a>
 </h2>
 <p>Specifying a minimum package version when importing packages ensures
-that used features are actually present. <code>min_version = TRUE</code>
-uses the currently installed package version. Alternatively, check which
-features are used and in which version those were introduced to find a
-minimum version. That can also be done afterwards by specifying minimum
-versions in checks through GitHub actions.</p>
+that used features are actually present. Setting
+<code>min_version = TRUE</code> in <code><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">usethis::use_package()</a></code>
+uses the currently installed package version.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"checkinput"</span>, type <span class="op">=</span> <span class="st">"Imports"</span>, min_version <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_dev_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"checkinput"</span>, type <span class="op">=</span> <span class="st">"Imports"</span>,</span>
@@ -200,7 +214,7 @@ versions in checks through GitHub actions.</p>
 <h2 id="set-up-a-github-repository">Set up a GitHub repository<a class="anchor" aria-label="anchor" href="#set-up-a-github-repository"></a>
 </h2>
 <p>For more information about setting up and using GitHub and Git, see
-<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette(topic = "git_github", package = "checkrpkgs")</a></code>.</p>
+<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette("git_github", package = "checkrpkgs")</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit"</span><span class="op">)</span></span>
 <span><span class="co"># If you get the error message you are not the current owner of the GitHub</span></span>
@@ -254,26 +268,31 @@ to section <code>'matrix: config:'</code> to run <code>R</code> version
 <h3 id="further-documentation">Further documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a>
 </h3>
 <p>See the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link">GitHub
-Actions</a> in <a href="https://r-pkgs.org/" class="external-link">R packages</a> and the
-GitHub documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link">workflow
-syntax</a></p>
+Actions</a> in <a href="https://r-pkgs.org/" class="external-link">R packages</a>, the GitHub
+documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link">workflow
+syntax</a>,’ and the section <code>Use GitHub Actions</code> in the
+vignette <em>Package development</em>:
+<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="using-pkgdown">Using pkgdown<a class="anchor" aria-label="anchor" href="#using-pkgdown"></a>
+<h2 id="use-pkgdown">Use pkgdown<a class="anchor" aria-label="anchor" href="#use-pkgdown"></a>
 </h2>
 <p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link">pkgdown</a> from the book <a href="https://r-pkgs.org/" class="external-link">R packages</a> and the documentation for
 package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
+<code class="sourceCode R"><span><span class="co"># Set up a GitHub action to automatically build and publish your site</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-level documentation</span></span></code></pre></div>
 <p>After a few minutes, the website should be present. The URL has the
 structure <code>https://USERNAME.github.io/REPONAME/</code>, e.g.,
 <code>https://jessealderliesten.github.io/develcoder/</code>.</p>
 <p>Refer from the <code>README</code> to the pkgdown website and add the
 line <code>light-switch: true</code> below the <code>template</code>
-heading in the <code>_pkgdown.YML-file</code> (located in the top-level
-package folder) to add a light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
+heading in the <code>_pkgdown.YML</code> file (located in the top-level
+package folder or in folder <code>pkgdown</code>; can also have
+extension <code>.YAML</code>) to add a light-switch to the
+pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
 and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
 code</a> for this repository).</p>
 </div>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/pkg_devel.html">Package development</a></li>
-    <li><a class="dropdown-item" href="../articles/pkg_setup.html">Package setup</a></li>
+<li><a class="dropdown-item" href="../articles/pkg_setup.html">Package setup</a></li>
+    <li><a class="dropdown-item" href="../articles/pkg_devel.html">Package development</a></li>
     <li><a class="dropdown-item" href="../articles/rmarkdown_knitr.html">RMarkdown and knitr</a></li>
   </ul>
 </li>
@@ -90,7 +90,7 @@ developing a package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_r</a></span><span class="op">(</span><span class="st">"is_number"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># also runs devtools::load_all()</span></span>
-<span><span class="op">?</span><span class="fu">is_number</span><span class="op">(</span><span class="op">)</span> <span class="co"># view help-page of the function</span></span></code></pre></div>
+<span><span class="op">?</span><span class="fu">checkinput</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/checkinput/reference/is_number.html" class="external-link">is_number</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># view help-page of the function</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
 <li>Manually update the <code>NEWS</code>-file.</li>
@@ -178,7 +178,7 @@ also defined in the file itself.</p>
 <ul>
 <li>See <a href="https://testthat.r-lib.org/reference/test_path.html" class="external-link">testthat::test_path()</a>
 on changing paths depending on how a check is run.</li>
-<li>On using temporary files, see <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, this <a href="https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html" class="external-link">R-mail</a>,
+<li>On using temporary files, see <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">help("local")</a></code>, this <a href="https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html" class="external-link">R-mail</a>,
 and <a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">withr::with_tempfile()</a>:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>\dontshow{</span>
@@ -189,6 +189,13 @@ and <a href="https://withr.r-lib.org/reference/with_tempfile.html" class="extern
 <div class="section level3">
 <h3 id="update-dependencies">Update dependencies<a class="anchor" aria-label="anchor" href="#update-dependencies"></a>
 </h3>
+<p>Specifying a minimum package version when importing packages ensures
+that used features are actually present. Setting
+<code>min_version = TRUE</code> in <code><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">usethis::use_package()</a></code>
+uses the currently installed package version. Alternatively, check which
+features are used and in which version those were introduced to find a
+minimum version. That can also be done by specifying minimum versions in
+checks through GitHub actions.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Declare a minimum version for R itself</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span><span class="st">"R"</span>, type <span class="op">=</span> <span class="st">"Depends"</span>, min_version <span class="op">=</span> <span class="st">"4.1.0"</span><span class="op">)</span></span>
@@ -244,19 +251,20 @@ function in the <code>NAMESPACE</code> file, e.g., to add the line
 probably run with the default argument
 <code>build_vignettes = FALSE</code>, use
 <code>build_vignettes = TRUE</code> instead:
-<code>devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)</code>.</p>
-<p>See also <code>tools::pkgVignettes(package = "checkrpkgs")</code> and
-<code>utils::vignette(&lt;"vignette_title"&gt;)</code>. To render a
-<code>Rd</code>-file as plain-text help in the R console:
-<code>tools::Rd2txt("path/to/file.Rd")</code>.</p>
+<code>devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)</code>.
+See also <code>tools::pkgVignettes(package = "&lt;pkgname&gt;")</code>
+for information about which vignettes R finds.</p>
+<p>Use <code>utils::vignette("&lt;vignette_title&gt;")</code> (e.g.,
+<code><a href="../articles/pkg_devel.html">utils::vignette("pkg_devel")</a></code>) and
+<code>tools::Rd2txt("path/to/file.Rd")</code> to render a vignette or an
+<code>Rd</code>-file in the help-pane of RStudio, respectively.</p>
 </div>
 <div class="section level3">
 <h3 id="styling">Styling<a class="anchor" aria-label="anchor" href="#styling"></a>
 </h3>
 <p>See the vignette <em>RMarkdown and knitr</em>:
-<code>vignette("RMarkdown and knitr", package = "develcoder")</code>)
-and my Chrome Bookmarks: <code>R</code> &gt; <code>CreatePkgs</code>
-&gt; <code>RMarkdown</code> on using RMarkdown to style vignettes.</p>
+<code><a href="../articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code>) on
+using RMarkdown to style vignettes.</p>
 <p>Put the next lines in the header of vignettes to get a table of
 contents:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -270,24 +278,25 @@ contents:</p>
 </h3>
 <p>For internal links to other sections in the same document (‘Section’,
 ‘above’, ‘below’): <code>[&lt;Section title&gt;]</code> or
-<code>[&lt;link text&gt;][&lt;Section title&gt;]</code></p>
-<p>There is <strong>no</strong> official way to link from vignettes to
-help-pages (<a href="https://r-pkgs.org/vignettes.html#links" class="external-link uri">https://r-pkgs.org/vignettes.html#links</a>). Using relative
-paths (e.g., <code>[someFun](../help/someFun)</code>, as proposed in a
-<a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
+<code>[&lt;link text&gt;][&lt;Section title&gt;]</code>.</p>
+<p>Linking to a help page of a package:
+<code>help("&lt;funcname&gt;", package = "&lt;pkgname&gt;")</code>
+(<code>help("&lt;funcname&gt;::&lt;pkgname&gt;")</code> does
+<strong>not</strong> work).</p>
+<p>There is <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><strong>no</strong></a>
+official way to link from vignettes to help-pages. Using relative paths
+(e.g., <code>[&lt;funcname&gt;](../help/&lt;funcname&gt;)</code>, as
+proposed in a <a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
 answer</a>) is impaired by the change in the location of files when the
 package is installed. In addition, linking on the <code>pkgdown</code>
-website does <strong>not</strong> work in that format. For more advanced
-way of linking from vignettes to help-pages that might work, see <a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f" class="external-link">here</a>.</p>
-<p>Text between angled brackets (e.g., <code>&lt;pkgname&gt;</code>)
-disappears when used in link text, so instead of
-<code>[library(&lt;pkgname&gt;)](../help/library)</code>, use</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>[library](..<span class="sc">/</span>help<span class="sc">/</span>library)<span class="st">`</span><span class="at">(&lt;pkgname&gt;)</span><span class="st">`</span></span></code></pre></div>
+website does <strong>not</strong> work in that format
+(<code>pkgdown</code> recognises calls like
+<code>`&lt;funcname&gt;()`</code> and
+<code>`&lt;pkgname&gt;::&lt;funcname&gt;()`</code>, see the <a href="https://pkgdown.r-lib.org/articles/linking.html" class="external-link">documentation</a>).
+For a more advanced way of linking from vignettes to help-pages that
+might work, see <a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f" class="external-link">here</a>.</p>
 <p>To link from help-pages to vignettes, use</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>The vignette <span class="sc">*</span><span class="er">&lt;</span>vignette name<span class="sc">&gt;</span><span class="er">*:</span> <span class="st">`</span><span class="at">vignette("&lt;vignette name&gt;", package = "&lt;pkgname&gt;")</span><span class="st">`</span> </span></code></pre></div>
-<p>If no vignettes are visible, run
-<code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>, which possibly needs to be
-followed by <code>install(..., build_vignettes = TRUE)</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>The vignette <span class="sc">*</span><span class="er">&lt;</span>vignette name<span class="sc">&gt;</span><span class="er">*:</span> <span class="st">`</span><span class="at">vignette("&lt;vignette name&gt;", package = "&lt;pkgname&gt;")</span><span class="st">`</span> </span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -305,7 +314,7 @@ package.</p>
 <h3 id="check-tests">Check tests<a class="anchor" aria-label="anchor" href="#check-tests"></a>
 </h3>
 <p>Check for which functions no test file has been written.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -318,7 +327,7 @@ package.</p>
 <div class="section level3">
 <h3 id="locally-test-update">Locally test update<a class="anchor" aria-label="anchor" href="#locally-test-update"></a>
 </h3>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Using `manual = FALSE` because building the manual leads to `latex` errors</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">FALSE</span>, force_suggests <span class="op">=</span> <span class="cn">TRUE</span>, run_dont_test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -334,10 +343,7 @@ package.</p>
 <span><span class="co"># Load the package and view the help files as usual outside devtools:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span>package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">?</span><span class="va">reorder_levels</span></span></code></pre></div>
-<p>If no vignettes are visible, <code><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">devtools::install()</a></code> was
-probably run with the default <code>build_vignettes = FALSE</code>:
-change it to use <code>build_vignettes = TRUE</code>.</p>
+<span><span class="op">?</span><span class="fu">checkinput</span><span class="fu">::</span><span class="va">reorder_levels</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="update-package-wide-documentation">Update package-wide documentation<a class="anchor" aria-label="anchor" href="#update-package-wide-documentation"></a>
@@ -365,7 +371,7 @@ not automatically <code>commit</code> the change, but do so manually to
 adjust the commit message to something like
 <code>Bump to version x.y.z. Breaking change: &lt;func&gt; no longer ...</code>.
 Indicating the version number in the commit title makes it easier to
-find back changes later on.</p>
+find changes back later on.</p>
 </div>
 </div>
 </div>
@@ -377,8 +383,9 @@ find back changes later on.</p>
 </h3>
 <p>To manually run GitHub Actions (GHA) set up
 <code>workflow_dispatch</code> (see section
-<code>Use GitHub Actions</code> in <code>pkg_setup.Rmd</code>). To check
-if package <code>B</code>, which depends on package <code>A</code>, is
+<code>Use GitHub Actions</code> in the vignette <em>Package setup</em>:
+<code><a href="../articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>). To check if
+package <code>B</code>, which depends on package <code>A</code>, is
 still working fine, go to the <code>Actions</code> tab of repository
 <code>B</code>, select the action you want to trigger (e.g.,
 <code>R-CMD-check.yaml</code>), and use the <code>Run workflow</code>
@@ -387,7 +394,14 @@ you need to trigger it once manually on the <code>main</code> branch to
 be able to trigger it manually on other branches.</p>
 <p>Scheduled jobs that failed can be rerun through the button
 <code>Re-run jobs</code> &gt; <code>Re-run failed jobs</code> &gt;
-<code>Re-run jobs</code>.</p>
+<code>Re-run jobs</code>. If the GitHub actions page (e.g., <a href="https://github.com/JesseAlderliesten/develcoder/actions" class="external-link uri">https://github.com/JesseAlderliesten/develcoder/actions</a>)
+indicates the package passes the R cmd check whereas the badge on the
+<code>README</code> indicates it fails, make sure the R cmd check
+considers the <code>main</code> branch (i.e., if the <code>devel</code>
+branch passes but the <code>main</code> branch fails, the badge will
+have <code>failing</code>): use the <code>Run workflow</code> button to
+run the GHA on the <code>main</code> branch (see the previous
+paragraph).</p>
 <p>If the package declares a dependency on a specific <code>R</code>
 version, it is useful to specify the minimum declared <code>R</code>
 version to run in addition to the ones that are by default used in the
@@ -395,18 +409,33 @@ template: add <code>- {os: ubuntu-latest,   r: '4.1.0'}</code> to
 section <code>matrix: config:</code> to run <code>R</code> 4.1.0.</p>
 </div>
 <div class="section level3">
-<h3 id="update-pkgdown-website">Update pkgdown website<a class="anchor" aria-label="anchor" href="#update-pkgdown-website"></a>
+<h3 id="pkgdown-website">pkgdown website<a class="anchor" aria-label="anchor" href="#pkgdown-website"></a>
 </h3>
 <p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and the <a href="https://r-pkgs.org/website.html" class="external-link">chapter</a> from the R packages
 book.</p>
-<p>Updating website</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># To manually update the website</span></span>
+<span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Open <code>docs/index.html</code> in a webbrowser to preview the
 website, or look at the files that constitute your package’s website are
 in the local <code>docs/</code> directory.</p>
 <p>Instead of manually updating the pkgdown website, one can use a <a href="#use-github-actions">GitHub Action</a> workflow (e.g., <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml" class="external-link">pkgdown.yaml</a>)
-that updates the website after a pull request or push.</p>
+that updates the website after a pull request or push. To set this up,
+run <code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown_github_pages()</a></code>.</p>
+<div class="section level4">
+<h4 id="styling-1">Styling<a class="anchor" aria-label="anchor" href="#styling-1"></a>
+</h4>
+<p>To create a thematic index instead of the default alphabetically
+ordered one, see the <a href="https://pkgdown.r-lib.org/reference/build_reference.html" class="external-link">documentation</a>
+and the <a href="https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml" class="external-link">example</a>.</p>
+<p>To customise the order in which <code>Articles</code> are listed,
+specify their order in the <code>_pkgdown.yml</code> file (run
+<code>tools::pkgVignettes(package = "&lt;pkgname&gt;")$names</code> to
+get their names; see the <a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">documentation</a>
+and for example the <code>_pkgdown.yml</code> <a href="https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml" class="external-link">file</a>
+and non-alphabetical order of the <a href="https://jessealderliesten.github.io/checkrpkgs/articles/" class="external-link">articles</a>
+in the <code>checkrpkgs</code> package.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="merge-devel-branch-with-master">Merge devel-branch with master<a class="anchor" aria-label="anchor" href="#merge-devel-branch-with-master"></a>
@@ -482,14 +511,19 @@ packages.</p>
 interpreted as links (which leads to the error
 <code>@section Could not resolve link to topic ":blank:" in the dependencies or base packages</code>)
 when running <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code>, use backticks
-(<code>) to format a line as code, or wrap consecutive lines in</code>`.</p>
+(<code>`</code>) to format a line as code, or wrap consecutive lines in
+<code>\code{...}`</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="guidelines">Guidelines<a class="anchor" aria-label="anchor" href="#guidelines"></a>
 </h2>
-<p>See <a href="https://developer.r-project.org/" class="external-link uri">https://developer.r-project.org/</a> and <a href="https://developer.r-project.org/devel-guidelines.txt" class="external-link uri">https://developer.r-project.org/devel-guidelines.txt</a> See
-alsoe <a href="https://cran.r-project.org/web/packages/policies.html" class="external-link uri">https://cran.r-project.org/web/packages/policies.html</a>
-and <a href="https://github.com/JesseAlderliesten/pkg-dev-ctv/blob/main/proposal.md#links-links" class="external-link uri">https://github.com/JesseAlderliesten/pkg-dev-ctv/blob/main/proposal.md#links-links</a></p>
+<ul>
+<li>
+<a href="https://developer.r-project.org/" class="external-link uri">https://developer.r-project.org/</a>, especially <a href="https://developer.r-project.org/devel-guidelines.txt" class="external-link uri">https://developer.r-project.org/devel-guidelines.txt</a>
+</li>
+<li><a href="https://cran.r-project.org/web/packages/policies.html" class="external-link uri">https://cran.r-project.org/web/packages/policies.html</a></li>
+<li><a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links" class="external-link uri">https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links</a></li>
+</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

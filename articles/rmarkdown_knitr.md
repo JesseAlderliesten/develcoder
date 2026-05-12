@@ -28,6 +28,7 @@ mentioned at \[Useful resources\] below) for extensive help.
 - the [Posit](https://posit.co/) website on [R
   Markdown](http://rmarkdown.rstudio.com)
 - the maintainer’s website on [knitr](https://yihui.org/knitr/)
+- the [Markdown guide](https://www.markdownguide.org/)
 
 ## Installing
 
@@ -81,7 +82,7 @@ evaluating R code chunks is the directory of the input document by
 default. The working directory can be changed using
 `opts_knit$set(root.dir = ...)` but should *not* be changed using
 [`setwd()`](https://rdrr.io/r/base/getwd.html), see the `Note` in
-`help(knitr::knit())`.
+[`help("knit", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
 An inferior alternative to including `file = ...` in the header is
 including
@@ -127,18 +128,18 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 
 ## Adding and collecting code chuncks
 
-Add a new chunk by (1) clicking the `Insert Chunk` button on the
+Add a new chunk by either (1) clicking the `Insert Chunk` button on the
 toolbar, (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters
-```` ```{r} and ``` ````
+```` ```{r} ```` above and ```` ``` ```` below the code chunk.
 
 To collect all chunks in a R Markdown document that contain R-code in a
 conventional R-script use
-`knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`
+`knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`.
 
 Note that the various R Markdown options are not incorporated in such an
 R-script, which might hamper exactly reproducing the analyses as
 executed when running the R Markdown file, see the note in
-`help("knitr::purl()")` about that.
+[`help("purl", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
 ## Formatting in R Markdown
 

@@ -13,7 +13,7 @@ a package.
 
 usethis::use_r("is_number")
 devtools::document() # also runs devtools::load_all()
-?is_number() # view help-page of the function
+?checkinput::is_number() # view help-page of the function
 ```
 
 Do:
@@ -106,7 +106,7 @@ expect_error(func_name(x = "a", arg = arg),
   [testthat::test_path()](https://testthat.r-lib.org/reference/test_path.html)
   on changing paths depending on how a check is run.
 - On using temporary files, see
-  [`local()`](https://rdrr.io/r/base/eval.html), this
+  [`help("local")`](https://rdrr.io/r/base/eval.html), this
   [R-mail](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html),
   and
   [withr::with_tempfile()](https://withr.r-lib.org/reference/with_tempfile.html):
@@ -119,6 +119,14 @@ expect_error(func_name(x = "a", arg = arg),
 ```
 
 ### Update dependencies
+
+Specifying a minimum package version when importing packages ensures
+that used features are actually present. Setting `min_version = TRUE` in
+[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
+uses the currently installed package version. Alternatively, check which
+features are used and in which version those were introduced to find a
+minimum version. That can also be done by specifying minimum versions in
+checks through GitHub actions.
 
 ``` r
 
@@ -181,17 +189,19 @@ If no vignettes are visible,
 was probably run with the default argument `build_vignettes = FALSE`,
 use `build_vignettes = TRUE` instead:
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
+See also `tools::pkgVignettes(package = "<pkgname>")` for information
+about which vignettes R finds.
 
-See also `tools::pkgVignettes(package = "checkrpkgs")` and
-`utils::vignette(<"vignette_title">)`. To render a `Rd`-file as
-plain-text help in the R console: `tools::Rd2txt("path/to/file.Rd")`.
+Use `utils::vignette("<vignette_title>")` (e.g.,
+[`utils::vignette("pkg_devel")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
+and `tools::Rd2txt("path/to/file.Rd")` to render a vignette or an
+`Rd`-file in the help-pane of RStudio, respectively.
 
 ### Styling
 
 See the vignette *RMarkdown and knitr*:
-`vignette("RMarkdown and knitr", package = "develcoder")`) and my Chrome
-Bookmarks: `R` \> `CreatePkgs` \> `RMarkdown` on using RMarkdown to
-style vignettes.
+[`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.md))
+on using RMarkdown to style vignettes.
 
 Put the next lines in the header of vignettes to get a table of
 contents:
@@ -208,35 +218,30 @@ toc_depth: 3
 
 For internal links to other sections in the same document (‘Section’,
 ‘above’, ‘below’): `[<Section title>]` or
-`[<link text>][<Section title>]`
+`[<link text>][<Section title>]`.
 
-There is **no** official way to link from vignettes to help-pages
-(<https://r-pkgs.org/vignettes.html#links>). Using relative paths (e.g.,
-`[someFun](../help/someFun)`, as proposed in a [StackOverflow
+Linking to a help page of a package:
+`help("<funcname>", package = "<pkgname>")`
+(`help("<funcname>::<pkgname>")` does **not** work).
+
+There is [**no**](https://r-pkgs.org/vignettes.html#links) official way
+to link from vignettes to help-pages. Using relative paths (e.g.,
+`[<funcname>](../help/<funcname>)`, as proposed in a [StackOverflow
 answer](https://stackoverflow.com/questions/34946219)) is impaired by
 the change in the location of files when the package is installed. In
 addition, linking on the `pkgdown` website does **not** work in that
-format. For more advanced way of linking from vignettes to help-pages
-that might work, see
+format (`pkgdown` recognises calls like `` `<funcname>()` `` and
+`` `<pkgname>::<funcname>()` ``, see the
+[documentation](https://pkgdown.r-lib.org/articles/linking.html)). For a
+more advanced way of linking from vignettes to help-pages that might
+work, see
 [here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
-
-Text between angled brackets (e.g., `<pkgname>`) disappears when used in
-link text, so instead of `[library(<pkgname>)](../help/library)`, use
-
-``` r
-[library](../help/library)`(<pkgname>)`
-```
 
 To link from help-pages to vignettes, use
 
 ``` r
 The vignette *<vignette name>*: `vignette("<vignette name>", package = "<pkgname>")` 
 ```
-
-If no vignettes are visible, run
-[`pkgdown::build_article()`](https://pkgdown.r-lib.org/reference/build_articles.html),
-which possibly needs to be followed by
-`install(..., build_vignettes = TRUE)`.
 
 ## Adding miscellaneous files
 
@@ -281,13 +286,8 @@ goodpractice::gp() # Check for issues.
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
 browseVignettes(package = basename(getwd()))
-?reorder_levels
+?checkinput::reorder_levels
 ```
-
-If no vignettes are visible,
-[`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
-was probably run with the default `build_vignettes = FALSE`: change it
-to use `build_vignettes = TRUE`.
 
 ### Update package-wide documentation
 
@@ -310,23 +310,30 @@ In the latter case, do not automatically `commit` the change, but do so
 manually to adjust the commit message to something like
 `Bump to version x.y.z. Breaking change: <func> no longer ...`.
 Indicating the version number in the commit title makes it easier to
-find back changes later on.
+find changes back later on.
 
 ## Performing updates
 
 ### Use GitHub Actions
 
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see
-section `Use GitHub Actions` in `pkg_setup.Rmd`). To check if package
-`B`, which depends on package `A`, is still working fine, go to the
-`Actions` tab of repository `B`, select the action you want to trigger
-(e.g., `R-CMD-check.yaml`), and use the `Run workflow` button to run the
-GHA. You can select which branch it should run on, but you need to
-trigger it once manually on the `main` branch to be able to trigger it
-manually on other branches.
+section `Use GitHub Actions` in the vignette *Package setup*:
+[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)).
+To check if package `B`, which depends on package `A`, is still working
+fine, go to the `Actions` tab of repository `B`, select the action you
+want to trigger (e.g., `R-CMD-check.yaml`), and use the `Run workflow`
+button to run the GHA. You can select which branch it should run on, but
+you need to trigger it once manually on the `main` branch to be able to
+trigger it manually on other branches.
 
 Scheduled jobs that failed can be rerun through the button `Re-run jobs`
-\> `Re-run failed jobs` \> `Re-run jobs`.
+\> `Re-run failed jobs` \> `Re-run jobs`. If the GitHub actions page
+(e.g., <https://github.com/JesseAlderliesten/develcoder/actions>)
+indicates the package passes the R cmd check whereas the badge on the
+`README` indicates it fails, make sure the R cmd check considers the
+`main` branch (i.e., if the `devel` branch passes but the `main` branch
+fails, the badge will have `failing`): use the `Run workflow` button to
+run the GHA on the `main` branch (see the previous paragraph).
 
 If the package declares a dependency on a specific `R` version, it is
 useful to specify the minimum declared `R` version to run in addition to
@@ -334,16 +341,15 @@ the ones that are by default used in the template: add
 `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to run
 `R` 4.1.0.
 
-### Update pkgdown website
+### pkgdown website
 
 See the documentation about package
 [pkgdown](https://pkgdown.r-lib.org/) and the
 [chapter](https://r-pkgs.org/website.html) from the R packages book.
 
-Updating website
-
 ``` r
 
+# To manually update the website
 pkgdown::build_site()
 ```
 
@@ -354,7 +360,28 @@ at the files that constitute your package’s website are in the local
 Instead of manually updating the pkgdown website, one can use a [GitHub
 Action](#use-github-actions) workflow (e.g.,
 [pkgdown.yaml](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
-that updates the website after a pull request or push.
+that updates the website after a pull request or push. To set this up,
+run
+[`usethis::use_pkgdown_github_pages()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
+
+#### Styling
+
+To create a thematic index instead of the default alphabetically ordered
+one, see the
+[documentation](https://pkgdown.r-lib.org/reference/build_reference.html)
+and the
+[example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml).
+
+To customise the order in which `Articles` are listed, specify their
+order in the `_pkgdown.yml` file (run
+`tools::pkgVignettes(package = "<pkgname>")$names` to get their names;
+see the
+[documentation](https://pkgdown.r-lib.org/reference/build_articles.html)
+and for example the `_pkgdown.yml`
+[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml)
+and non-alphabetical order of the
+[articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in
+the `checkrpkgs` package.
 
 ### Merge devel-branch with master
 
@@ -418,12 +445,12 @@ links (which leads to the error
 `@section Could not resolve link to topic ":blank:" in the dependencies or base packages`)
 when running
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
-use backticks
-(`) to format a line as code, or wrap consecutive lines in`\`.
+use backticks (`` ` ``) to format a line as code, or wrap consecutive
+lines in `` \code{...}` ``.
 
 ## Guidelines
 
-See <https://developer.r-project.org/> and
-<https://developer.r-project.org/devel-guidelines.txt> See alsoe
-<https://cran.r-project.org/web/packages/policies.html> and
-<https://github.com/JesseAlderliesten/pkg-dev-ctv/blob/main/proposal.md#links-links>
+- <https://developer.r-project.org/>, especially
+  <https://developer.r-project.org/devel-guidelines.txt>
+- <https://cran.r-project.org/web/packages/policies.html>
+- <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links>
