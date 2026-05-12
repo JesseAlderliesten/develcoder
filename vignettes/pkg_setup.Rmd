@@ -43,6 +43,8 @@ Do:
 - Update the `Description` field of the `DESCRIPTION` file.
 
 ## Add package-wide documentation
+
+### License
 A license file makes clear what use of your package is allowed. Overview of
 licenses are available at [choosealicense](https://choosealicense.com/appendix/),
 [GNU.org](https://www.gnu.org/licenses/license-list.html),
@@ -52,15 +54,25 @@ are provided in [The Legal Side of Open Source](https://opensource.guide/legal/)
 and [this blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
 gives details on the MIT License.
 
+I do **not** follow the `usethis` practise of using `devtools::build_readme()`
+to update `README.md` because that imposes the requirement to have `README.Rmd`
+and `README.md` staged at the same time. To remove this requirement if it was
+accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
+from the R-project folder (see the `Description` section in
+`help("build_readme", package = "devtools")`.
+
+### Citation
 A citation file makes clear how your package should be cited, see the
 [Citation file format GitHub page](https://citation-file-format.github.io/) for
 details on the format.
 
+### Package overview
 `R/<pkgname>-package.R` is used by `usethis` to list imported functions and can
 also be used as help-page such that `help("<pkgname>")` produces a description
 of the package with an overview of its functions.
 
-```{r license, eval = FALSE}
+### Code and remarks
+```{r package docs, eval = FALSE}
 # Run R as administrator
 usethis::use_mit_license() # Create license files for a permissive license
 cffr::cff_write() # Create a citation file
@@ -85,20 +97,10 @@ Do:
   [NEWS_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt)
   in the folder `inst/templates`).
 
-NB. I do **not** follow the `usethis` practise of using `devtools::build_readme()`
-to update `README.md` because that imposes the requirement to have `README.Rmd`
-and `README.md` staged at the same time. To remove this requirement if it was
-accidentally introduced, delete the the (hidden) file `.git/hooks/pre-commit`
-from the R-project folder (see the `Description` section in
-`help("build_readme", package = "devtools")`.
-
 ## Importing packages or functions
 Specifying a minimum package version when importing packages ensures that used
 features are actually present. Setting `min_version = TRUE` in
-`usethis::use_package()` uses the currently installed
-package version. Alternatively, check which features are used and in which
-version those were introduced to find a minimum version. That can also be done
-afterwards by specifying minimum versions in checks through GitHub actions.
+`usethis::use_package()` uses the currently installed package version.
 
 ```{r dependencies, eval = FALSE}
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
@@ -169,10 +171,12 @@ to include some other useful triggers for GHAs (see the template file
 ### Further documentation
 See the section about
 [GitHub Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-in [R packages](https://r-pkgs.org/) and the GitHub documentation about
-[workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+in [R packages](https://r-pkgs.org/), the GitHub documentation about
+[workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),'
+and the section `Use GitHub Actions` in the vignette *Package development*:
+`vignette("pkg_devel", package = "develcoder")`.
 
-## Using pkgdown
+## Use pkgdown
 See the chapter about [pkgdown](https://r-pkgs.org/website.html) from the book
 [R packages](https://r-pkgs.org/) and the documentation for package
 [pkgdown](https://pkgdown.r-lib.org/).
