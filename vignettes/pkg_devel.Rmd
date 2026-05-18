@@ -267,6 +267,9 @@ if(utils::packageVersion("devtools") >= "2.5.0") {
   devtools::check_doc_fields()
 }
 
+tools::check_package_urls(dir = getwd())
+tools::check_package_dois(dir = getwd())
+
 pkg_env <- devtools::load_all()$env
 codetools::checkUsageEnv(env = pkg_env, all = TRUE, suppressParamAssigns = TRUE)
 
@@ -285,6 +288,10 @@ res_pkgcheck <- pkgcheck::pkgcheck()
 res_pkgcheck
 res_goodpractice <- goodpractice::gp()
 res_goodpractice
+
+# Check spelling (requires system library like Aspell, see http://aspell.net/)
+utils::aspell_package_Rd_files(dir = getwd())
+utils::aspell_package_vignettes(dir = getwd())
 ```
 
 ### Locally test update
