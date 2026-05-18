@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Package development • develcoder</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Package development">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,7 +104,8 @@ developing a package.</p>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' Description</span></span>
 <span><span class="co">#'</span></span>
-<span><span class="co">#' @inheritParams is_logical # From a function in the current package</span></span>
+<span><span class="co">#' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit</span></span>
+<span><span class="co">#' @inheritParams is_logical allow_zero # From a function in the current package</span></span>
 <span><span class="co">#' @inheritParams utils::installed.packages # from a function in another package</span></span>
 <span><span class="co">#' @param x Vector of names to test.</span></span>
 <span><span class="co">#' @param allow_underscores `TRUE` or `FALSE`: allow underscores?</span></span>
@@ -225,7 +226,7 @@ by two colons and the function name, e.g.,
 because the function is an operator, it is necessary to also list the
 function in the <code>NAMESPACE</code> file, e.g., to add the line
 <code>#' @importFrom utils osVersion</code> to
-<code>R/&lt;pkgname&gt;-package.R</code> that was created by
+<code>R/&lt;pkg&gt;-package.R</code> that was created by
 <code><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">usethis::use_package_doc()</a></code>. This is done by
 <code>usethis::use_import_from(package = "utils", fun = "osVersion")</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -252,8 +253,8 @@ probably run with the default argument
 <code>build_vignettes = FALSE</code>, use
 <code>build_vignettes = TRUE</code> instead:
 <code>devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)</code>.
-See also <code>tools::pkgVignettes(package = "&lt;pkgname&gt;")</code>
-for information about which vignettes R finds.</p>
+See also <code>tools::pkgVignettes(package = "&lt;pkg&gt;")</code> for
+information about which vignettes R finds.</p>
 <p>Use <code>utils::vignette("&lt;vignette_title&gt;")</code> (e.g.,
 <code><a href="../articles/pkg_devel.html">utils::vignette("pkg_devel")</a></code>) and
 <code>tools::Rd2txt("path/to/file.Rd")</code> to render a vignette or an
@@ -280,23 +281,23 @@ contents:</p>
 ‘above’, ‘below’): <code>[&lt;Section title&gt;]</code> or
 <code>[&lt;link text&gt;][&lt;Section title&gt;]</code>.</p>
 <p>Linking to a help page of a package:
-<code>help("&lt;funcname&gt;", package = "&lt;pkgname&gt;")</code>
-(<code>help("&lt;funcname&gt;::&lt;pkgname&gt;")</code> does
+<code>help("&lt;func&gt;", package = "&lt;pkg&gt;")</code>
+(<code>help("&lt;func&gt;::&lt;pkg&gt;")</code> does
 <strong>not</strong> work).</p>
 <p>There is <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><strong>no</strong></a>
 official way to link from vignettes to help-pages. Using relative paths
-(e.g., <code>[&lt;funcname&gt;](../help/&lt;funcname&gt;)</code>, as
-proposed in a <a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
+(e.g., <code>[&lt;func&gt;](../help/&lt;func&gt;)</code>, as proposed in
+a <a href="https://stackoverflow.com/questions/34946219" class="external-link">StackOverflow
 answer</a>) is impaired by the change in the location of files when the
 package is installed. In addition, linking on the <code>pkgdown</code>
 website does <strong>not</strong> work in that format
 (<code>pkgdown</code> recognises calls like
-<code>`&lt;funcname&gt;()`</code> and
-<code>`&lt;pkgname&gt;::&lt;funcname&gt;()`</code>, see the <a href="https://pkgdown.r-lib.org/articles/linking.html" class="external-link">documentation</a>).
+<code>`&lt;func&gt;()`</code> and
+<code>`&lt;pkg&gt;::&lt;func&gt;()`</code>, see the <a href="https://pkgdown.r-lib.org/articles/linking.html" class="external-link">documentation</a>).
 For a more advanced way of linking from vignettes to help-pages that
 might work, see <a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f" class="external-link">here</a>.</p>
 <p>To link from help-pages to vignettes, use</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>The vignette <span class="sc">*</span><span class="er">&lt;</span>vignette name<span class="sc">&gt;</span><span class="er">*:</span> <span class="st">`</span><span class="at">vignette("&lt;vignette name&gt;", package = "&lt;pkgname&gt;")</span><span class="st">`</span> </span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>The vignette <span class="sc">*</span><span class="er">&lt;</span>vignette<span class="sc">&gt;</span><span class="er">*:</span> <span class="st">`</span><span class="at">vignette("&lt;vignette&gt;", package = "&lt;pkg&gt;")</span><span class="st">`</span> </span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -318,27 +319,78 @@ package.</p>
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">curr_pkg_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">files_R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">files_man</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"man"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"\\.Rd$"</span><span class="op">)</span></span>
+<span><span class="va">proj_pkg_R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">curr_pkg_name</span>, <span class="st">"-package.R"</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">proj_pkg_R</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">files_R</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">files_R</span> <span class="op">&lt;-</span> <span class="va">files_R</span><span class="op">[</span><span class="va">files_R</span> <span class="op">!=</span> <span class="va">proj_pkg_R</span><span class="op">]</span></span>
+<span>  <span class="va">files_man</span> <span class="op">&lt;-</span> <span class="va">files_man</span><span class="op">[</span><span class="va">files_man</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">proj_pkg_R</span>, <span class="st">"d"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="st">"reexports.Rd"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">files_man</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">files_man</span> <span class="op">&lt;-</span> <span class="va">files_man</span><span class="op">[</span><span class="va">files_man</span> <span class="op">!=</span> <span class="st">"reexports.Rd"</span><span class="op">]</span></span>
+<span>  <span class="co"># Based on https://stackoverflow.com/a/74487073/32365738</span></span>
+<span>  <span class="va">reexported_funcs</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html" class="external-link">getNamespaceExports</a></span><span class="op">(</span><span class="va">curr_pkg_name</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span>envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="va">curr_pkg_name</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">reexported_funcs</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"File 'reexports.Rd' is present but no re-exported functions found!"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="va">files_R</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span><span class="va">files_R</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">reexported_funcs</span>, <span class="st">".R"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
 <span><span class="va">expected_man</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\.Rd$"</span>, replacement <span class="op">=</span> <span class="st">".R"</span>, x <span class="op">=</span> <span class="va">files_man</span><span class="op">)</span></span>
 <span><span class="va">expected_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"test_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">files_R</span>, <span class="va">expected_man</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">expected_files</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">expected_files</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"./inst/tinytest"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<span><span class="va">tests_missing</span> <span class="op">&lt;-</span> <span class="va">expected_files</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">expected_files</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"./inst/tinytest"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">tests_missing</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"No test-file found for file "</span>, <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/checkinput/reference/paste_quoted.html" class="external-link">paste_quoted</a></span><span class="op">(</span><span class="va">tests_missing</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="locally-test-update">Locally test update<a class="anchor" aria-label="anchor" href="#locally-test-update"></a>
+<h3 id="automated-checks">Automated checks<a class="anchor" aria-label="anchor" href="#automated-checks"></a>
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Using `manual = FALSE` because building the manual leads to `latex` errors</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">FALSE</span>, force_suggests <span class="op">=</span> <span class="cn">TRUE</span>, run_dont_test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/release_checks.html" class="external-link">release_checks</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"2.5.0"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># check for missing `\value` and `\examples` fields in `Rd` files</span></span>
+<span>  <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check_doc_fields.html" class="external-link">check_doc_fields</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/urltools.html" class="external-link">check_package_urls</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/doitools.html" class="external-link">check_package_dois</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pkg_env</span> <span class="op">&lt;-</span> <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">env</span></span>
+<span><span class="fu">codetools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/codetools/man/checkUsage.html" class="external-link">checkUsageEnv</a></span><span class="op">(</span>env <span class="op">=</span> <span class="va">pkg_env</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, suppressParamAssigns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># - 'pkgcheck' depends on 'pkgstats', which needs the system libraries</span></span>
+<span><span class="co">#   'ctags-universal' and 'GNU global'. Run pkgstats::ctags_test() to check if</span></span>
+<span><span class="co">#   those are installed. If not, you might have to run pkgstats::ctags_install();</span></span>
+<span><span class="co">#   see also the output of library(pkgstats) and the documentation at</span></span>
+<span><span class="co">#   https://docs.ropensci.org/pkgstats/articles/installation.html</span></span>
+<span><span class="co"># - pkgcheck::pkgcheck() and goodpractice::gp() have quite some overlap. See</span></span>
+<span><span class="co">#   https://github.com/ropensci-review-tools/goodpractice/issues/284 </span></span>
+<span><span class="co"># - The lintr issue `Use == instead of %in% for scalar comparison` should be</span></span>
+<span><span class="co">#   ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be</span></span>
+<span><span class="co">#   removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and</span></span>
+<span><span class="co">#   'NA == y' return 'NA'.</span></span>
+<span><span class="va">res_pkgcheck</span> <span class="op">&lt;-</span> <span class="fu">pkgcheck</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/pkgcheck/reference/pkgcheck.html" class="external-link">pkgcheck</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">res_pkgcheck</span></span>
+<span><span class="va">res_goodpractice</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">gp</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">res_goodpractice</span></span>
+<span></span>
+<span><span class="co"># Check spelling (requires system library like Aspell, see http://aspell.net/)</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/aspell-utils.html" class="external-link">aspell_package_Rd_files</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/aspell-utils.html" class="external-link">aspell_package_vignettes</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="locally-test-update">Locally test update<a class="anchor" aria-label="anchor" href="#locally-test-update"></a>
+</h3>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check if output of .libPaths() is correct.</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>quick <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Note:</span></span>
-<span><span class="co"># The lintr issue `Use == instead of %in% for scalar comparison` should be</span></span>
-<span><span class="co"># ignored for x %in% y if x or y might contain NA that should be ignored:</span></span>
-<span><span class="co"># x %in% NA and NA %in% y return FALSE, whereas x == NA and NA == y return NA</span></span>
-<span><span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">gp</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check for issues.</span></span>
 <span></span>
 <span><span class="co"># Load the package and view the help files as usual outside devtools:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -413,7 +465,7 @@ section <code>matrix: config:</code> to run <code>R</code> 4.1.0.</p>
 </h3>
 <p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and the <a href="https://r-pkgs.org/website.html" class="external-link">chapter</a> from the R packages
 book.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To manually update the website</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Open <code>docs/index.html</code> in a webbrowser to preview the
@@ -430,8 +482,8 @@ ordered one, see the <a href="https://pkgdown.r-lib.org/reference/build_referenc
 and the <a href="https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml" class="external-link">example</a>.</p>
 <p>To customise the order in which <code>Articles</code> are listed,
 specify their order in the <code>_pkgdown.yml</code> file (run
-<code>tools::pkgVignettes(package = "&lt;pkgname&gt;")$names</code> to
-get their names; see the <a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">documentation</a>
+<code>tools::pkgVignettes(package = "&lt;pkg&gt;")$names</code> to get
+their names; see the <a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">documentation</a>
 and for example the <code>_pkgdown.yml</code> <a href="https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml" class="external-link">file</a>
 and non-alphabetical order of the <a href="https://jessealderliesten.github.io/checkrpkgs/articles/" class="external-link">articles</a>
 in the <code>checkrpkgs</code> package.</p>

@@ -28,7 +28,8 @@ Do:
 #'
 #' Description
 #'
-#' @inheritParams is_logical # From a function in the current package
+#' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
+#' @inheritParams is_logical allow_zero # From a function in the current package
 #' @inheritParams utils::installed.packages # from a function in another package
 #' @param x Vector of names to test.
 #' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
@@ -158,8 +159,8 @@ name, e.g.,
 [`utils::osVersion()`](https://rdrr.io/r/utils/sessionInfo.html). If
 that is not possible, for example because the function is an operator,
 it is necessary to also list the function in the `NAMESPACE` file, e.g.,
-to add the line `#' @importFrom utils osVersion` to
-`R/<pkgname>-package.R` that was created by
+to add the line `#' @importFrom utils osVersion` to `R/<pkg>-package.R`
+that was created by
 [`usethis::use_package_doc()`](https://usethis.r-lib.org/reference/use_package_doc.html).
 This is done by
 `usethis::use_import_from(package = "utils", fun = "osVersion")`.
@@ -189,8 +190,8 @@ If no vignettes are visible,
 was probably run with the default argument `build_vignettes = FALSE`,
 use `build_vignettes = TRUE` instead:
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
-See also `tools::pkgVignettes(package = "<pkgname>")` for information
-about which vignettes R finds.
+See also `tools::pkgVignettes(package = "<pkg>")` for information about
+which vignettes R finds.
 
 Use `utils::vignette("<vignette_title>")` (e.g.,
 [`utils::vignette("pkg_devel")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
@@ -220,18 +221,17 @@ For internal links to other sections in the same document (‘Section’,
 ‘above’, ‘below’): `[<Section title>]` or
 `[<link text>][<Section title>]`.
 
-Linking to a help page of a package:
-`help("<funcname>", package = "<pkgname>")`
-(`help("<funcname>::<pkgname>")` does **not** work).
+Linking to a help page of a package: `help("<func>", package = "<pkg>")`
+(`help("<func>::<pkg>")` does **not** work).
 
 There is [**no**](https://r-pkgs.org/vignettes.html#links) official way
 to link from vignettes to help-pages. Using relative paths (e.g.,
-`[<funcname>](../help/<funcname>)`, as proposed in a [StackOverflow
+`[<func>](../help/<func>)`, as proposed in a [StackOverflow
 answer](https://stackoverflow.com/questions/34946219)) is impaired by
 the change in the location of files when the package is installed. In
 addition, linking on the `pkgdown` website does **not** work in that
-format (`pkgdown` recognises calls like `` `<funcname>()` `` and
-`` `<pkgname>::<funcname>()` ``, see the
+format (`pkgdown` recognises calls like `` `<func>()` `` and
+`` `<pkg>::<func>()` ``, see the
 [documentation](https://pkgdown.r-lib.org/articles/linking.html)). For a
 more advanced way of linking from vignettes to help-pages that might
 work, see
@@ -240,7 +240,7 @@ work, see
 To link from help-pages to vignettes, use
 
 ``` r
-The vignette *<vignette name>*: `vignette("<vignette name>", package = "<pkgname>")` 
+The vignette *<vignette>*: `vignette("<vignette>", package = "<pkg>")` 
 ```
 
 ## Adding miscellaneous files
@@ -260,11 +260,71 @@ Check for which functions no test file has been written.
 devtools::document()
 tinytest::test_all()
 
+curr_pkg_name <- basename(getwd())
 files_R <- list.files(file.path(".", "R"))
 files_man <- list.files(path = file.path(".", "man"), pattern = "\\.Rd$")
+proj_pkg_R <- paste0(curr_pkg_name, "-package.R")
+if(proj_pkg_R %in% files_R) {
+  files_R <- files_R[files_R != proj_pkg_R]
+  files_man <- files_man[files_man != paste0(proj_pkg_R, "d")]
+}
+if("reexports.Rd" %in% files_man) {
+  files_man <- files_man[files_man != "reexports.Rd"]
+  # Based on https://stackoverflow.com/a/74487073/32365738
+  reexported_funcs <- progutils::not_in(getNamespaceExports(curr_pkg_name),
+                                        ls(envir = asNamespace(curr_pkg_name)))
+  if(length(reexported_funcs) == 0L) {
+    warning("File 'reexports.Rd' is present but no re-exported functions found!")
+  } else {
+    files_R <- progutils::not_in(files_R, paste0(reexported_funcs, ".R"))
+  }
+}
 expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
 expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
-expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
+tests_missing <- expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
+if(length(tests_missing) > 0L) {
+  warning("No test-file found for file ", progutils::paste_quoted(tests_missing))
+}
+```
+
+### Automated checks
+
+``` r
+
+devtools::document()
+# Using `manual = FALSE` because building the manual leads to `latex` errors
+devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
+devtools::release_checks()
+if(utils::packageVersion("devtools") >= "2.5.0") {
+  # check for missing `\value` and `\examples` fields in `Rd` files
+  devtools::check_doc_fields()
+}
+
+tools::check_package_urls(dir = getwd())
+tools::check_package_dois(dir = getwd())
+
+pkg_env <- devtools::load_all()$env
+codetools::checkUsageEnv(env = pkg_env, all = TRUE, suppressParamAssigns = TRUE)
+
+# - 'pkgcheck' depends on 'pkgstats', which needs the system libraries
+#   'ctags-universal' and 'GNU global'. Run pkgstats::ctags_test() to check if
+#   those are installed. If not, you might have to run pkgstats::ctags_install();
+#   see also the output of library(pkgstats) and the documentation at
+#   https://docs.ropensci.org/pkgstats/articles/installation.html
+# - pkgcheck::pkgcheck() and goodpractice::gp() have quite some overlap. See
+#   https://github.com/ropensci-review-tools/goodpractice/issues/284 
+# - The lintr issue `Use == instead of %in% for scalar comparison` should be
+#   ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
+#   removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
+#   'NA == y' return 'NA'.
+res_pkgcheck <- pkgcheck::pkgcheck()
+res_pkgcheck
+res_goodpractice <- goodpractice::gp()
+res_goodpractice
+
+# Check spelling (requires system library like Aspell, see http://aspell.net/)
+utils::aspell_package_Rd_files(dir = getwd())
+utils::aspell_package_vignettes(dir = getwd())
 ```
 
 ### Locally test update
@@ -272,16 +332,8 @@ expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
 ``` r
 
 devtools::document()
-# Using `manual = FALSE` because building the manual leads to `latex` errors
-devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
 .libPaths() # Check if output of .libPaths() is correct.
 devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
-
-# Note:
-# The lintr issue `Use == instead of %in% for scalar comparison` should be
-# ignored for x %in% y if x or y might contain NA that should be ignored:
-# x %in% NA and NA %in% y return FALSE, whereas x == NA and NA == y return NA
-goodpractice::gp() # Check for issues.
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
@@ -374,8 +426,8 @@ and the
 
 To customise the order in which `Articles` are listed, specify their
 order in the `_pkgdown.yml` file (run
-`tools::pkgVignettes(package = "<pkgname>")$names` to get their names;
-see the
+`tools::pkgVignettes(package = "<pkg>")$names` to get their names; see
+the
 [documentation](https://pkgdown.r-lib.org/reference/build_articles.html)
 and for example the `_pkgdown.yml`
 [file](https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml)

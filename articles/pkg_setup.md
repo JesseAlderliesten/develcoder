@@ -32,7 +32,7 @@ vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
 
 ``` r
 
-path_to_package <- file.path("D:", "Userdata", "Jesse Nieuw", "Documents", "R", pkgname)
+path_to_package <- file.path("D:", "Userdata", "Jesse Nieuw", "Documents", "R_add", pkgname)
 usethis::create_package(path = path_to_package)
 ```
 
@@ -74,9 +74,9 @@ format.
 
 ### Package overview
 
-`R/<pkgname>-package.R` is used by `usethis` to list imported functions
-and can also be used as help-page such that `help("<pkgname>")` produces
-a description of the package with an overview of its functions.
+`R/<pkg>-package.R` is used by `usethis` to list imported functions and
+can also be used as help-page such that `help("<pkg>")` produces a
+description of the package with an overview of its functions.
 
 ### Code and remarks
 
@@ -85,7 +85,7 @@ a description of the package with an overview of its functions.
 # Run R as administrator
 usethis::use_mit_license() # Create license files for a permissive license
 cffr::cff_write() # Create a citation file
-usethis::use_package_doc() # Create R/<pkgname>-package.R
+usethis::use_package_doc() # Create R/<pkg>-package.R
 usethis::use_readme_rmd() # Create README.Rmd
 usethis::use_news_md() # Create NEWS.md
 ```
@@ -98,10 +98,10 @@ Do:
     [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
   - Add a badge with the version number by including the following code
-    in the `README.Rmd` file (replace `<pkgname>` with the actual
-    package name; the badge does **not** work if the GitHub repository
-    is private):
-    `![](https://img.shields.io/github/r-package/v/JesseAlderliesten/<pkgname>?color=blue)`
+    in the `README.Rmd` file (replace `<pkg>` with the actual package
+    name; the badge does **not** work if the GitHub repository is
+    private):
+    `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
 - Update the `NEWS`-file (see the template file
   [NEWS_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt)
@@ -146,6 +146,7 @@ usethis::use_git(message = "Initial commit")
 # If you get the error message you are not the current owner of the GitHub
 # repository, restart R as administrator and try again.
 usethis::use_github(private = TRUE)
+usethis::git_vaccinate()
 ```
 
 ## Use GitHub Actions
@@ -214,7 +215,7 @@ devtools::document() # To update package-level documentation
 ```
 
 After a few minutes, the website should be present. The URL has the
-structure `https://USERNAME.github.io/REPONAME/`, e.g.,
+structure `https://<username>.github.io/<repository>/`, e.g.,
 `https://jessealderliesten.github.io/develcoder/`.
 
 Refer from the `README` to the pkgdown website and add the line
