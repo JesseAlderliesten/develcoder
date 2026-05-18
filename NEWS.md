@@ -1,3 +1,12 @@
+# develcoder 0.0.6
+
+### Breaking changes
+- Add suggested dependencies `codetools` and `pkgcheck` for package checks.
+
+### Miscellaneous
+- Vignette `Package development`: add section about automated checks.
+
+
 # develcoder 0.0.5
 
 ### Miscellaneous
