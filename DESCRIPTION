@@ -33,7 +33,7 @@ Suggests:
 Remotes:
     github::JesseAlderliesten/checkinput,
     github::JesseAlderliesten/checkrpkgs,
-    github::"ropensci-review-tools/pkgcheck",
+    github::ropensci-review-tools/pkgcheck,
     github::JesseAlderliesten/progutils
 URL: https://github.com/JesseAlderliesten/develcoder, https://jessealderliesten.github.io/develcoder/
 BugReports: https://github.com/JesseAlderliesten/develcoder/issues
