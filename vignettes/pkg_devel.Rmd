@@ -31,7 +31,8 @@ Do:
 #'
 #' Description
 #'
-#' @inheritParams is_logical # From a function in the current package
+#' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
+#' @inheritParams is_logical allow_zero # From a function in the current package
 #' @inheritParams utils::installed.packages # from a function in another package
 #' @param x Vector of names to test.
 #' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
