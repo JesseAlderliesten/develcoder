@@ -85,7 +85,21 @@ file itself.
 #' @inheritSection is_logical @note
 ```
 
+#### Add examples
+Examples should **not** write to the working directory (i.e., use `getwd()`) but
+to a temporary directory that is cleaned up afterwards. See the section
+`Usage in practice` in `help("create_tempdir", package = "progutils")`.
+
+Examples rendered on a website created with [pkgdown](https://pkgdown.r-lib.org/)
+will display the output underneath the code. However, help-files accessed
+through `help(<func>)` will not, such that it might be useful to include a short
+comment regarding what feature of the output is notable.
+
 ### Add tests
+Tests should **not** write to the working directory (i.e., use `getwd()`) but to
+a temporary directory that is cleaned up afterwards. See the section
+`Usage in practice` in `help("create_tempdir", package = "progutils")`.
+
 ``` {r tests, eval = FALSE}
 library(tinytest)
 tinytest::test_all() # Run all tests of a package
@@ -99,19 +113,6 @@ expect_warning(
   pattern = "...", strict = TRUE, fixed = TRUE)
 expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
-```
-
-### Using temporary files
-- See [testthat::test_path()](https://testthat.r-lib.org/reference/test_path.html)
-  on changing paths depending on how a check is run.
-- On using temporary files, see `help("local")`, this
-  [R-mail](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html),
-  and [withr::with_tempfile()](https://withr.r-lib.org/reference/with_tempfile.html):
-```{r tempfile, eval = FALSE}
-\dontshow{
-  my_tempdir <- tempdir()
-  example_dir <- file.path(my_tempdir, example_dir)
-}
 ```
 
 ### Update dependencies
