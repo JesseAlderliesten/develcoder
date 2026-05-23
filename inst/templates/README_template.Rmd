@@ -75,9 +75,9 @@ To use this repository, download it as a `ZIP` file (use the green `<> Code`
 button and choose `Download ZIP`) and unzip the folder. The scripts require
 [R](https://www.r-project.org/) and were run with `R` x.y.z and
 [RStudio](https://posit.co/download/rstudio-desktop/) YYYY.MM.BB on Windows 11
-Home version YYHX. See the GitHub repository
-[checkrpkgs](https://github.com/JesseAlderliesten/checkrpkgs) for details on
-installing R and RStudio.
+Home version YYHX. See the vignette *Installing R, Rtools and RStudio* in
+package `checkrpkgs` (`vignette("install_r", package = "checkrpkgs")`) for
+details on installing R and RStudio.
 
 Run R as administrator and open the project using the *R Project (.Rproj)* file
 to automatically set the working directory to the directory the R Project file
