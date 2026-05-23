@@ -1,11 +1,11 @@
 ---
-title: "RMarkdown and knitr"
+title: "R Markdown and knitr"
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{RMarkdown and knitr}
+  %\VignetteIndexEntry{R Markdown and knitr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
