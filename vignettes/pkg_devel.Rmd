@@ -11,19 +11,23 @@ vignette: >
 ---
 
 ## Introduction
-This file contains code and annotations that are useful when developing a package.
+This file contains code and annotations that are useful when developing a
+package, including when preparing to release a new package version and setting
+up for a new version. It assumes the package has already been set up, as
+described in the vignette *Package setup*:
+`vignette("pkg_setup", package = "develcoder")`.
 
 ## Add functions
 ### Set up
 ```{r functions, eval = FALSE}
-usethis::use_r("is_number")
+usethis::use_r("<func>")
 devtools::document() # also runs devtools::load_all()
-?checkinput::is_number() # view help-page of the function
+?<func>() # view help-page of the function
 ```
 
 Do:
 
-- Manually update the `NEWS`-file.
+- Manually update the `NEWS` file: ``- Added `<func>()` to ...``.
 
 ### Documentation
 ```{r documentation, eval = FALSE}
@@ -75,8 +79,8 @@ func_name <- function(x, allow_underscores = TRUE) {
 
 
 #### Inherit sections
-Inherited sections are *silently* ignored if that section is also defined in the
-file itself.
+Inherited sections are **silently** ignored if that section is also defined in
+the file itself.
 
 ``` {r inherit docs, eval = FALSE}
 #' @inherit is_number return
