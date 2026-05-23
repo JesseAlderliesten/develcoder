@@ -384,6 +384,15 @@ and non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in the
 `checkrpkgs` package.
 
+To create a custom function index, include a section `reference:` in the
+`_pkgdown.yml` file with the desired headings and topics, see the
+[documentation](https://pkgdown.r-lib.org/reference/build_reference.html), an
+[official example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml)
+and [my own example](https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml).
+Then build the reference with `pkgdown::build_reference()` and view it locally
+by opening the file `"<pkg>\docs\index.html"` and browse to `Reference` to see
+the package index.
+
 ### Merge devel-branch with master
 To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
 `<Contribute>` > `Open Pull Request`. Copy the updated `NEWS` in the
