@@ -131,6 +131,10 @@ usethis::use_git(message = "Initial commit")
 # repository, restart R as administrator and try again.
 usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
+# See also https://forum.posit.co/t/renaming-the-default-branch/119149
+usethis::git_default_branch_rename(from = "master", to = "main")
+# Sometimes takes a while before this works
+usethis::git_default_branch_rediscover()
 ```
 
 ## Use GitHub Actions
