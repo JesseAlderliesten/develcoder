@@ -11,19 +11,23 @@ vignette: >
 ---
 
 ## Introduction
-This file contains code and annotations that are useful when developing a package.
+This file contains code and annotations that are useful when developing a
+package, including when preparing to release a new package version and setting
+up for a new version. It assumes the package has already been set up, as
+described in the vignette *Package setup*:
+`vignette("pkg_setup", package = "develcoder")`.
 
 ## Add functions
 ### Set up
 ```{r functions, eval = FALSE}
-usethis::use_r("is_number")
+usethis::use_r("<func>")
 devtools::document() # also runs devtools::load_all()
-?checkinput::is_number() # view help-page of the function
+?<func>() # view help-page of the function
 ```
 
 Do:
 
-- Manually update the `NEWS`-file.
+- Manually update the `NEWS` file: ``- Added `<func>()` to ...``.
 
 ### Documentation
 ```{r documentation, eval = FALSE}
@@ -75,8 +79,8 @@ func_name <- function(x, allow_underscores = TRUE) {
 
 
 #### Inherit sections
-Inherited sections are *silently* ignored if that section is also defined in the
-file itself.
+Inherited sections are **silently** ignored if that section is also defined in
+the file itself.
 
 ``` {r inherit docs, eval = FALSE}
 #' @inherit is_number return
@@ -85,7 +89,21 @@ file itself.
 #' @inheritSection is_logical @note
 ```
 
+#### Add examples
+Examples should **not** write to the working directory (i.e., use `getwd()`) but
+to a temporary directory that is cleaned up afterwards. See the section
+`Usage in practice` in `help("create_tempdir", package = "progutils")`.
+
+Examples rendered on a website created with [pkgdown](https://pkgdown.r-lib.org/)
+will display the output underneath the code. However, help-files accessed
+through `help(<func>)` will not, such that it might be useful to include a short
+comment regarding what feature of the output is notable.
+
 ### Add tests
+Tests should **not** write to the working directory (i.e., use `getwd()`) but to
+a temporary directory that is cleaned up afterwards. See the section
+`Usage in practice` in `help("create_tempdir", package = "progutils")`.
+
 ``` {r tests, eval = FALSE}
 library(tinytest)
 tinytest::test_all() # Run all tests of a package
@@ -99,19 +117,6 @@ expect_warning(
   pattern = "...", strict = TRUE, fixed = TRUE)
 expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
-```
-
-### Using temporary files
-- See [testthat::test_path()](https://testthat.r-lib.org/reference/test_path.html)
-  on changing paths depending on how a check is run.
-- On using temporary files, see `help("local")`, this
-  [R-mail](https://stat.ethz.ch/pipermail/r-devel/2018-March/075783.html),
-  and [withr::with_tempfile()](https://withr.r-lib.org/reference/with_tempfile.html):
-```{r tempfile, eval = FALSE}
-\dontshow{
-  my_tempdir <- tempdir()
-  example_dir <- file.path(my_tempdir, example_dir)
-}
 ```
 
 ### Update dependencies
@@ -382,6 +387,15 @@ example the `_pkgdown.yml`
 and non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in the
 `checkrpkgs` package.
+
+To create a custom function index, include a section `reference:` in the
+`_pkgdown.yml` file with the desired headings and topics, see the
+[documentation](https://pkgdown.r-lib.org/reference/build_reference.html), an
+[official example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml)
+and [my own example](https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml).
+Then build the reference with `pkgdown::build_reference()` and view it locally
+by opening the file `"<pkg>\docs\index.html"` and browse to `Reference` to see
+the package index.
 
 ### Merge devel-branch with master
 To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
