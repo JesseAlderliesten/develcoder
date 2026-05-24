@@ -17,7 +17,7 @@ This file contains information about using
 
 An R Markdown file is an R script with markup to enable to combine the script
 (including the comments) together with its output and additional text in a
-single document. The R-package
+single document. The R package
 [rmarkdown](https://cran.r-project.org/package=rmarkdown), as well as either
 [RStudio](https://www.rstudio.com/) or [Pandoc](https://pandoc.org/) is
 required to create an R Markdown file.
@@ -75,7 +75,7 @@ makes more sense in interactive use during development of the script.
 
 
 ## Loading files
-Files that have to be used by the R Markdown script (e.g., R-scripts that are
+Files that have to be used by the R Markdown script (e.g., R scripts that are
 sourced, data files that are read) should be placed in the same directory as the
 R Markdown file, because the working directory when evaluating R code chunks is
 the directory of the input document by default. The working directory can be
@@ -98,7 +98,7 @@ that all of the source code is printed (see `?source()`).
 The following lines can be used to knit documents (i.e., generate output in HTML
 or PDF files containing the script with its output and additional text)
 containing a file name including a time-stamp. Using this way of creating
-documents creates and keeps local R-objects in the current environment.
+documents creates and keeps local R objects in the current environment.
 Although that can be useful for inspection and debugging, the potential use of
 local objects can lead to non-reproducibility issues, such that the environment
 should be cleared before using it and final files should be created by using the
@@ -120,12 +120,12 @@ Add a new chunk by either (1) clicking the `Insert Chunk` button on the toolbar,
 (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters ```` ```{r} ```` above
 and ```` ``` ```` below the code chunk.
 
-To collect all chunks in a R Markdown document that contain R-code in a
-conventional R-script use 
+To collect all chunks in a R Markdown document that contain R code in a
+conventional R script use 
 `knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`.
 
 Note that the various R Markdown options are not incorporated in such an
-R-script, which might hamper exactly reproducing the analyses as executed when
+R script, which might hamper exactly reproducing the analyses as executed when
 running the R Markdown file, see the note in `help("purl", package = "knitr")`.
 
 
