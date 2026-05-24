@@ -50,8 +50,8 @@ Folder `vignettes` contains the following vignettes:
   contains code that is needed during package development, including
   when preparing to release a new package version and setting up for a
   new version.
-- [package
-  development](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
+- [R Markdown and
+  knitr](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
   [`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.md)
   contains information about using [R
   Markdown](https://pkgs.rstudio.com/rmarkdown/) and

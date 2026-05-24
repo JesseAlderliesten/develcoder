@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/pkg_setup.html">Package setup</a></li>
     <li><a class="dropdown-item" href="../articles/pkg_devel.html">Package development</a></li>
-    <li><a class="dropdown-item" href="../articles/rmarkdown_knitr.html">RMarkdown and knitr</a></li>
+    <li><a class="dropdown-item" href="../articles/rmarkdown_knitr.html">R Markdown and knitr</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -79,7 +79,10 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This file contains code and annotations that are useful when creating
-a package.</p>
+a package. This code is needed only once to set up a package from
+scratch. Further development is described in the vignette <em>Package
+development</em>:
+<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="choose-a-name">Choose a name<a class="anchor" aria-label="anchor" href="#choose-a-name"></a>
@@ -92,20 +95,24 @@ a package.</p>
 <span></span>
 <span><span class="co"># Is the intended name available?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu">pkgdepends</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/pkgdepends/reference/pkg_name_check.html" class="external-link">pkg_name_check</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">pkgname</span><span class="op">)</span><span class="op">$</span><span class="va">basics</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span>url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://github.com/search?q="</span>, <span class="va">pkgname</span>, <span class="st">"&amp;type=repositories"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span>url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://github.com/search?q="</span>, <span class="va">pkgname</span>, <span class="st">"+language%3AR+&amp;type=repositories"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span>url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://github.com/search?q="</span>, <span class="va">pkgname</span>,</span>
+<span>                              <span class="st">"&amp;type=repositories"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span>url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://github.com/search?q="</span>, <span class="va">pkgname</span>,</span>
+<span>                              <span class="st">"+language%3AR+&amp;type=repositories"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="create-the-package">Create the package<a class="anchor" aria-label="anchor" href="#create-the-package"></a>
 </h2>
 <p>This uses information stored in your <code>.Rprofile</code> file
 (located at
-<code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>, see
-<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code> for details), see
-<code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">usethis::use_description()</a></code> and the <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link">usethis
-vignette</a>.</p>
+<code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>. See
+<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>,
+<code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> and the
+<a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link">usethis
+vignette</a> for details.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">path_to_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"D:"</span>, <span class="st">"Userdata"</span>, <span class="st">"Jesse Nieuw"</span>, <span class="st">"Documents"</span>, <span class="st">"R_add"</span>, <span class="va">pkgname</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">path_to_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">pkgname</span><span class="op">)</span></span>
+<span><span class="va">path_to_package</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">create_package</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">path_to_package</span><span class="op">)</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
@@ -134,7 +141,7 @@ using <code><a href="https://devtools.r-lib.org/reference/build_readme.html" cla
 time. To remove this requirement if it was accidentally introduced,
 delete the the (hidden) file <code>.git/hooks/pre-commit</code> from the
 R-project folder (see the <code>Description</code> section in
-<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">help("build_readme", package = "devtools")</a></code>.</p>
+<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">help("build_readme", package = "devtools")</a></code>).</p>
 </div>
 <div class="section level3">
 <h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -149,7 +156,9 @@ GitHub page</a> for details on the format.</p>
 <p><code>R/&lt;pkg&gt;-package.R</code> is used by <code>usethis</code>
 to list imported functions and can also be used as help-page such that
 <code>help("&lt;pkg&gt;")</code> produces a description of the package
-with an overview of its functions.</p>
+with an overview of its functions if package <code>&lt;pkg&gt;</code>
+has been loaded (i.e., <code>library(&lt;pkg&gt;)</code> has been
+run.</p>
 </div>
 <div class="section level3">
 <h3 id="code-and-remarks">Code and remarks<a class="anchor" aria-label="anchor" href="#code-and-remarks"></a>
@@ -170,9 +179,8 @@ with an overview of its functions.</p>
 <li>See the template file <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link">README_template.Rmd</a>
 in the folder <code>inst/templates</code>.</li>
 <li>Add a badge with the version number by including the following code
-in the <code>README.Rmd</code> file (replace <code>&lt;pkg&gt;</code>
-with the actual package name; the badge does <strong>not</strong> work
-if the GitHub repository is private):
+in the <code>README.Rmd</code> file (the badge does <strong>not</strong>
+work if the GitHub repository is private):
 <code>![](https://img.shields.io/github/r-package/v/&lt;repository&gt;/&lt;pkg&gt;?color=blue)</code>
 </li>
 <li>
@@ -203,7 +211,7 @@ uses the currently installed package version.</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="set-up-testing">Set up testing<a class="anchor" aria-label="anchor" href="#set-up-testing"></a>
+<h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
@@ -217,10 +225,14 @@ uses the currently installed package version.</p>
 <code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette("git_github", package = "checkrpkgs")</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit"</span><span class="op">)</span></span>
-<span><span class="co"># If you get the error message you are not the current owner of the GitHub</span></span>
-<span><span class="co"># repository, restart R as administrator and try again.</span></span>
+<span><span class="co"># If you get the error message 'You are not the current owner of the GitHub</span></span>
+<span><span class="co"># repository', restart R as administrator and try again.</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github.html" class="external-link">use_github</a></span><span class="op">(</span>private <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_vaccinate.html" class="external-link">git_vaccinate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_vaccinate.html" class="external-link">git_vaccinate</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># See also https://forum.posit.co/t/renaming-the-default-branch/119149</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git-default-branch.html" class="external-link">git_default_branch_rename</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"master"</span>, to <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></span>
+<span><span class="co"># Sometimes takes a while before this works</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git-default-branch.html" class="external-link">git_default_branch_rediscover</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="use-github-actions">Use GitHub Actions<a class="anchor" aria-label="anchor" href="#use-github-actions"></a>
@@ -237,7 +249,7 @@ ensures the code passes <code>R-CMD check</code> when dependencies in
 <code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
 include some other useful triggers for GHAs (see the template file
 <code>check-no-suggests.yaml</code> in the folder
-<code>templates</code>):</p>
+<code>inst/templates</code>):</p>
 <ul>
 <li>you made changes to code in the current repository: add
 <code>'push:'</code> to section <code>'on:'</code> to run GHA on
@@ -247,7 +259,7 @@ pushes.</li>
 pull requests.</li>
 <li>you changed package <code>A</code> and want to check if package
 <code>B</code>, which depends on package <code>A</code>, is still
-working fine): add <code>'workflow_dispatch:'</code> to section
+working fine: add <code>'workflow_dispatch:'</code> to section
 <code>'on:'</code> to be able to manually trigger GHA. See section
 <code>Use GitHub Actions</code> in <code>pkg_devel.Rmd</code> on how to
 use it.</li>
@@ -256,8 +268,8 @@ e.g. <code>'schedule: - cron: "23 4 * * 6"'</code> to section
 <code>'on:'</code> to run every Saturday on 04:23 UTC. The cron
 specification consists of five elements that indicate the minute (0 -
 59), hour (0 - 23), day of the month (1 - 31), month (1 - 12), and day
-of the week (0 - 6). This timing is approximate and depends on the
-business of the servers.</li>
+of the week (0 - 6). This timing is approximate and depends on how busy
+the servers are.</li>
 <li>If the package declares a dependency on a specific <code>R</code>
 version, it is useful to specify the minimum declared <code>R</code>
 version to run in addition to the ones that are by default used in the
@@ -271,7 +283,7 @@ to section <code>'matrix: config:'</code> to run <code>R</code> version
 <p>See the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link">GitHub
 Actions</a> in <a href="https://r-pkgs.org/" class="external-link">R packages</a>, the GitHub
 documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link">workflow
-syntax</a>,’ and the section <code>Use GitHub Actions</code> in the
+syntax</a>, and the section <code>Use GitHub Actions</code> in the
 vignette <em>Package development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>

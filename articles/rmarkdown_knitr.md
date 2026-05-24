@@ -1,4 +1,4 @@
-# RMarkdown and knitr
+# R Markdown and knitr
 
 ## Introduction
 
@@ -8,7 +8,7 @@ Markdown](https://pkgs.rstudio.com/rmarkdown/) and
 
 An R Markdown file is an R script with markup to enable to combine the
 script (including the comments) together with its output and additional
-text in a single document. The R-package
+text in a single document. The R package
 [rmarkdown](https://cran.r-project.org/package=rmarkdown), as well as
 either [RStudio](https://www.rstudio.com/) or
 [Pandoc](https://pandoc.org/) is required to create an R Markdown file.
@@ -75,7 +75,7 @@ during development of the script.
 
 ## Loading files
 
-Files that have to be used by the R Markdown script (e.g., R-scripts
+Files that have to be used by the R Markdown script (e.g., R scripts
 that are sourced, data files that are read) should be placed in the same
 directory as the R Markdown file, because the working directory when
 evaluating R code chunks is the directory of the input document by
@@ -106,7 +106,7 @@ ensure that all of the source code is printed (see `?source()`).
 The following lines can be used to knit documents (i.e., generate output
 in HTML or PDF files containing the script with its output and
 additional text) containing a file name including a time-stamp. Using
-this way of creating documents creates and keeps local R-objects in the
+this way of creating documents creates and keeps local R objects in the
 current environment. Although that can be useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
@@ -132,12 +132,12 @@ Add a new chunk by either (1) clicking the `Insert Chunk` button on the
 toolbar, (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters
 ```` ```{r} ```` above and ```` ``` ```` below the code chunk.
 
-To collect all chunks in a R Markdown document that contain R-code in a
-conventional R-script use
+To collect all chunks in a R Markdown document that contain R code in a
+conventional R script use
 `knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`.
 
 Note that the various R Markdown options are not incorporated in such an
-R-script, which might hamper exactly reproducing the analyses as
+R script, which might hamper exactly reproducing the analyses as
 executed when running the R Markdown file, see the note in
 [`help("purl", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 

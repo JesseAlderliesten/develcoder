@@ -3,7 +3,9 @@
 ## Introduction
 
 This file contains code and annotations that are useful when creating a
-package.
+package. This code is needed only once to set up a package from scratch.
+Further development is described in the vignette *Package development*:
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Choose a name
 
@@ -16,23 +18,26 @@ stopifnot(pkgdepends::is_valid_package_name(nm = pkgname))
 
 # Is the intended name available?
 unlist(pkgdepends::pkg_name_check(name = pkgname)$basics)
-browseURL(url = paste0("https://github.com/search?q=", pkgname, "&type=repositories"))
-browseURL(url = paste0("https://github.com/search?q=", pkgname, "+language%3AR+&type=repositories"))
+utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
+                              "&type=repositories"))
+utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
+                              "+language%3AR+&type=repositories"))
 ```
 
 ## Create the package
 
 This uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\<username>\Documents\.Rprofile`, see
-[`help("Startup")`](https://rdrr.io/r/base/Startup.html) for details),
-see
-[`usethis::use_description()`](https://usethis.r-lib.org/reference/use_description.html)
+`D:\Userdata\<username>\Documents\.Rprofile`. See
+[`help("Startup")`](https://rdrr.io/r/base/Startup.html),
+[`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
 and the [usethis
-vignette](https://usethis.r-lib.org/articles/usethis-setup.html).
+vignette](https://usethis.r-lib.org/articles/usethis-setup.html) for
+details.
 
 ``` r
 
-path_to_package <- file.path("D:", "Userdata", "Jesse Nieuw", "Documents", "R_add", pkgname)
+path_to_package <- file.path(getwd(), pkgname)
+path_to_package
 usethis::create_package(path = path_to_package)
 ```
 
@@ -63,7 +68,7 @@ to update `README.md` because that imposes the requirement to have
 requirement if it was accidentally introduced, delete the the (hidden)
 file `.git/hooks/pre-commit` from the R-project folder (see the
 `Description` section in
-[`help("build_readme", package = "devtools")`](https://devtools.r-lib.org/reference/build_readme.html).
+[`help("build_readme", package = "devtools")`](https://devtools.r-lib.org/reference/build_readme.html)).
 
 ### Citation
 
@@ -76,7 +81,8 @@ format.
 
 `R/<pkg>-package.R` is used by `usethis` to list imported functions and
 can also be used as help-page such that `help("<pkg>")` produces a
-description of the package with an overview of its functions.
+description of the package with an overview of its functions if package
+`<pkg>` has been loaded (i.e., `library(<pkg>)` has been run.
 
 ### Code and remarks
 
@@ -98,9 +104,8 @@ Do:
     [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
   - Add a badge with the version number by including the following code
-    in the `README.Rmd` file (replace `<pkg>` with the actual package
-    name; the badge does **not** work if the GitHub repository is
-    private):
+    in the `README.Rmd` file (the badge does **not** work if the GitHub
+    repository is private):
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
 - Update the `NEWS`-file (see the template file
@@ -126,7 +131,7 @@ usethis::use_dev_package(package = "progutils", type = "Imports",
 devtools::document()
 ```
 
-## Set up testing
+## Set up testing infrastructure
 
 ``` r
 
@@ -143,10 +148,14 @@ For more information about setting up and using GitHub and Git, see
 ``` r
 
 usethis::use_git(message = "Initial commit")
-# If you get the error message you are not the current owner of the GitHub
-# repository, restart R as administrator and try again.
+# If you get the error message 'You are not the current owner of the GitHub
+# repository', restart R as administrator and try again.
 usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
+# See also https://forum.posit.co/t/renaming-the-default-branch/119149
+usethis::git_default_branch_rename(from = "master", to = "main")
+# Sometimes takes a while before this works
+usethis::git_default_branch_rediscover()
 ```
 
 ## Use GitHub Actions
@@ -167,14 +176,14 @@ usethis::use_github_action("check-no-suggests")
 Then adjust the YAML file (i.e.,
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
 useful triggers for GHAs (see the template file `check-no-suggests.yaml`
-in the folder `templates`):
+in the folder `inst/templates`):
 
 - you made changes to code in the current repository: add `'push:'` to
   section `'on:'` to run GHA on pushes.
 - someone else proposed changes to code in the current repository: add
   `'pull_request:'` to section `'on:'` to run GHA on pull requests.
 - you changed package `A` and want to check if package `B`, which
-  depends on package `A`, is still working fine): add
+  depends on package `A`, is still working fine: add
   `'workflow_dispatch:'` to section `'on:'` to be able to manually
   trigger GHA. See section `Use GitHub Actions` in `pkg_devel.Rmd` on
   how to use it.
@@ -183,7 +192,7 @@ in the folder `templates`):
   every Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
-  timing is approximate and depends on the business of the servers.
+  timing is approximate and depends on how busy the servers are.
 - If the package declares a dependency on a specific `R` version, it is
   useful to specify the minimum declared `R` version to run in addition
   to the ones that are by default used in the template: add e.g.,
@@ -196,7 +205,7 @@ See the section about [GitHub
 Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
 in [R packages](https://r-pkgs.org/), the GitHub documentation about
 [workflow
-syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),’
+syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
 and the section `Use GitHub Actions` in the vignette *Package
 development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
