@@ -1,3 +1,13 @@
+# develcoder 0.0.7
+
+### Miscellaneous
+- Vignette `Package development`: add a section on writing examples. Moved stub
+  on temporary files to section `Usage in practice` of
+  `progutils::create_tempdir()`. Add a section on creating a custom function
+  index for the package website. Rename default GitHub branch from `master` to
+  `main`.
+
+
 # develcoder 0.0.6
 
 ### Breaking changes
