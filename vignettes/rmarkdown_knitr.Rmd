@@ -24,7 +24,7 @@ required to create an R Markdown file.
 
 To generate a PDF as output, a [LaTeX](https://www.latex-project.org/get/)
 distribution needs to be installed. See the 'Rmarkdown cookbook' and the
-'Definitive guide' (both mentioned at [Useful resources] below) for extensive
+'Definitive guide' (both mentioned at [Useful sources] below) for extensive
 help.
 
 ## Useful sources
@@ -44,7 +44,7 @@ all users), see
 [this Stack Exchange post](https://tex.stackexchange.com/questions/27138/how-can-i-fix-the-error-gui-framework-cannot-be-initialized-with-texniccenter)
 
 An alternative to MikText is [TinyTeX](https://yihui.org/tinytex/) (for
-debugging see `https://yihui.org/tinytex/r/`):
+debugging see https://yihui.org/tinytex/r/):
 ``` {r tinytex, eval = FALSE}
 writeLines(c(
   '\\documentclass{article}',
@@ -92,7 +92,7 @@ is included in the knitted file without the accompanying comments, that
 specification of the environment through the argument `local` can be
 [error-prone](https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html)
 and that `max.deparse.length within source(...)` has to be increased to ensure
-that all of the source code is printed (see `?source()`).
+that all of the source code is printed (see `help("source")`).
 
 ## Generating documents in HTML and PDF format ('knitting documents')
 The following lines can be used to knit documents (i.e., generate output in HTML
