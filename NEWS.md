@@ -1,7 +1,10 @@
-# develcoder 0.0.7
+# develcoder 0.1.0
 
-### Miscellaneous
-- ...
+### Breaking changes
+- Dependency `checkinput`: require >= 0.6.0, needed to use `paste_quoted()` that
+  is re-exported from `checkinput` to `progutils`.
+- Dependency `progutils`: require >= 0.0.9, needed to use `paste_quoted()` that
+  is re-exported from `checkinput` to `progutils`.
 
 
 # develcoder 0.0.7
