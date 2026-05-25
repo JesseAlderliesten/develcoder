@@ -13,7 +13,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
     cffr,
-    checkinput,
+    checkinput (>= 0.6.0),
     checkrpkgs,
     codetools,
     devtools,
@@ -23,7 +23,7 @@ Suggests:
     pkgcheck,
     pkgdepends,
     pkgdown,
-    progutils,
+    progutils (>= 0.0.9),
     remotes,
     rmarkdown,
     tinytest,
