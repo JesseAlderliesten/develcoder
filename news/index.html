@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,9 +45,17 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="develcoder-010">develcoder 0.1.0<a class="anchor" aria-label="anchor" href="#develcoder-010"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h4>
+<ul><li>Dependency <code>checkinput</code>: require &gt;= 0.6.0, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
+<li>Dependency <code>progutils</code>: require &gt;= 0.0.9, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.7" id="develcoder-007">develcoder 0.0.7<a class="anchor" aria-label="anchor" href="#develcoder-007"></a></h2>
 <div class="section level4">
-<h4 id="miscellaneous-0-0-7">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-7"></a></h4>
+<h4 id="documentation-0-0-7">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-7"></a></h4>
 <ul><li>Vignette <code>Package development</code>: add a section on writing examples. Moved stub on temporary files to section <code>Usage in practice</code> of <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">progutils::create_tempdir()</a></code>. Add a section on creating a custom function index for the package website. Rename default GitHub branch from <code>master</code> to <code>main</code>.</li>
 </ul></div>
 </div>
@@ -58,27 +66,15 @@
 <ul><li>Add suggested dependencies <code>codetools</code> and <code>pkgcheck</code> for package checks.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="miscellaneous-0-0-6">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-6"></a></h4>
+<h4 id="documentation-0-0-6">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-6"></a></h4>
 <ul><li>Vignette <code>Package development</code>: add section about automated checks.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="develcoder-005">develcoder 0.0.5<a class="anchor" aria-label="anchor" href="#develcoder-005"></a></h2>
 <div class="section level4">
-<h4 id="miscellaneous-0-0-5">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-5"></a></h4>
-<ul><li>Vignettes: Stylistic updates (fix and add links).</li>
-<li>Vignette <code>Package development</code>: add section about styling the <code>pkgdown</code> website. Elaborate on linking on the <code>pkgdown</code> website and on failed GitHub Actions.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.4" id="develcoder-004">develcoder 0.0.4.<a class="anchor" aria-label="anchor" href="#develcoder-004"></a></h2>
-<div class="section level4">
-<h4 id="miscellaneous-0-0-4">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-4"></a></h4>
-<ul><li>
-<code>README</code>: refer to website when appropriate. Stylistic update.</li>
-<li>
-<code>NEWS</code>: stylistic update.</li>
-<li>Vignettes: rely on <code>pkgdown</code> to create links to functions.</li>
+<h4 id="documentation-0-0-5">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-5"></a></h4>
+<ul><li>Vignette <code>Package development</code>: add section about styling the <code>pkgdown</code> website. Elaborate on linking on the <code>pkgdown</code> website and on failed GitHub Actions.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -89,9 +85,8 @@
 <li>Use <code>roxygen2</code> version 8.0.0.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="miscellaneous-0-0-3">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-3"></a></h4>
-<ul><li>Add pkgdown website: <code>https://jessealderliesten.github.io/develcoder/</code>.</li>
-<li>Vignette <code>Package development</code>: describe a faster way to create a new <code>devel</code>-branch. Replace deprecated <code><a href="https://devtools.r-lib.org/reference/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> with <code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>.</li>
+<h4 id="documentation-0-0-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-3"></a></h4>
+<ul><li>Vignette <code>Package development</code>: describe a faster way to create a new <code>devel</code>-branch. Replace deprecated <code><a href="https://devtools.r-lib.org/reference/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> with <code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>.</li>
 <li>Vignette <code>Package setup</code>: add links to overviews of licenses.</li>
 </ul></div>
 </div>
@@ -100,10 +95,6 @@
 <div class="section level4">
 <h4 id="breaking-changes-0-0-2">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-2"></a></h4>
 <ul><li>Add <code>fs</code> and <code>remotes</code> as dependencies in <code>Suggests</code> because they are used in <code>README_template.Rmd</code>.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="miscellaneous-0-0-2">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-0-2"></a></h4>
-<ul><li>Add references from <code>README_template.Rmd</code> to the vignettes.</li>
 </ul></div>
 </div>
     <div class="section level2">

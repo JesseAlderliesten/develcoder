@@ -63,7 +63,7 @@ You can visit the [develcoder
 website](https://jessealderliesten.github.io/develcoder/) to explore the
 package. To use `develcoder`, you have to install it from
 [GitHub](https://github.com/JesseAlderliesten/develcoder) using the
-following code in R (you need to run R as administrator):
+following R code (you need to run R as administrator):
 
 ``` r
 

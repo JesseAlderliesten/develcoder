@@ -457,16 +457,16 @@ To merge the `devel`-branch with `master`, go the the `devel`-branch on
 GitHub. `<Contribute>` \> `Open Pull Request`. Copy the updated `NEWS`
 in the `description` field and use the button `Create pull request`.
 
-If you see
+If the message
 `No conflicts with base branch: Merging can be performed automatically`,
-you can use the green `Merge pull request` button, or change to
-`Squash and merge`.
+is displayed, you can use the green `Merge pull request` button, or
+change to `Squash and merge`.
 
-Otherwise, you will see
-`This branch has conflicts that must be resolved`: follow the
-instructions to resolve the conflicts. Then push the button
-`Commit merge`. Then you should see `No conflicts with base branch` and
-you can proceed as described in the previous paragraph.
+Otherwise, the message `This branch has conflicts that must be resolved`
+will be displayed: follow the instructions to resolve the conflicts.
+Then push the button `Commit merge`. Then you should see
+`No conflicts with base branch` and you can proceed as described in the
+previous paragraph.
 
 After a successful merge, you will see a message that you can delete the
 `devel`-branch, which you can do. To do so later, go to `Pull requests`,

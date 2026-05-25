@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,8 @@ well as either <a href="https://www.rstudio.com/" class="external-link">RStudio<
 Markdown file.</p>
 <p>To generate a PDF as output, a <a href="https://www.latex-project.org/get/" class="external-link">LaTeX</a> distribution needs
 to be installed. See the ‘Rmarkdown cookbook’ and the ‘Definitive guide’
-(both mentioned at [Useful resources] below) for extensive help.</p>
+(both mentioned at <a href="#useful-sources">Useful sources</a> below)
+for extensive help.</p>
 </div>
 <div class="section level2">
 <h2 id="useful-sources">Useful sources<a class="anchor" aria-label="anchor" href="#useful-sources"></a>
@@ -112,8 +113,7 @@ distribution, set <code>install for all users</code> and
 <code>always install missing packages on the fly</code> (for all users),
 see <a href="https://tex.stackexchange.com/questions/27138/how-can-i-fix-the-error-gui-framework-cannot-be-initialized-with-texniccenter" class="external-link">this
 Stack Exchange post</a></p>
-<p>An alternative to MikText is <a href="https://yihui.org/tinytex/" class="external-link">TinyTeX</a> (for debugging see
-<code>https://yihui.org/tinytex/r/</code>):</p>
+<p>An alternative to MikText is <a href="https://yihui.org/tinytex/" class="external-link">TinyTeX</a> (for debugging see <a href="https://yihui.org/tinytex/r/" class="external-link uri">https://yihui.org/tinytex/r/</a>):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">'\\documentclass{article}'</span>,</span>
@@ -166,7 +166,7 @@ comments, that specification of the environment through the argument
 <code>local</code> can be <a href="https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html" class="external-link">error-prone</a>
 and that <code>max.deparse.length within source(...)</code> has to be
 increased to ensure that all of the source code is printed (see
-<code>?source()</code>).</p>
+<code><a href="https://rdrr.io/r/base/source.html" class="external-link">help("source")</a></code>).</p>
 </div>
 <div class="section level2">
 <h2 id="generating-documents-in-html-and-pdf-format-knitting-documents">Generating documents in HTML and PDF format (‘knitting

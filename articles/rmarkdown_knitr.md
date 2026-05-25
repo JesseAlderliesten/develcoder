@@ -16,7 +16,8 @@ either [RStudio](https://www.rstudio.com/) or
 To generate a PDF as output, a
 [LaTeX](https://www.latex-project.org/get/) distribution needs to be
 installed. See the ‘Rmarkdown cookbook’ and the ‘Definitive guide’ (both
-mentioned at \[Useful resources\] below) for extensive help.
+mentioned at [Useful sources](#useful-sources) below) for extensive
+help.
 
 ## Useful sources
 
@@ -38,7 +39,7 @@ When installing [MikTex](https://miktex.org/) as LaTex distribution, set
 post](https://tex.stackexchange.com/questions/27138/how-can-i-fix-the-error-gui-framework-cannot-be-initialized-with-texniccenter)
 
 An alternative to MikText is [TinyTeX](https://yihui.org/tinytex/) (for
-debugging see `https://yihui.org/tinytex/r/`):
+debugging see <https://yihui.org/tinytex/r/>):
 
 ``` r
 
@@ -99,7 +100,8 @@ comments, that specification of the environment through the argument
 `local` can be
 [error-prone](https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html)
 and that `max.deparse.length within source(...)` has to be increased to
-ensure that all of the source code is printed (see `?source()`).
+ensure that all of the source code is printed (see
+[`help("source")`](https://rdrr.io/r/base/source.html)).
 
 ## Generating documents in HTML and PDF format (‘knitting documents’)
 
