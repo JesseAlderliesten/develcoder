@@ -1,8 +1,7 @@
 # develcoder: Code And Templates To Develop R Packages
 
-A collection of code and templates to develop R packages. Based on the R
-packages 'devtools' and 'usethis', following the book 'R packages' by
-Hadley Wickham and Jennifer Bryan.
+Code and templates to set up, develop, and maintain R packages. This
+package heavily relies on packages 'devtools' and 'usethis'.
 
 ## See also
 

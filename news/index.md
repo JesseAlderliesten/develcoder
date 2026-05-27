@@ -1,5 +1,21 @@
 # Changelog
 
+## develcoder 0.2.0
+
+#### Breaking changes
+
+- Dependency `checkinput`: increase minimum version from `0.7.0` to
+  `0.8.0` to update argument name `allow_zero` to `allow_zero_length`.
+- Dependency `progutils`: increase minimum version from `0.0.9` to
+  `0.2.0` to update argument name `allow_zero` to `allow_zero_length`.
+- Dependency `checkrpkgs`: require \>= 0.9.0 to update argument name
+  `allow_zero` to `allow_zero_length`.
+
+#### Documentation
+
+- Updated package description.
+- Also use first-level headings.
+
 ## develcoder 0.1.0
 
 #### Breaking changes

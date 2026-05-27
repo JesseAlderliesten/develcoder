@@ -59,9 +59,9 @@ Folder `vignettes` contains the following vignettes:
 
 ## Installation
 
-You can visit the [develcoder
+Visit the [develcoder
 website](https://jessealderliesten.github.io/develcoder/) to explore the
-package. To use `develcoder`, you have to install it from
+package, or install `develcoder` from
 [GitHub](https://github.com/JesseAlderliesten/develcoder) using the
 following R code (you need to run R as administrator):
 

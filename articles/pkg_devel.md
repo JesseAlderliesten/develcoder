@@ -8,7 +8,7 @@ setting up for a new version. It assumes the package has already been
 set up, as described in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
 
-## Add functions
+## Adding functions
 
 ### Set up
 
@@ -21,6 +21,12 @@ devtools::document() # also runs devtools::load_all()
 Do:
 
 - Manually update the `NEWS` file: `` - Added `<func>()` to ... ``.
+- When adding mew function arguments to an existing function, it is best
+  practice to place the new argument after existing arguments and use a
+  default value that matches the old behaviour: then code written for
+  the old version will work the same as before the change, even if they
+  rely on positional matching, such that it is a **non**-breaking
+  change.
 
 ### Documentation
 
@@ -31,8 +37,8 @@ Do:
 #' Description
 #'
 #' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
-#' @inheritParams is_logical allow_zero # From a function in the current package
-#' @inheritParams utils::installed.packages # from a function in another package
+#' @inheritParams is_logical allow_zero_length # for a function in the current package
+#' @inheritParams utils::installed.packages # for a function in another package
 #' @param x Vector of names to test.
 #' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
 #' @param x,y Separate arguments by a comma without a space to create a single
@@ -98,6 +104,11 @@ Examples rendered on a website created with
 the code. However, help-files accessed through `help(<func>)` will not,
 such that it might be useful to include a short comment regarding what
 feature of the output is notable.
+
+``` r
+
+devtools::run_examples()
+```
 
 ### Add tests
 
@@ -175,7 +186,7 @@ usethis::use_import_from(package = "utils", fun = "osVersion")
 usethis::use_package("utils", type = "Suggests", min_version = "4.1.0")
 ```
 
-## Add vignettes
+## Adding vignettes
 
 ### Set up
 
@@ -297,6 +308,7 @@ if(length(tests_missing) > 0L) {
 
 devtools::document()
 # Using `manual = FALSE` because building the manual leads to `latex` errors
+# If checks fail, see https://r-pkgs.org/R-CMD-check.html on how to proceed
 devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
 devtools::release_checks()
 if(utils::packageVersion("devtools") >= "2.5.0") {
@@ -363,12 +375,12 @@ To increment the package version, adjust the package version in the
 `DESCRIPTION` file, or run `R` as administrator and then use
 [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
 In the latter case, do not automatically `commit` the change, but do so
-manually to adjust the commit message to something like
-`Bump to version x.y.z. Breaking change: <func> no longer ...`.
+manually to adjust the commit message to `Bump to version x.y.z.`.
 Indicating the version number in the commit title makes it easier to
-find changes back later on.
+find changes back later on (the pull request can have a description of
+the changes, i.e., the updated section of the `NEWS` file).
 
-## Performing updates
+## Updating
 
 ### Use GitHub Actions
 
@@ -472,7 +484,7 @@ After a successful merge, you will see a message that you can delete the
 `devel`-branch, which you can do. To do so later, go to `Pull requests`,
 select the `closed` tab, and scroll down to the button `Delete branch`.
 
-### Overwrite devel-branch after merge
+#### Overwrite devel-branch after merge
 
 In `RStudio`, open the relevant project to check there are no commits
 left. Then you can move to the `master` branch and `Pull` to get all
@@ -501,10 +513,10 @@ can also create a completely new branch:
 
 ### Installing the updated package
 
-Then you can delete the old package version from your PC (see
-[`getwd()`](https://rdrr.io/r/base/getwd.html) for its location) and
-install the updated version following your own instructions on the
-GitHub pages of the relevant packages.
+Then you can delete the old package version from your PC
+(`find.package("<pkg>")` gives its location) and install the updated
+version following your own instructions on the GitHub pages of the
+relevant packages.
 
 ## Troubleshooting
 
@@ -516,9 +528,17 @@ when running
 use backticks (`` ` ``) to format a line as code, or wrap consecutive
 lines in `` \code{...}` ``.
 
-## Guidelines
+## Documentation and help
 
-- <https://developer.r-project.org/>, especially
+- [CRAN Repository
+  policy](https://cran.r-project.org/web/packages/policies.html)
+- R [developer page](https://developer.r-project.org/), especially
   <https://developer.r-project.org/devel-guidelines.txt>
-- <https://cran.r-project.org/web/packages/policies.html>
+- R [development guide](https://contributor.r-project.org/rdevguide/)
+  from the [R Contribution Working
+  Group](https://contributor.r-project.org/)
+- R [news
+  (devel)](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
+- [R packages](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan
 - <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links>
+- <https://github.com/jtleek/rpackages>
