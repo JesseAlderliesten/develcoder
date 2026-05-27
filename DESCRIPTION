@@ -1,20 +1,19 @@
 Package: develcoder
 Title: Code And Templates To Develop R Packages
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person("Jesse", "Alderliesten", , "jessealderliesten@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1132-4310"))
 Description:
-    A collection of code and templates to develop R packages. Based on the R
-    packages 'devtools' and 'usethis', following the book 'R packages' by Hadley
-    Wickham and Jennifer Bryan.
+    Code and templates to set up, develop, and maintain R packages. This package
+    heavily relies on packages 'devtools' and 'usethis'.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
     cffr,
-    checkinput (>= 0.6.0),
-    checkrpkgs,
+    checkinput (>= 0.8.0),
+    checkrpkgs (>= 0.9.0),
     codetools,
     devtools,
     fs,
@@ -23,7 +22,7 @@ Suggests:
     pkgcheck,
     pkgdepends,
     pkgdown,
-    progutils (>= 0.0.9),
+    progutils (>= 0.2.0),
     remotes,
     rmarkdown,
     tinytest,
