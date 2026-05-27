@@ -10,15 +10,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Introduction
+# Introduction
 This file contains code and annotations that are useful when developing a
 package, including when preparing to release a new package version and setting
 up for a new version. It assumes the package has already been set up, as
 described in the vignette *Package setup*:
 `vignette("pkg_setup", package = "develcoder")`.
 
-## Add functions
-### Set up
+
+# Adding functions
+## Set up
 ```{r functions, eval = FALSE}
 usethis::use_r("<func>")
 devtools::document() # also runs devtools::load_all()
@@ -28,16 +29,22 @@ devtools::document() # also runs devtools::load_all()
 Do:
 
 - Manually update the `NEWS` file: ``- Added `<func>()` to ...``.
+- When adding mew function arguments to an existing function, it is best
+  practice to place the new argument after existing arguments and use a default
+  value that matches the old behaviour: then code written for the old version
+  will work the same as before the change, even if they rely on positional
+  matching, such that it is a **non**-breaking change.
+  
 
-### Documentation
+## Documentation
 ```{r documentation, eval = FALSE}
 #' Title
 #'
 #' Description
 #'
 #' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
-#' @inheritParams is_logical allow_zero # From a function in the current package
-#' @inheritParams utils::installed.packages # from a function in another package
+#' @inheritParams is_logical allow_zero_length # for a function in the current package
+#' @inheritParams utils::installed.packages # for a function in another package
 #' @param x Vector of names to test.
 #' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
 #' @param x,y Separate arguments by a comma without a space to create a single
@@ -77,8 +84,7 @@ func_name <- function(x, allow_underscores = TRUE) {
 }
 ```
 
-
-#### Inherit sections
+### Inherit sections
 Inherited sections are **silently** ignored if that section is also defined in
 the file itself.
 
@@ -89,7 +95,7 @@ the file itself.
 #' @inheritSection is_logical @note
 ```
 
-#### Add examples
+### Add examples
 Examples should **not** write to the working directory (i.e., use `getwd()`) but
 to a temporary directory that is cleaned up afterwards. See the section
 `Usage in practice` in `help("create_tempdir", package = "progutils")`.
@@ -99,7 +105,11 @@ will display the output underneath the code. However, help-files accessed
 through `help(<func>)` will not, such that it might be useful to include a short
 comment regarding what feature of the output is notable.
 
-### Add tests
+``` {r examples, eval = FALSE}
+devtools::run_examples()
+```
+
+## Add tests
 Tests should **not** write to the working directory (i.e., use `getwd()`) but to
 a temporary directory that is cleaned up afterwards. See the section
 `Usage in practice` in `help("create_tempdir", package = "progutils")`.
@@ -119,7 +129,7 @@ expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
-### Update dependencies
+## Update dependencies
 Specifying a minimum package version when importing packages ensures that used
 features are actually present. Setting `min_version = TRUE` in 
 `usethis::use_package()` uses the currently installed package version.
@@ -147,7 +157,7 @@ the section [Use GitHub Actions].
 To use a function that is present in 'new' versions of R also in older versions
 of R, see https://github.com/yihui/xfun/blob/main/R/zzz.R
 
-#### Importing packages or functions
+### Importing packages or functions
 The standard way to use functions from other packages is to import the package
 (i.e., put it in the `Imports:` field of the `DESCRIPTION` file) and in code use
 the package name followed by two colons and the function name, e.g.,
@@ -162,8 +172,9 @@ usethis::use_import_from(package = "utils", fun = "osVersion")
 usethis::use_package("utils", type = "Suggests", min_version = "4.1.0")
 ```
 
-## Add vignettes
-### Set up
+
+# Adding vignettes
+## Set up
 ``` {r vignettes, eval = FALSE}
 usethis::use_vignette("my_vignette", title = "Some title")
 usethis::use_package(package = "knitr", type = "Suggests")
@@ -183,7 +194,7 @@ Use `utils::vignette("<vignette_title>")` (e.g., `utils::vignette("pkg_devel")`)
 and `tools::Rd2txt("path/to/file.Rd")` to render a vignette or an `Rd`-file in
 the help-pane of RStudio, respectively.
 
-### Styling
+## Styling
 See the vignette *RMarkdown and knitr*:
 `vignette("rmarkdown_knitr", package = "develcoder")`) on using RMarkdown to
 style vignettes.
@@ -196,7 +207,7 @@ output:
 toc_depth: 3
 ```
 
-### Linking
+## Linking
 For internal links to other sections in the same document ('Section', 'above',
 'below'): `[<Section title>]` or `[<link text>][<Section title>]`.
 
@@ -220,14 +231,16 @@ To link from help-pages to vignettes, use
 The vignette *<vignette>*: `vignette("<vignette>", package = "<pkg>")` 
 ```
 
-## Adding miscellaneous files
+
+# Adding miscellaneous files
 Non-standard files or folders should be added in the `inst/` directory to pass
 `R cmd check`. Those files and folders will be in the top directory in the
 installed package.
 
-## Preparing for updates
 
-### Check tests
+# Preparing for updates
+
+## Check tests
 Check for which functions no test file has been written.
 
 ``` {r update tests, eval = FALSE}
@@ -261,10 +274,11 @@ if(length(tests_missing) > 0L) {
 }
 ```
 
-### Automated checks
+## Automated checks
 ``` {r checks, eval = FALSE}
 devtools::document()
 # Using `manual = FALSE` because building the manual leads to `latex` errors
+# If checks fail, see https://r-pkgs.org/R-CMD-check.html on how to proceed
 devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
 devtools::release_checks()
 if(utils::packageVersion("devtools") >= "2.5.0") {
@@ -299,7 +313,7 @@ utils::aspell_package_Rd_files(dir = getwd())
 utils::aspell_package_vignettes(dir = getwd())
 ```
 
-### Locally test update
+## Locally test update
 ``` {r update, eval = FALSE}
 devtools::document()
 .libPaths() # Check if output of .libPaths() is correct.
@@ -311,27 +325,29 @@ browseVignettes(package = basename(getwd()))
 ?checkinput::reorder_levels
 ```
 
-### Update package-wide documentation
+## Update package-wide documentation
 
-#### NEWS
+### NEWS
 Restyle and publish the `NEWS`-file at each new package release.
 
-#### README
+### README
 To provide a nice overview of functions: see
 [this example](https://github.com/MJobinASU/MontyHall). After adjusting the
 `README.Rmd`, `Knit` it to produce a `README.Md` file.
 
-#### Increment package version
+### Increment package version
 To increment the package version, adjust the package version in the `DESCRIPTION`
 file, or run `R` as administrator and then use `usethis::use_version()`. In the
 latter case, do not automatically `commit` the change, but do so manually to
-adjust the commit message to something like
-`Bump to version x.y.z. Breaking change: <func> no longer ...`. Indicating the
-version number in the commit title makes it easier to find changes back later on.
+adjust the commit message to `Bump to version x.y.z.`. Indicating the version
+number in the commit title makes it easier to find changes back later on (the
+pull request can have a description of the changes, i.e., the updated section of
+the `NEWS` file).
 
-## Performing updates
 
-### Use GitHub Actions
+# Updating
+
+## Use GitHub Actions
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see section
 `Use GitHub Actions` in the vignette *Package setup*:
 `vignette("pkg_setup", package = "develcoder")`). To check if package `B`, which
@@ -356,7 +372,7 @@ specify the minimum declared `R` version to run in addition to the ones that are
 by default used in the template: add `- {os: ubuntu-latest,   r: '4.1.0'}` to
 section `matrix: config:` to run `R` 4.1.0.
 
-### pkgdown website
+## pkgdown website
 See the documentation about package [pkgdown](https://pkgdown.r-lib.org/) and
 the [chapter](https://r-pkgs.org/website.html) from the R packages book.
 
@@ -373,7 +389,7 @@ Instead of manually updating the pkgdown website, one can use a
 that updates the website after a pull request or push. To set this up, run
 `usethis::use_pkgdown_github_pages()`.
 
-#### Styling
+### Styling
 To create a thematic index instead of the default alphabetically ordered one,
 see the [documentation](https://pkgdown.r-lib.org/reference/build_reference.html)
 and the [example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml).
@@ -397,7 +413,7 @@ Then build the reference with `pkgdown::build_reference()` and view it locally
 by opening the file `"<pkg>\docs\index.html"` and browse to `Reference` to see
 the package index.
 
-### Merge devel-branch with master
+## Merge devel-branch with master
 To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
 `<Contribute>` > `Open Pull Request`. Copy the updated `NEWS` in the
 `description` field and use the button `Create pull request`.
@@ -426,7 +442,7 @@ be notified that `devel` already exists and asked if you want to overwrite it.
 **If** you have just merged `devel` into `master`, you can choose to overwrite
 it to have a new `devel` branch.
 
-#### Set up a new branch
+### Set up a new branch
 Instead of overwriting the `devel`-branch after merging into `main`, you can
 also create a completely new branch:
 
@@ -439,21 +455,26 @@ also create a completely new branch:
 - Then (still in `RStudio`) in the `Git` menu change from `master` to the
   just-created branch.
 
-### Installing the updated package
-Then you can delete the old package version from your PC (see `getwd()` for its
-location) and install the updated version following your own instructions on the
-GitHub pages of the relevant packages.
+## Installing the updated package
+Then you can delete the old package version from your PC (`find.package("<pkg>")`
+gives its location) and install the updated version following your own
+instructions on the GitHub pages of the relevant packages.
 
 
-## Troubleshooting
+# Troubleshooting
 To prevent `regex`-classes in example code from being interpreted as links
 (which leads to the error
 `@section Could not resolve link to topic ":blank:" in the dependencies or base packages`)
 when running `devtools::document()`, use backticks (`` ` ``) to format a line as
 code, or wrap consecutive lines in `` \code{...}` ``.
 
-## Guidelines
-- https://developer.r-project.org/, especially 
+# Documentation and help
+- [CRAN Repository policy](https://cran.r-project.org/web/packages/policies.html)
+- R [developer page](https://developer.r-project.org/), especially
   https://developer.r-project.org/devel-guidelines.txt
-- https://cran.r-project.org/web/packages/policies.html
+- R [development guide](https://contributor.r-project.org/rdevguide/) from the
+[R Contribution Working Group](https://contributor.r-project.org/)
+- R [news (devel)](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
+- [R packages](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan
 - https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links
+- https://github.com/jtleek/rpackages
