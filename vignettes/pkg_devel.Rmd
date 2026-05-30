@@ -336,6 +336,22 @@ browseVignettes(package = basename(getwd()))
 ?checkinput::reorder_levels
 ```
 
+## Check reverse dependencies
+**Acknowledgement**
+This section reproduces a
+[contribution](https://stat.ethz.ch/pipermail/r-package-devel/2026q2/012397.html)
+by Ivan Krylov to the
+[R-pkg-devel mailing list](https://stat.ethz.ch/mailman/listinfo/r-package-devel)
+of 26 May 2026.
+
+To check if packages that use your package still pass their checks if you made
+breaking changes, install the new version of your package, run
+`tools::package_dependencies(reverse = TRUE, which = "most", recursive = "strong")`
+to get the list of reverse dependencies, then use `utils::download.packages(...)`
+to obtain their latest tarballs and finally run `tools::check_packages_in_dir()`
+to check them. See also `xfun::rev_check()` and package
+[revdepcheck](https://revdepcheck.r-lib.org/).
+
 ## Update package-wide documentation
 
 ### NEWS
