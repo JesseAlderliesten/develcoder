@@ -34,7 +34,9 @@ Do:
   value that matches the old behaviour: then code written for the old version
   will work the same as before the change, even if they rely on positional
   matching, such that it is a **non**-breaking change.
-  
+- When **renaming** functions, remember to also change their names in the
+  `_pkgdown.yml` file if that file is used to create a custom index for the
+  website (`pkgdown::build_reference()` warns about it if you forget).
 
 ## Documentation
 ```{r documentation, eval = FALSE}
@@ -56,9 +58,8 @@ Do:
 #' `TRUE` or `FALSE`, returned [invisibly][invisible].
 #'
 #' @section Side effects:
-#' Values in `x` are identified in an [error][stop], [warning], or [message] if
-#' `signal` is `error`, `warn`, or `message`, respectively. Set `signal` to
-#' `quiet` to suppress this.
+#' The directory indicated by the returned path is
+#' [created][progutils::create_dir()] if it does not yet exist.
 #'
 #' @section Notes:
 #' Some notes.
@@ -117,7 +118,11 @@ a temporary directory that is cleaned up afterwards. See the section
 ``` {r tests, eval = FALSE}
 library(tinytest)
 tinytest::test_all() # Run all tests of a package
-tinytest::run_test_file("./inst/tinytest/test_funcname.R") # Run specific file
+# Run specific file, selecting the file by name
+tinytest::run_test_file(file.path(getwd(), "inst", "tinytest", "test_funcname.R"))
+# Run specific file, selecting the file by order
+tinytest::run_test_file(
+  list.files(file.path(getwd(), "inst", "tinytest"), full.names = TRUE)[1L])
 
 # expect_silent(...) tests that no warnings or errors are emitted, NOT that no
 # messages are emitted.
@@ -136,6 +141,10 @@ features are actually present. Setting `min_version = TRUE` in
 Alternatively, check which features are used and in which version those were
 introduced to find a minimum version. That can also be done by specifying
 minimum versions in checks through GitHub actions.
+
+Since R 4.6.0, `read.dcf()` recognises lines starting with `#` as comment lines,
+making it possible to indicate in comments in the `DESCRIPTION` file why a
+particular package version is needed.
 
 ``` {r dependencies, eval = FALSE}
 # Declare a minimum version for R itself
