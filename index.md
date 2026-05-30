@@ -47,7 +47,7 @@ Folder `vignettes` contains the following vignettes:
 - [package
   development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md)
-  contains code that is needed during package development, including
+  contains code that is useful during package development, including
   when preparing to release a new package version and setting up for a
   new version.
 - [R Markdown and
@@ -55,7 +55,7 @@ Folder `vignettes` contains the following vignettes:
   [`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.md)
   contains information about using [R
   Markdown](https://pkgs.rstudio.com/rmarkdown/) and
-  [knitr](https://yihui.org/knitr/) to style vignettes.
+  [knitr](https://yihui.org/knitr/).
 
 ## Installation
 
@@ -79,3 +79,16 @@ remotes::install_github(repo = "JesseAlderliesten/develcoder",
 For more information about installing and configuring R and RStudio, see
 my package
 [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
+
+## Similar resources
+
+The book [R packages](https://r-pkgs.org/) by Hadley Wickham and
+Jennifer Bryan is much more elaborate than `develcoder`. Another good
+reference is the chapter [Building R
+Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
+of [Mastering Software Development in
+R](https://bookdown.org/rdpeng/RProgDA/) by Roger D. Peng, Sean Kross,
+and Brooke Anderson. The section ‘Documentation and help’ in the
+[package
+development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
+vignette contains further references.

@@ -15,6 +15,10 @@
 
 - Updated package description.
 - Also use first-level headings.
+- Vignette `Package development`: expand section ‘Documentation and
+  help’. Returning an error is not a side effect. Add option to run
+  individual test files.
+- `README`: add section ‘Similar resources’.
 
 ## develcoder 0.1.0
 

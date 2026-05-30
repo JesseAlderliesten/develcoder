@@ -104,6 +104,11 @@ a default value that matches the old behaviour: then code written for
 the old version will work the same as before the change, even if they
 rely on positional matching, such that it is a
 <strong>non</strong>-breaking change.</li>
+<li>When <strong>renaming</strong> functions, remember to also change
+their names in the <code>_pkgdown.yml</code> file if that file is used
+to create a custom index for the website
+(<code><a href="https://pkgdown.r-lib.org/reference/build_reference.html" class="external-link">pkgdown::build_reference()</a></code> warns about it if you
+forget).</li>
 </ul>
 </div>
 <div class="section level3">
@@ -128,9 +133,8 @@ rely on positional matching, such that it is a
 <span><span class="co">#' `TRUE` or `FALSE`, returned [invisibly][invisible].</span></span>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' @section Side effects:</span></span>
-<span><span class="co">#' Values in `x` are identified in an [error][stop], [warning], or [message] if</span></span>
-<span><span class="co">#' `signal` is `error`, `warn`, or `message`, respectively. Set `signal` to</span></span>
-<span><span class="co">#' `quiet` to suppress this.</span></span>
+<span><span class="co">#' The directory indicated by the returned path is</span></span>
+<span><span class="co">#' [created][progutils::create_dir()] if it does not yet exist.</span></span>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' @section Notes:</span></span>
 <span><span class="co">#' Some notes.</span></span>
@@ -191,7 +195,11 @@ cleaned up afterwards. See the section <code>Usage in practice</code> in
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/markvanderloo/tinytest" class="external-link">tinytest</a></span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Run all tests of a package</span></span>
-<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_file.html" class="external-link">run_test_file</a></span><span class="op">(</span><span class="st">"./inst/tinytest/test_funcname.R"</span><span class="op">)</span> <span class="co"># Run specific file</span></span>
+<span><span class="co"># Run specific file, selecting the file by name</span></span>
+<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_file.html" class="external-link">run_test_file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"tinytest"</span>, <span class="st">"test_funcname.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Run specific file, selecting the file by order</span></span>
+<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_file.html" class="external-link">run_test_file</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"tinytest"</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># expect_silent(...) tests that no warnings or errors are emitted, NOT that no</span></span>
 <span><span class="co"># messages are emitted.</span></span>
@@ -212,6 +220,10 @@ uses the currently installed package version. Alternatively, check which
 features are used and in which version those were introduced to find a
 minimum version. That can also be done by specifying minimum versions in
 checks through GitHub actions.</p>
+<p>Since R 4.6.0, <code><a href="https://rdrr.io/r/base/dcf.html" class="external-link">read.dcf()</a></code> recognises lines starting with
+<code>#</code> as comment lines, making it possible to indicate in
+comments in the <code>DESCRIPTION</code> file why a particular package
+version is needed.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Declare a minimum version for R itself</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span><span class="st">"R"</span>, type <span class="op">=</span> <span class="st">"Depends"</span>, min_version <span class="op">=</span> <span class="st">"4.1.0"</span><span class="op">)</span></span>
@@ -228,8 +240,10 @@ checks through GitHub actions.</p>
 GitHub Actions, see the section <a href="#use-github-actions">Use GitHub
 Actions</a>.</li>
 </ul>
-<p>To use a function that is present in ‘new’ versions of R also in
-older versions of R, see <a href="https://github.com/yihui/xfun/blob/main/R/zzz.R" class="external-link uri">https://github.com/yihui/xfun/blob/main/R/zzz.R</a></p>
+<p>See <a href="https://github.com/yihui/xfun/blob/main/R/zzz.R" class="external-link">xfun</a> how to
+implement using a function that is present in ‘new’ versions of R also
+in older versions of R. The <a href="https://github.com/DavisVaughan/cross" class="external-link">cross</a> package can be
+used to benchmark old and new versions.</p>
 <div class="section level4">
 <h4 id="importing-packages-or-functions">Importing packages or functions<a class="anchor" aria-label="anchor" href="#importing-packages-or-functions"></a>
 </h4>
@@ -595,25 +609,64 @@ when running <code><a href="https://devtools.r-lib.org/reference/document.html" 
 <div class="section level2">
 <h2 id="documentation-and-help">Documentation and help<a class="anchor" aria-label="anchor" href="#documentation-and-help"></a>
 </h2>
+<div class="section level3">
+<h3 id="guidelines-on-package-development">Guidelines on package development<a class="anchor" aria-label="anchor" href="#guidelines-on-package-development"></a>
+</h3>
 <ul>
-<li><a href="https://cran.r-project.org/web/packages/policies.html" class="external-link">CRAN
-Repository policy</a></li>
-<li>R <a href="https://developer.r-project.org/" class="external-link">developer page</a>,
-especially <a href="https://developer.r-project.org/devel-guidelines.txt" class="external-link uri">https://developer.r-project.org/devel-guidelines.txt</a>
-</li>
-<li>R <a href="https://contributor.r-project.org/rdevguide/" class="external-link">development
-guide</a> from the <a href="https://contributor.r-project.org/" class="external-link">R
-Contribution Working Group</a>
-</li>
-<li>R <a href="https://cran.r-project.org/doc/manuals/r-devel/NEWS.html" class="external-link">news
-(devel)</a>
+<li>The <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html" class="external-link">Writing
+R extensions</a> manual is the official guide on extending R</li>
+<li>The <a href="https://cran.r-project.org/web/packages/policies.html" class="external-link">CRAN
+Repository policy</a> and <a href="https://contributions.bioconductor.org/" class="external-link">BioConductor package
+guide</a> are the official guides for <a href="https://cran.r-project.org/" class="external-link">CRAN</a> and <a href="https://bioconductor.org/" class="external-link">BioConductor</a>
 </li>
 <li>
-<a href="https://r-pkgs.org/" class="external-link">R packages</a> by Hadley Wickham and
-Jennifer Bryan</li>
-<li><a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links" class="external-link uri">https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links</a></li>
-<li><a href="https://github.com/jtleek/rpackages" class="external-link uri">https://github.com/jtleek/rpackages</a></li>
+<a href="https://epiverse-trace.github.io/" class="external-link">EpiverseTrace</a> has <a href="https://epiverse-trace.github.io/blueprints/" class="external-link">blueprints for
+software development</a>
+</li>
+<li>The <a href="https://contributor.r-project.org/" class="external-link">R Contribution
+Working Group</a> has an <a href="https://contributor.r-project.org/rdevguide/" class="external-link">R development
+guide</a>
+</li>
+<li>
+<a href="https://ropensci.org/" class="external-link">rOpenSci</a> has a <a href="https://devguide.ropensci.org/" class="external-link">package development guide</a>, a
+<a href="https://stats-devguide.ropensci.org/" class="external-link">Statistical Software Peer
+Review</a> guide and a useful section <a href="https://docs.r-universe.dev/publish.html" class="external-link">Publish packages</a> in
+the <a href="https://docs.r-universe.dev/" class="external-link">R universe
+documentation</a>
+</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="other-useful-resources">Other useful resources<a class="anchor" aria-label="anchor" href="#other-useful-resources"></a>
+</h3>
+<ul>
+<li>The book <a href="https://r-pkgs.org/" class="external-link">R packages</a> by Wickham and
+Bryan</li>
+<li>The book <a href="https://r-in-production.org/" class="external-link">R in production</a>
+by Wickham and Masiello</li>
+<li>The chapter <a href="https://bookdown.org/rdpeng/RProgDA/building-r-packages.html" class="external-link">Building
+R Packages</a> of <a href="https://bookdown.org/rdpeng/RProgDA/" class="external-link">Mastering Software
+Development in R</a> by Peng, Kross, and Anderson</li>
+<li>The website <a href="https://rstats.wtf/" class="external-link">What They Forgot to Teach
+You About R</a>
+</li>
+<li>The R <a href="https://developer.r-project.org/" class="external-link">developer page</a>
+contains <a href="https://developer.r-project.org/devel-guidelines.txt" class="external-link">developer
+guidelines</a> and <a href="https://developer.r-project.org/TechDocs/" class="external-link">technical
+documentation</a>
+</li>
+<li>
+<a href="https://posit.co/" class="external-link">Posit</a> has a <a href="https://opensource.posit.co/resources/cheatsheets/package-development/" class="external-link">cheatsheet</a>
+about package development</li>
+<li>
+<a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md" class="external-link">Package
+Development and Maintenance</a> (currently a proposal for a <a href="https://cran.r-project.org/web/views/" class="external-link">CRAN Task View</a>)
+provides an annotated thematic collection of R packages that assist in
+developing R packages</li>
+<li>The separate R <a href="https://cran.r-project.org/doc/manuals/r-devel/NEWS.html" class="external-link">NEWS</a>
+for the development branch</li>
+</ul>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

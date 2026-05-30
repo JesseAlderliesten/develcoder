@@ -27,7 +27,8 @@ help.
 - the [Definitive guide](https://bookdown.org/yihui/rmarkdown/) by Y.
   Xie, J.J. Allaire, and G. Grolemund
 - the [Posit](https://posit.co/) website on [R
-  Markdown](http://rmarkdown.rstudio.com)
+  Markdown](http://rmarkdown.rstudio.com) and a
+  [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
 - the maintainer’s website on [knitr](https://yihui.org/knitr/)
 - the [Markdown guide](https://www.markdownguide.org/)
 
