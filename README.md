@@ -21,7 +21,7 @@ using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 │   └── workflows: workflows to run tests with GitHub Actions
 ├── R: functions
 ├── inst
-│   ├── templates: templates for NEWS, README, and yaml files (see below).
+│   ├── templates: templates for README and yaml files (see below).
 │   └── tinytest: tests
 ├── man: help-files
 ├── tests: setup to use 'tinytest' for testing
@@ -33,7 +33,6 @@ Folder
 contains the following templates (in the installed package these are in
 `develcoder/templates`):
 
-- `NEWS_template.txt` for a `NEWS.txt` file, to be put in `<pkgname>`.
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
 - `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
   `<pkgname>\.github\workflows` (see the section `Use GitHub Actions` in the
