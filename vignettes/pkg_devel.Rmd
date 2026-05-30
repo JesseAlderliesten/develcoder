@@ -163,8 +163,10 @@ Do:
 - Specify the minimum declared `R` version as workflow in GitHub Actions, see
 the section [Use GitHub Actions].
 
-To use a function that is present in 'new' versions of R also in older versions
-of R, see https://github.com/yihui/xfun/blob/main/R/zzz.R
+See [xfun](https://github.com/yihui/xfun/blob/main/R/zzz.R) how to implement
+using a function that is present in 'new' versions of R also in older versions
+of R. The [cross](https://github.com/DavisVaughan/cross) package can be used to
+benchmark old and new versions.
 
 ### Importing packages or functions
 The standard way to use functions from other packages is to import the package
@@ -478,12 +480,44 @@ when running `devtools::document()`, use backticks (`` ` ``) to format a line as
 code, or wrap consecutive lines in `` \code{...}` ``.
 
 # Documentation and help
-- [CRAN Repository policy](https://cran.r-project.org/web/packages/policies.html)
-- R [developer page](https://developer.r-project.org/), especially
-  https://developer.r-project.org/devel-guidelines.txt
-- R [development guide](https://contributor.r-project.org/rdevguide/) from the
-[R Contribution Working Group](https://contributor.r-project.org/)
-- R [news (devel)](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
-- [R packages](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan
-- https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#links-links
-- https://github.com/jtleek/rpackages
+
+## Guidelines on package development
+
+- The
+  [Writing R extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
+  manual is the official guide on extending R
+- The [CRAN Repository policy](https://cran.r-project.org/web/packages/policies.html)
+  and [BioConductor package guide](https://contributions.bioconductor.org/) are
+  the official guides for [CRAN](https://cran.r-project.org/) and
+  [BioConductor](https://bioconductor.org/)
+- [EpiverseTrace](https://epiverse-trace.github.io/) has
+  [blueprints for software development](https://epiverse-trace.github.io/blueprints/)
+- The [R Contribution Working Group](https://contributor.r-project.org/) has an
+  [R development guide](https://contributor.r-project.org/rdevguide/)
+- [rOpenSci](https://ropensci.org/) has a
+  [package development guide](https://devguide.ropensci.org/), a
+  [Statistical Software Peer Review](https://stats-devguide.ropensci.org/) guide
+  and a useful section [Publish packages](https://docs.r-universe.dev/publish.html)
+  in the [R universe documentation](https://docs.r-universe.dev/)
+
+## Other useful resources
+
+- The book [R packages](https://r-pkgs.org/) by Wickham and Bryan
+- The book [R in production](https://r-in-production.org/) by Wickham and Masiello
+- The chapter
+  [Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
+  of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
+  by Peng, Kross, and Anderson
+- The website [What They Forgot to Teach You About R](https://rstats.wtf/)
+- The R [developer page](https://developer.r-project.org/) contains
+  [developer guidelines](https://developer.r-project.org/devel-guidelines.txt)
+  and [technical documentation](https://developer.r-project.org/TechDocs/)
+- [Posit](https://posit.co/) has a
+  [cheatsheet](https://opensource.posit.co/resources/cheatsheets/package-development/)
+  about package development
+- [Package Development and Maintenance](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md)
+  (currently a proposal for a
+  [CRAN Task View](https://cran.r-project.org/web/views/)) provides an annotated
+  thematic collection of R packages that assist in developing R packages
+- The separate R [NEWS](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
+  for the development branch
