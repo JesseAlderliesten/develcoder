@@ -35,10 +35,9 @@ contains the following templates (in the installed package these are in
 
 - `README_template.Rmd` for a `README.Rmd` file, to be put in `<pkgname>`.
 - `check-no-suggests.yaml` for a GitHub Actions workflow, to be put in
-  `<pkgname>\.github\workflows` (see the section `Use GitHub Actions` in the
-  vignettes
+  `<pkgname>\.github\workflows` (see the section `Automate checks` in the vignette
   [package setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
-  and
+  and the section `Use GitHub Actions` in the vignette
   [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   for details).
 
