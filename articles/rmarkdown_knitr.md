@@ -64,12 +64,12 @@ appendix at the end of of a document, see
 <https://bookdown.org/yihui/rmarkdown-cookbook/code-appendix.html>.
 
 If the option `include = FALSE` is used, code and results are not
-included in output, but code *is* executed such that its results can be
-used in other code chunks (useful as option for particular chunks, not
-as global option).
+included in output, but code **is** executed such that its results can
+be used in other code chunks (useful as option for particular chunks,
+not as global option).
 
-If the option `error = TRUE` is used, code execution will *not* stop on
-error (unless `include = FALSE`), but instead the error message is
+If the option `error = TRUE` is used, code execution will **not** stop
+on error (unless `include = FALSE`), but instead the error message is
 included in the output. This is useful in non-interactive use in
 production settings. If the option `error = FALSE` is used, code
 execution stops on error, which makes more sense in interactive use
@@ -82,7 +82,7 @@ that are sourced, data files that are read) should be placed in the same
 directory as the R Markdown file, because the working directory when
 evaluating R code chunks is the directory of the input document by
 default. The working directory can be changed using
-`opts_knit$set(root.dir = ...)` but should *not* be changed using
+`opts_knit$set(root.dir = ...)` but should **not** be changed using
 [`setwd()`](https://rdrr.io/r/base/getwd.html), see the `Note` in
 [`help("knit", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
@@ -104,7 +104,7 @@ and that `max.deparse.length within source(...)` has to be increased to
 ensure that all of the source code is printed (see
 [`help("source")`](https://rdrr.io/r/base/source.html)).
 
-## Generating documents in HTML and PDF format (‘knitting documents’)
+## Knitting documents to HTML and PDF
 
 The following lines can be used to knit documents (i.e., generate output
 in HTML or PDF files containing the script with its output and
@@ -114,7 +114,7 @@ current environment. Although that can be useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
 before using it and final files should be created by using the `Knit`
-button in `RStudio`, *not* by using
+button in `RStudio`, **not** by using
 [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
 (see [here](https://bookdown.org/yihui/rmarkdown/compile.html#fnref2)).
 

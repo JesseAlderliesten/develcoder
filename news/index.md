@@ -1,5 +1,22 @@
 # Changelog
 
+## develcoder 0.3.0
+
+#### Breaking changes
+
+- Add dependencies `revdepcheck` and `xfun` to check reverse
+  dependencies.
+
+#### Documentation
+
+- Vignette `Package setup`: remove section ‘Importing packages or
+  functions’ because it duplicates section ‘Update dependencies’ from
+  the vignette `Package development`.
+- Vignette `Package development`: add section ‘Check reverse
+  dependencies’.
+- Remove the `NEWS` template: looking at real `NEWS` files is much more
+  useful.
+
 ## develcoder 0.2.0
 
 #### Breaking changes

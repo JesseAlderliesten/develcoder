@@ -30,8 +30,8 @@ This uses information stored in your `.Rprofile` file (located at
 `D:\Userdata\<username>\Documents\.Rprofile`. See
 [`help("Startup")`](https://rdrr.io/r/base/Startup.html),
 [`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
-and the [usethis
-vignette](https://usethis.r-lib.org/articles/usethis-setup.html) for
+and the `usethis` vignette [usethis
+setup](https://usethis.r-lib.org/articles/usethis-setup.html) for
 details.
 
 ``` r
@@ -56,33 +56,34 @@ of licenses are available at
 [GNU.org](https://www.gnu.org/licenses/license-list.html), [Open Source
 Initiative](https://opensource.org/licenses), and [System Package Data
 Exchange](https://spdx.org/licenses/). Some legal details are provided
-in [The Legal Side of Open Source](https://opensource.guide/legal/) and
+in [The Legal Side of Open Source](https://opensource.guide/legal/), and
 [this
 blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
 gives details on the MIT License.
 
-I do **not** follow the `usethis` practise of using
+I do **not** follow the `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
-to update `README.md` because that imposes the requirement to have
-`README.Rmd` and `README.md` staged at the same time. To remove this
-requirement if it was accidentally introduced, delete the the (hidden)
-file `.git/hooks/pre-commit` from the R-project folder (see the
-`Description` section in
+to update `README.md` because then `README.Rmd` and `README.md` have to
+be staged at the same time. To remove this requirement if it was
+accidentally introduced, delete the the (hidden) file
+`.git/hooks/pre-commit` from the R-project folder (see the `Description`
+section in
 [`help("build_readme", package = "devtools")`](https://devtools.r-lib.org/reference/build_readme.html)).
 
 ### Citation
 
-A citation file makes clear how your package should be cited, see the
+A citation file makes clear how your package should be cited. See the
 [Citation file format GitHub
 page](https://citation-file-format.github.io/) for details on the
 format.
 
 ### Package overview
 
-`R/<pkg>-package.R` is used by `usethis` to list imported functions and
-can also be used as help-page such that `help("<pkg>")` produces a
-description of the package with an overview of its functions if package
-`<pkg>` has been loaded (i.e., `library(<pkg>)` has been run.
+The file `R/<pkg>-package.R` is used by `usethis` to list imported
+functions and can also be used as help-page such that `help("<pkg>")`
+produces a description of the package with an overview of its functions
+if package `<pkg>` has been loaded (i.e., `library(<pkg>)` has been
+run).
 
 ### Code and remarks
 
@@ -105,31 +106,9 @@ Do:
     in the folder `inst/templates`.
   - Add a badge with the version number by including the following code
     in the `README.Rmd` file (the badge does **not** work if the GitHub
-    repository is private):
+    repository is private):  
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
   - `Knit` the `README.Rmd` file to produce a `README.Md` file.
-- Update the `NEWS`-file (see the template file
-  [NEWS_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/NEWS_template.txt)
-  in the folder `inst/templates`).
-
-## Importing packages or functions
-
-Specifying a minimum package version when importing packages ensures
-that used features are actually present. Setting `min_version = TRUE` in
-[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
-uses the currently installed package version.
-
-``` r
-
-usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
-usethis::use_dev_package(package = "checkinput", type = "Imports",
-                         remote = "github::JesseAlderliesten/checkinput")
-
-usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
-usethis::use_dev_package(package = "progutils", type = "Imports",
-                         remote = "github::JesseAlderliesten/progutils")
-devtools::document()
-```
 
 ## Set up testing infrastructure
 
@@ -158,13 +137,13 @@ usethis::git_default_branch_rename(from = "master", to = "main")
 usethis::git_default_branch_rediscover()
 ```
 
-## Use GitHub Actions
+## Automate checks
 
 GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
 `check-no-suggests.yaml` from
 [r-lib](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
-ensures the code passes `R-CMD check` when dependencies in `Suggests`
+ensures the code passes `R-CMD check` even if dependencies in `Suggests`
 are not installed.
 
 ``` r
@@ -188,33 +167,34 @@ in the folder `inst/templates`):
   trigger GHA. See section `Use GitHub Actions` in `pkg_devel.Rmd` on
   how to use it.
 - someone else made changes to packages your package depends on: add
-  e.g. `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run
-  every Saturday on 04:23 UTC. The cron specification consists of five
+  `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every
+  Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
   timing is approximate and depends on how busy the servers are.
-- If the package declares a dependency on a specific `R` version, it is
+- If the package declares a dependency on a minimum `R` version, it is
   useful to specify the minimum declared `R` version to run in addition
-  to the ones that are by default used in the template: add e.g.,
+  to the ones that are by default used in the template: for example, add
   `'- {os: ubuntu-latest, r: '4.1.0'}'` to section `'matrix: config:'`
-  to run `R` version 4.1.0.
+  to run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
+  version.
 
 ### Further documentation
 
 See the section about [GitHub
 Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-in [R packages](https://r-pkgs.org/), the GitHub documentation about
-[workflow
+in the book [R packages](https://r-pkgs.org/), the GitHub documentation
+about [workflow
 syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
 and the section `Use GitHub Actions` in the vignette *Package
 development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
-## Use pkgdown
+## Use a package website
 
-See the chapter about [pkgdown](https://r-pkgs.org/website.html) from
-the book [R packages](https://r-pkgs.org/) and the documentation for
-package [pkgdown](https://pkgdown.r-lib.org/).
+See the chapter about [pkgdown](https://r-pkgs.org/website.html) in the
+book [R packages](https://r-pkgs.org/) and the documentation for package
+[pkgdown](https://pkgdown.r-lib.org/).
 
 ``` r
 
@@ -230,8 +210,10 @@ structure `https://<username>.github.io/<repository>/`, e.g.,
 Refer from the `README` to the pkgdown website and add the line
 `light-switch: true` below the `template` heading in the `_pkgdown.YML`
 file (located in the top-level package folder or in folder `pkgdown`;
-can also have extension `.YAML`) to add a light-switch to the
-pkgdown-website (see the
+can also have extension `.YAML`; this is **not** the `YAML` file
+defining testing workflows in
+`<pkg>\.github\workflows\check-no-suggests.yaml`) to add a light-switch
+to the pkgdown-website (see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)

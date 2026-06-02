@@ -20,12 +20,12 @@ devtools::document() # also runs devtools::load_all()
 
 Do:
 
-- Manually update the `NEWS` file: `` - Added `<func>()` to ... ``.
-- When adding mew function arguments to an existing function, it is best
+- Manually update the `NEWS` file: `` - Add `<func>()` to ... ``.
+- When adding new function arguments to an existing function, it is best
   practice to place the new argument after existing arguments and use a
   default value that matches the old behaviour: then code written for
-  the old version will work the same as before the change, even if they
-  rely on positional matching, such that it is a **non**-breaking
+  the old version will work the same as before the change, even if it
+  relies on positional matching, such that it is a **non**-breaking
   change.
 - When **renaming** functions, remember to also change their names in
   the `_pkgdown.yml` file if that file is used to create a custom index
@@ -97,7 +97,7 @@ defined in the file itself.
 
 #### Add examples
 
-Examples should **not** write to the working directory (i.e., use
+Examples should **not** write to the working directory (e.g., using
 [`getwd()`](https://rdrr.io/r/base/getwd.html)) but to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
@@ -116,7 +116,7 @@ devtools::run_examples()
 
 ### Add tests
 
-Tests should **not** write to the working directory (i.e., use
+Tests should **not** write to the working directory (e.g., using
 [`getwd()`](https://rdrr.io/r/base/getwd.html)) but to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
@@ -124,7 +124,6 @@ directory that is cleaned up afterwards. See the section
 
 ``` r
 
-library(tinytest)
 tinytest::test_all() # Run all tests of a package
 # Run specific file, selecting the file by name
 tinytest::run_test_file(file.path(getwd(), "inst", "tinytest", "test_funcname.R"))
@@ -134,11 +133,11 @@ tinytest::run_test_file(
 
 # expect_silent(...) tests that no warnings or errors are emitted, NOT that no
 # messages are emitted.
-expect_silent(expect_true(func_name(x = x, arg = arg)))
-expect_warning(
+tinytest::expect_silent(expect_true(func_name(x = x, arg = arg)))
+tinytest::expect_warning(
   expect_equal(func_name(x = "a", arg = arg), 3),
   pattern = "...", strict = TRUE, fixed = TRUE)
-expect_error(func_name(x = "a", arg = arg),
+tinytest::expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
@@ -168,6 +167,10 @@ usethis::use_package("R", type = "Depends", min_version = "4.1.0")
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
                          remote = "github::JesseAlderliesten/checkinput")
+usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
+usethis::use_dev_package(package = "progutils", type = "Imports",
+                         remote = "github::JesseAlderliesten/progutils")
+devtools::document()
 ```
 
 Do:
@@ -190,8 +193,8 @@ name, e.g.,
 [`utils::osVersion()`](https://rdrr.io/r/utils/sessionInfo.html). If
 that is not possible, for example because the function is an operator,
 it is necessary to also list the function in the `NAMESPACE` file, e.g.,
-to add the line `#' @importFrom utils osVersion` to `R/<pkg>-package.R`
-that was created by
+to add the line `#' @importFrom utils osVersion` to the file
+`R/<pkg>-package.R` that was created by
 [`usethis::use_package_doc()`](https://usethis.r-lib.org/reference/use_package_doc.html).
 This is done by
 `usethis::use_import_from(package = "utils", fun = "osVersion")`.
@@ -209,6 +212,7 @@ usethis::use_package("utils", type = "Suggests", min_version = "4.1.0")
 ``` r
 
 usethis::use_vignette("my_vignette", title = "Some title")
+# Add suggested dependencies on 'knitr' and 'rmarkdown'
 usethis::use_package(package = "knitr", type = "Suggests")
 usethis::use_package(package = "rmarkdown", type = "Suggests")
 devtools::document()
@@ -221,8 +225,8 @@ If no vignettes are visible,
 was probably run with the default argument `build_vignettes = FALSE`,
 use `build_vignettes = TRUE` instead:
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
-See also `tools::pkgVignettes(package = "<pkg>")` for information about
-which vignettes R finds.
+Run `tools::pkgVignettes(package = "<pkg>")` for information about which
+vignettes R finds.
 
 Use `utils::vignette("<vignette_title>")` (e.g.,
 [`utils::vignette("pkg_devel")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
@@ -271,7 +275,7 @@ work, see
 To link from help-pages to vignettes, use
 
 ``` r
-The vignette *<vignette>*: `vignette("<vignette>", package = "<pkg>")` 
+The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")` 
 ```
 
 ## Adding miscellaneous files
@@ -373,35 +377,46 @@ browseVignettes(package = basename(getwd()))
 ?checkinput::reorder_levels
 ```
 
+### Check reverse dependencies
+
+**Acknowledgement** This section reproduces a
+[contribution](https://stat.ethz.ch/pipermail/r-package-devel/2026q2/012397.html)
+by Ivan Krylov to the [R-pkg-devel mailing
+list](https://stat.ethz.ch/mailman/listinfo/r-package-devel) of 26 May
+2026.
+
+To check if packages that use your package still pass their checks if
+you made breaking changes, install the new version of your package, run
+`tools::package_dependencies(reverse = TRUE, which = "most", recursive = "strong")`
+to get the list of reverse dependencies, then use
+`utils::download.packages(...)` to obtain their latest tarballs and
+finally run
+[`tools::check_packages_in_dir()`](https://rdrr.io/r/tools/check_packages_in_dir.html)
+to check them. See also
+[`xfun::rev_check()`](https://rdrr.io/pkg/xfun/man/rev_check.html) and
+package [revdepcheck](https://revdepcheck.r-lib.org/).
+
 ### Update package-wide documentation
 
-#### NEWS
-
-Restyle and publish the `NEWS`-file at each new package release.
-
-#### README
-
-To provide a nice overview of functions: see [this
-example](https://github.com/MJobinASU/MontyHall). After adjusting the
-`README.Rmd`, `Knit` it to produce a `README.Md` file.
-
-#### Increment package version
-
-To increment the package version, adjust the package version in the
-`DESCRIPTION` file, or run `R` as administrator and then use
-[`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
-In the latter case, do not automatically `commit` the change, but do so
-manually to adjust the commit message to `Bump to version x.y.z.`.
-Indicating the version number in the commit title makes it easier to
-find changes back later on (the pull request can have a description of
-the changes, i.e., the updated section of the `NEWS` file).
+- `NEWS`: restyle and publish the `NEWS`-file at each new package
+  release.
+- `README`: after adjusting the `README.Rmd`, `Knit` it to produce a
+  `README.Md` file.
+- `DESCRIPTION`: increment the package version in the `DESCRIPTION`
+  file, or run `R` as administrator and then use
+  [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
+  In the latter case, do not automatically `commit` the change, but do
+  so manually to adjust the commit message to `Bump to version x.y.z`.
+  Indicating the version number in the commit title makes it easier to
+  find changes back later on (the pull request can have a description of
+  the changes, i.e., the updated section of the `NEWS` file).
 
 ## Updating
 
 ### Use GitHub Actions
 
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see
-section `Use GitHub Actions` in the vignette *Package setup*:
+section `Automate checks` in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)).
 To check if package `B`, which depends on package `A`, is still working
 fine, go to the `Actions` tab of repository `B`, select the action you
@@ -419,7 +434,7 @@ indicates the package passes the R cmd check whereas the badge on the
 fails, the badge will have `failing`): use the `Run workflow` button to
 run the GHA on the `main` branch (see the previous paragraph).
 
-If the package declares a dependency on a specific `R` version, it is
+If the package declares a dependency on a minimum `R` version, it is
 useful to specify the minimum declared `R` version to run in addition to
 the ones that are by default used in the template: add
 `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to run
@@ -437,7 +452,7 @@ See the documentation about package
 pkgdown::build_site()
 ```
 
-Open `docs/index.html` in a webbrowser to preview the website, or look
+Open `docs/index.html` in a web browser to preview the website, or look
 at the files that constitute your package’s website are in the local
 `docs/` directory.
 

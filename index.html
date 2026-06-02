@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 │   └── workflows: workflows to run tests with GitHub Actions
 ├── R: functions
 ├── inst
-│   ├── templates: templates for NEWS, README, and yaml files (see below).
+│   ├── templates: templates for README and yaml files (see below).
 │   └── tinytest: tests
 ├── man: help-files
 ├── tests: setup to use 'tinytest' for testing
@@ -82,11 +82,9 @@
 <p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">inst/templates</a> contains the following templates (in the installed package these are in <code>develcoder/templates</code>):</p>
 <ul>
 <li>
-<code>NEWS_template.txt</code> for a <code>NEWS.txt</code> file, to be put in <code>&lt;pkgname&gt;</code>.</li>
-<li>
 <code>README_template.Rmd</code> for a <code>README.Rmd</code> file, to be put in <code>&lt;pkgname&gt;</code>.</li>
 <li>
-<code>check-no-suggests.yaml</code> for a GitHub Actions workflow, to be put in <code>&lt;pkgname&gt;\.github\workflows</code> (see the section <code>Use GitHub Actions</code> in the vignettes <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a> and <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a> for details).</li>
+<code>check-no-suggests.yaml</code> for a GitHub Actions workflow, to be put in <code>&lt;pkgname&gt;\.github\workflows</code> (see the section <code>Automate checks</code> in the vignette <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a> and the section <code>Use GitHub Actions</code> in the vignette <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a> for details).</li>
 </ul>
 <p>Folder <code>vignettes</code> contains the following vignettes:</p>
 <ul>
