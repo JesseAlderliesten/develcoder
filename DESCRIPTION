@@ -1,6 +1,6 @@
 Package: develcoder
 Title: Code And Templates To Develop R Packages
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     person("Jesse", "Alderliesten", , "jessealderliesten@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1132-4310"))
@@ -24,16 +24,19 @@ Suggests:
     pkgdown,
     progutils (>= 0.2.0),
     remotes,
+    revdepcheck,
     rmarkdown,
     tinytest,
     tools,
     usethis,
-    utils
+    utils,
+    xfun
 Remotes:
     github::JesseAlderliesten/checkinput,
     github::JesseAlderliesten/checkrpkgs,
     github::ropensci-review-tools/pkgcheck,
-    github::JesseAlderliesten/progutils
+    github::JesseAlderliesten/progutils,
+    github::r-lib/revdepcheck
 URL: https://github.com/JesseAlderliesten/develcoder, https://jessealderliesten.github.io/develcoder/
 BugReports: https://github.com/JesseAlderliesten/develcoder/issues
 VignetteBuilder: knitr
