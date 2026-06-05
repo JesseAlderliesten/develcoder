@@ -42,10 +42,10 @@ Do:
 #' Description
 #'
 #' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
-#' @inheritParams is_logical allow_zero_length # for a function in the current package
+#' @inheritParams is_logical allow_NA # for a function in the current package
 #' @inheritParams utils::installed.packages # for a function in another package
 #' @param x Vector of names to test.
-#' @param allow_underscores `TRUE` or `FALSE`: allow underscores?
+#' @param allow_NA `TRUE` or `FALSE`: allow [NA]s of the correct type in `x`?
 #' @param x,y Separate arguments by a comma without a space to create a single
 #' description for multiple arguments.
 #'
@@ -121,6 +121,12 @@ Tests should **not** write to the working directory (e.g., using
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
+More generally, tests should not make changes (without restoring the
+original state) that could influence subsequent tests. Examples of such
+changes are any settings and changes to the state of the global
+environment (see the vignette [test
+fixtures](https://testthat.r-lib.org/articles/test-fixtures.html) from
+package `testthat` for more details).
 
 ``` r
 
@@ -374,7 +380,7 @@ devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
 browseVignettes(package = basename(getwd()))
-?checkinput::reorder_levels
+?progutils::reorder_levels
 ```
 
 ### Check reverse dependencies

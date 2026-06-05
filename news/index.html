@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.0" id="develcoder-040">develcoder 0.4.0<a class="anchor" aria-label="anchor" href="#develcoder-040"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-4-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h4>
+<ul><li>Dependency <code>progutils</code>: increase minimum version from <code>0.2.0</code> to <code>0.5.0</code> to prevent <code><a href="https://jessealderliesten.github.io/progutils/reference/create_dir.html" class="external-link">progutils::create_dir()</a></code> from unsafely returning the working directory if creating the directory fails.</li>
+<li>Dependencies <code>checkinput</code> and <code>checkrpkgs</code>: remove unnecessary requirements for a minimum version.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="develcoder-030">develcoder 0.3.0<a class="anchor" aria-label="anchor" href="#develcoder-030"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h4>
-<ul><li>Add dependencies <code>revdepcheck</code> and <code>xfun</code> to check reverse dependencies.</li>
+<ul><li>Add dependencies <code>revdepcheck</code> and <code>xfun</code> to <code>Imports</code> because they are used in a vignette to check reverse dependencies.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-3-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-0"></a></h4>
@@ -63,7 +71,7 @@
 <h4 id="breaking-changes-0-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h4>
 <ul><li>Dependency <code>checkinput</code>: increase minimum version from <code>0.7.0</code> to <code>0.8.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
 <li>Dependency <code>progutils</code>: increase minimum version from <code>0.0.9</code> to <code>0.2.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
-<li>Dependency <code>checkrpkgs</code>: require &gt;= 0.9.0 to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
+<li>Dependency <code>checkrpkgs</code>: require <code>&gt;= 0.9.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-2-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-2-0"></a></h4>
@@ -78,8 +86,8 @@
 <h2 class="pkg-version" data-toc-text="0.1.0" id="develcoder-010">develcoder 0.1.0<a class="anchor" aria-label="anchor" href="#develcoder-010"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h4>
-<ul><li>Dependency <code>checkinput</code>: require &gt;= 0.6.0, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
-<li>Dependency <code>progutils</code>: require &gt;= 0.0.9, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
+<ul><li>Dependency <code>checkinput</code>: require <code>&gt;= 0.6.0</code>, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
+<li>Dependency <code>progutils</code>: require <code>&gt;= 0.0.9</code>, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -93,7 +101,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.6" id="develcoder-006">develcoder 0.0.6<a class="anchor" aria-label="anchor" href="#develcoder-006"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-0-6">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-6"></a></h4>
-<ul><li>Add suggested dependencies <code>codetools</code> and <code>pkgcheck</code> for package checks.</li>
+<ul><li>Add dependencies <code>codetools</code> and <code>pkgcheck</code> to <code>Suggests</code> because they are suggested for package checks.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-0-6">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-6"></a></h4>
@@ -111,7 +119,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.3" id="develcoder-003">develcoder 0.0.3<a class="anchor" aria-label="anchor" href="#develcoder-003"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-0-3">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-3"></a></h4>
-<ul><li>Add dependency <code>goodpractice</code> to be able to use <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::gp()</a></code> to check for various issues.</li>
+<ul><li>Add dependency <code>goodpractice</code> to <code>Suggests</code> because it is suggested to check for various issues.</li>
 <li>Use <code>roxygen2</code> version 8.0.0.</li>
 </ul></div>
 <div class="section level4">
@@ -124,7 +132,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.2" id="develcoder-002">develcoder 0.0.2<a class="anchor" aria-label="anchor" href="#develcoder-002"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-0-2">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-2"></a></h4>
-<ul><li>Add <code>fs</code> and <code>remotes</code> as dependencies in <code>Suggests</code> because they are used in <code>README_template.Rmd</code>.</li>
+<ul><li>Add dependencies <code>fs</code> and <code>remotes</code> to <code>Suggests</code> because they are used in <code>README_template.Rmd</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">

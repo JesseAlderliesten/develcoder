@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,10 +120,10 @@ forget).</li>
 <span><span class="co">#' Description</span></span>
 <span><span class="co">#'</span></span>
 <span><span class="co">#' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit</span></span>
-<span><span class="co">#' @inheritParams is_logical allow_zero_length # for a function in the current package</span></span>
+<span><span class="co">#' @inheritParams is_logical allow_NA # for a function in the current package</span></span>
 <span><span class="co">#' @inheritParams utils::installed.packages # for a function in another package</span></span>
 <span><span class="co">#' @param x Vector of names to test.</span></span>
-<span><span class="co">#' @param allow_underscores `TRUE` or `FALSE`: allow underscores?</span></span>
+<span><span class="co">#' @param allow_NA `TRUE` or `FALSE`: allow [NA]s of the correct type in `x`?</span></span>
 <span><span class="co">#' @param x,y Separate arguments by a comma without a space to create a single</span></span>
 <span><span class="co">#' description for multiple arguments.</span></span>
 <span><span class="co">#'</span></span>
@@ -191,7 +191,12 @@ notable.</p>
 <p>Tests should <strong>not</strong> write to the working directory
 (e.g., using <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code>) but to a temporary directory that is
 cleaned up afterwards. See the section <code>Usage in practice</code> in
-<code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>.</p>
+<code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>. More
+generally, tests should not make changes (without restoring the original
+state) that could influence subsequent tests. Examples of such changes
+are any settings and changes to the state of the global environment (see
+the vignette <a href="https://testthat.r-lib.org/articles/test-fixtures.html" class="external-link">test
+fixtures</a> from package <code>testthat</code> for more details).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Run all tests of a package</span></span>
 <span><span class="co"># Run specific file, selecting the file by name</span></span>
@@ -429,7 +434,7 @@ package.</p>
 <span><span class="co"># Load the package and view the help files as usual outside devtools:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span>package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">?</span><span class="fu">checkinput</span><span class="fu">::</span><span class="va">reorder_levels</span></span></code></pre></div>
+<span><span class="op">?</span><span class="fu">progutils</span><span class="fu">::</span><span class="va"><a href="https://jessealderliesten.github.io/progutils/reference/reorder_levels.html" class="external-link">reorder_levels</a></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="check-reverse-dependencies">Check reverse dependencies<a class="anchor" aria-label="anchor" href="#check-reverse-dependencies"></a>
