@@ -1,4 +1,4 @@
-# develcoder devel
+# develcoder 0.4.0
 
 ### Breaking changes
 - Dependency `progutils`: increase minimum version from `0.2.0` to `0.5.0` to
