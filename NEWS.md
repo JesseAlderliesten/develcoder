@@ -1,7 +1,18 @@
+# develcoder devel
+
+### Breaking changes
+- Dependency `progutils`: increase minimum version from `0.2.0` to `0.5.0` to
+  prevent `progutils::create_dir()` from unsafely returning the working
+  directory if creating the directory fails.
+- Dependencies `checkinput` and `checkrpkgs`: remove unnecessary requirements
+  for a minimum version.
+
+
 # develcoder 0.3.0
 
 ### Breaking changes
-- Add dependencies `revdepcheck` and `xfun` to check reverse dependencies.
+- Add dependencies `revdepcheck` and `xfun` to `Imports` because they are used
+  in a vignette to check reverse dependencies.
 
 ### Documentation
 - Vignette `Package setup`: remove section 'Importing packages or functions'
@@ -18,7 +29,7 @@
   update argument name `allow_zero` to `allow_zero_length`.
 - Dependency `progutils`: increase minimum version from `0.0.9` to `0.2.0` to
   update argument name `allow_zero` to `allow_zero_length`.
-- Dependency `checkrpkgs`: require >= 0.9.0 to update argument name `allow_zero`
+- Dependency `checkrpkgs`: require `>= 0.9.0` to update argument name `allow_zero`
   to `allow_zero_length`.
 
 ### Documentation
@@ -33,9 +44,9 @@
 # develcoder 0.1.0
 
 ### Breaking changes
-- Dependency `checkinput`: require >= 0.6.0, needed to use `paste_quoted()` that
+- Dependency `checkinput`: require `>= 0.6.0`, needed to use `paste_quoted()` that
   is re-exported from `checkinput` to `progutils`.
-- Dependency `progutils`: require >= 0.0.9, needed to use `paste_quoted()` that
+- Dependency `progutils`: require `>= 0.0.9`, needed to use `paste_quoted()` that
   is re-exported from `checkinput` to `progutils`.
 
 
@@ -52,7 +63,8 @@
 # develcoder 0.0.6
 
 ### Breaking changes
-- Add suggested dependencies `codetools` and `pkgcheck` for package checks.
+- Add dependencies `codetools` and `pkgcheck` to `Suggests` because they are
+  suggested for package checks.
 
 ### Documentation
 - Vignette `Package development`: add section about automated checks.
@@ -69,7 +81,7 @@
 # develcoder 0.0.3
 
 ### Breaking changes
-- Add dependency `goodpractice` to be able to use `goodpractice::gp()` to check
+- Add dependency `goodpractice` to `Suggests` because it is suggested to check
   for various issues.
 - Use `roxygen2` version 8.0.0.
 
@@ -83,7 +95,7 @@
 # develcoder 0.0.2
 
 ### Breaking changes
-- Add `fs` and `remotes` as dependencies in `Suggests` because they are used in
+- Add dependencies `fs` and `remotes` to `Suggests` because they are used in
   `README_template.Rmd`.
 
 
