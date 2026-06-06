@@ -75,11 +75,10 @@ For more information about installing and configuring R and RStudio, see my
 package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 
 ## Similar resources
-The book [R packages](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan
-is much more elaborate than `develcoder`. Another good reference is the chapter
-[Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
-of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
-by Roger D. Peng, Sean Kross, and Brooke Anderson. The section 'Documentation
-and help' in the
-[package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-vignette contains further references.
+- The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
+- The chapter [Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
+  of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
+  by R. D. Peng, S. Kross, and B. Anderson.
+- The section 'Documentation and help' in the
+  [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
+  vignette contains further references.
