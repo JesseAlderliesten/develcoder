@@ -213,6 +213,22 @@ fixtures</a> from package <code>testthat</code> for more details).</p>
 <span>  pattern <span class="op">=</span> <span class="st">"..."</span>, strict <span class="op">=</span> <span class="cn">TRUE</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/expect_equal.html" class="external-link">expect_error</a></span><span class="op">(</span><span class="fu">func_name</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"a"</span>, arg <span class="op">=</span> <span class="va">arg</span><span class="op">)</span>,</span>
 <span>             pattern <span class="op">=</span> <span class="st">"is_number(x) is not TRUE"</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Testing file paths requires some thought because the file separator
+depends on the operating system (see <code>.Platform$file.sep</code>)
+and the backward slash is used as escape character in R such that it
+needs to be escaped itself by doubling them. Thus, a check on the
+presence of successive slashes and backslashes in
+[string][is_character()] <code>string</code> would use
+<code>grepl(pattern = "//", x = string, fixed = TRUE)</code> and
+<code>grepl(pattern = "\\\\", x = string, fixed = TRUE)</code>. The
+message to point out their presence would be written as
+<code>message("Successive '/' or '\\\\'")</code> which would be printed
+as <code>Successive '/' or '\\'</code>.</p>
+<p>To circumvent the hassle of getting the correct type and number of
+slashes to compare with the path recorded in a message, check only for
+fixed parts of the message (e.g., <code>"Repeated"</code>), possibly
+followed by a check like
+<code>tinytest::expect_true(fs::dir_exists(string))</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="update-dependencies">Update dependencies<a class="anchor" aria-label="anchor" href="#update-dependencies"></a>
@@ -386,6 +402,10 @@ package.</p>
 <div class="section level3">
 <h3 id="automated-checks">Automated checks<a class="anchor" aria-label="anchor" href="#automated-checks"></a>
 </h3>
+<p><code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_results()</a></code>,
+<code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_details()</a></code> and
+<code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_issues()</a></code> give information about the
+current check status of CRAN packages.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Using `manual = FALSE` because building the manual leads to `latex` errors</span></span>

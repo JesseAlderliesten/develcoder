@@ -147,6 +147,22 @@ tinytest::expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
+Testing file paths requires some thought because the file separator
+depends on the operating system (see `.Platform$file.sep`) and the
+backward slash is used as escape character in R such that it needs to be
+escaped itself by doubling them. Thus, a check on the presence of
+successive slashes and backslashes in \[string\]\[is_character()\]
+`string` would use `grepl(pattern = "//", x = string, fixed = TRUE)` and
+`grepl(pattern = "\\\\", x = string, fixed = TRUE)`. The message to
+point out their presence would be written as
+`message("Successive '/' or '\\\\'")` which would be printed as
+`Successive '/' or '\\'`.
+
+To circumvent the hassle of getting the correct type and number of
+slashes to compare with the path recorded in a message, check only for
+fixed parts of the message (e.g., `"Repeated"`), possibly followed by a
+check like `tinytest::expect_true(fs::dir_exists(string))`.
+
 ### Update dependencies
 
 Specifying a minimum package version when importing packages ensures
@@ -329,6 +345,12 @@ if(length(tests_missing) > 0L) {
 ```
 
 ### Automated checks
+
+[`tools::CRAN_check_results()`](https://rdrr.io/r/tools/CRANtools.html),
+[`tools::CRAN_check_details()`](https://rdrr.io/r/tools/CRANtools.html)
+and
+[`tools::CRAN_check_issues()`](https://rdrr.io/r/tools/CRANtools.html)
+give information about the current check status of CRAN packages.
 
 ``` r
 
