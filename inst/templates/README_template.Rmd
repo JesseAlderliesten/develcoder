@@ -67,6 +67,8 @@ Folder `code` contains various R-scripts:
 - `ScriptFuncsTesting.R`: R script containing unit tests of the functions.
   File `xyz.R` is archived because ... .
 
+_See [this example](https://github.com/MJobinASU/MontyHall) how to provide an overview of functions._
+
 
 ## Workflow
 _In the script where packages are installed, point to correct version (i.e., `remotes::install_version(...)`)._
