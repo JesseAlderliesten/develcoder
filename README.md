@@ -87,4 +87,4 @@ package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 This project is licensed under the terms of the [MIT License](/LICENSE.md).
 
 ## Citation
-Please cite this project [as described here](/CITATION.cff)
+Please cite this project [as described here](/CITATION.cff).
