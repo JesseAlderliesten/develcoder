@@ -382,13 +382,13 @@ to check them. See also `xfun::rev_check()` and package
 
 ## Update package-wide documentation
 
-- `NEWS`: restyle and publish the `NEWS`-file at each new package release.
 - `README`: after adjusting the `README.Rmd`, `Knit` it to produce a `README.Md`
   file. You can follow the `usethis` practice of using `devtools::build_readme()`
   to update `README.md`, which requires that `README.Rmd` and `README.md` are
   staged at the same time. To remove this requirement if you do not want it,
   delete the the (hidden) file `.git/hooks/pre-commit` from the R-project folder
   (see the `Description` section in `help("use_readme_rmd", package = "usethis")`).
+- `NEWS`: restyle and publish the `NEWS`-file at each new package release.
 - `DESCRIPTION`: increment the package version in the `DESCRIPTION` file, or run
   `R` as administrator and then use `usethis::use_version()`. In the latter
   case, do not automatically `commit` the change, but do so manually to adjust
@@ -396,7 +396,11 @@ to check them. See also `xfun::rev_check()` and package
   in the commit title makes it easier to find changes back later on (the pull
   request can have a description of the changes, i.e., the updated section of
   the `NEWS` file).
+- `CITATION.cff`: update your citation file to reflect the new package version:
 
+  ```{r citation, eval = FALSE}
+  cffr::cff_write()
+  ```
 
 # Updating
 
