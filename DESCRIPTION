@@ -12,7 +12,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
     cffr,
-    checkinput,
+    checkinput (>= 1.0.0),
     checkrpkgs,
     codetools,
     devtools,
