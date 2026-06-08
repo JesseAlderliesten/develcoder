@@ -1,3 +1,14 @@
+# develcoder 0.5.0
+
+### Breaking changes
+- Dependency `checkinput`: require minimum version `1.0.0` to depend on a stable
+  version.
+
+### Documentation
+- Remove old `NEWS`.
+- Section 'Add package-wide documentation': put code closer to remarks.
+
+
 # develcoder 0.4.0
 
 ### Breaking changes
