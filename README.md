@@ -74,7 +74,13 @@ remotes::install_github(repo = "JesseAlderliesten/develcoder",
 For more information about installing and configuring R and RStudio, see my
 package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 
-## Similar resources
+## License
+This project is licensed under the terms of the [MIT License](/LICENSE.md).
+
+## Citation
+Please cite this project [as described here](/CITATION.cff).
+
+# Similar resources
 - The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
 - The chapter [Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
   of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
@@ -82,9 +88,3 @@ package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 - The section 'Documentation and help' in the
   [package development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   vignette contains further references.
-
-## License
-This project is licensed under the terms of the [MIT License](/LICENSE.md).
-
-## Citation
-Please cite this project [as described here](/CITATION.cff).
