@@ -427,8 +427,6 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
 
 ### Update package-wide documentation
 
-- `NEWS`: restyle and publish the `NEWS`-file at each new package
-  release.
 - `README`: after adjusting the `README.Rmd`, `Knit` it to produce a
   `README.Md` file. You can follow the `usethis` practice of using
   [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
@@ -438,6 +436,10 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
   `.git/hooks/pre-commit` from the R-project folder (see the
   `Description` section in
   [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
+
+- `NEWS`: restyle and publish the `NEWS`-file at each new package
+  release.
+
 - `DESCRIPTION`: increment the package version in the `DESCRIPTION`
   file, or run `R` as administrator and then use
   [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
@@ -446,6 +448,14 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
   Indicating the version number in the commit title makes it easier to
   find changes back later on (the pull request can have a description of
   the changes, i.e., the updated section of the `NEWS` file).
+
+- `CITATION.cff`: update your citation file to reflect the new package
+  version:
+
+  ``` r
+
+  cffr::cff_write()
+  ```
 
 ## Updating
 

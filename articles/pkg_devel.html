@@ -474,11 +474,7 @@ check them. See also <code><a href="https://rdrr.io/pkg/xfun/man/rev_check.html"
 <h3 id="update-package-wide-documentation">Update package-wide documentation<a class="anchor" aria-label="anchor" href="#update-package-wide-documentation"></a>
 </h3>
 <ul>
-<li>
-<code>NEWS</code>: restyle and publish the <code>NEWS</code>-file at
-each new package release.</li>
-<li>
-<code>README</code>: after adjusting the <code>README.Rmd</code>,
+<li><p><code>README</code>: after adjusting the <code>README.Rmd</code>,
 <code>Knit</code> it to produce a <code>README.Md</code> file. You can
 follow the <code>usethis</code> practice of using
 <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>,
@@ -486,9 +482,10 @@ which requires that <code>README.Rmd</code> and <code>README.md</code>
 are staged at the same time. To remove this requirement if you do not
 want it, delete the the (hidden) file <code>.git/hooks/pre-commit</code>
 from the R-project folder (see the <code>Description</code> section in
-<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</li>
-<li>
-<code>DESCRIPTION</code>: increment the package version in the
+<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p></li>
+<li><p><code>NEWS</code>: restyle and publish the <code>NEWS</code>-file
+at each new package release.</p></li>
+<li><p><code>DESCRIPTION</code>: increment the package version in the
 <code>DESCRIPTION</code> file, or run <code>R</code> as administrator
 and then use <code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>. In the latter case, do
 not automatically <code>commit</code> the change, but do so manually to
@@ -496,7 +493,13 @@ adjust the commit message to <code>Bump to version x.y.z</code>.
 Indicating the version number in the commit title makes it easier to
 find changes back later on (the pull request can have a description of
 the changes, i.e., the updated section of the <code>NEWS</code>
-file).</li>
+file).</p></li>
+<li>
+<p><code>CITATION.cff</code>: update your citation file to reflect
+the new package version:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
 </ul>
 </div>
 </div>
@@ -538,7 +541,7 @@ section <code>matrix: config:</code> to run <code>R</code> 4.1.0.</p>
 </h3>
 <p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and the <a href="https://r-pkgs.org/website.html" class="external-link">chapter</a> from the R packages
 book.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To manually update the website</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Open <code>docs/index.html</code> in a web browser to preview the
