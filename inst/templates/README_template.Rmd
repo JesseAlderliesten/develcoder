@@ -123,7 +123,7 @@ This project is licensed under the terms of the [MIT License](/LICENSE.md).
 ## Citation
 _Assuming there is a citation file in the repository. Use `cffr::cff_write()` to add one from R and see the section 'Add package-wide documentation' in the vignette `vignette(topic = "pkg_setup", package = "develcoder")` for details._
 
-Please as [Citation](/CITATION.MD).
+Please cite this project [as described here](/CITATION.cff).
 
 
 ## Contributing
