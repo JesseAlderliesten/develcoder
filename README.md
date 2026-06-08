@@ -7,8 +7,8 @@
 
 # develcoder
 
-`develcoder` is an R package storing code and templates to develop
-[R](https://www.r-project.org/) packages. It is based on the
+`develcoder` is an [R](https://www.r-project.org/) package containing code and
+templates to develop R packages. It is based on the
 [R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan,
 using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 [usethis](https://CRAN.R-project.org/package=usethis), although I use
@@ -19,7 +19,7 @@ using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 ```
 ├── .github
 │   └── workflows: workflows to run tests with GitHub Actions
-├── R: functions
+├── R: functions and package overview
 ├── inst
 │   ├── templates: templates for README and yaml files (see below).
 │   └── tinytest: tests
