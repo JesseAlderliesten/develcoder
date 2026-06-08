@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This file contains code and annotations that are useful when
+<p>This vignette contains code and annotations that are useful when
 developing a package, including when preparing to release a new package
 version and setting up for a new version. It assumes the package has
 already been set up, as described in the vignette <em>Package
@@ -358,9 +358,8 @@ might work, see <a href="https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed
 <h2 id="adding-miscellaneous-files">Adding miscellaneous files<a class="anchor" aria-label="anchor" href="#adding-miscellaneous-files"></a>
 </h2>
 <p>Non-standard files or folders should be added in the
-<code>inst/</code> directory to pass <code>R cmd check</code>. Those
-files and folders will be in the top directory in the installed
-package.</p>
+<code>inst/</code> directory to pass <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R CMD checks</a>. Those files
+and folders will be in the top directory in the installed package.</p>
 </div>
 <div class="section level2">
 <h2 id="preparing-for-updates">Preparing for updates<a class="anchor" aria-label="anchor" href="#preparing-for-updates"></a>
@@ -408,9 +407,10 @@ package.</p>
 current check status of CRAN packages.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># Using `manual = FALSE` because building the manual leads to `latex` errors</span></span>
-<span><span class="co"># If checks fail, see https://r-pkgs.org/R-CMD-check.html on how to proceed</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">FALSE</span>, force_suggests <span class="op">=</span> <span class="cn">TRUE</span>, run_dont_test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co"># See https://r-pkgs.org/R-CMD-check.html on how to proceed if checks fail. If</span></span>
+<span><span class="co"># checks fail because of `latex` errors when building the manual, you can use</span></span>
+<span><span class="co"># `manual = FALSE`.</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>force_suggests <span class="op">=</span> <span class="cn">TRUE</span>, run_dont_test <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/release_checks.html" class="external-link">release_checks</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">if</span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"2.5.0"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># check for missing `\value` and `\examples` fields in `Rd` files</span></span>
@@ -479,7 +479,14 @@ check them. See also <code><a href="https://rdrr.io/pkg/xfun/man/rev_check.html"
 each new package release.</li>
 <li>
 <code>README</code>: after adjusting the <code>README.Rmd</code>,
-<code>Knit</code> it to produce a <code>README.Md</code> file.</li>
+<code>Knit</code> it to produce a <code>README.Md</code> file. You can
+follow the <code>usethis</code> practice of using
+<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>,
+which requires that <code>README.Rmd</code> and <code>README.md</code>
+are staged at the same time. To remove this requirement if you do not
+want it, delete the the (hidden) file <code>.git/hooks/pre-commit</code>
+from the R-project folder (see the <code>Description</code> section in
+<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</li>
 <li>
 <code>DESCRIPTION</code>: increment the package version in the
 <code>DESCRIPTION</code> file, or run <code>R</code> as administrator

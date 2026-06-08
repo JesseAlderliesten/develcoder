@@ -2,10 +2,10 @@
 
 ## Introduction
 
-This file contains code and annotations that are useful when developing
-a package, including when preparing to release a new package version and
-setting up for a new version. It assumes the package has already been
-set up, as described in the vignette *Package setup*:
+This vignette contains code and annotations that are useful when
+developing a package, including when preparing to release a new package
+version and setting up for a new version. It assumes the package has
+already been set up, as described in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
 
 ## Adding functions
@@ -303,8 +303,8 @@ The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")`
 ## Adding miscellaneous files
 
 Non-standard files or folders should be added in the `inst/` directory
-to pass `R cmd check`. Those files and folders will be in the top
-directory in the installed package.
+to pass [R CMD checks](https://r-pkgs.org/R-CMD-check.html). Those files
+and folders will be in the top directory in the installed package.
 
 ## Preparing for updates
 
@@ -355,9 +355,10 @@ give information about the current check status of CRAN packages.
 ``` r
 
 devtools::document()
-# Using `manual = FALSE` because building the manual leads to `latex` errors
-# If checks fail, see https://r-pkgs.org/R-CMD-check.html on how to proceed
-devtools::check(manual = FALSE, force_suggests = TRUE, run_dont_test = TRUE)
+# See https://r-pkgs.org/R-CMD-check.html on how to proceed if checks fail. If
+# checks fail because of `latex` errors when building the manual, you can use
+# `manual = FALSE`.
+devtools::check(force_suggests = TRUE, run_dont_test = TRUE)
 devtools::release_checks()
 if(utils::packageVersion("devtools") >= "2.5.0") {
   # check for missing `\value` and `\examples` fields in `Rd` files
@@ -429,7 +430,14 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
 - `NEWS`: restyle and publish the `NEWS`-file at each new package
   release.
 - `README`: after adjusting the `README.Rmd`, `Knit` it to produce a
-  `README.Md` file.
+  `README.Md` file. You can follow the `usethis` practice of using
+  [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
+  to update `README.md`, which requires that `README.Rmd` and
+  `README.md` are staged at the same time. To remove this requirement if
+  you do not want it, delete the the (hidden) file
+  `.git/hooks/pre-commit` from the R-project folder (see the
+  `Description` section in
+  [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 - `DESCRIPTION`: increment the package version in the `DESCRIPTION`
   file, or run `R` as administrator and then use
   [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).

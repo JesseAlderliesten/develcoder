@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,10 +78,10 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This file contains code and annotations that are useful when creating
-a package. This code is needed only once to set up a package from
-scratch. Further development is described in the vignette <em>Package
-development</em>:
+<p>This vignette contains code and annotations that are useful when
+creating a package. This code is needed only once to set up a package
+from scratch. Further development is described in the vignette
+<em>Package development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 <div class="section level2">
@@ -103,13 +103,14 @@ development</em>:
 <div class="section level2">
 <h2 id="create-the-package">Create the package<a class="anchor" aria-label="anchor" href="#create-the-package"></a>
 </h2>
-<p>This uses information stored in your <code>.Rprofile</code> file
-(located at
-<code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>. See
-<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>,
-<code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> and the
+<p>Creating the package through <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code>
+uses information stored in your <code>.Rprofile</code> file (located at
+<code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>; see
+<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>) to fill in default information. See the
 <code>usethis</code> vignette <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link">usethis
-setup</a> for details.</p>
+setup</a>, and
+<code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> for
+details.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_to_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">pkgname</span><span class="op">)</span></span>
 <span><span class="va">path_to_package</span></span>
@@ -134,54 +135,35 @@ Overview of licenses are available at <a href="https://choosealicense.com/append
 Some legal details are provided in <a href="https://opensource.guide/legal/" class="external-link">The Legal Side of Open
 Source</a>, and <a href="https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line" class="external-link">this
 blogpost</a> gives details on the MIT License.</p>
-<p>I do <strong>not</strong> follow the <code>usethis</code> practice of
-using <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update
-<code>README.md</code> because then <code>README.Rmd</code> and
-<code>README.md</code> have to be staged at the same time. To remove
-this requirement if it was accidentally introduced, delete the the
-(hidden) file <code>.git/hooks/pre-commit</code> from the R-project
-folder (see the <code>Description</code> section in
-<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">help("build_readme", package = "devtools")</a></code>).</p>
-</div>
-<div class="section level3">
-<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h3>
-<p>A citation file makes clear how your package should be cited. See the
-<a href="https://citation-file-format.github.io/" class="external-link">Citation file format
-GitHub page</a> for details on the format.</p>
-</div>
-<div class="section level3">
-<h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
-</h3>
-<p>The file <code>R/&lt;pkg&gt;-package.R</code> is used by
-<code>usethis</code> to list imported functions and can also be used as
-help-page such that <code>help("&lt;pkg&gt;")</code> produces a
-description of the package with an overview of its functions if package
-<code>&lt;pkg&gt;</code> has been loaded (i.e.,
-<code>library(&lt;pkg&gt;)</code> has been run).</p>
-</div>
-<div class="section level3">
-<h3 id="code-and-remarks">Code and remarks<a class="anchor" aria-label="anchor" href="#code-and-remarks"></a>
-</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Run R as administrator</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create license files for a permissive license</span></span>
-<span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create a citation file</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">use_package_doc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create R/&lt;pkg&gt;-package.R</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create README.Rmd</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create NEWS.md</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This creates both <code>license.Md</code> and
+<code>license.Rmd</code>. You need to keep <code>license.Rmd</code>: it
+is required by <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R CMD
+checks</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="readme">README<a class="anchor" aria-label="anchor" href="#readme"></a>
+</h3>
+<p>The <code>usethis</code> practice of using
+<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>
+requires that <code>README.Rmd</code> and <code>README.md</code> are
+staged at the same time. To remove this requirement if you do not want
+it, delete the the (hidden) file <code>.git/hooks/pre-commit</code> from
+the R-project folder (see the <code>Description</code> section in
+<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
-<li>Keep <code>license.Rmd</code>: it is required by
-<code>R CMD check</code>.</li>
 <li>Manually update <code>README.Rmd</code>
 <ul>
-<li>See the template file <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link">README_template.Rmd</a>
-in the folder <code>inst/templates</code>.</li>
 <li>Add a badge with the version number by including the following code
 in the <code>README.Rmd</code> file (the badge does <strong>not</strong>
 work if the GitHub repository is private):<br><code>![](https://img.shields.io/github/r-package/v/&lt;repository&gt;/&lt;pkg&gt;?color=blue)</code>
 </li>
+<li>See the template file <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link">README_template.Rmd</a>
+in the folder <code>inst/templates</code>.</li>
 <li>
 <code>Knit</code> the <code>README.Rmd</code> file to produce a
 <code>README.Md</code> file.</li>
@@ -189,11 +171,39 @@ work if the GitHub repository is private):<br><code>![](https://img.shields.io/g
 </li>
 </ul>
 </div>
+<div class="section level3">
+<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
+<p>A citation file makes clear how your package should be cited. See the
+<a href="https://citation-file-format.github.io/" class="external-link">Citation file format
+GitHub page</a> for details on the format.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create a citation file</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
+</h3>
+<p>The file <code>R/&lt;pkg&gt;-package.R</code> makes that
+<code>help("&lt;pkg&gt;")</code> produces a relevant description of the
+package with links to GitHub and to the package website if package
+<code>&lt;pkg&gt;</code> has been loaded (i.e.,
+<code>library(&lt;pkg&gt;)</code> has been run). It is also used by
+<code>usethis</code> to list imported functions, and can be configured
+to give an overview of the functions in the package.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">use_package_doc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create R/&lt;pkg&gt;-package.R</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="news">NEWS<a class="anchor" aria-label="anchor" href="#news"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">use_news_md</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create NEWS.md</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tinytest"</span>, type <span class="op">=</span> <span class="st">"Suggests"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -203,7 +213,7 @@ work if the GitHub repository is private):<br><code>![](https://img.shields.io/g
 </h2>
 <p>For more information about setting up and using GitHub and Git, see
 <code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette("git_github", package = "checkrpkgs")</a></code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit"</span><span class="op">)</span></span>
 <span><span class="co"># If you get the error message 'You are not the current owner of the GitHub</span></span>
 <span><span class="co"># repository', restart R as administrator and try again.</span></span>
@@ -220,9 +230,10 @@ work if the GitHub repository is private):<br><code>![](https://img.shields.io/g
 <p>GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
 <code>check-no-suggests.yaml</code> from <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml" class="external-link">r-lib</a>
-ensures the code passes <code>R-CMD check</code> even if dependencies in
-<code>Suggests</code> are not installed.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+ensures the code passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R
+CMD checks</a> even if dependencies in <code>Suggests</code> are not
+installed.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-standard"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-no-suggests"</span><span class="op">)</span></span></code></pre></div>
 <p>Then adjust the YAML file (i.e.,
@@ -237,12 +248,12 @@ pushes.</li>
 <li>someone else proposed changes to code in the current repository: add
 <code>'pull_request:'</code> to section <code>'on:'</code> to run GHA on
 pull requests.</li>
-<li>you changed package <code>A</code> and want to check if package
-<code>B</code>, which depends on package <code>A</code>, is still
-working fine: add <code>'workflow_dispatch:'</code> to section
-<code>'on:'</code> to be able to manually trigger GHA. See section
-<code>Use GitHub Actions</code> in <code>pkg_devel.Rmd</code> on how to
-use it.</li>
+<li>you want to check if a reverse dependency (i.e., a package that
+depends on a package you changed) is still working fine: in the YAML
+file of the reverse dependency, add <code>'workflow_dispatch:'</code> to
+section <code>'on:'</code> to be able to manually trigger GHA. See
+section <code>Use GitHub Actions</code> in <code>pkg_devel.Rmd</code> on
+how to use it.</li>
 <li>someone else made changes to packages your package depends on: add
 <code>'schedule: - cron: "23 4 * * 6"'</code> to section
 <code>'on:'</code> to run every Saturday on 04:23 UTC. The cron
@@ -274,7 +285,7 @@ vignette <em>Package development</em>:
 </h2>
 <p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link">pkgdown</a> in the book <a href="https://r-pkgs.org/" class="external-link">R packages</a> and the documentation for
 package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set up a GitHub action to automatically build and publish your site</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-level documentation</span></span></code></pre></div>

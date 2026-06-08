@@ -2,16 +2,16 @@
 
 ## Introduction
 
-This file contains information about using [R
+This vignette contains information about using [R
 Markdown](https://pkgs.rstudio.com/rmarkdown/) and
 [knitr](https://yihui.org/knitr/).
 
-An R Markdown file is an R script with markup to enable to combine the
-script (including the comments) together with its output and additional
-text in a single document. The R package
-[rmarkdown](https://cran.r-project.org/package=rmarkdown), as well as
-either [RStudio](https://www.rstudio.com/) or
-[Pandoc](https://pandoc.org/) is required to create an R Markdown file.
+An R Markdown file is an R script with markup to enable combining the
+script (including the comments) with its output and additional text in a
+single document. The R package
+[rmarkdown](https://cran.r-project.org/package=rmarkdown) and either
+[RStudio](https://www.rstudio.com/) or [Pandoc](https://pandoc.org/) are
+required to create an R Markdown file.
 
 To generate a PDF as output, a
 [LaTeX](https://www.latex-project.org/get/) distribution needs to be
@@ -26,9 +26,10 @@ help.
   Xie, C. Dervieux, and E. Riederer
 - the [Definitive guide](https://bookdown.org/yihui/rmarkdown/) by Y.
   Xie, J.J. Allaire, and G. Grolemund
-- the [Posit](https://posit.co/) website on [R
-  Markdown](http://rmarkdown.rstudio.com) and a
+- a
   [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
+  and [website](http://rmarkdown.rstudio.com) on R Markdown from
+  [Posit](https://posit.co/)
 - the maintainer’s website on [knitr](https://yihui.org/knitr/)
 - the [Markdown guide](https://www.markdownguide.org/)
 
@@ -100,8 +101,8 @@ source code is included in the knitted file without the accompanying
 comments, that specification of the environment through the argument
 `local` can be
 [error-prone](https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html)
-and that `max.deparse.length within source(...)` has to be increased to
-ensure that all of the source code is printed (see
+and that `max.deparse.length` within `source(...)` has to be increased
+to ensure that all of the source code is printed (see
 [`help("source")`](https://rdrr.io/r/base/source.html)).
 
 ## Knitting documents to HTML and PDF

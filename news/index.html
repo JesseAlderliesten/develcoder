@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.0" id="develcoder-050">develcoder 0.5.0<a class="anchor" aria-label="anchor" href="#develcoder-050"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-5-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-5-0"></a></h4>
+<ul><li>Dependency <code>checkinput</code>: require minimum version <code>1.0.0</code> to depend on a stable version.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="documentation-0-5-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-5-0"></a></h4>
+<ul><li>Remove old <code>NEWS</code>.</li>
+<li>Section ‘Add package-wide documentation’: put code closer to remarks.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="develcoder-040">develcoder 0.4.0<a class="anchor" aria-label="anchor" href="#develcoder-040"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-4-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h4>
@@ -69,77 +81,9 @@
 <h2 class="pkg-version" data-toc-text="0.2.0" id="develcoder-020">develcoder 0.2.0<a class="anchor" aria-label="anchor" href="#develcoder-020"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h4>
-<ul><li>Dependency <code>checkinput</code>: increase minimum version from <code>0.7.0</code> to <code>0.8.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
-<li>Dependency <code>progutils</code>: increase minimum version from <code>0.0.9</code> to <code>0.2.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
-<li>Dependency <code>checkrpkgs</code>: require <code>&gt;= 0.9.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="documentation-0-2-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-2-0"></a></h4>
-<ul><li>Updated package description.</li>
-<li>Also use first-level headings.</li>
-<li>Vignette <code>Package development</code>: expand section ‘Documentation and help’. Returning an error is not a side effect. Add option to run individual test files.</li>
-<li>
-<code>README</code>: add section ‘Similar resources’.</li>
+<ul><li>Dependencies: increase minimum version of <code>checkinput</code> from <code>0.7.0</code> to <code>0.8.0</code>, of <code>progutils</code> from <code>0.0.9</code> to <code>0.2.0</code>, and of <code>checkrpkgs</code> to <code>&gt;= 0.9.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="develcoder-010">develcoder 0.1.0<a class="anchor" aria-label="anchor" href="#develcoder-010"></a></h2>
-<div class="section level4">
-<h4 id="breaking-changes-0-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h4>
-<ul><li>Dependency <code>checkinput</code>: require <code>&gt;= 0.6.0</code>, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
-<li>Dependency <code>progutils</code>: require <code>&gt;= 0.0.9</code>, needed to use <code>paste_quoted()</code> that is re-exported from <code>checkinput</code> to <code>progutils</code>.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.7" id="develcoder-007">develcoder 0.0.7<a class="anchor" aria-label="anchor" href="#develcoder-007"></a></h2>
-<div class="section level4">
-<h4 id="documentation-0-0-7">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-7"></a></h4>
-<ul><li>Vignette <code>Package development</code>: add a section on writing examples. Moved stub on temporary files to section <code>Usage in practice</code> of <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">progutils::create_tempdir()</a></code>. Add a section on creating a custom function index for the package website. Rename default GitHub branch from <code>master</code> to <code>main</code>.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.6" id="develcoder-006">develcoder 0.0.6<a class="anchor" aria-label="anchor" href="#develcoder-006"></a></h2>
-<div class="section level4">
-<h4 id="breaking-changes-0-0-6">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-6"></a></h4>
-<ul><li>Add dependencies <code>codetools</code> and <code>pkgcheck</code> to <code>Suggests</code> because they are suggested for package checks.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="documentation-0-0-6">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-6"></a></h4>
-<ul><li>Vignette <code>Package development</code>: add section about automated checks.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.5" id="develcoder-005">develcoder 0.0.5<a class="anchor" aria-label="anchor" href="#develcoder-005"></a></h2>
-<div class="section level4">
-<h4 id="documentation-0-0-5">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-5"></a></h4>
-<ul><li>Vignette <code>Package development</code>: add section about styling the <code>pkgdown</code> website. Elaborate on linking on the <code>pkgdown</code> website and on failed GitHub Actions.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.3" id="develcoder-003">develcoder 0.0.3<a class="anchor" aria-label="anchor" href="#develcoder-003"></a></h2>
-<div class="section level4">
-<h4 id="breaking-changes-0-0-3">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-3"></a></h4>
-<ul><li>Add dependency <code>goodpractice</code> to <code>Suggests</code> because it is suggested to check for various issues.</li>
-<li>Use <code>roxygen2</code> version 8.0.0.</li>
-</ul></div>
-<div class="section level4">
-<h4 id="documentation-0-0-3">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-0-3"></a></h4>
-<ul><li>Vignette <code>Package development</code>: describe a faster way to create a new <code>devel</code>-branch. Replace deprecated <code><a href="https://devtools.r-lib.org/reference/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> with <code><a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link">pkgdown::build_article()</a></code>.</li>
-<li>Vignette <code>Package setup</code>: add links to overviews of licenses.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.2" id="develcoder-002">develcoder 0.0.2<a class="anchor" aria-label="anchor" href="#develcoder-002"></a></h2>
-<div class="section level4">
-<h4 id="breaking-changes-0-0-2">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-2"></a></h4>
-<ul><li>Add dependencies <code>fs</code> and <code>remotes</code> to <code>Suggests</code> because they are used in <code>README_template.Rmd</code>.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.1" id="develcoder-001">develcoder 0.0.1<a class="anchor" aria-label="anchor" href="#develcoder-001"></a></h2>
-<ul><li>
-<code>develcoder</code> now is an R package.</li>
-</ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

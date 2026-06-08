@@ -2,9 +2,10 @@
 
 ## Introduction
 
-This file contains code and annotations that are useful when creating a
-package. This code is needed only once to set up a package from scratch.
-Further development is described in the vignette *Package development*:
+This vignette contains code and annotations that are useful when
+creating a package. This code is needed only once to set up a package
+from scratch. Further development is described in the vignette *Package
+development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Choose a name
@@ -26,13 +27,15 @@ utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
 
 ## Create the package
 
-This uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\<username>\Documents\.Rprofile`. See
-[`help("Startup")`](https://rdrr.io/r/base/Startup.html),
+Creating the package through
+[`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html)
+uses information stored in your `.Rprofile` file (located at
+`D:\Userdata\<username>\Documents\.Rprofile`; see
+[`help("Startup")`](https://rdrr.io/r/base/Startup.html)) to fill in
+default information. See the `usethis` vignette [usethis
+setup](https://usethis.r-lib.org/articles/usethis-setup.html), and
 [`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
-and the `usethis` vignette [usethis
-setup](https://usethis.r-lib.org/articles/usethis-setup.html) for
-details.
+for details.
 
 ``` r
 
@@ -61,14 +64,41 @@ in [The Legal Side of Open Source](https://opensource.guide/legal/), and
 blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
 gives details on the MIT License.
 
-I do **not** follow the `usethis` practice of using
+``` r
+
+usethis::use_mit_license()
+```
+
+This creates both `license.Md` and `license.Rmd`. You need to keep
+`license.Rmd`: it is required by [R CMD
+checks](https://r-pkgs.org/R-CMD-check.html).
+
+### README
+
+The `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
-to update `README.md` because then `README.Rmd` and `README.md` have to
-be staged at the same time. To remove this requirement if it was
-accidentally introduced, delete the the (hidden) file
-`.git/hooks/pre-commit` from the R-project folder (see the `Description`
-section in
-[`help("build_readme", package = "devtools")`](https://devtools.r-lib.org/reference/build_readme.html)).
+to update `README.md` requires that `README.Rmd` and `README.md` are
+staged at the same time. To remove this requirement if you do not want
+it, delete the the (hidden) file `.git/hooks/pre-commit` from the
+R-project folder (see the `Description` section in
+[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
+
+``` r
+
+usethis::use_readme_rmd()
+```
+
+Do:
+
+- Manually update `README.Rmd`
+  - Add a badge with the version number by including the following code
+    in the `README.Rmd` file (the badge does **not** work if the GitHub
+    repository is private):  
+    `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
+  - See the template file
+    [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
+    in the folder `inst/templates`.
+  - `Knit` the `README.Rmd` file to produce a `README.Md` file.
 
 ### Citation
 
@@ -77,38 +107,31 @@ A citation file makes clear how your package should be cited. See the
 page](https://citation-file-format.github.io/) for details on the
 format.
 
+``` r
+
+cffr::cff_write() # Create a citation file
+```
+
 ### Package overview
 
-The file `R/<pkg>-package.R` is used by `usethis` to list imported
-functions and can also be used as help-page such that `help("<pkg>")`
-produces a description of the package with an overview of its functions
-if package `<pkg>` has been loaded (i.e., `library(<pkg>)` has been
-run).
-
-### Code and remarks
+The file `R/<pkg>-package.R` makes that `help("<pkg>")` produces a
+relevant description of the package with links to GitHub and to the
+package website if package `<pkg>` has been loaded (i.e.,
+`library(<pkg>)` has been run). It is also used by `usethis` to list
+imported functions, and can be configured to give an overview of the
+functions in the package.
 
 ``` r
 
-# Run R as administrator
-usethis::use_mit_license() # Create license files for a permissive license
-cffr::cff_write() # Create a citation file
 usethis::use_package_doc() # Create R/<pkg>-package.R
-usethis::use_readme_rmd() # Create README.Rmd
-usethis::use_news_md() # Create NEWS.md
 ```
 
-Do:
+### NEWS
 
-- Keep `license.Rmd`: it is required by `R CMD check`.
-- Manually update `README.Rmd`
-  - See the template file
-    [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
-    in the folder `inst/templates`.
-  - Add a badge with the version number by including the following code
-    in the `README.Rmd` file (the badge does **not** work if the GitHub
-    repository is private):  
-    `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
-  - `Knit` the `README.Rmd` file to produce a `README.Md` file.
+``` r
+
+usethis::use_news_md() # Create NEWS.md
+```
 
 ## Set up testing infrastructure
 
@@ -143,8 +166,9 @@ GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
 `check-no-suggests.yaml` from
 [r-lib](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
-ensures the code passes `R-CMD check` even if dependencies in `Suggests`
-are not installed.
+ensures the code passes [R CMD
+checks](https://r-pkgs.org/R-CMD-check.html) even if dependencies in
+`Suggests` are not installed.
 
 ``` r
 
@@ -161,11 +185,11 @@ in the folder `inst/templates`):
   section `'on:'` to run GHA on pushes.
 - someone else proposed changes to code in the current repository: add
   `'pull_request:'` to section `'on:'` to run GHA on pull requests.
-- you changed package `A` and want to check if package `B`, which
-  depends on package `A`, is still working fine: add
-  `'workflow_dispatch:'` to section `'on:'` to be able to manually
-  trigger GHA. See section `Use GitHub Actions` in `pkg_devel.Rmd` on
-  how to use it.
+- you want to check if a reverse dependency (i.e., a package that
+  depends on a package you changed) is still working fine: in the YAML
+  file of the reverse dependency, add `'workflow_dispatch:'` to section
+  `'on:'` to be able to manually trigger GHA. See section
+  `Use GitHub Actions` in `pkg_devel.Rmd` on how to use it.
 - someone else made changes to packages your package depends on: add
   `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every
   Saturday on 04:23 UTC. The cron specification consists of five
