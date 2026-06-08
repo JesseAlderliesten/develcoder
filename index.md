@@ -99,4 +99,4 @@ License](https://jessealderliesten.github.io/LICENSE.md).
 ## Citation
 
 Please cite this project [as described
-here](https://jessealderliesten.github.io/CITATION.cff)
+here](https://jessealderliesten.github.io/CITATION.cff).
