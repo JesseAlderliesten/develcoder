@@ -88,22 +88,22 @@ License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
 ## Citation
 
 ``` R
-#> To cite package 'develcoder' in publications use:
-#> 
-#>   Alderliesten J (2026). _develcoder: Code And Templates To Develop R
-#>   Packages_. R package version 0.5.0, commit
-#>   50ef062aa667216a8b1fbdfa012572403c9c2058,
-#>   <https://github.com/JesseAlderliesten/develcoder>.
-#> 
-#> A BibTeX entry for LaTeX users is
-#> 
-#>   @Manual{,
-#>     title = {develcoder: Code And Templates To Develop R Packages},
-#>     author = {Jesse Alderliesten},
-#>     year = {2026},
-#>     note = {R package version 0.5.0, commit 50ef062aa667216a8b1fbdfa012572403c9c2058},
-#>     url = {https://github.com/JesseAlderliesten/develcoder},
-#>   }
+To cite package 'develcoder' in publications use:
+
+  Alderliesten J (2026). _develcoder: Code And Templates To Develop R
+  Packages_. R package version 0.5.0, commit
+  50ef062aa667216a8b1fbdfa012572403c9c2058,
+  <https://github.com/JesseAlderliesten/develcoder>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {develcoder: Code And Templates To Develop R Packages},
+    author = {Jesse Alderliesten},
+    year = {2026},
+    note = {R package version 0.5.0, commit 50ef062aa667216a8b1fbdfa012572403c9c2058},
+    url = {https://github.com/JesseAlderliesten/develcoder},
+  }
 ```
 
 # Similar resources
