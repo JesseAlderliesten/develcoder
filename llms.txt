@@ -106,7 +106,7 @@ A BibTeX entry for LaTeX users is
   }
 ```
 
-# Similar resources
+## Similar resources
 
 - The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
 - The chapter [Building R

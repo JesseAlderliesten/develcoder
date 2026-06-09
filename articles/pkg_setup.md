@@ -70,6 +70,20 @@ To create license files:
 usethis::use_mit_license()
 ```
 
+### Citation
+
+A citation file makes clear how your package should be cited. See the
+documentation in the R package
+[cffr](https://CRAN.R-project.org/package=cffr) and the GitHub page
+[Citation file format](https://citation-file-format.github.io/) for
+details on the format. The code uses the citation file if it exists and
+otherwise uses the the `DESCRIPTION` file:
+
+``` r
+
+cffr::cff_write(dependencies = FALSE) # Create a citation file
+```
+
 ### README
 
 The `usethis` practice of using
@@ -96,19 +110,6 @@ Do:
     [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
   - Knit the `README.Rmd` file to produce a `README.Md` file.
-
-### Citation
-
-A citation file makes clear how your package should be cited. See the
-documentation in the R package
-[cffr](https://CRAN.R-project.org/package=cffr) and the GitHub page
-[Citation file format](https://citation-file-format.github.io/) for
-details on the format.
-
-``` r
-
-cffr::cff_write(dependencies = FALSE) # Create a citation file
-```
 
 ### Package overview
 

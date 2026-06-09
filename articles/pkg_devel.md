@@ -434,7 +434,8 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
   can have a description of the changes, i.e., the updated section of
   the `NEWS` file).
 - `CITATION.cff`: update your citation file to reflect the new package
-  version:
+  version (this code uses the citation file if it exists and otherwise
+  uses the the `DESCRIPTION` file):
 
 ``` r
 

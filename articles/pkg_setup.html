@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,6 +141,17 @@ Source</a>.</p>
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
+<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
+<p>A citation file makes clear how your package should be cited. See the
+documentation in the R package <a href="https://CRAN.R-project.org/package=cffr" class="external-link">cffr</a> and the GitHub
+page <a href="https://citation-file-format.github.io/" class="external-link">Citation file
+format</a> for details on the format. The code uses the citation file if
+it exists and otherwise uses the the <code>DESCRIPTION</code> file:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create a citation file</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="readme">README<a class="anchor" aria-label="anchor" href="#readme"></a>
 </h3>
 <p>The <code>usethis</code> practice of using
@@ -150,7 +161,7 @@ staged at the same time. To remove this requirement, delete the the
 (hidden) file <code>.git/hooks/pre-commit</code> from the R-project
 folder (see the <code>Description</code> section in
 <code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
@@ -167,16 +178,6 @@ in the folder <code>inst/templates</code>.</li>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section level3">
-<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h3>
-<p>A citation file makes clear how your package should be cited. See the
-documentation in the R package <a href="https://CRAN.R-project.org/package=cffr" class="external-link">cffr</a> and the GitHub
-page <a href="https://citation-file-format.github.io/" class="external-link">Citation file
-format</a> for details on the format.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create a citation file</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>

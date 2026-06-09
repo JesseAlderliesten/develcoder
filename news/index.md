@@ -1,6 +1,6 @@
 # Changelog
 
-## develcoder 0.5.0.9000
+## develcoder 0.6.0
 
 #### Breaking changes
 
