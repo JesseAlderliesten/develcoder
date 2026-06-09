@@ -8,8 +8,8 @@
 # develcoder
 
 `develcoder` is an [R](https://www.r-project.org/) package containing code and
-templates to develop R packages. It is based on the
-[R packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer Bryan,
+templates to develop R packages. It is based on the book
+'[R packages](https://r-pkgs.org/)' by Hadley Wickham and Jennifer Bryan,
 using R packages [devtools](https://CRAN.R-project.org/package=devtools) and
 [usethis](https://CRAN.R-project.org/package=usethis), although I use
 [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
@@ -76,9 +76,23 @@ package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 
 ## License
 This project is licensed under the terms of the [MIT License](/LICENSE.md).
+This project is licensed under the terms of the [MIT License](LICENSE.md).
+
+This project is licensed under the terms of the [MIT License](/LICENSE).
+This project is licensed under the terms of the [MIT License](LICENSE).
 
 ## Citation
 Please cite this project [as described here](/CITATION.cff).
+Please cite this project [as described here](CITATION.cff).
+
+Please cite this project [as described here](/CITATION).
+Please cite this project [as described here](CITATION).
+
+Please cite this project as:
+
+```{r, eval = TRUE, echo = FALSE}
+citation("develcoder")
+```
 
 # Similar resources
 - The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
