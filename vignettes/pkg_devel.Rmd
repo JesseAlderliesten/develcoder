@@ -375,7 +375,9 @@ to check them. See also `xfun::rev_check()` and package
   in the commit title makes it easier to find changes back later on (the pull
   request can have a description of the changes, i.e., the updated section of
   the `NEWS` file).
-- `CITATION.cff`: update your citation file to reflect the new package version:
+- `CITATION.cff`: update your citation file to reflect the new package version
+  (this code uses the citation file if it exists and otherwise uses the the
+  `DESCRIPTION` file):
 
 ```{r citation, eval = FALSE}
 cffr::cff_write(dependencies = FALSE) # Create or update a citation file

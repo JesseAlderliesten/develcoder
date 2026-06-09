@@ -1,4 +1,4 @@
-# develcoder 0.5.0.9000
+# develcoder 0.6.0
 
 ### Breaking changes
 - Add dependency `desc` to `Suggests` because it is used in a vignette.

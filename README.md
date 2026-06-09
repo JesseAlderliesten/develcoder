@@ -108,7 +108,7 @@ License](LICENSE.md).
         url = {https://github.com/JesseAlderliesten/develcoder},
       }
 
-# Similar resources
+## Similar resources
 
 - The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
 - The chapter [Building R
