@@ -13,8 +13,9 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     cffr,
     checkinput (>= 1.0.0),
-    checkrpkgs,
+    checkrpkgs (>= 1.0.0),
     codetools,
+    desc,
     devtools,
     fs,
     goodpractice,
