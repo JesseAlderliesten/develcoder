@@ -75,18 +75,10 @@ For more information about installing and configuring R and RStudio, see my
 package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/).
 
 ## License
-This project is licensed under the terms of the [MIT License](/LICENSE.md).
-This project is licensed under the terms of the [MIT License](LICENSE.md).
-
-This project is licensed under the terms of the [MIT License](/LICENSE).
 This project is licensed under the terms of the [MIT License](LICENSE).
 
 ## Citation
-Please cite this project [as described here](/CITATION.cff).
 Please cite this project [as described here](CITATION.cff).
-
-Please cite this project [as described here](/CITATION).
-Please cite this project [as described here](CITATION).
 
 Please cite this project as:
 
