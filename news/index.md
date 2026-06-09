@@ -1,5 +1,13 @@
 # Changelog
 
+## develcoder 0.5.0.9000
+
+#### Breaking changes
+
+- Add dependency `desc` to `Suggests` because it is used in a vignette.
+- Dependency `checkrpkgs`: require minimum version `1.0.0` to depend on
+  a stable version.
+
 ## develcoder 0.5.0
 
 #### Breaking changes

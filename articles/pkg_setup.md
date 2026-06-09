@@ -2,10 +2,9 @@
 
 ## Introduction
 
-This vignette contains code and annotations that are useful when
-creating a package. This code is needed only once to set up a package
-from scratch. Further development is described in the vignette *Package
-development*:
+This vignette contains code and annotations to create a package. This
+code is needed only once to set up a package from scratch. Further
+package development is described in the vignette *Package development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Choose a name
@@ -29,13 +28,14 @@ utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
 
 Creating the package through
 [`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html)
-uses information stored in your `.Rprofile` file (located at
-`D:\Userdata\<username>\Documents\.Rprofile`; see
-[`help("Startup")`](https://rdrr.io/r/base/Startup.html)) to fill in
-default information. See the `usethis` vignette [usethis
-setup](https://usethis.r-lib.org/articles/usethis-setup.html), and
+uses information stored in `.Rprofile` files to fill in default
+information. Such files can exist in various locations, for example at
+`D:\Userdata\<username>\Documents\.Rprofile`: see
+[`help("Startup")`](https://rdrr.io/r/base/Startup.html). See the
+`usethis` vignette [usethis
+setup](https://usethis.r-lib.org/articles/usethis-setup.html) and
 [`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
-for details.
+for details on setting up a package.
 
 ``` r
 
@@ -46,41 +46,38 @@ usethis::create_package(path = path_to_package)
 
 Do:
 
-- Update the `Title` field of the `DESCRIPTION` file.
-- Update the `Description` field of the `DESCRIPTION` file.
+- Update the `Title` field of the `DESCRIPTION` file
+- Update the `Description` field of the `DESCRIPTION` file
+- Check if the automatically filled in information is correct
 
 ## Add package-wide documentation
 
 ### License
 
-A license file makes clear what use of your package is allowed. Overview
-of licenses are available at
+A license file makes clear what use of your package is allowed.
+Overviews of licenses are available from [Blue oak
+council](https://blueoakcouncil.org/list),
 [choosealicense](https://choosealicense.com/appendix/),
 [GNU.org](https://www.gnu.org/licenses/license-list.html), [Open Source
 Initiative](https://opensource.org/licenses), and [System Package Data
 Exchange](https://spdx.org/licenses/). Some legal details are provided
-in [The Legal Side of Open Source](https://opensource.guide/legal/), and
-[this
-blogpost](https://writing.kemitchell.com/2016/09/21/MIT-License-Line-by-Line)
-gives details on the MIT License.
+in [The Legal Side of Open Source](https://opensource.guide/legal/).
+
+To create license files:
 
 ``` r
 
 usethis::use_mit_license()
 ```
 
-This creates both `license.Md` and `license.Rmd`. You need to keep
-`license.Rmd`: it is required by [R CMD
-checks](https://r-pkgs.org/R-CMD-check.html).
-
 ### README
 
 The `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` requires that `README.Rmd` and `README.md` are
-staged at the same time. To remove this requirement if you do not want
-it, delete the the (hidden) file `.git/hooks/pre-commit` from the
-R-project folder (see the `Description` section in
+staged at the same time. To remove this requirement, delete the the
+(hidden) file `.git/hooks/pre-commit` from the R-project folder (see the
+`Description` section in
 [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 
 ``` r
@@ -95,21 +92,22 @@ Do:
     in the `README.Rmd` file (the badge does **not** work if the GitHub
     repository is private):  
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
-  - See the template file
+  - See
     [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
-  - `Knit` the `README.Rmd` file to produce a `README.Md` file.
+  - Knit the `README.Rmd` file to produce a `README.Md` file.
 
 ### Citation
 
 A citation file makes clear how your package should be cited. See the
-[Citation file format GitHub
-page](https://citation-file-format.github.io/) for details on the
-format.
+documentation in the R package
+[cffr](https://CRAN.R-project.org/package=cffr) and the GitHub page
+[Citation file format](https://citation-file-format.github.io/) for
+details on the format.
 
 ``` r
 
-cffr::cff_write() # Create a citation file
+cffr::cff_write(dependencies = FALSE) # Create a citation file
 ```
 
 ### Package overview
@@ -144,7 +142,8 @@ devtools::document()
 
 ## Set up a GitHub repository
 
-For more information about setting up and using GitHub and Git, see
+For more information about setting up and using GitHub and Git, see the
+vignette *Using Git and GitHub*:
 [`vignette("git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
 
 ``` r
@@ -156,7 +155,7 @@ usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
 # See also https://forum.posit.co/t/renaming-the-default-branch/119149
 usethis::git_default_branch_rename(from = "master", to = "main")
-# Sometimes takes a while before this works
+# Sometimes this takes a while before it works
 usethis::git_default_branch_rediscover()
 ```
 
@@ -166,7 +165,7 @@ GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
 `check-no-suggests.yaml` from
 [r-lib](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
-ensures the code passes [R CMD
+checks that the code passes [R CMD
 checks](https://r-pkgs.org/R-CMD-check.html) even if dependencies in
 `Suggests` are not installed.
 
@@ -181,24 +180,25 @@ Then adjust the YAML file (i.e.,
 useful triggers for GHAs (see the template file `check-no-suggests.yaml`
 in the folder `inst/templates`):
 
-- you made changes to code in the current repository: add `'push:'` to
-  section `'on:'` to run GHA on pushes.
-- someone else proposed changes to code in the current repository: add
-  `'pull_request:'` to section `'on:'` to run GHA on pull requests.
+- you made changes to code in the current repository:  
+  add `'push:'` to section `'on:'` to run GHA on pushes.
+- someone else proposed changes to code in the current repository:  
+  add `'pull_request:'` to section `'on:'` to run GHA on pull requests.
 - you want to check if a reverse dependency (i.e., a package that
-  depends on a package you changed) is still working fine: in the YAML
-  file of the reverse dependency, add `'workflow_dispatch:'` to section
-  `'on:'` to be able to manually trigger GHA. See section
-  `Use GitHub Actions` in `pkg_devel.Rmd` on how to use it.
-- someone else made changes to packages your package depends on: add
-  `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every
+  depends on a package you changed) is still working fine:  
+  add `'workflow_dispatch:'` to section `'on:'` in the YAML file of the
+  reverse dependency to be able to manually trigger GHA. See section
+  `Use GitHub Actions` in `pkg_devel.Rmd` how to use it.
+- someone else made changes to packages your package depends on:  
+  add `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every
   Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
   timing is approximate and depends on how busy the servers are.
 - If the package declares a dependency on a minimum `R` version, it is
   useful to specify the minimum declared `R` version to run in addition
-  to the ones that are by default used in the template: for example, add
+  to the ones that are by default used in the template: for example,
+  add  
   `'- {os: ubuntu-latest, r: '4.1.0'}'` to section `'matrix: config:'`
   to run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
   version.

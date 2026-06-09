@@ -2,10 +2,10 @@
 
 ## Introduction
 
-This vignette contains code and annotations that are useful when
-developing a package, including when preparing to release a new package
-version and setting up for a new version. It assumes the package has
-already been set up, as described in the vignette *Package setup*:
+This vignette contains code and annotations to develop a package, to
+prepare for package release, and to set up for a new version. It assumes
+the package has been set up as described in the vignette *Package
+setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
 
 ## Adding functions
@@ -20,7 +20,11 @@ devtools::document() # also runs devtools::load_all()
 
 Do:
 
-- Manually update the `NEWS` file: `` - Add `<func>()` to ... ``.
+- Manually update the `NEWS` file:  
+  `` - Add `<func>()` to ... ``.
+- If the added function relies on other packages, you have to update the
+  dependencies given in the `DESCRIPTION` file: see section [Update
+  dependencies](#update-dependencies).
 - When adding new function arguments to an existing function, it is best
   practice to place the new argument after existing arguments and use a
   default value that matches the old behaviour: then code written for
@@ -36,14 +40,10 @@ Do:
 ### Documentation
 
 ``` r
-
 #' Title
 #'
 #' Description
 #'
-#' # Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit
-#' @inheritParams is_logical allow_NA # for a function in the current package
-#' @inheritParams utils::installed.packages # for a function in another package
 #' @param x Vector of names to test.
 #' @param allow_NA `TRUE` or `FALSE`: allow [NA]s of the correct type in `x`?
 #' @param x,y Separate arguments by a comma without a space to create a single
@@ -76,16 +76,17 @@ Do:
 #' all_names(x = c("a", "b2a")) # TRUE
 #'
 #' @export
-func_name <- function(x, allow_underscores = TRUE) {
-  stopifnot(checkinput::is_logical(allow_underscores))
-  ...
+func_name <- function(x, allow_NA = TRUE) {
+  stopifnot(checkinput::is_logical(allow_NA))
+  <...>
 }
 ```
 
-#### Inherit sections
+#### Inherit documentation and parameters
 
-Inherited sections are **silently** ignored if that section is also
-defined in the file itself.
+It is possible to inherit sections of the documentation from other
+functions. Inherited sections are **silently** ignored if that section
+is also defined in the file itself.
 
 ``` r
 
@@ -93,6 +94,20 @@ defined in the file itself.
 #' @inherit is_number details
 #' @inheritSection is_logical Programming notes
 #' @inheritSection is_logical @note
+```
+
+#### Inherit parameters
+
+It is possible to inherit the description of parameters from other
+functions. Since `roxygen2` 8.0.0, it is possible to specify which
+arguments to inherit.
+
+``` r
+# inherit from a function in the current package
+@inheritParams is_logical allow_NA
+
+# inherit from a function in another package
+@inheritParams utils::installed.packages fields
 ```
 
 #### Add examples
@@ -103,11 +118,13 @@ directory that is cleaned up afterwards. See the section
 `Usage in practice` in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
 
-Examples rendered on a website created with
+Although examples rendered on a website created with
 [pkgdown](https://pkgdown.r-lib.org/) will display the output underneath
-the code. However, help-files accessed through `help(<func>)` will not,
-such that it might be useful to include a short comment regarding what
-feature of the output is notable.
+the code, help-files accessed through `help(<func>)` will not, such that
+it might be useful to include a short comment regarding what feature of
+the output is notable.
+
+To run all examples in a package:
 
 ``` r
 
@@ -123,7 +140,7 @@ directory that is cleaned up afterwards. See the section
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
 More generally, tests should not make changes (without restoring the
 original state) that could influence subsequent tests. Examples of such
-changes are any settings and changes to the state of the global
+changes are any options and changes to the state of the global
 environment (see the vignette [test
 fixtures](https://testthat.r-lib.org/articles/test-fixtures.html) from
 package `testthat` for more details).
@@ -147,12 +164,15 @@ tinytest::expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
+#### Testing file paths
+
 Testing file paths requires some thought because the file separator
 depends on the operating system (see `.Platform$file.sep`) and the
 backward slash is used as escape character in R such that it needs to be
 escaped itself by doubling them. Thus, a check on the presence of
-successive slashes and backslashes in \[string\]\[is_character()\]
-`string` would use `grepl(pattern = "//", x = string, fixed = TRUE)` and
+successive slashes and backslashes in
+\[string\]\[checkinput::is_character()\] `string` would use
+`grepl(pattern = "//", x = string, fixed = TRUE)` and
 `grepl(pattern = "\\\\", x = string, fixed = TRUE)`. The message to
 point out their presence would be written as
 `message("Successive '/' or '\\\\'")` which would be printed as
@@ -165,58 +185,20 @@ check like `tinytest::expect_true(fs::dir_exists(string))`.
 
 ### Update dependencies
 
-Specifying a minimum package version when importing packages ensures
-that used features are actually present. Setting `min_version = TRUE` in
-[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
-uses the currently installed package version. Alternatively, check which
-features are used and in which version those were introduced to find a
-minimum version. That can also be done by specifying minimum versions in
-checks through GitHub actions.
-
-Since R 4.6.0, [`read.dcf()`](https://rdrr.io/r/base/dcf.html)
-recognises lines starting with `#` as comment lines, making it possible
-to indicate in comments in the `DESCRIPTION` file why a particular
-package version is needed.
-
-``` r
-
-# Declare a minimum version for R itself
-usethis::use_package("R", type = "Depends", min_version = "4.1.0")
-
-# Declare a dependency on a package: 'use_package()' to declare a minimum
-# version and 'use_dev_package()' to specify the remote repository to download
-# the package from.
-usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
-usethis::use_dev_package(package = "checkinput", type = "Imports",
-                         remote = "github::JesseAlderliesten/checkinput")
-usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
-usethis::use_dev_package(package = "progutils", type = "Imports",
-                         remote = "github::JesseAlderliesten/progutils")
-devtools::document()
-```
-
-Do:
-
-- Specify the minimum declared `R` version as workflow in GitHub
-  Actions, see the section [Use GitHub Actions](#use-github-actions).
-
-See [xfun](https://github.com/yihui/xfun/blob/main/R/zzz.R) how to
-implement using a function that is present in ‘new’ versions of R also
-in older versions of R. The
-[cross](https://github.com/DavisVaughan/cross) package can be used to
-benchmark old and new versions.
-
 #### Importing packages or functions
 
 The standard way to use functions from other packages is to import the
-package (i.e., put it in the `Imports:` field of the `DESCRIPTION` file)
+package (i.e., put it in the `Imports:` field of the `DESCRIPTION` file;
+this is done by
+`usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`)
 and in code use the package name followed by two colons and the function
 name, e.g.,
-[`utils::osVersion()`](https://rdrr.io/r/utils/sessionInfo.html). If
-that is not possible, for example because the function is an operator,
-it is necessary to also list the function in the `NAMESPACE` file, e.g.,
-to add the line `#' @importFrom utils osVersion` to the file
-`R/<pkg>-package.R` that was created by
+[`utils::osVersion()`](https://rdrr.io/r/utils/sessionInfo.html).
+
+Using two colons to specify the package is not possible if the function
+is an operator: then it is necessary to also list the function in the
+`NAMESPACE` file, e.g., to add the line `#' @importFrom utils osVersion`
+to the file `R/<pkg>-package.R` that was created by
 [`usethis::use_package_doc()`](https://usethis.r-lib.org/reference/use_package_doc.html).
 This is done by
 `usethis::use_import_from(package = "utils", fun = "osVersion")`.
@@ -226,6 +208,39 @@ This is done by
 usethis::use_import_from(package = "utils", fun = "osVersion")
 usethis::use_package("utils", type = "Suggests", min_version = "4.1.0")
 ```
+
+#### Specifying minimum versions
+
+Specifying a minimum package version when importing packages ensures
+that used features are actually present. Setting `min_version = TRUE` in
+[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
+uses the currently installed package version but that might be too
+strict as features are likely also present in older versions. Apart from
+manually checking the `NEWS` files of the dependencies to check in which
+version used features were introduced, you can specify minimum versions
+in checks through GitHub actions.
+
+Since R 4.6.0, [`read.dcf()`](https://rdrr.io/r/base/dcf.html)
+recognises lines starting with `#` as comment lines, making it possible
+to use comments in the `DESCRIPTION` file to indicate why a particular
+package version is needed.
+
+``` r
+
+# Declare a minimum version for R itself
+usethis::use_package("R", type = "Depends", min_version = "4.1.0")
+
+# Declare a dependency on a package, specifying a minimum version and, if needed,
+# the remote repository to download the package from.
+use_remote_package(package = "checkinput", type = "Imports", min_version = TRUE,
+                   remote = "github::JesseAlderliesten/checkinput")
+devtools::document()
+```
+
+Do:
+
+- Specify the minimum declared `R` version as workflow in GitHub
+  Actions, see the section [Use GitHub Actions](#use-github-actions).
 
 ## Adding vignettes
 
@@ -242,13 +257,14 @@ pkgdown::build_article()
 browseVignettes(package = basename(getwd()))
 ```
 
-If no vignettes are visible,
+If no vignettes are visible after running
+`browseVignettes(package = basename(getwd()))`,
 [`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
 was probably run with the default argument `build_vignettes = FALSE`,
 use `build_vignettes = TRUE` instead:
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
-Run `tools::pkgVignettes(package = "<pkg>")` for information about which
-vignettes R finds.
+Run `tools::pkgVignettes(package = "<pkg>")` for information about the
+vignettes that R finds.
 
 Use `utils::vignette("<vignette_title>")` (e.g.,
 [`utils::vignette("pkg_devel")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
@@ -274,31 +290,23 @@ toc_depth: 3
 
 ### Linking
 
-For internal links to other sections in the same document (‘Section’,
-‘above’, ‘below’): `[<Section title>]` or
-`[<link text>][<Section title>]`.
+- Link to another section in the same document:  
+  `[<Section title>]` or `[<link text>][<Section title>]`.
+- Link to a help page of a package:  
+  `help("<func>", package = "<pkg>")` (unfortunately,
+  `help("<pkg>::<func>")` does **not** work).
+- Link from a help-page to a vignette:  
+  `` The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")` ``
+- Link to another vignette in the same package:  
+  `[<link text>](<vignette_filename>.html)`
 
-Linking to a help page of a package: `help("<func>", package = "<pkg>")`
-(`help("<func>::<pkg>")` does **not** work).
-
-There is [**no**](https://r-pkgs.org/vignettes.html#links) official way
-to link from vignettes to help-pages. Using relative paths (e.g.,
-`[<func>](../help/<func>)`, as proposed in a [StackOverflow
-answer](https://stackoverflow.com/questions/34946219)) is impaired by
-the change in the location of files when the package is installed. In
-addition, linking on the `pkgdown` website does **not** work in that
-format (`pkgdown` recognises calls like `` `<func>()` `` and
-`` `<pkg>::<func>()` ``, see the
-[documentation](https://pkgdown.r-lib.org/articles/linking.html)). For a
-more advanced way of linking from vignettes to help-pages that might
-work, see
-[here](https://github.com/dmurdoch/rgl/commit/bbc84447c2a6efed42907fbac176e9569b868d8f).
-
-To link from help-pages to vignettes, use
-
-``` r
-The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")` 
-```
+There are [**no**](https://r-pkgs.org/vignettes.html#links) official
+ways to link from vignettes to help-pages or vice versa. `pkgdown`
+recognises calls like `` `<func>()` `` and `` `<pkg>::<func>()` ``, such
+that relevant links for such calls will be created on a package website
+(see the
+[documentation](https://pkgdown.r-lib.org/articles/linking.html) for
+details).
 
 ## Adding miscellaneous files
 
@@ -310,38 +318,14 @@ and folders will be in the top directory in the installed package.
 
 ### Check tests
 
-Check for which functions no test file has been written.
+Check if there are functions for which no test file was written and run
+all test files.
 
 ``` r
 
+missing_test_files()
 devtools::document()
 tinytest::test_all()
-
-curr_pkg_name <- basename(getwd())
-files_R <- list.files(file.path(".", "R"))
-files_man <- list.files(path = file.path(".", "man"), pattern = "\\.Rd$")
-proj_pkg_R <- paste0(curr_pkg_name, "-package.R")
-if(proj_pkg_R %in% files_R) {
-  files_R <- files_R[files_R != proj_pkg_R]
-  files_man <- files_man[files_man != paste0(proj_pkg_R, "d")]
-}
-if("reexports.Rd" %in% files_man) {
-  files_man <- files_man[files_man != "reexports.Rd"]
-  # Based on https://stackoverflow.com/a/74487073/32365738
-  reexported_funcs <- progutils::not_in(getNamespaceExports(curr_pkg_name),
-                                        ls(envir = asNamespace(curr_pkg_name)))
-  if(length(reexported_funcs) == 0L) {
-    warning("File 'reexports.Rd' is present but no re-exported functions found!")
-  } else {
-    files_R <- progutils::not_in(files_R, paste0(reexported_funcs, ".R"))
-  }
-}
-expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
-expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
-tests_missing <- expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
-if(length(tests_missing) > 0L) {
-  warning("No test-file found for file ", progutils::paste_quoted(tests_missing))
-}
 ```
 
 ### Automated checks
@@ -431,31 +415,31 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
   `README.Md` file. You can follow the `usethis` practice of using
   [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
   to update `README.md`, which requires that `README.Rmd` and
-  `README.md` are staged at the same time. To remove this requirement if
-  you do not want it, delete the the (hidden) file
-  `.git/hooks/pre-commit` from the R-project folder (see the
-  `Description` section in
+  `README.md` are staged at the same time. To remove this requirement,
+  delete the the (hidden) file `.git/hooks/pre-commit` from the
+  R-project folder (see the `Description` section in
   [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
-
 - `NEWS`: restyle and publish the `NEWS`-file at each new package
   release.
-
-- `DESCRIPTION`: increment the package version in the `DESCRIPTION`
-  file, or run `R` as administrator and then use
+- `DESCRIPTION`: run
+  [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
+  to normalize the `DESCRIPTION` file. Manually increment the package
+  version in the `DESCRIPTION` file, or run `R` as administrator and
+  then use
   [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
-  In the latter case, do not automatically `commit` the change, but do
-  so manually to adjust the commit message to `Bump to version x.y.z`.
-  Indicating the version number in the commit title makes it easier to
-  find changes back later on (the pull request can have a description of
-  the changes, i.e., the updated section of the `NEWS` file).
-
+  In the latter case, do **not** automatically `commit` the change, but
+  do so manually to adjust the commit message to
+  `Bump to version x.y.z`. Indicating the version number in the commit
+  title makes it easier to find changes back later on (the pull request
+  can have a description of the changes, i.e., the updated section of
+  the `NEWS` file).
 - `CITATION.cff`: update your citation file to reflect the new package
   version:
 
-  ``` r
+``` r
 
-  cffr::cff_write()
-  ```
+cffr::cff_write(dependencies = FALSE) # Create or update a citation file
+```
 
 ## Updating
 
@@ -464,8 +448,10 @@ package [revdepcheck](https://revdepcheck.r-lib.org/).
 To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see
 section `Automate checks` in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)).
-To check if package `B`, which depends on package `A`, is still working
-fine, go to the `Actions` tab of repository `B`, select the action you
+
+To check if a reverse dependency (i.e., a package that depends on a
+package you changed) is still working fine:  
+go to the `Actions` tab of the reverse dependency, select the action you
 want to trigger (e.g., `R-CMD-check.yaml`), and use the `Run workflow`
 button to run the GHA. You can select which branch it should run on, but
 you need to trigger it once manually on the `main` branch to be able to
@@ -474,7 +460,8 @@ trigger it manually on other branches.
 Scheduled jobs that failed can be rerun through the button `Re-run jobs`
 \> `Re-run failed jobs` \> `Re-run jobs`. If the GitHub actions page
 (e.g., <https://github.com/JesseAlderliesten/develcoder/actions>)
-indicates the package passes the R cmd check whereas the badge on the
+indicates the package passes the [R CMD
+checks](https://r-pkgs.org/R-CMD-check.html) whereas the badge on the
 `README` indicates it fails, make sure the R cmd check considers the
 `main` branch (i.e., if the `devel` branch passes but the `main` branch
 fails, the badge will have `failing`): use the `Run workflow` button to
@@ -482,9 +469,9 @@ run the GHA on the `main` branch (see the previous paragraph).
 
 If the package declares a dependency on a minimum `R` version, it is
 useful to specify the minimum declared `R` version to run in addition to
-the ones that are by default used in the template: add
-`- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to run
-`R` 4.1.0.
+the ones that are by default used in the template:  
+add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
+run `R` 4.1.0.
 
 ### pkgdown website
 

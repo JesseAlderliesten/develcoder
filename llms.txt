@@ -1,12 +1,11 @@
 # develcoder
 
 `develcoder` is an [R](https://www.r-project.org/) package containing
-code and templates to develop R packages. It is based on the [R
-packages](https://r-pkgs.org/) book by Hadley Wickham and Jennifer
-Bryan, using R packages
-[devtools](https://CRAN.R-project.org/package=devtools) and
-[usethis](https://CRAN.R-project.org/package=usethis), although I use
-[tinytest](https://CRAN.R-project.org/package=tinytest) instead of
+code and templates to develop R packages. It is based on the book ‘[R
+packages](https://r-pkgs.org/)’ by Hadley Wickham and Jennifer Bryan,
+using R packages [devtools](https://CRAN.R-project.org/package=devtools)
+and [usethis](https://CRAN.R-project.org/package=usethis), although I
+use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 [testthat](https://cran.r-project.org/package=testthat) for unit tests.
 
 ## Structure
@@ -82,12 +81,30 @@ my package
 ## License
 
 This project is licensed under the terms of the [MIT
-License](https://jessealderliesten.github.io/LICENSE.md).
+License](https://jessealderliesten.github.io/LICENSE.md). This project
+is licensed under the terms of the [MIT
+License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
+
+This project is licensed under the terms of the [MIT
+License](https://jessealderliesten.github.io/LICENSE). This project is
+licensed under the terms of the [MIT
+License](https://jessealderliesten.github.io/develcoder/LICENSE).
 
 ## Citation
 
 Please cite this project [as described
-here](https://jessealderliesten.github.io/CITATION.cff).
+here](https://jessealderliesten.github.io/CITATION.cff). Please cite
+this project [as described
+here](https://jessealderliesten.github.io/develcoder/CITATION.cff).
+
+Please cite this project [as described
+here](https://jessealderliesten.github.io/CITATION). Please cite this
+project [as described
+here](https://jessealderliesten.github.io/develcoder/CITATION).
+
+Please cite this project as:
+
+`{r, eval = TRUE, echo = FALSE} citation("develcoder")`
 
 # Similar resources
 
