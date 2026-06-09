@@ -115,15 +115,19 @@ _Build on the example in section [Test] above with a more elaborate example. Des
 
 
 ## License
-_Assuming there is a license file in the repository. Use `usethis::use_mit_license()` to add one from R and see the section 'Add package-wide documentation' in the vignette `vignette(topic = "pkg_setup", package = "develcoder")` for details._
+_This assumes there is a license file in the repository. Use `usethis::use_mit_license()` to add one from R and see the section 'License' in the vignette `vignette(topic = "pkg_setup", package = "develcoder")` for details._
 
-This project is licensed under the terms of the [MIT License](/LICENSE.md).
+This project is licensed under the terms of the [MIT License](LICENSE.md).
 
 
 ## Citation
-_Assuming there is a citation file in the repository. Use `cffr::cff_write()` to add one from R and see the section 'Add package-wide documentation' in the vignette `vignette(topic = "pkg_setup", package = "develcoder")` for details._
+_This code uses the citation file if it exists and otherwise uses the the `DESCRIPTION` file. See the section 'Citation' in the vignette `vignette(topic = "pkg_setup", package = "develcoder")` for details._
 
-Please cite this project [as described here](/CITATION.cff).
+```` {r, eval = FALSE}
+```{r, echo = FALSE, comment = ""}
+citation(basename(getwd()))
+```
+````
 
 
 ## Contributing
