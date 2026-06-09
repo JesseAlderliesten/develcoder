@@ -8,7 +8,7 @@ message: 'To cite package "develcoder" in publications use:'
 type: software
 license: MIT
 title: 'develcoder: Code And Templates To Develop R Packages'
-version: 0.5.0
+version: 0.5.0.9000
 abstract: Code and templates to set up, develop, and maintain R packages. This package
   heavily relies on packages 'devtools' and 'usethis'.
 authors:
@@ -31,7 +31,7 @@ references:
   url: https://docs.ropensci.org/cffr/
   repository: https://CRAN.R-project.org/package=cffr
   authors:
-  - family-names: Hernangómez
+  - family-names: Hernangomez
     given-names: Diego
     email: diego.hernangomezherrero@gmail.com
     orcid: https://orcid.org/0000-0001-8457-4658
@@ -61,6 +61,7 @@ references:
     email: jessealderliesten@hotmail.com
     orcid: https://orcid.org/0000-0003-1132-4310
   year: '2026'
+  version: '>= 1.0.0'
 - type: software
   title: codetools
   abstract: 'codetools: Code Analysis Tools for R'
@@ -73,6 +74,23 @@ references:
     email: luke-tierney@uiowa.edu
   year: '2026'
   doi: 10.32614/CRAN.package.codetools
+- type: software
+  title: desc
+  abstract: 'desc: Manipulate DESCRIPTION Files'
+  notes: Suggests
+  url: https://desc.r-lib.org/
+  repository: https://CRAN.R-project.org/package=desc
+  authors:
+  - family-names: Csardi
+    given-names: Gabor
+    email: csardi.gabor@gmail.com
+  - family-names: Muller
+    given-names: Kirill
+  - family-names: Hester
+    given-names: Jim
+    email: james.f.hester@gmail.com
+  year: '2026'
+  doi: 10.32614/CRAN.package.desc
 - type: software
   title: devtools
   abstract: 'devtools: Tools to Make Developing R Packages Easier'
@@ -103,8 +121,8 @@ references:
     given-names: Jim
   - family-names: Wickham
     given-names: Hadley
-  - family-names: Csárdi
-    given-names: Gábor
+  - family-names: Csardi
+    given-names: Gabor
   year: '2026'
   doi: 10.32614/CRAN.package.fs
 - type: software
@@ -166,7 +184,7 @@ references:
     email: mark.padgham@email.com
     orcid: https://orcid.org/0000-0003-2172-5265
   - family-names: Salmon
-    given-names: Maëlle
+    given-names: Maelle
   - family-names: Wujciak-Jens
     given-names: Jacob
     email: jacob@wujciak.de
@@ -187,8 +205,8 @@ references:
   url: https://r-lib.github.io/pkgdepends/
   repository: https://CRAN.R-project.org/package=pkgdepends
   authors:
-  - family-names: Csárdi
-    given-names: Gábor
+  - family-names: Csardi
+    given-names: Gabor
     email: csardi.gabor@gmail.com
   year: '2026'
   doi: 10.32614/CRAN.package.pkgdepends
@@ -207,11 +225,11 @@ references:
     given-names: Jay
     orcid: https://orcid.org/0000-0002-6299-179X
   - family-names: Salmon
-    given-names: Maëlle
+    given-names: Maelle
     orcid: https://orcid.org/0000-0002-2815-0399
   - family-names: Roy
     given-names: Olivier
-  - family-names: Brüggemann
+  - family-names: Bruggemann
     given-names: Salim
     orcid: https://orcid.org/0000-0002-5329-5987
   year: '2026'
@@ -235,8 +253,8 @@ references:
   url: https://remotes.r-lib.org
   repository: https://CRAN.R-project.org/package=remotes
   authors:
-  - family-names: Csárdi
-    given-names: Gábor
+  - family-names: Csardi
+    given-names: Gabor
     email: csardi.gabor@gmail.com
   - family-names: Hester
     given-names: Jim
