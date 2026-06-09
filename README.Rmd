@@ -96,7 +96,7 @@ This project is licensed under the terms of the [MIT License](LICENSE.md).
 citation(basename(getwd()))
 ```
 
-# Similar resources
+## Similar resources
 - The book [R packages](https://r-pkgs.org/) by H. Wickham and J. Bryan
 - The chapter [Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
   of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
