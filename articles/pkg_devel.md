@@ -230,10 +230,15 @@ package version is needed.
 # Declare a minimum version for R itself
 usethis::use_package("R", type = "Depends", min_version = "4.1.0")
 
-# Declare a dependency on a package, specifying a minimum version and, if needed,
-# the remote repository to download the package from.
-use_remote_package(package = "checkinput", type = "Imports", min_version = TRUE,
-                   remote = "github::JesseAlderliesten/checkinput")
+# Declare a dependency on a package: 'use_package()' to declare a minimum
+# version and 'use_dev_package()' to specify the remote repository to download
+# the package from.
+usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
+usethis::use_dev_package(package = "checkinput", type = "Imports",
+                         remote = "github::JesseAlderliesten/checkinput")
+usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
+usethis::use_dev_package(package = "progutils", type = "Imports",
+                         remote = "github::JesseAlderliesten/progutils")
 devtools::document()
 ```
 
@@ -323,9 +328,33 @@ all test files.
 
 ``` r
 
-missing_test_files()
 devtools::document()
 tinytest::test_all()
+curr_pkg_name <- basename(getwd())
+files_R <- list.files(file.path(".", "R"))
+files_man <- list.files(path = file.path(".", "man"), pattern = "\\.Rd$")
+proj_pkg_R <- paste0(curr_pkg_name, "-package.R")
+if(proj_pkg_R %in% files_R) {
+  files_R <- files_R[files_R != proj_pkg_R]
+  files_man <- files_man[files_man != paste0(proj_pkg_R, "d")]
+}
+if("reexports.Rd" %in% files_man) {
+  files_man <- files_man[files_man != "reexports.Rd"]
+  # Based on https://stackoverflow.com/a/74487073/32365738
+  reexported_funcs <- progutils::not_in(getNamespaceExports(curr_pkg_name),
+                                        ls(envir = asNamespace(curr_pkg_name)))
+  if(length(reexported_funcs) == 0L) {
+    warning("File 'reexports.Rd' is present but no re-exported functions found!")
+  } else {
+    files_R <- progutils::not_in(files_R, paste0(reexported_funcs, ".R"))
+  }
+}
+expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
+expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
+tests_missing <- expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
+if(length(tests_missing) > 0L) {
+  warning("No test-file found for file ", progutils::paste_quoted(tests_missing))
+}
 ```
 
 ### Automated checks
