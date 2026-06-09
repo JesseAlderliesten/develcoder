@@ -81,26 +81,12 @@ my package
 ## License
 
 This project is licensed under the terms of the [MIT
-License](https://jessealderliesten.github.io/LICENSE.md). This project
-is licensed under the terms of the [MIT
-License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
-
-This project is licensed under the terms of the [MIT
-License](https://jessealderliesten.github.io/LICENSE). This project is
-licensed under the terms of the [MIT
 License](https://jessealderliesten.github.io/develcoder/LICENSE).
 
 ## Citation
 
 Please cite this project [as described
-here](https://jessealderliesten.github.io/CITATION.cff). Please cite
-this project [as described
 here](https://jessealderliesten.github.io/develcoder/CITATION.cff).
-
-Please cite this project [as described
-here](https://jessealderliesten.github.io/CITATION). Please cite this
-project [as described
-here](https://jessealderliesten.github.io/develcoder/CITATION).
 
 Please cite this project as:
 
