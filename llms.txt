@@ -10,15 +10,17 @@ use [tinytest](https://CRAN.R-project.org/package=tinytest) instead of
 
 ## Structure
 
-    ├── .github
-    │   └── workflows: workflows to run tests with GitHub Actions
-    ├── R: functions and package overview
-    ├── inst
-    │   ├── templates: templates for README and yaml files (see below).
-    │   └── tinytest: tests
-    ├── man: help-files
-    ├── tests: setup to use 'tinytest' for testing
-    └── vignettes: vignettes (see below) 
+``` R
+├── .github
+│   └── workflows: workflows to run tests with GitHub Actions
+├── R: functions and package overview
+├── inst
+│   ├── templates: templates for README and yaml files (see below).
+│   └── tinytest: tests
+├── man: help-files
+├── tests: setup to use 'tinytest' for testing
+└── vignettes: vignettes (see below) 
+```
 
 Folder
 [inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
@@ -66,7 +68,7 @@ following R code (you need to run R as administrator):
 ``` r
 
 if(!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages(pkgs = "remotes", quiet = FALSE)
+   install.packages(pkgs = "remotes", quiet = FALSE)
 }
 remotes::install_github(repo = "JesseAlderliesten/develcoder",
                         dependencies = NA, upgrade = FALSE, force = FALSE,
@@ -81,16 +83,28 @@ my package
 ## License
 
 This project is licensed under the terms of the [MIT
-License](https://jessealderliesten.github.io/develcoder/LICENSE).
+License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
 
 ## Citation
 
-Please cite this project [as described
-here](https://jessealderliesten.github.io/develcoder/CITATION.cff).
-
-Please cite this project as:
-
-`{r, eval = TRUE, echo = FALSE} citation("develcoder")`
+``` R
+#> To cite package 'develcoder' in publications use:
+#> 
+#>   Alderliesten J (2026). _develcoder: Code And Templates To Develop R
+#>   Packages_. R package version 0.5.0, commit
+#>   50ef062aa667216a8b1fbdfa012572403c9c2058,
+#>   <https://github.com/JesseAlderliesten/develcoder>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {develcoder: Code And Templates To Develop R Packages},
+#>     author = {Jesse Alderliesten},
+#>     year = {2026},
+#>     note = {R package version 0.5.0, commit 50ef062aa667216a8b1fbdfa012572403c9c2058},
+#>     url = {https://github.com/JesseAlderliesten/develcoder},
+#>   }
+```
 
 # Similar resources
 

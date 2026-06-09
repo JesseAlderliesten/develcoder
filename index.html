@@ -62,23 +62,24 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-<div class="section level1">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="develcoder">develcoder<a class="anchor" aria-label="anchor" href="#develcoder"></a>
 </h1></div>
+<!-- badges: start -->
+
 <p><code>develcoder</code> is an <a href="https://www.r-project.org/" class="external-link">R</a> package containing code and templates to develop R packages. It is based on the book ‘<a href="https://r-pkgs.org/" class="external-link">R packages</a>’ by Hadley Wickham and Jennifer Bryan, using R packages <a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a> and <a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a>, although I use <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> instead of <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a> for unit tests.</p>
 <div class="section level2">
 <h2 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
 </h2>
-<pre><code>├── .github
-│   └── workflows: workflows to run tests with GitHub Actions
-├── R: functions and package overview
-├── inst
-│   ├── templates: templates for README and yaml files (see below).
-│   └── tinytest: tests
-├── man: help-files
-├── tests: setup to use 'tinytest' for testing
-└── vignettes: vignettes (see below) </code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>├── .github</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>│   └── workflows<span class="sc">:</span> workflows to run tests with GitHub Actions</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>├── R<span class="sc">:</span> functions and package overview</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>├── inst</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>│   ├── templates<span class="sc">:</span> templates <span class="cf">for</span> README and yaml <span class="fu">files</span> (see below).</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>│   └── tinytest<span class="sc">:</span> tests</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>├── man<span class="sc">:</span> help<span class="sc">-</span>files</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>├── tests<span class="sc">:</span> setup to use <span class="st">'tinytest'</span> <span class="cf">for</span> testing</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>└── vignettes<span class="sc">:</span> <span class="fu">vignettes</span> (see below) </span></code></pre></div>
 <p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">inst/templates</a> contains the following templates (in the installed package these are in <code>develcoder/templates</code>):</p>
 <ul>
 <li>
@@ -102,7 +103,7 @@
 <p>Visit the <a href="https://jessealderliesten.github.io/develcoder/">develcoder website</a> to explore the package, or install <code>develcoder</code> from <a href="https://github.com/JesseAlderliesten/develcoder" class="external-link">GitHub</a> using the following R code (you need to run R as administrator):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"remotes"</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"remotes"</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"JesseAlderliesten/develcoder"</span>,</span>
 <span>                        dependencies <span class="op">=</span> <span class="cn">NA</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -113,14 +114,27 @@
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p>This project is licensed under the terms of the <a href="LICENSE">MIT License</a>.</p>
+<p>This project is licensed under the terms of the <a href="LICENSE.html">MIT License</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Please cite this project <a href="CITATION.cff">as described here</a>.</p>
-<p>Please cite this project as:</p>
-<p><code>{r, eval = TRUE, echo = FALSE} citation("develcoder")</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; To cite package 'develcoder' in publications use:</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   Alderliesten J (2026). _develcoder: Code And Templates To Develop R</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   Packages_. R package version 0.5.0, commit</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   50ef062aa667216a8b1fbdfa012572403c9c2058,</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   &lt;https://github.com/JesseAlderliesten/develcoder&gt;.</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;   @Manual{,</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;     title = {develcoder: Code And Templates To Develop R Packages},</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;     author = {Jesse Alderliesten},</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;     year = {2026},</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;     note = {R package version 0.5.0, commit 50ef062aa667216a8b1fbdfa012572403c9c2058},</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;     url = {https://github.com/JesseAlderliesten/develcoder},</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
