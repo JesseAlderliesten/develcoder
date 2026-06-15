@@ -123,9 +123,20 @@ usethis::use_news_md() # Create NEWS.md
 
 
 ## Set up testing infrastructure
-```{r testing, eval = FALSE}
+I use package [tinytest](https://CRAN.R-project.org/package=tinytest) to create
+tests. This can be set up through:
+
+```{r testing tinytest, eval = FALSE}
 tinytest::setup_tinytest(pkgdir = ".")
 usethis::use_package(package = "tinytest", type = "Suggests")
+devtools::document()
+```
+
+Use the following code instead if you prefer to use package
+[testthat](https://cran.r-project.org/package=testthat):
+
+```{r testing testthat, eval = FALSE}
+usethis::use_test("<func>")
 devtools::document()
 ```
 
@@ -191,14 +202,17 @@ and the section `Use GitHub Actions` in the vignette *Package development*:
 `vignette("pkg_devel", package = "develcoder")`.
 
 ## Use a package website
-See the chapter about [pkgdown](https://r-pkgs.org/website.html) in the book
-[R packages](https://r-pkgs.org/) and the documentation for package
-[pkgdown](https://pkgdown.r-lib.org/).
+One advantage of using a website for your package is that it automatically
+creates [hyperlinked cross-references](https://r-pkgs.org/vignettes.html#links)
+to functions and documentation you refer to.
+
+To set up a package website, you can use `usethis::use_pkgdown()`. To also set
+up a [GitHub action][GitHub Actions] to automatically build and update your site
+if you push changes to your package to GitHub, run the following code:
 
 ```{r pkgdown, eval = FALSE}
-# Set up a GitHub action to automatically build and publish your site
 usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
-devtools::document() # To update package-level documentation
+devtools::document() # To update package-wide documentation
 ```
 
 After a few minutes, the website should be present. The URL has the structure
@@ -215,3 +229,7 @@ the pkgdown-website (see the
 and the
 [example code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
 for this repository).
+
+See the chapter about [pkgdown](https://r-pkgs.org/website.html) in the book
+[R packages](https://r-pkgs.org/) and the documentation for package
+[pkgdown](https://pkgdown.r-lib.org/) for further details.
