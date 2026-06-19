@@ -12,23 +12,23 @@ vignette: >
 
 ## Introduction
 This vignette contains information about using
-[R Markdown](https://pkgs.rstudio.com/rmarkdown/) and
-[knitr](https://yihui.org/knitr/).
+[`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
+[`knitr`](https://yihui.org/knitr/).
 
 An R Markdown file is an R script with markup to enable combining the script
 (including the comments) with its output and additional text in a single
-document. The R package [rmarkdown](https://cran.r-project.org/package=rmarkdown)
+document. The R package [`rmarkdown`](https://cran.r-project.org/package=rmarkdown)
 and either [RStudio](https://posit.co/products/open-source/rstudio) or
-[Pandoc](https://pandoc.org/) are required to create an R Markdown file.
+[`Pandoc`](https://pandoc.org/) are required to create an R Markdown file.
 
-To generate a PDF as output, a [LaTeX](https://www.latex-project.org/get/)
+To generate a PDF as output, a [`LaTeX`](https://www.latex-project.org/get/)
 distribution needs to be installed. See the 'R markdown cookbook' and the
 'Definitive guide' (both mentioned at [Useful resources] below) for extensive
-help. When installing [MikTex](https://miktex.org/) as LaTeX distribution, set
+help. When installing [`MikTex`](https://miktex.org/) as LaTeX distribution, set
 `install for all users` and `always install missing packages on the fly` (for
 all users), see
 [this Stack Exchange post](https://tex.stackexchange.com/questions/27138/). An
-alternative to MikTeX is [TinyTeX](https://yihui.org/tinytex/) (for debugging
+alternative to `MikTeX` is [`TinyTeX`](https://yihui.org/tinytex/) (for debugging
 see [here](https://yihui.org/tinytex/r/)):
 
 ```{r tinytex, eval = FALSE}
@@ -41,15 +41,15 @@ options(tinytex.verbose = FALSE)
 ```
 
 ## Useful resources
-- the [R markdown cookbook](https://pkg.yihui.org/rmarkdown-cookbook/) by
+- the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/) by
   Y. Xie, C. Dervieux, and E. Riederer
-- the [Definitive guide](https://pkg.yihui.org/rmarkdown-book/) by Y. Xie, J.J.
+- the [`Definitive guide`](https://pkg.yihui.org/rmarkdown-book/) by Y. Xie, J.J.
   Allaire, and G. Grolemund
-- a [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
+- a [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
   and [website](https://rmarkdown.rstudio.com/) on R Markdown from
   [Posit](https://posit.co/)
-- the maintainer's website on [knitr](https://yihui.org/knitr/)
-- the [Markdown guide](https://www.markdownguide.org/)
+- the maintainer's website on [`knitr`](https://yihui.org/knitr/)
+- the [`Markdown guide`](https://www.markdownguide.org/)
 
 ## Global Settings for knitr used by R Markdown
 For a list of available options, see `str(knitr::opts_chunk$get())` and the
@@ -74,9 +74,9 @@ makes more sense in interactive use during development of the script.
 
 
 ## Loading files
-Files that have to be used by the R Markdown script (e.g., R scripts that are
+Files that have to be used by the `R Markdown` script (e.g., `R` scripts that are
 sourced, data files that are read) should be placed in the same directory as the
-R Markdown file, because the working directory when evaluating R code chunks is
+`R Markdown` file, because the working directory when evaluating `R` code chunks is
 the directory of the input document by default. The working directory can be
 changed using `opts_knit$set(root.dir = ...)` but should **not** be changed using
 `setwd()`, see the `Note` in `help("knit", package = "knitr")`.

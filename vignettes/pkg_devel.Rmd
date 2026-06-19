@@ -114,7 +114,7 @@ but to a temporary directory that is cleaned up afterwards. See the section
 `Usage in practice` in `help("create_tempdir", package = "progutils")`.
 
 Although examples rendered on a website created with
-[pkgdown](https://pkgdown.r-lib.org/) will display the output underneath the
+[`pkgdown`](https://pkgdown.r-lib.org/) will display the output underneath the
 code, help-files accessed through `help(<func>)` will not, such that it might be
 useful to include a short comment regarding what feature of the output is notable.
 
@@ -125,10 +125,10 @@ devtools::run_examples()
 
 To not run or not display code in examples, you can use the `dontrun` and
 `dontshow` tags, see the section
-[Examples](https://cran.r-project.org/doc/manuals/R-exts.html#Documenting-functions)
-from the [Writing R Extensions manual](https://cran.r-project.org/doc/manuals/R-exts.html) and the section about
-[Examples](https://r-pkgs.org/man.html#sec-man-examples-errors) in the book
-'R packages'.
+[`Examples`](https://cran.r-project.org/doc/manuals/R-exts.html#Documenting-functions)
+from the [`Writing R Extensions manual`](https://cran.r-project.org/doc/manuals/R-exts.html) and the section about
+[`Examples`](https://r-pkgs.org/man.html#sec-man-examples-errors) in the book
+`R packages`.
 
 ### Styling
 Newlines can be forced using `\cr`.
@@ -143,7 +143,7 @@ the section
 generally, tests should not make changes (without restoring the original state)
 that could influence subsequent tests. Examples of such changes are any options
 and changes to the state of the global environment (see the vignette
-[test fixtures](https://testthat.r-lib.org/articles/test-fixtures.html) from
+[`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html) from
 package `testthat` for more details).
 
 Note that `expect_silent(...)` tests that no errors or warnings are emitted,
@@ -175,10 +175,9 @@ tinytest::run_test_file(
 ### Testing file paths
 Testing file paths requires some thought because the file separator depends on
 the operating system (see `.Platform$file.sep`) and the backward slash is used
-as escape character in R such that it needs to be escaped itself by doubling
+as escape character in `R` such that it needs to be escaped itself by doubling
 them. Thus, a check on the presence of successive slashes and backslashes in
-[string][checkinput::is_character()] `string` would use
-`grepl(pattern = "//", x = string, fixed = TRUE)` and
+string `string` would use `grepl(pattern = "//", x = string, fixed = TRUE)` and
 `grepl(pattern = "\\\\", x = string, fixed = TRUE)`. The message to point out
 their presence would be written as `message("Successive '/' or '\\\\'")` which
 would be printed as `Successive '/' or '\\'`.
@@ -192,14 +191,15 @@ message (e.g., `"Repeated"`), possibly followed by a check like
 
 ### Importing packages or functions
 The standard way to use functions from other packages is to import the package
-(i.e., put it in the `Imports:` field of the `DESCRIPTION` file; this is done by
+(i.e., put it in the `Imports:` field of the `DESCRIPTION` file; this is done by  
 `usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`)
 and in code use the package name followed by two colons and the function name,
 e.g., `utils::osVersion()`.
 
 Using two colons to specify the package is not possible if
 the function is an operator: then it is necessary to also list the function in
-the `NAMESPACE` file, e.g., to add the line `#' @importFrom utils osVersion` to
+the `NAMESPACE` file, e.g., to add the line  
+`#' @importFrom utils osVersion` to
 the file `R/<pkg>-package.R` that was created by `usethis::use_package_doc()`.
 This is done by `usethis::use_import_from(package = "utils", fun = "osVersion")`.
 
@@ -225,7 +225,7 @@ through GitHub actions and iteratively change them to find the minimum version
 that passes the check. Then specify that version as minimum version in your
 `DESCRIPTION` file.
 
-Since R 4.6.0, `read.dcf()` recognises lines starting with `#` as comment lines,
+Since `R` 4.6.0, `read.dcf()` recognises lines starting with `#` as comment lines,
 making it possible to use comments in the `DESCRIPTION` file to indicate why a
 particular package version is needed.
 
@@ -269,8 +269,8 @@ default argument `build_vignettes = FALSE`, use `build_vignettes = TRUE` instead
 that R finds.
 
 Use `utils::vignette("<vignette_title>")` (e.g., `utils::vignette("pkg_devel")`)
-and `tools::Rd2txt("path/to/file.Rd")` to render a vignette or an `Rd`-file in
-the help-pane of RStudio, respectively.
+and `tools::Rd2txt("path/to/file.Rd")` to render a vignette or an `Rd` file in
+the `help` pane of RStudio, respectively.
 
 ## Styling
 See the vignette *RMarkdown and knitr*:
@@ -305,7 +305,7 @@ calls will be created on a package website (see the
 
 # Adding miscellaneous files
 Non-standard files or folders should be added in the `inst/` directory to pass
-[R CMD checks](https://r-pkgs.org/R-CMD-check.html). Those files and folders
+[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html). Those files and folders
 will be in the top directory in the installed package.
 
 
@@ -342,7 +342,7 @@ expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
 expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
 tests_missing <- expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
 if(length(tests_missing) > 0L) {
-  warning("No test-file found for file ", progutils::paste_quoted(tests_missing))
+  warning("No test file found for file ", progutils::paste_quoted(tests_missing))
 }
 ```
 
@@ -364,7 +364,7 @@ before checking it, whereas
 does not but is able to compare output from different checks.
 
 See the [CRAN cookbook](https://contributor.r-project.org/cran-cookbook/) and
-the appendix [R-CMD-check](https://r-pkgs.org/R-CMD-check.html) from the book
+the appendix [`R-CMD-check`](https://r-pkgs.org/R-CMD-check.html) from the book
 'R packages' on how to proceed if checks fail.
 
 The call to `devtools::check()` used here is more strict than the default,
@@ -501,6 +501,10 @@ also [here](https://github.com/r-universe-org/workflows)) might be useful.
 
 ``` {r checks-goodpractice, eval = FALSE}
 # Select checks
+# Show groups of checks: goodpractice::all_check_groups()
+# Show all checks in some groups: goodpractice::checks_by_group(c("cyclocomp", "lintr"))
+# Run all check from some groups:
+# goodpractice::goodpractice(checks = goodpractice::checks_by_group(c("cyclocomp", "lintr")))
 goodpractice_all_checks <- goodpractice::all_checks()
 my_checks_goodpractice <- progutils::not_in(
   goodpractice_all_checks,
@@ -521,7 +525,8 @@ my_checks_goodpractice <- progutils::not_in(
     "tidyverse_line_length_linter",
     "tidyverse_object_name_linter",
     "tidyverse_spaces_left_parentheses_linter",
-    "tidyverse_test_file_names", # does not recognise test-files in inst/tinytest
+    # does not find test-files in inst/tinytest, use check_test_files() instead.
+    "tidyverse_test_file_names",
     "tidyverse_whitespace_linter",
     
     # Checks similar to those from 'rcmdcheck' and 'urlchecker' are also used by
@@ -582,7 +587,7 @@ to check them. See also `xfun::rev_check()`, package
   staged at the same time. To remove this requirement,
   delete the the (hidden) file `.git/hooks/pre-commit` from the R-project folder
   (see the `Description` section in `help("use_readme_rmd", package = "usethis")`).
-- `NEWS`: restyle and publish the `NEWS`-file at each new package release.
+- `NEWS`: restyle and publish the `NEWS` file at each new package release.
 - `DESCRIPTION`: run `desc::desc_normalize()` to normalize the `DESCRIPTION`
   file. Manually increment the package version in the `DESCRIPTION` file, or run
   `R` as administrator and then use `usethis::use_version()`. In the latter
@@ -607,7 +612,7 @@ To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see section
 `vignette("pkg_setup", package = "develcoder")`).
 
 To check if a reverse dependency (i.e., a package that depends on a package you
-changed) is still working fine:  
+changed) is still working fine: 
 go to the `Actions` tab of the reverse dependency, select the action you want to
 trigger (e.g., `R-CMD-check.yaml`), and use the `Run workflow` button to run the
 GHA. You can select which branch it should run on, but you need to trigger it
@@ -617,9 +622,9 @@ branches.
 Scheduled jobs that failed can be rerun through the button `Re-run jobs` >
 `Re-run failed jobs` > `Re-run jobs`. If the GitHub actions page (e.g.,
 https://github.com/JesseAlderliesten/develcoder/actions) indicates the package
-passes the [R CMD checks](https://r-pkgs.org/R-CMD-check.html)
+passes the [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html)
 whereas the badge on the `README` indicates it fails,
-make sure the R cmd check considers the `main` branch (i.e., if the `devel`
+make sure the `R CMD check` considers the `main` branch (i.e., if the `devel`
 branch passes but the `main` branch fails, the badge will have `failing`): use
 the `Run workflow` button to run the GHA on the `main` branch (see the previous
 paragraph).
@@ -631,8 +636,8 @@ add `- {os: ubuntu-latest,   r: '4.1.0'}` to section `matrix: config:` to run
 `R` 4.1.0.
 
 ## pkgdown website
-See the documentation about package [pkgdown](https://pkgdown.r-lib.org/) and
-the [chapter](https://r-pkgs.org/website.html) from the R packages book.
+See the documentation about package [`pkgdown`](https://pkgdown.r-lib.org/) and
+the [`chapter`](https://r-pkgs.org/website.html) from the `R packages` book.
 
 ``` {r pkgdown, eval = FALSE}
 # To manually update the website
@@ -643,7 +648,7 @@ files that constitute your package's website are in the local `docs/` directory.
 
 Instead of manually updating the pkgdown website, one can use a
 [GitHub Action][Use GitHub Actions] workflow (e.g.,
-[pkgdown.yaml](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
+[`pkgdown.yaml`](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
 that updates the website after a pull request or push. To set this up, run
 `usethis::use_pkgdown_github_pages()`.
 
@@ -672,7 +677,7 @@ by opening the file `"<pkg>\docs\index.html"` and browse to `Reference` to see
 the package index.
 
 ## Merge devel-branch with master
-To merge the `devel`-branch with `master`, go the the `devel`-branch on GitHub.
+To merge the `devel` branch with `master`, go the the `devel` branch on GitHub.
 `<Contribute>` > `Open Pull Request`. Copy the updated `NEWS` in the
 `description` field and use the button `Create pull request`.
 
@@ -691,9 +696,9 @@ After a successful merge, you will see a message that you can delete the
 the `closed` tab, and scroll down to the button `Delete branch`.
 
 ### Overwrite devel-branch after merge
-In `RStudio`, open the relevant project to check there are no commits left. Then
+In RStudio, open the relevant project to check there are no commits left. Then
 you can move to the `master` branch and `Pull` to get all updates you just
-committed to the `master` branch. Then click the `New branch` button in `RStudio`
+committed to the `master` branch. Then click the `New branch` button in RStudio
 (besides the `Switch branch` icon indicating which branch (e.g., `master` or
 `devel`) you are using), use `devel` as branch name and click `Create`. You will
 be notified that `devel` already exists and asked if you want to overwrite it.
@@ -708,9 +713,9 @@ also create a completely new branch:
   specify a name for the branch > green `Create new branch` button.
 - Go back to the GitHub page of the package, and at the green `Code` button >
   `copy URL to clipboard`.
-- In `RStudio`: `File` > `New project` > `Version control` > `Git` and paste the
+- In RStudio: `File` > `New project` > `Version control` > `Git` and paste the
   copied URL in the `Repository URL` > `Create Project`.
-- Then (still in `RStudio`) in the `Git` menu change from `master` to the
+- Then (still in RStudio) in the `Git` menu change from `master` to the
   just-created branch.
 
 ## Installing the updated package
@@ -731,45 +736,46 @@ code, or wrap consecutive lines in `` \code{...}` ``.
 ## Guidelines on package development
 
 - The
-  [Writing R extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
+  [`Writing R extensions`](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
   manual, which is the official guide on extending R
-- The [CRAN Repository policy](https://cran.r-project.org/web/packages/policies.html)
-  and [BioConductor package guide](https://contributions.bioconductor.org/),
+- The [`CRAN Repository policy`](https://cran.r-project.org/web/packages/policies.html)
+  (with an overview of changes [here](https://github.com/eddelbuettel/crp))
+  and [`BioConductor package guide`](https://contributions.bioconductor.org/),
   which are the official guides for [CRAN](https://cran.r-project.org/) and
   [BioConductor](https://bioconductor.org/)
 - The
-  [blueprints for software development](https://epiverse-trace.github.io/blueprints/)
+  [`blueprints for software development`](https://epiverse-trace.github.io/blueprints/)
   from [EpiverseTrace](https://epiverse-trace.github.io/)
-- The [R development guide](https://contributor.r-project.org/rdevguide/) from
+- The [`R development guide`](https://contributor.r-project.org/rdevguide/) from
   the [R Contribution Working Group](https://contributor.r-project.org/)
-- The [package development guide](https://devguide.ropensci.org/), the
+- The [`package development guide`](https://devguide.ropensci.org/), the
   [Statistical Software Peer Review](https://stats-devguide.ropensci.org/) guide,
-  and a section [Publish packages](https://docs.r-universe.dev/publish.html) in
-  the [R universe documentation](https://docs.r-universe.dev/) from
+  and a section [`Publish packages`](https://docs.r-universe.dev/publish.html) in
+  the [`R universe documentation`](https://docs.r-universe.dev/) from
   [rOpenSci](https://ropensci.org/)
 
 ## Other useful resources
 
-- The [CRAN cookbook](https://contributor.r-project.org/cran-cookbook/)
-- The book [R packages](https://r-pkgs.org/) by Wickham and Bryan
-- The book [R in production](https://r-in-production.org/) by Wickham and Masiello
+- The [`CRAN cookbook`](https://contributor.r-project.org/cran-cookbook/)
+- The book [`R packages`](https://r-pkgs.org/) by Wickham and Bryan
+- The book [`R in production`](https://r-in-production.org/) by Wickham and Masiello
 - The chapter
-  [Building R Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
-  of [Mastering Software Development in R](https://bookdown.org/rdpeng/RProgDA/)
+  [`Building R Packages`](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
+  of [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
   by Peng, Kross, and Anderson
-- The website [What They Forgot to Teach You About R](https://rstats.wtf/)
-- The R [developer page](https://developer.r-project.org/) with
-  [developer guidelines](https://developer.r-project.org/devel-guidelines.txt)
-  and [technical documentation](https://developer.r-project.org/TechDocs/)
+- The website [`What They Forgot to Teach You About R`](https://rstats.wtf/)
+- The R [`developer page`](https://developer.r-project.org/) with
+  [`developer guidelines`](https://developer.r-project.org/devel-guidelines.txt)
+  and [`technical documentation`](https://developer.r-project.org/TechDocs/)
 - The
-  [cheatsheet](https://opensource.posit.co/resources/cheatsheets/package-development/)
+  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/package-development/)
   about package development by [Posit](https://posit.co/)
-- The package [checkrpkgs](https://jessealderliesten.github.io/checkrpkgs/) that
+- The package [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/) that
   explains how to get information about to-be-installed and already-installed
   packages, and how to get the source code of R functions
-- [Package Development and Maintenance](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md)
+- [`Package Development and Maintenance`](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md)
   (currently a proposal for a
-  [CRAN Task View](https://cran.r-project.org/web/views/)) with an annotated
+  [`CRAN Task View`](https://cran.r-project.org/web/views/)) with an annotated
   thematic collection of R packages that assist in developing R packages
-- The R [NEWS](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
+- The R [`NEWS`](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html)
   for the development branch
