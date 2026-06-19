@@ -4,7 +4,7 @@
 \name{develcoder-package}
 \alias{develcoder}
 \alias{develcoder-package}
-\title{develcoder: Code And Templates To Develop R Packages}
+\title{develcoder: Code and Templates to Develop R Packages}
 \description{
 Code and templates to set up, develop, and maintain R packages. This package heavily relies on packages 'devtools' and 'usethis'.
 }

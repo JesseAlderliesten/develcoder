@@ -1,6 +1,6 @@
 Package: develcoder
-Title: Code And Templates To Develop R Packages
-Version: 0.6.0
+Title: Code and Templates to Develop R Packages
+Version: 0.7.0
 Authors@R: 
     person("Jesse", "Alderliesten", , "jessealderliesten@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1132-4310"))
@@ -10,23 +10,24 @@ Description:
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
+Imports:
+    checkinput (>= 1.0.0),
+    fs,
+    progutils (>= 0.9.0)
 Suggests: 
     cffr,
-    checkinput (>= 1.0.0),
     checkrpkgs (>= 1.0.0),
     codetools,
     desc,
     devtools,
-    fs,
     goodpractice,
     knitr,
-    pkgcheck,
     pkgdepends,
     pkgdown,
-    progutils (>= 0.5.0),
     remotes,
     revdepcheck,
     rmarkdown,
+    testthat,
     tinytest,
     tools,
     usethis,
@@ -35,7 +36,6 @@ Suggests:
 Remotes:
     github::JesseAlderliesten/checkinput,
     github::JesseAlderliesten/checkrpkgs,
-    github::ropensci-review-tools/pkgcheck,
     github::JesseAlderliesten/progutils,
     github::r-lib/revdepcheck
 URL: https://github.com/JesseAlderliesten/develcoder, https://jessealderliesten.github.io/develcoder/

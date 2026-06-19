@@ -3,15 +3,16 @@
 # Modifications:
 # - not run GHA on 'push': it should be sufficient to run R CMD check locally
 #   before pushing and run GHA on pull requests.
-# - run GHA every Saturday on 04:23 UTC: added 'schedule: - cron: "23 4 * * 6"'
-# - enable manually triggering GHA: added 'workflow_dispatch:' at 'on:' (see
-#   https://docs.github.com/en/actions/reference/workflows-and-actions and
-#   https://docs.github.com/en/actions/how-tos/manage-workflow-runs).
-# - run GHA with the currently released version of R on macOS, Windows, and
-#   Ubuntu. In addition, run GHA with the devel-version of R on Ubuntu.
+# - run GHA every Saturday on 04:23 UTC
+# - enable manually triggering GHA
+# - run GHA with the currently released version and the development version of R
+#   on Ubuntu.
 
-# Need help debugging build failures? Start at
-# https://github.com/r-lib/actions#where-to-find-help
+# For help debugging build failures, see https://r-pkgs.org/R-CMD-check.html and
+# https://github.com/r-lib/actions#where-to-find-help. For more background,
+# including an explanation of the syntax used in this file, see
+# https://docs.github.com/en/actions/reference/workflows-and-actions and
+# https://docs.github.com/en/actions/how-tos/manage-workflow-runs.
 
 on:
   pull_request:
@@ -19,12 +20,12 @@ on:
       - cron: "23 4 * * 6" # run GHA every Saturday on 04:23 UTC
   workflow_dispatch: # to be able to manually trigger GHA
 
-name: R-CMD-check.yaml
+name: check-standard.yaml
 
 permissions: read-all
 
 jobs:
-  R-CMD-check:
+  check-standard:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -33,17 +34,15 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -51,7 +50,6 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

@@ -1,3 +1,30 @@
+# develcoder 0.7.0
+
+### Breaking changes
+- Dependencies `checkinput`, `fs`, and `progutils`: move from `Suggests` to
+  `Imports` because they are used by `missing_test_files()`, increasing minimum
+  version for `progutils` from `>= 0.5.0` to `>= 0.9.0` to use a safe version of
+  `create_tempdir()`.
+- Add dependency `testthat` to `Suggests` because it is mentioned in a vignette.
+- Remove dependency `pkgcheck` because their checks are already covered by
+  `goodpractice`.
+
+### Added functions
+- `check_test_files()` to check if all function files have a corresponding test
+  file and vice versa.
+- `get_test_files()`: helper function for `check_test_files()`.
+
+### Documentation
+- Vignette `pkg_setup`: explain how to use `testthat` instead of `tinytest`. Add
+  a clearer introduction to `pkgdown`.
+- Vignette `pkg_devel`: various additions: explain how to not run or not display
+  code in examples. Elaborate explanation how to find when a feature was
+  introduced. Elaborate section `Automated checks`. No longer suggest using
+  `pkgcheck` which requires system libraries.
+- Vignette `rmarkdown_knitr`: expand section with examples of formatting,
+  showing both the code and the output.
+
+
 # develcoder 0.6.0
 
 ### Breaking changes
