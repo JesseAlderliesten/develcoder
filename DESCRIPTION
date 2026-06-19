@@ -1,5 +1,5 @@
 Package: develcoder
-Title: Code And Templates To Develop R Packages
+Title: Code and Templates to Develop R Packages
 Version: 0.6.0
 Authors@R: 
     person("Jesse", "Alderliesten", , "jessealderliesten@hotmail.com", role = c("aut", "cre"),
