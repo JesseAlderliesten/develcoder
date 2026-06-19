@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,44 +78,22 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link">R Markdown</a> and <a href="https://yihui.org/knitr/" class="external-link">knitr</a>.</p>
+<p>This vignette contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link"><code>R Markdown</code></a>
+and <a href="https://yihui.org/knitr/" class="external-link"><code>knitr</code></a>.</p>
 <p>An R Markdown file is an R script with markup to enable combining the
 script (including the comments) with its output and additional text in a
-single document. The R package <a href="https://cran.r-project.org/package=rmarkdown" class="external-link">rmarkdown</a> and
-either <a href="https://www.rstudio.com/" class="external-link">RStudio</a> or <a href="https://pandoc.org/" class="external-link">Pandoc</a> are required to create an R
-Markdown file.</p>
-<p>To generate a PDF as output, a <a href="https://www.latex-project.org/get/" class="external-link">LaTeX</a> distribution needs
-to be installed. See the ‘Rmarkdown cookbook’ and the ‘Definitive guide’
-(both mentioned at <a href="#useful-sources">Useful sources</a> below)
-for extensive help.</p>
-</div>
-<div class="section level2">
-<h2 id="useful-sources">Useful sources<a class="anchor" aria-label="anchor" href="#useful-sources"></a>
-</h2>
-<ul>
-<li>the <a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="external-link">R
-Markdown cookbook</a> by Y. Xie, C. Dervieux, and E. Riederer</li>
-<li>the <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">Definitive
-guide</a> by Y. Xie, J.J. Allaire, and G. Grolemund</li>
-<li>a <a href="https://opensource.posit.co/resources/cheatsheets/rmarkdown/" class="external-link">cheatsheet</a>
-and <a href="http://rmarkdown.rstudio.com" class="external-link">website</a> on R Markdown
-from <a href="https://posit.co/" class="external-link">Posit</a>
-</li>
-<li>the maintainer’s website on <a href="https://yihui.org/knitr/" class="external-link">knitr</a>
-</li>
-<li>the <a href="https://www.markdownguide.org/" class="external-link">Markdown guide</a>
-</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="installing">Installing<a class="anchor" aria-label="anchor" href="#installing"></a>
-</h2>
-<p>When installing <a href="https://miktex.org/" class="external-link">MikTex</a> as LaTex
-distribution, set <code>install for all users</code> and
+single document. The R package <a href="https://cran.r-project.org/package=rmarkdown" class="external-link"><code>rmarkdown</code></a>
+and either <a href="https://posit.co/products/open-source/rstudio" class="external-link">RStudio</a> or <a href="https://pandoc.org/" class="external-link"><code>Pandoc</code></a> are required to
+create an R Markdown file.</p>
+<p>To generate a PDF as output, a <a href="https://www.latex-project.org/get/" class="external-link"><code>LaTeX</code></a>
+distribution needs to be installed. See the ‘R markdown cookbook’ and
+the ‘Definitive guide’ (both mentioned at <a href="#useful-resources">Useful resources</a> below) for extensive help.
+When installing <a href="https://miktex.org/" class="external-link"><code>MikTex</code></a> as
+LaTeX distribution, set <code>install for all users</code> and
 <code>always install missing packages on the fly</code> (for all users),
-see <a href="https://tex.stackexchange.com/questions/27138/how-can-i-fix-the-error-gui-framework-cannot-be-initialized-with-texniccenter" class="external-link">this
-Stack Exchange post</a></p>
-<p>An alternative to MikText is <a href="https://yihui.org/tinytex/" class="external-link">TinyTeX</a> (for debugging see <a href="https://yihui.org/tinytex/r/" class="external-link uri">https://yihui.org/tinytex/r/</a>):</p>
+see <a href="https://tex.stackexchange.com/questions/27138/" class="external-link">this Stack
+Exchange post</a>. An alternative to <code>MikTeX</code> is <a href="https://yihui.org/tinytex/" class="external-link"><code>TinyTeX</code></a> (for
+debugging see <a href="https://yihui.org/tinytex/r/" class="external-link">here</a>):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">'\\documentclass{article}'</span>,</span>
@@ -125,15 +103,34 @@ Stack Exchange post</a></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>tinytex.verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="useful-resources">Useful resources<a class="anchor" aria-label="anchor" href="#useful-resources"></a>
+</h2>
+<ul>
+<li>the <a href="https://pkg.yihui.org/rmarkdown-cookbook/" class="external-link"><code>R markdown cookbook</code></a>
+by Y. Xie, C. Dervieux, and E. Riederer</li>
+<li>the <a href="https://pkg.yihui.org/rmarkdown-book/" class="external-link"><code>Definitive guide</code></a>
+by Y. Xie, J.J. Allaire, and G. Grolemund</li>
+<li>a <a href="https://opensource.posit.co/resources/cheatsheets/rmarkdown/" class="external-link"><code>cheatsheet</code></a>
+and <a href="https://rmarkdown.rstudio.com/" class="external-link">website</a> on R Markdown
+from <a href="https://posit.co/" class="external-link">Posit</a>
+</li>
+<li>the maintainer’s website on <a href="https://yihui.org/knitr/" class="external-link"><code>knitr</code></a>
+</li>
+<li>the <a href="https://www.markdownguide.org/" class="external-link"><code>Markdown guide</code></a>
+</li>
+</ul>
+</div>
+<div class="section level2">
 <h2 id="global-settings-for-knitr-used-by-r-markdown">Global Settings for knitr used by R Markdown<a class="anchor" aria-label="anchor" href="#global-settings-for-knitr-used-by-r-markdown"></a>
 </h2>
 <p>For a list of available options, see
-<code>str(knitr::opts_chunk$get())</code> and details at
-<code>https://yihui.org/knitr/options/</code> and
-<code>https://yihui.org/knitr/objects/</code>.</p>
+<code>str(knitr::opts_chunk$get())</code> and the overviews at the
+maintainer’s website (<a href="https://yihui.org/knitr/options/" class="external-link">here</a> and <a href="https://yihui.org/knitr/objects/" class="external-link">here</a>).</p>
 <p>The option <code>echo = FALSE</code> hides code from the output. Use
 numeric values to include the code of particular chunks. To collect all
-code as an the appendix at the end of of a document, see <a href="https://bookdown.org/yihui/rmarkdown-cookbook/code-appendix.html" class="external-link uri">https://bookdown.org/yihui/rmarkdown-cookbook/code-appendix.html</a>.</p>
+code as an the appendix at the end of of a document, see the section
+about putting <a href="https://pkg.yihui.org/rmarkdown-cookbook/code-appendix" class="external-link">code in an
+appendix</a> from the ‘rmarkdown cookbook’.</p>
 <p>If the option <code>include = FALSE</code> is used, code and results
 are not included in output, but code <strong>is</strong> executed such
 that its results can be used in other code chunks (useful as option for
@@ -149,11 +146,12 @@ during development of the script.</p>
 <div class="section level2">
 <h2 id="loading-files">Loading files<a class="anchor" aria-label="anchor" href="#loading-files"></a>
 </h2>
-<p>Files that have to be used by the R Markdown script (e.g., R scripts
-that are sourced, data files that are read) should be placed in the same
-directory as the R Markdown file, because the working directory when
-evaluating R code chunks is the directory of the input document by
-default. The working directory can be changed using
+<p>Files that have to be used by the <code>R Markdown</code> script
+(e.g., <code>R</code> scripts that are sourced, data files that are
+read) should be placed in the same directory as the
+<code>R Markdown</code> file, because the working directory when
+evaluating <code>R</code> code chunks is the directory of the input
+document by default. The working directory can be changed using
 <code>opts_knit$set(root.dir = ...)</code> but should
 <strong>not</strong> be changed using <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code>, see the
 <code>Note</code> in <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">help("knit", package = "knitr")</a></code>.</p>
@@ -165,7 +163,7 @@ header is including</p>
 <p>in the body of the chunk. That method has the disadvantages that bare
 source code is included in the knitted file without the accompanying
 comments, that specification of the environment through the argument
-<code>local</code> can be <a href="https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html" class="external-link">error-prone</a>
+<code>local</code> can be <a href="https://pkg.yihui.org/rmarkdown-cookbook/source-script.html" class="external-link">error-prone</a>
 and that <code>max.deparse.length</code> within <code>source(...)</code>
 has to be increased to ensure that all of the source code is printed
 (see <code><a href="https://rdrr.io/r/base/source.html" class="external-link">help("source")</a></code>).</p>
@@ -180,9 +178,9 @@ this way of creating documents creates and keeps local R objects in the
 current environment. Although that can be useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
-before using it and final files should be created by using the
-<code>Knit</code> button in <code>RStudio</code>, <strong>not</strong>
-by using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">rmarkdown::render()</a></code> (see <a href="https://bookdown.org/yihui/rmarkdown/compile.html#fnref2" class="external-link">here</a>).</p>
+before using it and final files should be created by knitting (e.g.,
+using the <code>Knit</code> button in <code>RStudio</code>),
+<strong>not</strong> by using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">rmarkdown::render()</a></code> (see <a href="https://pkg.yihui.org/rmarkdown-book/compile.html#fnref2" class="external-link">here</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DateTimeStamp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%Y_%m_%d_%H_%M"</span><span class="op">)</span></span>
 <span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"FilenameRMarkdownFile.Rmd"</span>, output_format <span class="op">=</span> <span class="st">"html_document"</span>,</span>
@@ -210,47 +208,126 @@ executed when running the R Markdown file, see the note in
 <div class="section level2">
 <h2 id="formatting-in-r-markdown">Formatting in R Markdown<a class="anchor" aria-label="anchor" href="#formatting-in-r-markdown"></a>
 </h2>
-<pre class="formatting"><code>To create lists, an empty line before the is needed:
-
-* unordered list
-* item 2
-+ sub-item 1
-+ sub-item 2
-
-1. ordered list
-2. item 2
-+ sub-item 1
-+ sub-item 2
-
-
-Making text italic or bold
-*italic text* and _italic text_
-** bold text **
-_Some **bold words** in italic text_
-
-Formatting text as R code:
-``` r
-&lt;some code here&gt;
-```
-
-To not evaluate a code chunk:
-```{r, example, eval = FALSE}
-&lt;some code here&gt;
-```
-
-Bullets for a list:
-* Item one
-* Item two
-
-Adding a horizontal line:
-================
-
-Inserting a table:
-| Name       | Description                      |
+<div class="section level3">
+<h3 id="italic-and-bold-text">Italic and bold text<a class="anchor" aria-label="anchor" href="#italic-and-bold-text"></a>
+</h3>
+<pre><code>Using *italic words* and _also italic words_ or **bold words** or even
+_An **italic and bold phrase** in italic text_</code></pre>
+<p>is rendered as:</p>
+<p>Using <em>italic words</em> and <em>also italic words</em> or
+<strong>bold words</strong> or even <em>An <strong>italic and bold
+phrase</strong> in italic text</em></p>
+</div>
+<div class="section level3">
+<h3 id="code-chunks">Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"></a>
+</h3>
+<p>R code chunks can be shown with or without its output through
+argument <code>eval</code> (which is <code>TRUE</code> by default):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="st">```</span><span class="at">{r code-chunk-example}</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="at">sum(c(1, 2))</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="at">mean(c(1, 2))</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="st">```</span></span></code></pre></div>
+<p>shows a code chunk with its output, like:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 3</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1.5</span></span></code></pre>
+<p>Whereas</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="st">```</span><span class="at">{r code-chunk-example-no-output, eval = FALSE}</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="at">sum(c(1, 2))</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="at">mean(c(1, 2))</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="st">```</span></span></code></pre></div>
+<p>shows a code chunk without its output, like:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="table">Table<a class="anchor" aria-label="anchor" href="#table"></a>
+</h3>
+<pre><code>| Name       | Description                      |
 | :--------- | :--------------------------------|
-| `Colname1` | Some description                 |
-| `Colname2` | Some description                 |
-| `Colname3` | Some description                 |</code></pre>
+| `Name one` | Some description                 |
+| `Name two` | Some description                 |</code></pre>
+<p>gives:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Name</th>
+<th align="left">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>Name one</code></td>
+<td align="left">Some description</td>
+</tr>
+<tr class="even">
+<td align="left"><code>Name two</code></td>
+<td align="left">Some description</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
+</h3>
+<p>Lists need an empty line before the first item to be correctly
+rendered. Sub-items are created by indenting them. Numbered lists
+(ordered lists) are created by using a number followed by a dot
+(<code>1.</code>). Non-numbered lists (non-ordered lists) are created by
+using asterisks (<code>*</code>), plus signs (<code>+</code>), or dashes
+(<code>-</code>).</p>
+<pre><code>non-numbered list:
+
+* item one
+* item two
+  * sub-item one
+  * sub-item two
+
+numbered list:
+
+1. item one
+2. item two
+</code></pre>
+<p>These lists would render as:</p>
+<p>non-numbered list:</p>
+<ul>
+<li>item one</li>
+<li>item two
+<ul>
+<li>sub-item one</li>
+<li>sub-item two</li>
+</ul>
+</li>
+</ul>
+<p>numbered list:</p>
+<ol style="list-style-type: decimal">
+<li>item one</li>
+<li>item two</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="escaping">Escaping<a class="anchor" aria-label="anchor" href="#escaping"></a>
+</h3>
+<p>To include <code>n</code> delimiters <code>(`)</code> in the
+<strong>output</strong>, escape them by enclosing with
+<code>n + 1</code> delimiters:<br>
+for example, <code>`` `some text` ``</code> produces
+<code>`some text`</code>, and <code>``` `` `some text` `` ```</code>
+produces <code>`` `some text` ``</code>. Do <strong>not</strong> start a
+line of code with a delimiter if you want to escape other delimiters:
+that would be interpreted as starting a code section.</p>
+<p>To include code to <strong>create</strong> code chunks (i.e., include
+code which escapes chunk headings), use</p>
+<pre><code>r ''````{r use-sum}
+1 + 2
+```</code></pre>
+<p>to show how to create a code chunk like</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 3</span></span></code></pre>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

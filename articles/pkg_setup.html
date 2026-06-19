@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,9 +108,8 @@ uses information stored in <code>.Rprofile</code> files to fill in
 default information. Such files can exist in various locations, for
 example at
 <code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>: see
-<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>. See the <code>usethis</code> vignette <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link">usethis
-setup</a> and
-<code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> for
+<code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>. See the <code>usethis</code> vignette <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link"><code>usethis setup</code></a>
+and <code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> for
 details on setting up a package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_to_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">pkgname</span><span class="op">)</span></span>
@@ -144,10 +143,10 @@ Source</a>.</p>
 <h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h3>
 <p>A citation file makes clear how your package should be cited. See the
-documentation in the R package <a href="https://CRAN.R-project.org/package=cffr" class="external-link">cffr</a> and the GitHub
-page <a href="https://citation-file-format.github.io/" class="external-link">Citation file
-format</a> for details on the format. The code uses the citation file if
-it exists and otherwise uses the the <code>DESCRIPTION</code> file:</p>
+documentation in the <code>R</code> package <a href="https://CRAN.R-project.org/package=cffr" class="external-link"><code>cffr</code></a> and
+the GitHub page <a href="https://citation-file-format.github.io/" class="external-link"><code>Citation file format</code></a>
+for details on the format. The code uses the citation file if it exists
+and otherwise uses the the <code>DESCRIPTION</code> file:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create a citation file</span></span></code></pre></div>
 </div>
@@ -158,8 +157,8 @@ it exists and otherwise uses the the <code>DESCRIPTION</code> file:</p>
 <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>
 requires that <code>README.Rmd</code> and <code>README.md</code> are
 staged at the same time. To remove this requirement, delete the the
-(hidden) file <code>.git/hooks/pre-commit</code> from the R-project
-folder (see the <code>Description</code> section in
+(hidden) file <code>.git/hooks/pre-commit</code> from the <code>R</code>
+project folder (see the section <code>Description</code> in
 <code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -171,7 +170,7 @@ folder (see the <code>Description</code> section in
 in the <code>README.Rmd</code> file (the badge does <strong>not</strong>
 work if the GitHub repository is private):<br><code>![](https://img.shields.io/github/r-package/v/&lt;repository&gt;/&lt;pkg&gt;?color=blue)</code>
 </li>
-<li>See <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link">README_template.Rmd</a>
+<li>See <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link"><code>README_template.Rmd</code></a>
 in the folder <code>inst/templates</code>.</li>
 <li>Knit the <code>README.Rmd</code> file to produce a
 <code>README.Md</code> file.</li>
@@ -202,9 +201,15 @@ to give an overview of the functions in the package.</p>
 <div class="section level2">
 <h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
+<p>I use package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> to
+create tests. This can be set up through:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tinytest"</span>, type <span class="op">=</span> <span class="st">"Suggests"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Use the following code instead if you prefer to use package <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"&lt;func&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -213,7 +218,7 @@ to give an overview of the functions in the package.</p>
 <p>For more information about setting up and using GitHub and Git, see
 the vignette <em>Using Git and GitHub</em>:
 <code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette("git_github", package = "checkrpkgs")</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit"</span><span class="op">)</span></span>
 <span><span class="co"># If you get the error message 'You are not the current owner of the GitHub</span></span>
 <span><span class="co"># repository', restart R as administrator and try again.</span></span>
@@ -229,13 +234,13 @@ the vignette <em>Using Git and GitHub</em>:
 </h2>
 <p>GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
-<code>check-no-suggests.yaml</code> from <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml" class="external-link">r-lib</a>
-checks that the code passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R CMD checks</a> even if
-dependencies in <code>Suggests</code> are not installed.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code>check-no-suggests.yaml</code> from <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml" class="external-link"><code>r-lib</code></a>
+checks that the code passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD checks</code></a>
+even if dependencies in <code>Suggests</code> are not installed.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-standard"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-no-suggests"</span><span class="op">)</span></span></code></pre></div>
-<p>Then adjust the YAML file (i.e.,
+<p>Then adjust the <code>YAML</code> file (i.e.,
 <code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
 include some other useful triggers for GHAs (see the template file
 <code>check-no-suggests.yaml</code> in the folder
@@ -271,23 +276,27 @@ your package declares <code>R</code> 4.1.0 as minimum version.</li>
 <div class="section level3">
 <h3 id="further-documentation">Further documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a>
 </h3>
-<p>See the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link">GitHub
-Actions</a> in the book <a href="https://r-pkgs.org/" class="external-link">R packages</a>,
-the GitHub documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link">workflow
-syntax</a>, and the section <code>Use GitHub Actions</code> in the
-vignette <em>Package development</em>:
+<p>See the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link"><code>GitHub Actions</code></a>
+in the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a>,
+the GitHub documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link"><code>workflow syntax</code></a>,
+and the section <code>Use GitHub Actions</code> in the vignette
+<em>Package development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="use-a-package-website">Use a package website<a class="anchor" aria-label="anchor" href="#use-a-package-website"></a>
 </h2>
-<p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link">pkgdown</a> in the book <a href="https://r-pkgs.org/" class="external-link">R packages</a> and the documentation for
-package <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Set up a GitHub action to automatically build and publish your site</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-level documentation</span></span></code></pre></div>
+<p>One advantage of using a website for your package is that it
+automatically creates <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><code>hyperlinked cross-references</code></a>
+to functions and documentation you refer to.</p>
+<p>To set up a package website, you can use
+<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>. To also set up a [GitHub
+action][GitHub Actions] to automatically build and update your site if
+you push changes to your package to GitHub, run the following code:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-wide documentation</span></span></code></pre></div>
 <p>After a few minutes, the website should be present. The URL has the
 structure
 <code>https://&lt;username&gt;.github.io/&lt;repository&gt;/</code>,
@@ -302,6 +311,10 @@ extension <code>.YAML</code>; this is <strong>not</strong> the
 add a light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
 and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
 code</a> for this repository).</p>
+<p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link"><code>pkgdown</code></a> in the
+book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> and the
+documentation for package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> for further
+details.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

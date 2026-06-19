@@ -32,8 +32,9 @@ uses information stored in `.Rprofile` files to fill in default
 information. Such files can exist in various locations, for example at
 `D:\Userdata\<username>\Documents\.Rprofile`: see
 [`help("Startup")`](https://rdrr.io/r/base/Startup.html). See the
-`usethis` vignette [usethis
-setup](https://usethis.r-lib.org/articles/usethis-setup.html) and
+`usethis` vignette
+[`usethis setup`](https://usethis.r-lib.org/articles/usethis-setup.html)
+and
 [`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
 for details on setting up a package.
 
@@ -73,9 +74,9 @@ usethis::use_mit_license()
 ### Citation
 
 A citation file makes clear how your package should be cited. See the
-documentation in the R package
-[cffr](https://CRAN.R-project.org/package=cffr) and the GitHub page
-[Citation file format](https://citation-file-format.github.io/) for
+documentation in the `R` package
+[`cffr`](https://CRAN.R-project.org/package=cffr) and the GitHub page
+[`Citation file format`](https://citation-file-format.github.io/) for
 details on the format. The code uses the citation file if it exists and
 otherwise uses the the `DESCRIPTION` file:
 
@@ -90,8 +91,8 @@ The `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` requires that `README.Rmd` and `README.md` are
 staged at the same time. To remove this requirement, delete the the
-(hidden) file `.git/hooks/pre-commit` from the R-project folder (see the
-`Description` section in
+(hidden) file `.git/hooks/pre-commit` from the `R` project folder (see
+the section `Description` in
 [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 
 ``` r
@@ -107,7 +108,7 @@ Do:
     repository is private):  
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
   - See
-    [README_template.Rmd](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
+    [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
   - Knit the `README.Rmd` file to produce a `README.Md` file.
 
@@ -134,10 +135,22 @@ usethis::use_news_md() # Create NEWS.md
 
 ## Set up testing infrastructure
 
+I use package [tinytest](https://CRAN.R-project.org/package=tinytest) to
+create tests. This can be set up through:
+
 ``` r
 
 tinytest::setup_tinytest(pkgdir = ".")
 usethis::use_package(package = "tinytest", type = "Suggests")
+devtools::document()
+```
+
+Use the following code instead if you prefer to use package
+[testthat](https://cran.r-project.org/package=testthat):
+
+``` r
+
+usethis::use_test("<func>")
 devtools::document()
 ```
 
@@ -165,10 +178,10 @@ usethis::git_default_branch_rediscover()
 GitHub Actions (GHA) is a continuous integration service to
 automatically run code upon certain triggers. Setting GHA to run
 `check-no-suggests.yaml` from
-[r-lib](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
-checks that the code passes [R CMD
-checks](https://r-pkgs.org/R-CMD-check.html) even if dependencies in
-`Suggests` are not installed.
+[`r-lib`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
+checks that the code passes
+[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) even if
+dependencies in `Suggests` are not installed.
 
 ``` r
 
@@ -176,7 +189,7 @@ usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
-Then adjust the YAML file (i.e.,
+Then adjust the `YAML` file (i.e.,
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
 useful triggers for GHAs (see the template file `check-no-suggests.yaml`
 in the folder `inst/templates`):
@@ -206,26 +219,32 @@ in the folder `inst/templates`):
 
 ### Further documentation
 
-See the section about [GitHub
-Actions](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-in the book [R packages](https://r-pkgs.org/), the GitHub documentation
-about [workflow
-syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
+See the section about
+[`GitHub Actions`](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
+in the book [`R packages`](https://r-pkgs.org/), the GitHub
+documentation about
+[`workflow syntax`](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
 and the section `Use GitHub Actions` in the vignette *Package
 development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Use a package website
 
-See the chapter about [pkgdown](https://r-pkgs.org/website.html) in the
-book [R packages](https://r-pkgs.org/) and the documentation for package
-[pkgdown](https://pkgdown.r-lib.org/).
+One advantage of using a website for your package is that it
+automatically creates
+[`hyperlinked cross-references`](https://r-pkgs.org/vignettes.html#links)
+to functions and documentation you refer to.
+
+To set up a package website, you can use
+[`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
+To also set up a \[GitHub action\]\[GitHub Actions\] to automatically
+build and update your site if you push changes to your package to
+GitHub, run the following code:
 
 ``` r
 
-# Set up a GitHub action to automatically build and publish your site
 usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
-devtools::document() # To update package-level documentation
+devtools::document() # To update package-wide documentation
 ```
 
 After a few minutes, the website should be present. The URL has the
@@ -243,3 +262,7 @@ to the pkgdown-website (see the
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
 for this repository).
+
+See the chapter about [`pkgdown`](https://r-pkgs.org/website.html) in
+the book [`R packages`](https://r-pkgs.org/) and the documentation for
+package [`pkgdown`](https://pkgdown.r-lib.org/) for further details.

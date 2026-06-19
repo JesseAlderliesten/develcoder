@@ -2,46 +2,28 @@
 
 ## Introduction
 
-This vignette contains information about using [R
-Markdown](https://pkgs.rstudio.com/rmarkdown/) and
-[knitr](https://yihui.org/knitr/).
+This vignette contains information about using
+[`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
+[`knitr`](https://yihui.org/knitr/).
 
 An R Markdown file is an R script with markup to enable combining the
 script (including the comments) with its output and additional text in a
 single document. The R package
-[rmarkdown](https://cran.r-project.org/package=rmarkdown) and either
-[RStudio](https://www.rstudio.com/) or [Pandoc](https://pandoc.org/) are
-required to create an R Markdown file.
+[`rmarkdown`](https://cran.r-project.org/package=rmarkdown) and either
+[RStudio](https://posit.co/products/open-source/rstudio) or
+[`Pandoc`](https://pandoc.org/) are required to create an R Markdown
+file.
 
 To generate a PDF as output, a
-[LaTeX](https://www.latex-project.org/get/) distribution needs to be
-installed. See the ‘Rmarkdown cookbook’ and the ‘Definitive guide’ (both
-mentioned at [Useful sources](#useful-sources) below) for extensive
-help.
-
-## Useful sources
-
-- the [R Markdown
-  cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) by Y.
-  Xie, C. Dervieux, and E. Riederer
-- the [Definitive guide](https://bookdown.org/yihui/rmarkdown/) by Y.
-  Xie, J.J. Allaire, and G. Grolemund
-- a
-  [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
-  and [website](http://rmarkdown.rstudio.com) on R Markdown from
-  [Posit](https://posit.co/)
-- the maintainer’s website on [knitr](https://yihui.org/knitr/)
-- the [Markdown guide](https://www.markdownguide.org/)
-
-## Installing
-
-When installing [MikTex](https://miktex.org/) as LaTex distribution, set
-`install for all users` and `always install missing packages on the fly`
-(for all users), see [this Stack Exchange
-post](https://tex.stackexchange.com/questions/27138/how-can-i-fix-the-error-gui-framework-cannot-be-initialized-with-texniccenter)
-
-An alternative to MikText is [TinyTeX](https://yihui.org/tinytex/) (for
-debugging see <https://yihui.org/tinytex/r/>):
+[`LaTeX`](https://www.latex-project.org/get/) distribution needs to be
+installed. See the ‘R markdown cookbook’ and the ‘Definitive guide’
+(both mentioned at [Useful resources](#useful-resources) below) for
+extensive help. When installing [`MikTex`](https://miktex.org/) as LaTeX
+distribution, set `install for all users` and
+`always install missing packages on the fly` (for all users), see [this
+Stack Exchange post](https://tex.stackexchange.com/questions/27138/). An
+alternative to `MikTeX` is [`TinyTeX`](https://yihui.org/tinytex/) (for
+debugging see [here](https://yihui.org/tinytex/r/)):
 
 ``` r
 
@@ -53,16 +35,32 @@ tinytex::pdflatex('test.tex')
 options(tinytex.verbose = FALSE)
 ```
 
+## Useful resources
+
+- the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/)
+  by Y. Xie, C. Dervieux, and E. Riederer
+- the [`Definitive guide`](https://pkg.yihui.org/rmarkdown-book/) by Y.
+  Xie, J.J. Allaire, and G. Grolemund
+- a
+  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
+  and [website](https://rmarkdown.rstudio.com/) on R Markdown from
+  [Posit](https://posit.co/)
+- the maintainer’s website on [`knitr`](https://yihui.org/knitr/)
+- the [`Markdown guide`](https://www.markdownguide.org/)
+
 ## Global Settings for knitr used by R Markdown
 
 For a list of available options, see `str(knitr::opts_chunk$get())` and
-details at `https://yihui.org/knitr/options/` and
-`https://yihui.org/knitr/objects/`.
+the overviews at the maintainer’s website
+([here](https://yihui.org/knitr/options/) and
+[here](https://yihui.org/knitr/objects/)).
 
 The option `echo = FALSE` hides code from the output. Use numeric values
 to include the code of particular chunks. To collect all code as an the
-appendix at the end of of a document, see
-<https://bookdown.org/yihui/rmarkdown-cookbook/code-appendix.html>.
+appendix at the end of of a document, see the section about putting
+[code in an
+appendix](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix) from
+the ‘rmarkdown cookbook’.
 
 If the option `include = FALSE` is used, code and results are not
 included in output, but code **is** executed such that its results can
@@ -78,10 +76,10 @@ during development of the script.
 
 ## Loading files
 
-Files that have to be used by the R Markdown script (e.g., R scripts
+Files that have to be used by the `R Markdown` script (e.g., `R` scripts
 that are sourced, data files that are read) should be placed in the same
-directory as the R Markdown file, because the working directory when
-evaluating R code chunks is the directory of the input document by
+directory as the `R Markdown` file, because the working directory when
+evaluating `R` code chunks is the directory of the input document by
 default. The working directory can be changed using
 `opts_knit$set(root.dir = ...)` but should **not** be changed using
 [`setwd()`](https://rdrr.io/r/base/getwd.html), see the `Note` in
@@ -100,7 +98,7 @@ in the body of the chunk. That method has the disadvantages that bare
 source code is included in the knitted file without the accompanying
 comments, that specification of the environment through the argument
 `local` can be
-[error-prone](https://bookdown.org/yihui/rmarkdown-cookbook/source-script.html)
+[error-prone](https://pkg.yihui.org/rmarkdown-cookbook/source-script.html)
 and that `max.deparse.length` within `source(...)` has to be increased
 to ensure that all of the source code is printed (see
 [`help("source")`](https://rdrr.io/r/base/source.html)).
@@ -114,10 +112,10 @@ this way of creating documents creates and keeps local R objects in the
 current environment. Although that can be useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
-before using it and final files should be created by using the `Knit`
-button in `RStudio`, **not** by using
+before using it and final files should be created by knitting (e.g.,
+using the `Knit` button in `RStudio`), **not** by using
 [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
-(see [here](https://bookdown.org/yihui/rmarkdown/compile.html#fnref2)).
+(see [here](https://pkg.yihui.org/rmarkdown-book/compile.html#fnref2)).
 
 ``` r
 
@@ -147,46 +145,130 @@ executed when running the R Markdown file, see the note in
 
 ## Formatting in R Markdown
 
-```` formatting
-To create lists, an empty line before the is needed:
+### Italic and bold text
 
-* unordered list
-* item 2
-+ sub-item 1
-+ sub-item 2
+    Using *italic words* and _also italic words_ or **bold words** or even
+    _An **italic and bold phrase** in italic text_
 
-1. ordered list
-2. item 2
-+ sub-item 1
-+ sub-item 2
+is rendered as:
 
+Using *italic words* and *also italic words* or **bold words** or even
+*An **italic and bold phrase** in italic text*
 
-Making text italic or bold
-*italic text* and _italic text_
-** bold text **
-_Some **bold words** in italic text_
+### Code chunks
 
-Formatting text as R code:
-``` r
-<some code here>
+R code chunks can be shown with or without its output through argument
+`eval` (which is `TRUE` by default):
+
+```` r
+```{r code-chunk-example}
+sum(c(1, 2))
+mean(c(1, 2))
 ```
-
-To not evaluate a code chunk:
-```{r, example, eval = FALSE}
-<some code here>
-```
-
-Bullets for a list:
-* Item one
-* Item two
-
-Adding a horizontal line:
-================
-
-Inserting a table:
-| Name       | Description                      |
-| :--------- | :--------------------------------|
-| `Colname1` | Some description                 |
-| `Colname2` | Some description                 |
-| `Colname3` | Some description                 |
 ````
+
+shows a code chunk with its output, like:
+
+``` r
+
+sum(c(1, 2))
+```
+
+    ## [1] 3
+
+``` r
+
+mean(c(1, 2))
+```
+
+    ## [1] 1.5
+
+Whereas
+
+```` r
+```{r code-chunk-example-no-output, eval = FALSE}
+sum(c(1, 2))
+mean(c(1, 2))
+```
+````
+
+shows a code chunk without its output, like:
+
+``` r
+
+sum(c(1, 2))
+mean(c(1, 2))
+```
+
+### Table
+
+    | Name       | Description                      |
+    | :--------- | :--------------------------------|
+    | `Name one` | Some description                 |
+    | `Name two` | Some description                 |
+
+gives:
+
+| Name       | Description      |
+|:-----------|:-----------------|
+| `Name one` | Some description |
+| `Name two` | Some description |
+
+### Lists
+
+Lists need an empty line before the first item to be correctly rendered.
+Sub-items are created by indenting them. Numbered lists (ordered lists)
+are created by using a number followed by a dot (`1.`). Non-numbered
+lists (non-ordered lists) are created by using asterisks (`*`), plus
+signs (`+`), or dashes (`-`).
+
+    non-numbered list:
+
+    * item one
+    * item two
+      * sub-item one
+      * sub-item two
+
+    numbered list:
+
+    1. item one
+    2. item two
+
+These lists would render as:
+
+non-numbered list:
+
+- item one
+- item two
+  - sub-item one
+  - sub-item two
+
+numbered list:
+
+1.  item one
+2.  item two
+
+### Escaping
+
+To include `n` delimiters `` (`) `` in the **output**, escape them by
+enclosing with `n + 1` delimiters:  
+for example, ``` `` `some text` `` ``` produces `` `some text` ``, and
+```` ``` `` `some text` `` ``` ```` produces ``` `` `some text` `` ```.
+Do **not** start a line of code with a delimiter if you want to escape
+other delimiters: that would be interpreted as starting a code section.
+
+To include code to **create** code chunks (i.e., include code which
+escapes chunk headings), use
+
+    r ''````{r use-sum}
+    1 + 2
+    ```
+
+to show how to create a code chunk like
+
+``` r
+
+1 + 2
+```
+
+    ## [1] 3

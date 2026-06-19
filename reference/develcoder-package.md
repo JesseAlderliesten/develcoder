@@ -1,4 +1,4 @@
-# develcoder: Code And Templates To Develop R Packages
+# develcoder: Code and Templates to Develop R Packages
 
 Code and templates to set up, develop, and maintain R packages. This
 package heavily relies on packages 'devtools' and 'usethis'.
