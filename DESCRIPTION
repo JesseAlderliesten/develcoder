@@ -20,7 +20,7 @@ Suggests:
     codetools,
     desc,
     devtools,
-    goodpractice,
+    goodpractice (>= 1.1.0),
     knitr,
     pkgdepends,
     pkgdown,
