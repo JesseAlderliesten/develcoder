@@ -1,0 +1,67 @@
+#' Check if test infrastructure is present and refers to the current package
+#'
+#' @inheritParams progutils::signal_text signal
+#' @param path_infra [character string][checkinput::is_character()] with a path
+#' to the file which determines the test infrastructure, see `Details`.
+#'
+#' @details
+#' The default `path_infra` points to file `tinytest.R` in directory `tests` of
+#' the current [working directory][getwd()], which belongs to the test
+#' infrastructure of [`tinytest`]( https://CRAN.R-project.org/package=tinytest).
+#' To use the test infrastructure of
+#' [`testthat`](https://CRAN.R-project.org/package=testthat), use
+#' `path_infra = fs::path_wd("tests", "testthat.R")`.
+#'
+#' The [signal][signal_text()] indicated by argument `signal` is emitted:#'
+#' - if the package indicated in `path_infra` is not among the dependencies
+#' - if the file that determines the used testing infrastructure does not exist
+#' - if the file that determines the used testing infrastructure does not refer
+#'   to the package in the current working directory
+#'
+#' @returns
+#' A character vector containing a character string with the text of the
+#' [signal][signal_text()], which is `""` if no signal is emitted.
+#'
+#' @examples
+#'
+#'
+#'
+#' @export
+check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
+                             signal = c("error", "warning", "message", "quiet")) {
+  stopifnot(checkinput::is_character(path_infra))
+
+  test_infra <- sub(pattern = ".R$", replacement = "",
+                    x = basename(path_infra), ignore.case = TRUE)
+  pkg_name <- basename(dirname(dirname(path_infra)))
+  text_signal <- character(0)
+
+  if(!(test_infra %in% desc::desc_get_deps()[, "package"])) {
+    text_signal_deps <- paste0("Add package '", test_infra,
+                               "' as suggested dependency of package ",
+                               progutils::paste_quoted(pkg_name), ".")
+    text_signal <- c(text_signal, text_signal_deps)
+  }
+
+  if(fs::is_file(path_infra)) {
+    text_infra <- readLines(con = path_infra, warn = FALSE)
+    if(!any(grepl(pattern = pkg_name, x = text_infra, fixed = TRUE))) {
+      text_signal_pkg <- paste0(
+        "The file that determines the used testing infrastructure\nexists but",
+        " does not refer to package ", progutils::paste_quoted(pkg_name),
+        ":\n'", path_infra, "'")
+      text_signal <- c(text_signal, text_signal_pkg)
+    }
+  } else {
+    text_signal_infra <- paste0("The file that determines the used testing",
+                                " infrastructure does not exist:\n", path_infra)
+    text_signal <- c(text_signal, text_signal_infra)
+  }
+
+  if(length(text_signal) > 0L) {
+    progutils::signal_text(text = progutils::wrap_text(
+      text_signal, ignore_newlines = FALSE),
+      signal = signal)
+  }
+  text_signal
+}
