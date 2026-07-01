@@ -21,7 +21,8 @@ get_test_files(
 \item{ignore_case}{\code{TRUE} or \code{FALSE}: ignore case when matching filenames to
 \code{pattern}?}
 
-\item{signal}{Character string indicating the type of signal to be used:
+\item{signal}{\link[checkinput:is_character]{character string} indicating the
+type of signal to be used:
 \code{"error"} to throw an \link[=stop]{error}, \code{"warning"} to issue a \link{warning},
 \code{"message"} to show a \link{message}, or \code{"quiet"} to be quiet.}
 }
@@ -29,7 +30,7 @@ get_test_files(
 A character vector containing the found test files, which is \code{character(0)}
 if no test files are found, with \link[=attributes]{attribute} \code{"info"} containing
 a character string with the text of the \link[progutils:signal_text]{signal}, which is
-\code{""} if no signal was emitted.
+\code{""} if no signal is emitted.
 }
 \description{
 Get test files, emitting a signal if test files do not have corresponding
@@ -41,7 +42,8 @@ directory \code{testdir}:
 \itemize{
 \item does not \link[fs:dir_exists]{exist}
 \item contains files that are ignored because they do not start with pattern
-\code{pattern}, are not \R files, or are template files created by \code{tinytest}
+\code{pattern}, are not \R files, or are template files created by
+\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
 \item contain test files without corresponding function files in folder \code{R}
 \item does not contain any test files
 }
