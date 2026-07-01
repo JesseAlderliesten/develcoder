@@ -29,11 +29,11 @@ character vector with the names of \R files for which no test file was found.
 Check if all function files have a corresponding test file and vice versa.
 }
 \details{
-This function looks for test files in folders \code{inst/tinytest} and
-\code{tests/testthat} below the directory indicated by \code{path_pkg}, where
-\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}} and
-\href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their test
-files, respectively, for \R files starting with pattern \code{pattern}.
+This function looks for \R files starting with pattern \code{pattern} in folders
+\code{inst/tinytest}, \code{tinytest}, and \code{tests/testthat} in the directory indicated
+by \code{path_pkg}, where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+and \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their
+test files, respectively.
 
 It is checked that all test files have corresponding function files and vice
 versa. Function files of re-exported functions are ignored when looking for
@@ -46,7 +46,7 @@ Warnings are issued if:
 \item none of the test directories contain any test files
 \item the test directories contain files that are ignored because their names do
 not start with pattern \code{pattern}, are not \R files, or are template files
-created by \code{tinytest}
+created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
 \item the test directories contain test files without corresponding function
 files in folder \code{R}
 \item folder \code{R} contains function files without corresponding test files
