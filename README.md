@@ -113,6 +113,10 @@ License](LICENSE.md).
   of
   [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
   by R. D. Peng, S. Kross, and B. Anderson.
+- Slides from the workshop [Building tidy
+  tools](https://rstudio-conf-2022.github.io/build-tidy-tools) by E.
+  Rand and I. Lyttle
 - The section `Documentation and help` in the
   [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   vignette contains further references.
+- Package [`packagepal`](https://CRAN.R-project.org/package=packagepal)
