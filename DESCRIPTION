@@ -12,19 +12,19 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Imports:
     checkinput (>= 1.0.0),
-    fs,
+    desc,
+    fs (>= 1.2.4),
     progutils (>= 0.9.0)
 Suggests: 
     cffr,
     checkrpkgs (>= 1.0.0),
     codetools,
-    desc,
     devtools,
     goodpractice (>= 1.1.0),
     knitr,
     pkgdepends,
     pkgdown,
-    remotes,
+    remotes (>= 2.2.0),
     revdepcheck,
     rmarkdown,
     testthat,
