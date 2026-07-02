@@ -29,20 +29,26 @@ check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
                              signal = c("error", "warning", "message", "quiet")) {
   signal <- match.arg(signal, several.ok = FALSE)
   stopifnot(checkinput::is_path(path_infra))
+  path_desc <- fs::path(dirname(dirname(path_infra)), "DESCRIPTION")
+  if(!fs::is_file(path_desc)) {
+    stop("No DESCRIPTION file found at ", path_desc,
+         ", incorrect 'path_infra'?: ", path_infra)
+  }
 
   test_infra <- sub(pattern = "\\.R$", replacement = "",
                     x = basename(path_infra), ignore.case = TRUE)
   pkg_name <- basename(dirname(dirname(path_infra)))
   if(pkg_name == ".") {
-    stop("'path_infra' should have at least three levels of directories to",
-         " include a package\nname: ", path_infra)
+    stop("Could not obtain a package name, incorrect 'path_infra'?: ",
+         path_infra)
   }
+
   text_signal <- character(0)
 
-  if(!(test_infra %in% desc::desc_get_deps()[, "package"])) {
-    text_signal_deps <- paste0("Add package '", test_infra,
-                               "' as suggested dependency of package ",
-                               progutils::paste_quoted(pkg_name), ".")
+  if(!(test_infra %in% desc::desc_get_deps(file = path_desc)[, "package"])) {
+    text_signal_deps <- paste0(
+      "Add package '", test_infra, "' as suggested dependency of package ",
+      progutils::paste_quoted(pkg_name), ".")
     text_signal <- c(text_signal, text_signal_deps)
   }
 
@@ -64,9 +70,9 @@ check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
 
   text_signal <- paste0(text_signal, collapse = "\n")
   if(length(text_signal) > 1L || nzchar(text_signal)) {
-    progutils::signal_text(text = progutils::wrap_text(text_signal,
-                                                       ignore_newlines = FALSE),
-                           signal = signal)
+    progutils::signal_text(
+      text = progutils::wrap_text(text_signal, ignore_newlines = FALSE),
+      signal = signal)
   }
   text_signal
 }
