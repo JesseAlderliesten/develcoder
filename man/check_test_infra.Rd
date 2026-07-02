@@ -33,7 +33,7 @@ To use the test infrastructure of
 \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}}, use
 \code{path_infra = fs::path_wd("tests", "testthat.R")}.
 
-The \link[progutils:signal_text]{signal} indicated by argument \code{signal} is emitted:#'
+The \link[progutils:signal_text]{signal} indicated by argument \code{signal} is emitted:
 \itemize{
 \item if the package indicated in \code{path_infra} is not among the dependencies
 \item if the file that determines the used testing infrastructure does not exist
