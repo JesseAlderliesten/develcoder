@@ -77,7 +77,7 @@ expect_silent(
   expect_identical(
     check_test_infra(fs::path(my_tempdir, "tests", "tinytest.R"),
                      signal = "warning"),
-    character(0))
+    "")
 )
 
 expect_warning(
@@ -102,7 +102,7 @@ expect_silent(
   expect_identical(
     check_test_infra(fs::path(my_tempdir, "tests", "testthat.R"),
                      signal = "warning"),
-    character(0))
+    "")
 )
 
 ##### Arguments that should result in an error #####
