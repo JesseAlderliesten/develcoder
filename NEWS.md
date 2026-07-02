@@ -1,3 +1,32 @@
+# develcoder 0.8.0
+
+### Breaking changes
+- Dependency `desc`: move from `Suggests` to `Imports` because it is used by
+  `check_test_infra()`.
+- Dependency `fs`: require minimum version `1.2.4` because function `dir_ls()`
+  with argument `fail` is used in a vignette.
+- Suggested dependency `goodpractice`: require minimum version `1.1.0` which
+  changed default argument `checks` in `goodpractice::goodpractice()`.
+- Dependency `progutils`: increase minimum version from `0.9.0` to `0.13.0` to
+  prevent spurious warnings from `wrap_text()`.
+- Dependency `remotes`: require minimum version `2.2.0` because function
+  `install_version()` with the specification of minimum version is used in a
+  vignette.
+- Add suggested dependency `withr` to create temporary projects when testing.
+
+### Added functions
+- `check_test_infra()` to check if the infrastructure for testing is present and
+  refers to the current package.
+
+### Documentation
+- Vignette `pkg_setup`: expand section on licenses. Move documentation on GitHub
+  Actions to vignette `pkg_devel`.
+- Vignette `pkg_devel`: discuss choosing dependencies. Add section with
+  documentation and help for GitHub Actions. Explain how to show the
+  `DESCRIPTION` file when discussing how to normalise it. Various clarifications.
+- Vignette `rmarkdown_knitr`: fuller discussion of R markdown file and package.
+
+
 # develcoder 0.7.0
 
 ### Breaking changes
