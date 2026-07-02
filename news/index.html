@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,29 @@
       <small>Source: <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.0" id="develcoder-080">develcoder 0.8.0<a class="anchor" aria-label="anchor" href="#develcoder-080"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-8-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-8-0"></a></h4>
+<ul><li>Dependency <code>desc</code>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code><a href="../reference/check_test_infra.html">check_test_infra()</a></code>.</li>
+<li>Dependency <code>fs</code>: require minimum version <code>1.2.4</code> because function <code>dir_ls()</code> with argument <code>fail</code> is used in a vignette.</li>
+<li>Suggested dependency <code>goodpractice</code>: require minimum version <code>1.1.0</code> which changed default argument <code>checks</code> in <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::goodpractice()</a></code>.</li>
+<li>Dependency <code>progutils</code>: increase minimum version from <code>0.9.0</code> to <code>0.13.0</code> to prevent spurious warnings from <code>wrap_text()</code>.</li>
+<li>Dependency <code>remotes</code>: require minimum version <code>2.2.0</code> because function <code>install_version()</code> with the specification of minimum version is used in a vignette.</li>
+<li>Add suggested dependency <code>withr</code> to create temporary projects when testing.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="added-functions-0-8-0">Added functions<a class="anchor" aria-label="anchor" href="#added-functions-0-8-0"></a></h4>
+<ul><li>
+<code><a href="../reference/check_test_infra.html">check_test_infra()</a></code> to check if the infrastructure for testing is present and refers to the current package.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="documentation-0-8-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-8-0"></a></h4>
+<ul><li>Vignette <code>pkg_setup</code>: expand section on licenses. Move documentation on GitHub Actions to vignette <code>pkg_devel</code>.</li>
+<li>Vignette <code>pkg_devel</code>: discuss choosing dependencies. Add section with documentation and help for GitHub Actions. Explain how to show the <code>DESCRIPTION</code> file when discussing how to normalise it. Various clarifications.</li>
+<li>Vignette <code>rmarkdown_knitr</code>: fuller discussion of R markdown file and package.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="develcoder-070">develcoder 0.7.0<a class="anchor" aria-label="anchor" href="#develcoder-070"></a></h2>
 <div class="section level4">

@@ -56,15 +56,26 @@ Do:
 ### License
 
 A license file makes clear what use of your package is allowed.
-Overviews of licenses are available from [Blue oak
-council](https://blueoakcouncil.org/list),
-[choosealicense](https://choosealicense.com/appendix/),
-[GNU.org](https://www.gnu.org/licenses/license-list.html), [Open Source
-Initiative](https://opensource.org/licenses), and [System Package Data
-Exchange](https://spdx.org/licenses/). Some legal details are provided
-in [The Legal Side of Open Source](https://opensource.guide/legal/).
+Overviews of licenses are available at various websites:
 
-To create license files:
+- [Blue oak council](https://blueoakcouncil.org/list)
+- [choosealicense](https://choosealicense.com/appendix/)
+- [ELRA License Wizard](http://wizard.elda.org/)
+- [GNU.org](https://www.gnu.org/licenses/license-list.html)
+- [Open Source Initiative](https://opensource.org/licenses)
+- [System Package Data Exchange](https://spdx.org/licenses/)
+- [tl;drLegal](https://www.tldrlegal.com/contact-us)
+
+Some legal details are provided at [The Legal Side of Open
+Source](https://opensource.guide/legal/).
+
+[CRAN](https://cran.r-project.org/) only
+[allows](https://cran.r-project.org/web/packages/policies.html#Source-packages)
+packages with licences from [this
+list](https://svn.r-project.org/R/trunk/share/licenses/license.db).
+`usethis` provides utility functions to add licenses (see
+`help("licenses", package = "usethis")`. For example, to add a MIT
+license:
 
 ``` r
 
@@ -77,8 +88,7 @@ A citation file makes clear how your package should be cited. See the
 documentation in the `R` package
 [`cffr`](https://CRAN.R-project.org/package=cffr) and the GitHub page
 [`Citation file format`](https://citation-file-format.github.io/) for
-details on the format. The code uses the citation file if it exists and
-otherwise uses the the `DESCRIPTION` file:
+details on the format.
 
 ``` r
 
@@ -141,12 +151,11 @@ create tests. This can be set up through:
 ``` r
 
 tinytest::setup_tinytest(pkgdir = ".")
-usethis::use_package(package = "tinytest", type = "Suggests")
 devtools::document()
 ```
 
-Use the following code instead if you prefer to use package
-[testthat](https://cran.r-project.org/package=testthat):
+Use the following code if you prefer to use package
+[testthat](https://cran.r-project.org/package=testthat) instead:
 
 ``` r
 
@@ -217,15 +226,8 @@ in the folder `inst/templates`):
   to run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
   version.
 
-### Further documentation
-
-See the section about
-[`GitHub Actions`](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
-in the book [`R packages`](https://r-pkgs.org/), the GitHub
-documentation about
-[`workflow syntax`](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
-and the section `Use GitHub Actions` in the vignette *Package
-development*:
+For further documentation, see section `GHA: documentation and help` in
+the vignette *Package development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Use a package website
@@ -237,7 +239,7 @@ to functions and documentation you refer to.
 
 To set up a package website, you can use
 [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
-To also set up a \[GitHub action\]\[GitHub Actions\] to automatically
+To also set up a [GitHub action](#automate-checks) to automatically
 build and update your site if you push changes to your package to
 GitHub, run the following code:
 

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,11 +131,25 @@ file</li>
 <h3 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h3>
 <p>A license file makes clear what use of your package is allowed.
-Overviews of licenses are available from <a href="https://blueoakcouncil.org/list" class="external-link">Blue oak council</a>, <a href="https://choosealicense.com/appendix/" class="external-link">choosealicense</a>, <a href="https://www.gnu.org/licenses/license-list.html" class="external-link">GNU.org</a>, <a href="https://opensource.org/licenses" class="external-link">Open Source Initiative</a>, and
-<a href="https://spdx.org/licenses/" class="external-link">System Package Data Exchange</a>.
-Some legal details are provided in <a href="https://opensource.guide/legal/" class="external-link">The Legal Side of Open
+Overviews of licenses are available at various websites:</p>
+<ul>
+<li><a href="https://blueoakcouncil.org/list" class="external-link">Blue oak council</a></li>
+<li><a href="https://choosealicense.com/appendix/" class="external-link">choosealicense</a></li>
+<li><a href="http://wizard.elda.org/" class="external-link">ELRA License Wizard</a></li>
+<li><a href="https://www.gnu.org/licenses/license-list.html" class="external-link">GNU.org</a></li>
+<li><a href="https://opensource.org/licenses" class="external-link">Open Source
+Initiative</a></li>
+<li><a href="https://spdx.org/licenses/" class="external-link">System Package Data
+Exchange</a></li>
+<li><a href="https://www.tldrlegal.com/contact-us" class="external-link">tl;drLegal</a></li>
+</ul>
+<p>Some legal details are provided at <a href="https://opensource.guide/legal/" class="external-link">The Legal Side of Open
 Source</a>.</p>
-<p>To create license files:</p>
+<p><a href="https://cran.r-project.org/" class="external-link">CRAN</a> only <a href="https://cran.r-project.org/web/packages/policies.html#Source-packages" class="external-link">allows</a>
+packages with licences from <a href="https://svn.r-project.org/R/trunk/share/licenses/license.db" class="external-link">this
+list</a>. <code>usethis</code> provides utility functions to add
+licenses (see <code>help("licenses", package = "usethis")</code>. For
+example, to add a MIT license:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -145,8 +159,7 @@ Source</a>.</p>
 <p>A citation file makes clear how your package should be cited. See the
 documentation in the <code>R</code> package <a href="https://CRAN.R-project.org/package=cffr" class="external-link"><code>cffr</code></a> and
 the GitHub page <a href="https://citation-file-format.github.io/" class="external-link"><code>Citation file format</code></a>
-for details on the format. The code uses the citation file if it exists
-and otherwise uses the the <code>DESCRIPTION</code> file:</p>
+for details on the format.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create a citation file</span></span></code></pre></div>
 </div>
@@ -205,9 +218,9 @@ to give an overview of the functions in the package.</p>
 create tests. This can be set up through:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tinytest"</span>, type <span class="op">=</span> <span class="st">"Suggests"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Use the following code instead if you prefer to use package <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a>:</p>
+<p>Use the following code if you prefer to use package <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a>
+instead:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"&lt;func&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -273,16 +286,10 @@ template: for example, add<br><code>'- {os: ubuntu-latest,   r: '4.1.0'}'</code>
 <code>'matrix: config:'</code> to run <code>R</code> version 4.1.0 if
 your package declares <code>R</code> 4.1.0 as minimum version.</li>
 </ul>
-<div class="section level3">
-<h3 id="further-documentation">Further documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a>
-</h3>
-<p>See the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link"><code>GitHub Actions</code></a>
-in the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a>,
-the GitHub documentation about <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax" class="external-link"><code>workflow syntax</code></a>,
-and the section <code>Use GitHub Actions</code> in the vignette
-<em>Package development</em>:
+<p>For further documentation, see section
+<code>GHA: documentation and help</code> in the vignette <em>Package
+development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="use-a-package-website">Use a package website<a class="anchor" aria-label="anchor" href="#use-a-package-website"></a>
@@ -291,9 +298,9 @@ and the section <code>Use GitHub Actions</code> in the vignette
 automatically creates <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><code>hyperlinked cross-references</code></a>
 to functions and documentation you refer to.</p>
 <p>To set up a package website, you can use
-<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>. To also set up a [GitHub
-action][GitHub Actions] to automatically build and update your site if
-you push changes to your package to GitHub, run the following code:</p>
+<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>. To also set up a <a href="#automate-checks">GitHub action</a> to automatically build and
+update your site if you push changes to your package to GitHub, run the
+following code:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-wide documentation</span></span></code></pre></div>

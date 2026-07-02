@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,20 +80,25 @@
 </h2>
 <p>This vignette contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link"><code>R Markdown</code></a>
 and <a href="https://yihui.org/knitr/" class="external-link"><code>knitr</code></a>.</p>
-<p>An R Markdown file is an R script with markup to enable combining the
-script (including the comments) with its output and additional text in a
-single document. The R package <a href="https://cran.r-project.org/package=rmarkdown" class="external-link"><code>rmarkdown</code></a>
-and either <a href="https://posit.co/products/open-source/rstudio" class="external-link">RStudio</a> or <a href="https://pandoc.org/" class="external-link"><code>Pandoc</code></a> are required to
-create an R Markdown file.</p>
-<p>To generate a PDF as output, a <a href="https://www.latex-project.org/get/" class="external-link"><code>LaTeX</code></a>
-distribution needs to be installed. See the ‘R markdown cookbook’ and
-the ‘Definitive guide’ (both mentioned at <a href="#useful-resources">Useful resources</a> below) for extensive help.
-When installing <a href="https://miktex.org/" class="external-link"><code>MikTex</code></a> as
-LaTeX distribution, set <code>install for all users</code> and
+<p>An R Markdown file (<code>.Rmd</code>) is a plain-text file with R
+code and markup. The markup is written in <a href="https://daringfireball.net/projects/markdown/" class="external-link">markdown</a>. The R
+package <a href="https://cran.r-project.org/package=rmarkdown" class="external-link"><code>rmarkdown</code></a>
+converts R Markdown files to a single output file containing the R code,
+output of the R code, and additional text.</p>
+<p>The <code>rmarkdown</code> package requires either <a href="https://pandoc.org/" class="external-link"><code>Pandoc</code></a> or <a href="https://posit.co/products/open-source/rstudio" class="external-link">RStudio</a> (which
+already includes <code>Pandoc</code>) to convert R Markdown files to an
+html-file.</p>
+<p>The <code>rmarkdown</code> package requires a <a href="https://www.latex-project.org/get/" class="external-link"><code>LaTeX</code></a>
+distribution, such as <a href="https://miktex.org/" class="external-link"><code>MikTex</code></a> or <a href="https://yihui.org/tinytex/" class="external-link"><code>TinyTeX</code></a> (for
+debugging see <a href="https://yihui.org/tinytex/r/" class="external-link">here</a>), to
+convert R Markdown files to a PDF. See the ‘R markdown cookbook’ and the
+‘Definitive guide’ (both mentioned at <a href="#useful-resources">Useful
+resources</a> below) for extensive help. When installing <a href="https://miktex.org/" class="external-link"><code>MikTex</code></a> as LaTeX
+distribution, set <code>install for all users</code> and
 <code>always install missing packages on the fly</code> (for all users),
 see <a href="https://tex.stackexchange.com/questions/27138/" class="external-link">this Stack
-Exchange post</a>. An alternative to <code>MikTeX</code> is <a href="https://yihui.org/tinytex/" class="external-link"><code>TinyTeX</code></a> (for
-debugging see <a href="https://yihui.org/tinytex/r/" class="external-link">here</a>):</p>
+Exchange post</a>.</p>
+<p>For <a href="https://yihui.org/tinytex/" class="external-link"><code>TinyTeX</code></a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">'\\documentclass{article}'</span>,</span>
@@ -118,6 +123,8 @@ from <a href="https://posit.co/" class="external-link">Posit</a>
 </li>
 <li>the <a href="https://www.markdownguide.org/" class="external-link"><code>Markdown guide</code></a>
 </li>
+<li>the book <a href="https://rmd4sci.njtierney.com/" class="external-link">RMarkdown for
+Scientists</a> by N. Tierney</li>
 </ul>
 </div>
 <div class="section level2">
@@ -217,6 +224,8 @@ _An **italic and bold phrase** in italic text_</code></pre>
 <p>Using <em>italic words</em> and <em>also italic words</em> or
 <strong>bold words</strong> or even <em>An <strong>italic and bold
 phrase</strong> in italic text</em></p>
+<p>Partially bold text does <strong>not</strong> work inside link text
+in R &lt;= 4.1.0.</p>
 </div>
 <div class="section level3">
 <h3 id="code-chunks">Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"></a>

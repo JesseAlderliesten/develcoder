@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,9 +181,9 @@ which arguments to inherit.</p>
 <div class="section level4">
 <h4 id="add-examples">Add examples<a class="anchor" aria-label="anchor" href="#add-examples"></a>
 </h4>
-<p>Examples should <strong>not</strong> write to the working directory
-(e.g., using <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code>) but to a temporary directory that is
-cleaned up afterwards. See the section <code>Usage in practice</code> in
+<p>Examples that create output files should write them to a temporary
+directory that is cleaned up afterwards. See the section
+<code>Usage in practice</code> in
 <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>.</p>
 <p>Although examples rendered on a website created with <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> will display
 the output underneath the code, help-files accessed through
@@ -209,8 +209,9 @@ in the book <code>R packages</code>.</p>
 <div class="section level3">
 <h3 id="add-tests">Add tests<a class="anchor" aria-label="anchor" href="#add-tests"></a>
 </h3>
-<p>Tests should write to a temporary directory that is cleaned up
-afterwards. See the section <code>Usage in practice</code> in
+<p>Tests that create output files should write them to a temporary
+directory that is cleaned up afterwards. See the section
+<code>Usage in practice</code> in
 <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>. More
 generally, tests should not make changes (without restoring the original
 state) that could influence subsequent tests. Examples of such changes
@@ -262,6 +263,11 @@ followed by a check like
 <div class="section level3">
 <h3 id="update-dependencies">Update dependencies<a class="anchor" aria-label="anchor" href="#update-dependencies"></a>
 </h3>
+<p>First, you should consider if you really need a new dependency. Some
+additional effort in choosing dependencies or in coding can allow to
+depend on ‘lighter’ dependencies (i.e., dependencies that themselves
+have not too many dependencies), which makes a project more stable over
+time. See the various contributions to the <a href="https://www.tinyverse.org/" class="external-link"><code>tinyverse</code></a>.</p>
 <div class="section level4">
 <h4 id="importing-packages-or-functions">Importing packages or functions<a class="anchor" aria-label="anchor" href="#importing-packages-or-functions"></a>
 </h4>
@@ -410,31 +416,7 @@ run all test files. Use <code><a href="https://devtools.r-lib.org/reference/test
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or devtools::test()</span></span>
-<span><span class="va">curr_pkg_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">files_R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"R"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">files_man</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"."</span>, <span class="st">"man"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"\\.Rd$"</span><span class="op">)</span></span>
-<span><span class="va">proj_pkg_R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">curr_pkg_name</span>, <span class="st">"-package.R"</span><span class="op">)</span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="va">proj_pkg_R</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">files_R</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">files_R</span> <span class="op">&lt;-</span> <span class="va">files_R</span><span class="op">[</span><span class="va">files_R</span> <span class="op">!=</span> <span class="va">proj_pkg_R</span><span class="op">]</span></span>
-<span>  <span class="va">files_man</span> <span class="op">&lt;-</span> <span class="va">files_man</span><span class="op">[</span><span class="va">files_man</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">proj_pkg_R</span>, <span class="st">"d"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="op">}</span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="st">"reexports.Rd"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">files_man</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">files_man</span> <span class="op">&lt;-</span> <span class="va">files_man</span><span class="op">[</span><span class="va">files_man</span> <span class="op">!=</span> <span class="st">"reexports.Rd"</span><span class="op">]</span></span>
-<span>  <span class="co"># Based on https://stackoverflow.com/a/74487073/32365738</span></span>
-<span>  <span class="va">reexported_funcs</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html" class="external-link">getNamespaceExports</a></span><span class="op">(</span><span class="va">curr_pkg_name</span><span class="op">)</span>,</span>
-<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span>envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="va">curr_pkg_name</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">reexported_funcs</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"File 'reexports.Rd' is present but no re-exported functions found!"</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="va">files_R</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span><span class="va">files_R</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">reexported_funcs</span>, <span class="st">".R"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">expected_man</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\.Rd$"</span>, replacement <span class="op">=</span> <span class="st">".R"</span>, x <span class="op">=</span> <span class="va">files_man</span><span class="op">)</span></span>
-<span><span class="va">expected_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"test_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">files_R</span>, <span class="va">expected_man</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">tests_missing</span> <span class="op">&lt;-</span> <span class="va">expected_files</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">expected_files</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"./inst/tinytest"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">tests_missing</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"No test file found for file "</span>, <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/checkinput/reference/paste_quoted.html" class="external-link">paste_quoted</a></span><span class="op">(</span><span class="va">tests_missing</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<span><span class="fu">develcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/check_test_files.html">check_test_files</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="automated-checks">Automated checks<a class="anchor" aria-label="anchor" href="#automated-checks"></a>
@@ -480,7 +462,7 @@ to private repositories)</li>
 <code>https://</code>
 </li>
 <li>should use the canonical forms expected by CRAN, not the ‘simple’
-form displayed in the webbrowser:
+forms displayed in the webbrowser:
 <ul>
 <li>
 <code>https://CRAN.R-project.org/package=&lt;pkg&gt;</code> for
@@ -490,7 +472,7 @@ packages</li>
 manuals <a href="https://CRAN.R-project.org/manuals.html" class="external-link">in general</a>
 and URLs of the form
 <code>https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html</code>
-to’ refer to a <a href="https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html" class="external-link">specific
+to refer to a <a href="https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html" class="external-link">specific
 manual</a>
 </li>
 <li>
@@ -547,8 +529,9 @@ suggested dependency (i.e., is in the <code>Suggests</code> field of the
 <code>DESCRIPTION</code> file) without running that code conditionally
 on the presence of <code>&lt;pkg&gt;</code> through
 <code>if(requireNamespace(&lt;pkg&gt;)) {&lt;code&gt;}</code>. The
-latter is catched by running
-<code>env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)</code>.</p></li>
+latter is catched by using argument
+<code>env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)</code> when running
+<code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>.</p></li>
 <li><p>If checks fail because of <code>LaTeX</code> errors when building
 the manual, you can use <code>manual = FALSE</code>.</p></li>
 </ul>
@@ -589,6 +572,7 @@ flagged above by
 <p>Check R code for possible problems.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Return is invisible and silent if all is well</span></span>
 <span><span class="fu">codetools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/codetools/man/checkUsage.html" class="external-link">checkUsagePackage</a></span><span class="op">(</span>pack <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                             all <span class="op">=</span> <span class="cn">TRUE</span>, suppressParamAssigns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -607,8 +591,9 @@ flagged above by
 <p>I do not use <a href="https://docs.ropensci.org/pkgcheck/reference/pkgcheck.html" class="external-link">pkgcheck::pkgcheck()</a>
 because their <a href="https://docs.ropensci.org/pkgcheck/articles/list-checks.html" class="external-link">‘own’
 checks</a> are largely covered by the checks from <code>devtools</code>
-used [above][devtool], their checks from <code>goodpractice</code> are
-already covered here, and the checks from <a href="https://docs.ropensci.org/pkgstats/reference/pkgstats.html" class="external-link">pkgstats</a>
+used <a href="#devtools-local">above</a>, their checks from
+<code>goodpractice</code> are already covered here, and the checks from
+<a href="https://docs.ropensci.org/pkgstats/reference/pkgstats.html" class="external-link">pkgstats</a>
 are not interesting and require system libraries
 <code>ctags-universal</code> and <code>GNU global</code>. However, the
 <code>pkgcheck</code> <a href="https://github.com/ropensci-review-tools/pkgcheck-action" class="external-link">GitHub
@@ -623,7 +608,7 @@ useful.</p>
 <span><span class="va">goodpractice_all_checks</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/all_checks.html" class="external-link">all_checks</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">my_checks_goodpractice</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span></span>
 <span>  <span class="va">goodpractice_all_checks</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"covr"</span>, <span class="co"># time-consuming according to 'pkgcheck'</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"covr"</span>, <span class="co"># time-consuming and wants 100% coverage</span></span>
 <span>    <span class="st">"complexity_function_length"</span>, <span class="st">"cyclocomp"</span>, <span class="co"># I write complex functions</span></span>
 <span>    <span class="co"># The lintr issue `Use == instead of %in% for scalar comparison` should be</span></span>
 <span>    <span class="co"># ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be</span></span>
@@ -651,7 +636,8 @@ useful.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res_goodpractice</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">gp</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, checks <span class="op">=</span> <span class="va">my_checks_goodpractice</span><span class="op">)</span></span>
+<span><span class="va">res_goodpractice</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice</a></span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>, checks <span class="op">=</span> <span class="va">my_checks_goodpractice</span><span class="op">)</span></span>
 <span><span class="va">res_goodpractice_failed</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/failed_checks.html" class="external-link">failed_checks</a></span><span class="op">(</span><span class="va">res_goodpractice</span><span class="op">)</span></span>
 <span><span class="va">res_goodpractice_failed</span></span>
 <span></span>
@@ -675,7 +661,11 @@ useful.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check if output of .libPaths() is correct.</span></span>
+<span><span class="co"># If the next line leads to the error 'lazy-load database</span></span>
+<span><span class="co"># '.../R/win-library/&lt;X.Y&gt;/&lt;pkg&gt;/R/&lt;pkg&gt;.rdb' is corrupt', you should restart R</span></span>
+<span><span class="co"># and again run the next line.</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>quick <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span><span class="co"># Load the package and view the help files as usual outside devtools:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -714,21 +704,36 @@ folder (see the <code>Description</code> section in
 <code>NEWS</code>: restyle and publish the <code>NEWS</code> file at
 each new package release.</li>
 <li>
-<code>DESCRIPTION</code>: run <code><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc::desc_normalize()</a></code> to
-normalize the <code>DESCRIPTION</code> file. Manually increment the
-package version in the <code>DESCRIPTION</code> file, or run
-<code>R</code> as administrator and then use
-<code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>. In the latter case, do
+<code>DESCRIPTION</code>:
+<ul>
+<li>run <code><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc::desc_normalize()</a></code> to normalize the
+<code>DESCRIPTION</code> file (use <code><a href="https://desc.r-lib.org/reference/desc.html" class="external-link">desc::desc()</a></code> or
+<code>utils::packageDescription(pkg = basename(getwd()))</code> to show
+the <code>DESCRIPTION</code> file, and
+<code><a href="https://desc.r-lib.org/reference/desc_get_deps.html" class="external-link">desc::desc_get_deps()</a></code> or
+<code>utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))</code>
+to only show the dependencies).</li>
+<li>Manually increment the package version in the
+<code>DESCRIPTION</code> file, or run <code>R</code> as administrator
+and then use <code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>. In the latter case, do
 <strong>not</strong> automatically <code>commit</code> the change, but
 do so manually to adjust the commit message to
 <code>Bump to version x.y.z</code>. Indicating the version number in the
 commit title makes it easier to find changes back later on (the pull
 request can have a description of the changes, i.e., the updated section
-of the <code>NEWS</code> file).</li>
+of the <code>NEWS</code> file). See package <a href="https://CRAN.R-project.org/package=lifecycle" class="external-link"><code>lifecycle</code></a>
+on how to add badges to packages and functions to indicate their
+lifecycle and its vignette <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><code>Lifecycle stages</code></a>,
+chapter <a href="https://r-pkgs.org/lifecycle.html" class="external-link"><code>Lifecycle</code></a>, and
+the <a href="https://semver.org/" class="external-link">Semantic Versioning Specification</a>
+on versioning.</li>
+</ul>
+</li>
 <li>
 <code>CITATION.cff</code>: update your citation file to reflect the
-new package version (this code uses the citation file if it exists and
-otherwise uses the the <code>DESCRIPTION</code> file):</li>
+new package version (this code updates the citation file if it exists
+and otherwise uses the <code>DESCRIPTION</code> file to create a
+citation file):</li>
 </ul>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create or update a citation file</span></span></code></pre></div>
@@ -740,16 +745,17 @@ otherwise uses the the <code>DESCRIPTION</code> file):</li>
 <div class="section level3">
 <h3 id="use-github-actions">Use GitHub Actions<a class="anchor" aria-label="anchor" href="#use-github-actions"></a>
 </h3>
-<p>To manually run GitHub Actions (GHA) set up
+<p>To manually trigger GitHub Actions (GHA) set up
 <code>workflow_dispatch</code> (see section <code>Automate checks</code>
 in the vignette <em>Package setup</em>:
 <code><a href="../articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>).</p>
 <p>To check if a reverse dependency (i.e., a package that depends on a
 package you changed) is still working fine: go to the
 <code>Actions</code> tab of the reverse dependency, select the action
-you want to trigger (e.g., <code>R-CMD-check.yaml</code>), and use the
-<code>Run workflow</code> button to run the GHA. You can select which
-branch it should run on, but you need to trigger it once manually on the
+you want to trigger (e.g., <code>check-standard.yaml</code>), and use
+the <code>Run workflow</code> button shown at the top of the overview
+with workflow runs to run the GHA. You can select which branch it should
+run on, but you need to trigger it once manually on the
 <code>main</code> branch to be able to trigger it manually on other
 branches.</p>
 <p>Scheduled jobs that failed can be rerun through the button
@@ -768,6 +774,23 @@ version to run in addition to the ones that are by default used in the
 template:<br>
 add <code>- {os: ubuntu-latest,   r: '4.1.0'}</code> to section
 <code>matrix: config:</code> to run <code>R</code> 4.1.0.</p>
+<div class="section level4">
+<h4 id="gha-documentation-and-help">GHA: documentation and help<a class="anchor" aria-label="anchor" href="#gha-documentation-and-help"></a>
+</h4>
+<p>For more background on GitHub Actions, including an explanation of
+the syntax used in <code>.yaml</code> files, see the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link"><code>GitHub Actions</code></a>
+in the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a>,
+the GitHub <a href="https://docs.github.com/en/actions/reference/workflows-and-actions" class="external-link"><code>reference</code></a>
+and <a href="https://docs.github.com/en/actions/how-tos/manage-workflow-runs" class="external-link"><code>HowTo</code></a>,
+and the section <code>Use GitHub Actions</code> in the vignette
+<em>Package development</em>:
+<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
+<p>For help debugging build failures, see the Appendix <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R-CMD-check</code></a>
+in the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a>
+and the section <a href="https://github.com/r-lib/actions#where-to-find-help" class="external-link">Where to find
+help</a> in the documentation of the <a href="https://github.com/r-lib/actions" class="external-link"><code>actions</code></a>
+package.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="pkgdown-website">pkgdown website<a class="anchor" aria-label="anchor" href="#pkgdown-website"></a>
@@ -873,6 +896,17 @@ URL in the <code>Repository URL</code> &gt;
 install the updated version following your own instructions on the
 GitHub pages of the relevant packages.</p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="searching-for-packages">Searching for packages<a class="anchor" aria-label="anchor" href="#searching-for-packages"></a>
+</h2>
+<ul>
+<li>
+<a href="https://github.com/ropensci-review-tools/pkgmatch" class="external-link"><code>pkgmatch</code></a>
+and the section <code>Similar tools</code> in its
+<code>README</code>.</li>
+<li><a href="https://CRAN.R-project.org/package=pkgsearch" class="external-link uri">https://CRAN.R-project.org/package=pkgsearch</a></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>

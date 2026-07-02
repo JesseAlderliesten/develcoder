@@ -85,7 +85,7 @@ License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
 To cite package 'develcoder' in publications use:
 
   Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-  Packages_. R package version 0.7.0,
+  Packages_. R package version 0.8.0,
   <https://github.com/JesseAlderliesten/develcoder>.
 
 A BibTeX entry for LaTeX users is
@@ -94,7 +94,7 @@ A BibTeX entry for LaTeX users is
     title = {develcoder: Code and Templates to Develop R Packages},
     author = {Jesse Alderliesten},
     year = {2026},
-    note = {R package version 0.7.0},
+    note = {R package version 0.8.0},
     url = {https://github.com/JesseAlderliesten/develcoder},
   }
 ```
@@ -108,6 +108,10 @@ A BibTeX entry for LaTeX users is
   of
   [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
   by R. D. Peng, S. Kross, and B. Anderson.
+- Slides from the workshop [Building tidy
+  tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by E.
+  Rand and I. Lyttle
 - The section `Documentation and help` in the
   [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   vignette contains further references.
+- Package [`packagepal`](https://CRAN.R-project.org/package=packagepal)

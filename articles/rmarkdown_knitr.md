@@ -6,24 +6,30 @@ This vignette contains information about using
 [`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
 [`knitr`](https://yihui.org/knitr/).
 
-An R Markdown file is an R script with markup to enable combining the
-script (including the comments) with its output and additional text in a
-single document. The R package
-[`rmarkdown`](https://cran.r-project.org/package=rmarkdown) and either
-[RStudio](https://posit.co/products/open-source/rstudio) or
-[`Pandoc`](https://pandoc.org/) are required to create an R Markdown
-file.
+An R Markdown file (`.Rmd`) is a plain-text file with R code and markup.
+The markup is written in
+[markdown](https://daringfireball.net/projects/markdown/). The R package
+[`rmarkdown`](https://cran.r-project.org/package=rmarkdown) converts R
+Markdown files to a single output file containing the R code, output of
+the R code, and additional text.
 
-To generate a PDF as output, a
-[`LaTeX`](https://www.latex-project.org/get/) distribution needs to be
-installed. See the ‘R markdown cookbook’ and the ‘Definitive guide’
-(both mentioned at [Useful resources](#useful-resources) below) for
-extensive help. When installing [`MikTex`](https://miktex.org/) as LaTeX
+The `rmarkdown` package requires either [`Pandoc`](https://pandoc.org/)
+or [RStudio](https://posit.co/products/open-source/rstudio) (which
+already includes `Pandoc`) to convert R Markdown files to an html-file.
+
+The `rmarkdown` package requires a
+[`LaTeX`](https://www.latex-project.org/get/) distribution, such as
+[`MikTex`](https://miktex.org/) or
+[`TinyTeX`](https://yihui.org/tinytex/) (for debugging see
+[here](https://yihui.org/tinytex/r/)), to convert R Markdown files to a
+PDF. See the ‘R markdown cookbook’ and the ‘Definitive guide’ (both
+mentioned at [Useful resources](#useful-resources) below) for extensive
+help. When installing [`MikTex`](https://miktex.org/) as LaTeX
 distribution, set `install for all users` and
 `always install missing packages on the fly` (for all users), see [this
-Stack Exchange post](https://tex.stackexchange.com/questions/27138/). An
-alternative to `MikTeX` is [`TinyTeX`](https://yihui.org/tinytex/) (for
-debugging see [here](https://yihui.org/tinytex/r/)):
+Stack Exchange post](https://tex.stackexchange.com/questions/27138/).
+
+For [`TinyTeX`](https://yihui.org/tinytex/):
 
 ``` r
 
@@ -47,6 +53,8 @@ options(tinytex.verbose = FALSE)
   [Posit](https://posit.co/)
 - the maintainer’s website on [`knitr`](https://yihui.org/knitr/)
 - the [`Markdown guide`](https://www.markdownguide.org/)
+- the book [RMarkdown for Scientists](https://rmd4sci.njtierney.com/)
+  by N. Tierney
 
 ## Global Settings for knitr used by R Markdown
 
@@ -154,6 +162,8 @@ is rendered as:
 
 Using *italic words* and *also italic words* or **bold words** or even
 *An **italic and bold phrase** in italic text*
+
+Partially bold text does **not** work inside link text in R \<= 4.1.0.
 
 ### Code chunks
 

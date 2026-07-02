@@ -112,8 +112,7 @@ arguments to inherit.
 
 #### Add examples
 
-Examples should **not** write to the working directory (e.g., using
-[`getwd()`](https://rdrr.io/r/base/getwd.html)) but to a temporary
+Examples that create output files should write them to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
@@ -149,8 +148,9 @@ For an overview of mathematical notation see:
 
 ### Add tests
 
-Tests should write to a temporary directory that is cleaned up
-afterwards. See the section `Usage in practice` in
+Tests that create output files should write them to a temporary
+directory that is cleaned up afterwards. See the section
+`Usage in practice` in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
 More generally, tests should not make changes (without restoring the
 original state) that could influence subsequent tests. Examples of such
@@ -206,6 +206,13 @@ fixed parts of the message (e.g., `"Repeated"`), possibly followed by a
 check like `tinytest::expect_true(fs::dir_exists(string))`.
 
 ### Update dependencies
+
+First, you should consider if you really need a new dependency. Some
+additional effort in choosing dependencies or in coding can allow to
+depend on ‘lighter’ dependencies (i.e., dependencies that themselves
+have not too many dependencies), which makes a project more stable over
+time. See the various contributions to the
+[`tinyverse`](https://www.tinyverse.org/).
 
 #### Importing packages or functions
 
@@ -367,31 +374,7 @@ tests.
 
 devtools::document()
 tinytest::test_all() # or devtools::test()
-curr_pkg_name <- basename(getwd())
-files_R <- list.files(file.path(".", "R"))
-files_man <- list.files(path = file.path(".", "man"), pattern = "\\.Rd$")
-proj_pkg_R <- paste0(curr_pkg_name, "-package.R")
-if(proj_pkg_R %in% files_R) {
-  files_R <- files_R[files_R != proj_pkg_R]
-  files_man <- files_man[files_man != paste0(proj_pkg_R, "d")]
-}
-if("reexports.Rd" %in% files_man) {
-  files_man <- files_man[files_man != "reexports.Rd"]
-  # Based on https://stackoverflow.com/a/74487073/32365738
-  reexported_funcs <- progutils::not_in(getNamespaceExports(curr_pkg_name),
-                                        ls(envir = asNamespace(curr_pkg_name)))
-  if(length(reexported_funcs) == 0L) {
-    warning("File 'reexports.Rd' is present but no re-exported functions found!")
-  } else {
-    files_R <- progutils::not_in(files_R, paste0(reexported_funcs, ".R"))
-  }
-}
-expected_man <- sub(pattern = "\\.Rd$", replacement = ".R", x = files_man)
-expected_files <- sort(unique(paste0("test_", c(files_R, expected_man))))
-tests_missing <- expected_files[!(expected_files %in% list.files("./inst/tinytest"))]
-if(length(tests_missing) > 0L) {
-  warning("No test file found for file ", progutils::paste_quoted(tests_missing))
-}
+develcoder::check_test_files()
 ```
 
 ### Automated checks
@@ -447,12 +430,12 @@ for details about the environment variables):
   - should be direct links, not redirects
   - should use the protocol `http://` instead of `https://`
   - should use the canonical forms expected by CRAN, not the ‘simple’
-    form displayed in the webbrowser:
+    forms displayed in the webbrowser:
     - `https://CRAN.R-project.org/package=<pkg>` for packages
     - `https://CRAN.R-project.org/manuals.html` to refer to manuals [in
       general](https://CRAN.R-project.org/manuals.html) and URLs of the
       form
-      `https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html` to’
+      `https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html` to
       refer to a [specific
       manual](https://CRAN.R-project.org/doc/manuals/r-release/R-exts.html)
     - `https://CRAN.R-project.org/web/packages/policies.html` to refer
@@ -506,8 +489,9 @@ for details about the environment variables):
   or used a package that is declared as suggested dependency (i.e., is
   in the `Suggests` field of the `DESCRIPTION` file) without running
   that code conditionally on the presence of `<pkg>` through
-  `if(requireNamespace(<pkg>)) {<code>}`. The latter is catched by
-  running `env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)`.
+  `if(requireNamespace(<pkg>)) {<code>}`. The latter is catched by using
+  argument `env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)` when running
+  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
 
 - If checks fail because of `LaTeX` errors when building the manual, you
   can use `manual = FALSE`.
@@ -556,6 +540,7 @@ Check R code for possible problems.
 ``` r
 
 devtools::load_all()
+# Return is invisible and silent if all is well
 codetools::checkUsagePackage(pack = basename(getwd()),
                              all = TRUE, suppressParamAssigns = TRUE)
 ```
@@ -580,7 +565,7 @@ I do not use
 because their [‘own’
 checks](https://docs.ropensci.org/pkgcheck/articles/list-checks.html)
 are largely covered by the checks from `devtools` used
-\[above\]\[devtool\], their checks from `goodpractice` are already
+[above](#devtools-local), their checks from `goodpractice` are already
 covered here, and the checks from
 [pkgstats](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
 are not interesting and require system libraries `ctags-universal` and
@@ -599,7 +584,7 @@ useful.
 goodpractice_all_checks <- goodpractice::all_checks()
 my_checks_goodpractice <- progutils::not_in(
   goodpractice_all_checks,
-  c("covr", # time-consuming according to 'pkgcheck'
+  c("covr", # time-consuming and wants 100% coverage
     "complexity_function_length", "cyclocomp", # I write complex functions
     # The lintr issue `Use == instead of %in% for scalar comparison` should be
     # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
@@ -627,7 +612,8 @@ my_checks_goodpractice <- progutils::not_in(
   )
 )
 
-res_goodpractice <- goodpractice::gp(path = ".", checks = my_checks_goodpractice)
+res_goodpractice <- goodpractice::goodpractice(
+  path = ".", checks = my_checks_goodpractice)
 res_goodpractice_failed <- goodpractice::failed_checks(res_goodpractice)
 res_goodpractice_failed
 
@@ -648,7 +634,11 @@ res_goodpractice
 
 devtools::document()
 .libPaths() # Check if output of .libPaths() is correct.
+# If the next line leads to the error 'lazy-load database
+# '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt', you should restart R
+# and again run the next line.
 devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
+
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
@@ -688,21 +678,36 @@ package [crandalf](https://github.com/yihui/crandalf), and package
   [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 - `NEWS`: restyle and publish the `NEWS` file at each new package
   release.
-- `DESCRIPTION`: run
-  [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
-  to normalize the `DESCRIPTION` file. Manually increment the package
-  version in the `DESCRIPTION` file, or run `R` as administrator and
-  then use
-  [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
-  In the latter case, do **not** automatically `commit` the change, but
-  do so manually to adjust the commit message to
-  `Bump to version x.y.z`. Indicating the version number in the commit
-  title makes it easier to find changes back later on (the pull request
-  can have a description of the changes, i.e., the updated section of
-  the `NEWS` file).
+- `DESCRIPTION`:
+  - run
+    [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
+    to normalize the `DESCRIPTION` file (use
+    [`desc::desc()`](https://desc.r-lib.org/reference/desc.html) or
+    `utils::packageDescription(pkg = basename(getwd()))` to show the
+    `DESCRIPTION` file, and
+    [`desc::desc_get_deps()`](https://desc.r-lib.org/reference/desc_get_deps.html)
+    or
+    `utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))`
+    to only show the dependencies).
+  - Manually increment the package version in the `DESCRIPTION` file, or
+    run `R` as administrator and then use
+    [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
+    In the latter case, do **not** automatically `commit` the change,
+    but do so manually to adjust the commit message to
+    `Bump to version x.y.z`. Indicating the version number in the commit
+    title makes it easier to find changes back later on (the pull
+    request can have a description of the changes, i.e., the updated
+    section of the `NEWS` file). See package
+    [`lifecycle`](https://CRAN.R-project.org/package=lifecycle) on how
+    to add badges to packages and functions to indicate their lifecycle
+    and its vignette
+    [`Lifecycle stages`](https://lifecycle.r-lib.org/articles/stages.html),
+    chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html), and the
+    [Semantic Versioning Specification](https://semver.org/) on
+    versioning.
 - `CITATION.cff`: update your citation file to reflect the new package
-  version (this code uses the citation file if it exists and otherwise
-  uses the the `DESCRIPTION` file):
+  version (this code updates the citation file if it exists and
+  otherwise uses the `DESCRIPTION` file to create a citation file):
 
 ``` r
 
@@ -713,17 +718,18 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 
 ### Use GitHub Actions
 
-To manually run GitHub Actions (GHA) set up `workflow_dispatch` (see
+To manually trigger GitHub Actions (GHA) set up `workflow_dispatch` (see
 section `Automate checks` in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)).
 
 To check if a reverse dependency (i.e., a package that depends on a
 package you changed) is still working fine: go to the `Actions` tab of
 the reverse dependency, select the action you want to trigger (e.g.,
-`R-CMD-check.yaml`), and use the `Run workflow` button to run the GHA.
-You can select which branch it should run on, but you need to trigger it
-once manually on the `main` branch to be able to trigger it manually on
-other branches.
+`check-standard.yaml`), and use the `Run workflow` button shown at the
+top of the overview with workflow runs to run the GHA. You can select
+which branch it should run on, but you need to trigger it once manually
+on the `main` branch to be able to trigger it manually on other
+branches.
 
 Scheduled jobs that failed can be rerun through the button `Re-run jobs`
 \> `Re-run failed jobs` \> `Re-run jobs`. If the GitHub actions page
@@ -741,6 +747,26 @@ useful to specify the minimum declared `R` version to run in addition to
 the ones that are by default used in the template:  
 add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
 run `R` 4.1.0.
+
+#### GHA: documentation and help
+
+For more background on GitHub Actions, including an explanation of the
+syntax used in `.yaml` files, see the section about
+[`GitHub Actions`](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
+in the book [`R packages`](https://r-pkgs.org/), the GitHub
+[`reference`](https://docs.github.com/en/actions/reference/workflows-and-actions)
+and
+[`HowTo`](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
+and the section `Use GitHub Actions` in the vignette *Package
+development*:
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+
+For help debugging build failures, see the Appendix
+[`R-CMD-check`](https://r-pkgs.org/R-CMD-check.html) in the book
+[`R packages`](https://r-pkgs.org/) and the section [Where to find
+help](https://github.com/r-lib/actions#where-to-find-help) in the
+documentation of the [`actions`](https://github.com/r-lib/actions)
+package.
 
 ### pkgdown website
 
@@ -850,6 +876,12 @@ Then you can delete the old package version from your PC
 (`find.package("<pkg>")` gives its location) and install the updated
 version following your own instructions on the GitHub pages of the
 relevant packages.
+
+## Searching for packages
+
+- [`pkgmatch`](https://github.com/ropensci-review-tools/pkgmatch) and
+  the section `Similar tools` in its `README`.
+- <https://CRAN.R-project.org/package=pkgsearch>
 
 ## Troubleshooting
 

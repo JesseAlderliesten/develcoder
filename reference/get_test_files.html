@@ -9,7 +9,7 @@ function files or vice versa."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,8 @@ function files or vice versa.</p>
 
 
 <dt id="arg-signal">signal<a class="anchor" aria-label="anchor" href="#arg-signal"></a></dt>
-<dd><p>Character string indicating the type of signal to be used:
+<dd><p><a href="https://jessealderliesten.github.io/checkinput/reference/all_characters.html" class="external-link">character string</a> indicating the
+type of signal to be used:
 <code>"error"</code> to throw an <a href="https://rdrr.io/r/base/stop.html" class="external-link">error</a>, <code>"warning"</code> to issue a <a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a>,
 <code>"message"</code> to show a <a href="https://rdrr.io/r/base/message.html" class="external-link">message</a>, or <code>"quiet"</code> to be quiet.</p></dd>
 
@@ -92,14 +93,15 @@ function files or vice versa.</p>
     <p>A character vector containing the found test files, which is <code>character(0)</code>
 if no test files are found, with <a href="https://rdrr.io/r/base/attributes.html" class="external-link">attribute</a> <code>"info"</code> containing
 a character string with the text of the <a href="https://jessealderliesten.github.io/progutils/reference/signal_text.html" class="external-link">signal</a>, which is
-<code>""</code> if no signal was emitted.</p>
+<code>""</code> if no signal is emitted.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <a href="https://jessealderliesten.github.io/progutils/reference/signal_text.html" class="external-link">signal</a> indicated by argument <code>signal</code> is emitted if
 directory <code>testdir</code>:</p><ul><li><p>does not <a href="https://fs.r-lib.org/reference/file_access.html" class="external-link">exist</a></p></li>
 <li><p>contains files that are ignored because they do not start with pattern
-<code>pattern</code>, are not <span style="R">R</span> files, or are template files created by <code>tinytest</code></p></li>
+<code>pattern</code>, are not <span style="R">R</span> files, or are template files created by
+<a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a></p></li>
 <li><p>contain test files without corresponding function files in folder <code>R</code></p></li>
 <li><p>does not contain any test files</p></li>
 </ul><p>A character string with the text of this signal is also present as attribute

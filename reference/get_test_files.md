@@ -37,11 +37,13 @@ get_test_files(
 
 - signal:
 
-  Character string indicating the type of signal to be used: `"error"`
-  to throw an [error](https://rdrr.io/r/base/stop.html), `"warning"` to
-  issue a [warning](https://rdrr.io/r/base/warning.html), `"message"` to
-  show a [message](https://rdrr.io/r/base/message.html), or `"quiet"` to
-  be quiet.
+  [character
+  string](https://jessealderliesten.github.io/checkinput/reference/all_characters.html)
+  indicating the type of signal to be used: `"error"` to throw an
+  [error](https://rdrr.io/r/base/stop.html), `"warning"` to issue a
+  [warning](https://rdrr.io/r/base/warning.html), `"message"` to show a
+  [message](https://rdrr.io/r/base/message.html), or `"quiet"` to be
+  quiet.
 
 ## Value
 
@@ -50,7 +52,7 @@ A character vector containing the found test files, which is
 [attribute](https://rdrr.io/r/base/attributes.html) `"info"` containing
 a character string with the text of the
 [signal](https://jessealderliesten.github.io/progutils/reference/signal_text.html),
-which is `""` if no signal was emitted.
+which is `""` if no signal is emitted.
 
 ## Details
 
@@ -62,7 +64,7 @@ indicated by argument `signal` is emitted if directory `testdir`:
 
 - contains files that are ignored because they do not start with pattern
   `pattern`, are not R files, or are template files created by
-  `tinytest`
+  [`tinytest`](https://CRAN.R-project.org/package=tinytest)
 
 - contain test files without corresponding function files in folder `R`
 

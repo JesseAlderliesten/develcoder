@@ -43,11 +43,12 @@ test file was found.
 
 ## Details
 
-This function looks for test files in folders `inst/tinytest` and
-`tests/testthat` below the directory indicated by `path_pkg`, where
+This function looks for R files starting with pattern `pattern` in
+folders `inst/tinytest`, `tinytest`, and `tests/testthat` in the
+directory indicated by `path_pkg`, where
 [`tinytest`](https://CRAN.R-project.org/package=tinytest) and
 [`testthat`](https://CRAN.R-project.org/package=testthat) place their
-test files, respectively, for R files starting with pattern `pattern`.
+test files, respectively.
 
 It is checked that all test files have corresponding function files and
 vice versa. Function files of re-exported functions are ignored when
@@ -62,7 +63,8 @@ Warnings are issued if:
 
 - the test directories contain files that are ignored because their
   names do not start with pattern `pattern`, are not R files, or are
-  template files created by `tinytest`
+  template files created by
+  [`tinytest`](https://CRAN.R-project.org/package=tinytest)
 
 - the test directories contain test files without corresponding function
   files in folder `R`

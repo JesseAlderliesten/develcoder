@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,11 +85,11 @@ character vector with the names of <span style="R">R</span> files for which no t
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function looks for test files in folders <code>inst/tinytest</code> and
-<code>tests/testthat</code> below the directory indicated by <code>path_pkg</code>, where
-<a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a> and
-<a href="https://CRAN.R-project.org/package=testthat" class="external-link"><code>testthat</code></a> place their test
-files, respectively, for <span style="R">R</span> files starting with pattern <code>pattern</code>.</p>
+    <p>This function looks for <span style="R">R</span> files starting with pattern <code>pattern</code> in folders
+<code>inst/tinytest</code>, <code>tinytest</code>, and <code>tests/testthat</code> in the directory indicated
+by <code>path_pkg</code>, where <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a>
+and <a href="https://CRAN.R-project.org/package=testthat" class="external-link"><code>testthat</code></a> place their
+test files, respectively.</p>
 <p>It is checked that all test files have corresponding function files and vice
 versa. Function files of re-exported functions are ignored when looking for
 corresponding test files because these functions should be tested in the
@@ -98,7 +98,7 @@ package from which they are re-exported.</p>
 <li><p>none of the test directories contain any test files</p></li>
 <li><p>the test directories contain files that are ignored because their names do
 not start with pattern <code>pattern</code>, are not <span style="R">R</span> files, or are template files
-created by <code>tinytest</code></p></li>
+created by <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a></p></li>
 <li><p>the test directories contain test files without corresponding function
 files in folder <code>R</code></p></li>
 <li><p>folder <code>R</code> contains function files without corresponding test files</p></li>
