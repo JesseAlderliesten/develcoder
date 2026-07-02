@@ -12,7 +12,7 @@
 #' [`testthat`](https://CRAN.R-project.org/package=testthat), use
 #' `path_infra = fs::path_wd("tests", "testthat.R")`.
 #'
-#' The [signal][signal_text()] indicated by argument `signal` is emitted:#'
+#' The [signal][signal_text()] indicated by argument `signal` is emitted:
 #' - if the package indicated in `path_infra` is not among the dependencies
 #' - if the file that determines the used testing infrastructure does not exist
 #' - if the file that determines the used testing infrastructure does not refer
@@ -24,16 +24,19 @@
 #'
 #' @examples
 #'
-#'
-#'
 #' @export
 check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
                              signal = c("error", "warning", "message", "quiet")) {
-  stopifnot(checkinput::is_character(path_infra))
+  signal <- match.arg(signal, several.ok = FALSE)
+  stopifnot(checkinput::is_path(path_infra))
 
-  test_infra <- sub(pattern = ".R$", replacement = "",
+  test_infra <- sub(pattern = "\\.R$", replacement = "",
                     x = basename(path_infra), ignore.case = TRUE)
   pkg_name <- basename(dirname(dirname(path_infra)))
+  if(pkg_name == ".") {
+    stop("'path_infra' should have at least three levels of directories to",
+         " include a package\nname: ", path_infra)
+  }
   text_signal <- character(0)
 
   if(!(test_infra %in% desc::desc_get_deps()[, "package"])) {
@@ -45,7 +48,8 @@ check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
 
   if(fs::is_file(path_infra)) {
     text_infra <- readLines(con = path_infra, warn = FALSE)
-    if(!any(grepl(pattern = pkg_name, x = text_infra, fixed = TRUE))) {
+    if(!any(grepl(pattern = paste0("\"", pkg_name, "\""), x = text_infra,
+                  fixed = TRUE))) {
       text_signal_pkg <- paste0(
         "The file that determines the used testing infrastructure\nexists but",
         " does not refer to package ", progutils::paste_quoted(pkg_name),
@@ -58,10 +62,11 @@ check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
     text_signal <- c(text_signal, text_signal_infra)
   }
 
-  if(length(text_signal) > 0L) {
-    progutils::signal_text(text = progutils::wrap_text(
-      text_signal, ignore_newlines = FALSE),
-      signal = signal)
+  text_signal <- paste0(text_signal, collapse = "\n")
+  if(length(text_signal) > 1L || nzchar(text_signal)) {
+    progutils::signal_text(text = progutils::wrap_text(text_signal,
+                                                       ignore_newlines = FALSE),
+                           signal = signal)
   }
   text_signal
 }
