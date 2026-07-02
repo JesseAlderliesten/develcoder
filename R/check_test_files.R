@@ -8,11 +8,11 @@
 #' is the [working directory][getwd()].
 #'
 #' @details
-#' This function looks for test files in folders `inst/tinytest` and
-#' `tests/testthat` below the directory indicated by `path_pkg`, where
-#' [`tinytest`](https://CRAN.R-project.org/package=tinytest) and
-#' [`testthat`](https://CRAN.R-project.org/package=testthat) place their test
-#' files, respectively, for \R files starting with pattern `pattern`.
+#' This function looks for \R files starting with pattern `pattern` in folders
+#' `inst/tinytest`, `tinytest`, and `tests/testthat` in the directory indicated
+#' by `path_pkg`, where [`tinytest`](https://CRAN.R-project.org/package=tinytest)
+#' and [`testthat`](https://CRAN.R-project.org/package=testthat) place their
+#' test files, respectively.
 #'
 #' It is checked that all test files have corresponding function files and vice
 #' versa. Function files of re-exported functions are ignored when looking for
@@ -25,7 +25,7 @@
 #' - none of the test directories contain any test files
 #' - the test directories contain files that are ignored because their names do
 #'   not start with pattern `pattern`, are not \R files, or are template files
-#'   created by `tinytest`
+#'   created by [`tinytest`]( https://CRAN.R-project.org/package=tinytest)
 #' - the test directories contain test files without corresponding function
 #'   files in folder `R`
 #' - folder `R` contains function files without corresponding test files
@@ -50,25 +50,17 @@ check_test_files <- function(path_pkg = getwd(), pattern = "^test_|^test-",
   pkg_name <- basename(path_pkg)
   warn_text <- character(0)
 
-  # The 'inst' directories are relevant during package development, the others
-  # are relevant when the package is installed.
+  warn_text <- c(
+    warn_text,
+    check_test_infra(path_infra = fs::path(path_pkg, "tests", "tinytest.R")),
+    check_test_infra(path_infra = fs::path(path_pkg, "tests", "testthat.R"))
+  )
+
+  # The 'inst/tinytest' directory is relevant during package development, the
+  # others are relevant when the package is installed.
   path_tinytest_inst <- fs::path(path_pkg, "inst", "tinytest")
   path_tinytest <- fs::path(path_pkg, "tinytest")
-  path_testthat_inst <- fs::path(path_pkg, "inst", "tests")
   path_testthat <- fs::path(path_pkg, "tests", "testthat")
-
-  path_tinytest_master <- fs::path(path_pkg, "tests", "tinytest.R")
-  if(fs::is_file(path_tinytest_master)) {
-    text_tinytest_master <- readLines(
-      file(description = path_tinytest_master, open = "rt"),
-      warn = FALSE)
-    if(!any(grepl(pattern = pkg_name, x = text_tinytest_master, fixed = TRUE))) {
-      warn_text <- c(warn_text,
-                     paste0("'tinytest' masterfile exists but does not refer",
-                            " to package ", progutils::paste_quoted(pkg_name),
-                            ":\n'", path_tinytest_master, "'"))
-    }
-  }
 
   tinytest_test_files_inst <- get_test_files(
     testdir = path_tinytest_inst, pattern = pattern, ignore_case = ignore_case,
@@ -76,20 +68,15 @@ check_test_files <- function(path_pkg = getwd(), pattern = "^test_|^test-",
   tinytest_test_files <- get_test_files(
     testdir = path_tinytest, pattern = pattern, ignore_case = ignore_case,
     signal = "quiet")
-  testthat_test_files_inst <- get_test_files(
-    testdir = path_testthat_inst, pattern = pattern, ignore_case = ignore_case,
-    signal = "quiet")
   testthat_test_files <- get_test_files(
     testdir = path_testthat, pattern = pattern, ignore_case = ignore_case,
     signal = "quiet")
 
-  all_paths <- c(path_tinytest_inst, path_tinytest,
-                 path_testthat_inst, path_testthat)
+  all_paths <- c(path_tinytest_inst, path_tinytest, path_testthat)
   test_files_present <- c(tinytest_test_files_inst, tinytest_test_files,
-                          testthat_test_files_inst, testthat_test_files)
+                          testthat_test_files)
   all_attributes <- c(attr(tinytest_test_files_inst, "info"),
                       attr(tinytest_test_files, "info"),
-                      attr(testthat_test_files_inst, "info"),
                       attr(testthat_test_files, "info"))
   bool_dir_not_exist <- grepl(pattern = "does not exist",
                               x = all_attributes, fixed = TRUE)

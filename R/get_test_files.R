@@ -17,7 +17,8 @@
 #'
 #' - does not [exist][fs::dir_exists()]
 #' - contains files that are ignored because they do not start with pattern
-#'   `pattern`, are not \R files, or are template files created by `tinytest`
+#'   `pattern`, are not \R files, or are template files created by
+#'   [`tinytest`]( https://CRAN.R-project.org/package=tinytest)
 #' - contain test files without corresponding function files in folder `R`
 #' - does not contain any test files
 #'
@@ -28,7 +29,7 @@
 #' A character vector containing the found test files, which is `character(0)`
 #' if no test files are found, with [attribute][attributes] `"info"` containing
 #' a character string with the text of the [signal][signal_text()], which is
-#' `""` if no signal was emitted.
+#' `""` if no signal is emitted.
 #'
 #' @seealso
 #' [check_test_files()] that uses this function and checks some more
@@ -49,12 +50,10 @@ get_test_files <- function(testdir, pattern = "^test_|^test-", ignore_case = TRU
     text_signal <- c(text_signal, "test directory does not exist")
     testfiles <- character(0)
   } else {
-    testfiles <- list.files(testdir)
-
-    testfiles <- fs::path_abs(
-      fs::dir_ls(path = testdir, all = FALSE, recurse = FALSE, type = "file",
-                 regexp = pattern, fail = FALSE, ignore.case = ignore_case)
-    )
+    testfiles <- grep(
+      pattern = pattern,
+      x = basename(fs::dir_ls(path = testdir, type = "file", fail = FALSE)),
+      ignore.case = ignore_case, value = TRUE)
 
     if(length(testfiles) == 0L) {
       no_test_files <- TRUE
@@ -90,9 +89,9 @@ get_test_files <- function(testdir, pattern = "^test_|^test-", ignore_case = TRU
   if(length(text_signal) > 0L) {
     text_signal <- paste0(text_signal, collapse = ".\n")
     text_signal <- paste(text_signal, progutils::paste_quoted(testdir), sep = ":\n")
-    progutils::signal_text(text = progutils::wrap_text(text_signal,
-                                                       ignore_newlines = FALSE),
-                           signal = signal)
+    progutils::signal_text(text = progutils::wrap_text(
+      text_signal, ignore_newlines = FALSE),
+      signal = signal)
     attributes(testfiles) <- list("info" = text_signal)
   } else {
     # Not using character(0) because then grepl(pattern = "<text>",
