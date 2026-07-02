@@ -14,7 +14,7 @@ Imports:
     checkinput (>= 1.0.0),
     desc,
     fs (>= 1.2.4),
-    progutils (>= 0.9.0)
+    progutils (>= 0.12.0)
 Suggests: 
     cffr,
     checkrpkgs (>= 1.0.0),
@@ -32,6 +32,7 @@ Suggests:
     tools,
     usethis,
     utils,
+    withr,
     xfun
 Remotes:
     github::JesseAlderliesten/checkinput,
