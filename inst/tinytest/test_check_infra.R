@@ -32,7 +32,7 @@ expect_warning(
     )
   ),
   pattern = paste0(suggest_tinytest, ".+", infra_missing_tinytest),
-  strict = TRUE, fixed = FALSE)
+  strict = TRUE)
 
 expect_warning(
   expect_true(
@@ -42,22 +42,20 @@ expect_warning(
     )
   ),
   pattern = paste0(suggest_testthat, ".+", infra_missing_testthat),
-  strict = TRUE, fixed = FALSE)
+  strict = TRUE)
 
 ##### files and dependencies wrong #####
 # Create testfiles that refer to the wrong package
-testfile_tinytest <- progutils::create_file_path(
-  filename = "tinytest.R", format_stamp = "",
-  dir = fs::path(my_tempdir, "tests"), add_date = FALSE)
+testfile_tinytest <- fs::path(fs::dir_create(fs::path(my_tempdir, "tests")),
+                              "tinytest.R")
 fs::file_create(testfile_tinytest)
 expect_true(fs::is_file(testfile_tinytest))
 writeLines(text = c("if (requireNamespace(\"tinytest\", quietly = TRUE)) {",
                     "  tinytest::test_package(\"wrongpkg\")", "}"),
            con = testfile_tinytest)
 
-testfile_testthat <- progutils::create_file_path(
-  filename = "testthat.R", format_stamp = "",
-  dir = fs::path(my_tempdir, "tests"), add_date = FALSE)
+testfile_testthat <- fs::path(fs::dir_create(fs::path(my_tempdir, "tests")),
+                              "testthat.R")
 fs::file_create(testfile_testthat)
 expect_true(fs::is_file(testfile_testthat))
 writeLines(text = c("library(testthat)", paste0("library(", pkg_name, ")"),
@@ -76,8 +74,7 @@ expect_warning(
                                signal = "warning")
     )
   ),
-  pattern = paste0(suggest_tinytest, ".+", infra_wrong_tinytest),
-  strict = TRUE, fixed = FALSE)
+  pattern = paste0(suggest_tinytest, ".+", infra_wrong_tinytest), strict = TRUE)
 
 expect_warning(
   expect_true(
@@ -86,8 +83,7 @@ expect_warning(
                                signal = "warning")
     )
   ),
-  pattern = paste0(suggest_testthat, ".+", infra_wrong_testthat),
-  strict = TRUE, fixed = FALSE)
+  pattern = paste0(suggest_testthat, ".+", infra_wrong_testthat), strict = TRUE)
 
 ##### files missing, dependencies present #####
 # Create a temporary directory and temporarily set the working directory to it
@@ -111,7 +107,7 @@ expect_warning(
           x = check_test_infra(fs::path(my_tempdir, "tests", "tinytest.R"),
                                signal = "warning"))
   ),
-  pattern = infra_missing_tinytest, strict = TRUE, fixed = FALSE)
+  pattern = infra_missing_tinytest, strict = TRUE)
 
 expect_warning(
   expect_true(
@@ -119,22 +115,20 @@ expect_warning(
           x = check_test_infra(fs::path(my_tempdir, "tests", "testthat.R"),
                                signal = "warning"))
   ),
-  pattern = infra_missing_testthat, strict = TRUE, fixed = FALSE)
+  pattern = infra_missing_testthat, strict = TRUE)
 
 ##### files present, dependencies missing #####
 # Create file indicating which test infrastructure is used
-testfile_tinytest <- progutils::create_file_path(
-  filename = "tinytest.R", format_stamp = "",
-  dir = fs::path(my_tempdir, "tests"), add_date = FALSE)
+testfile_tinytest <- fs::path(fs::dir_create(fs::path(my_tempdir, "tests")),
+                              "tinytest.R")
 fs::file_create(testfile_tinytest)
 expect_true(fs::is_file(testfile_tinytest))
 writeLines(text = c("if (requireNamespace(\"tinytest\", quietly = TRUE)) {",
                     paste0("  tinytest::test_package(\"", pkg_name, "\")"), "}"),
            con = testfile_tinytest)
 
-testfile_testthat <- progutils::create_file_path(
-  filename = "testthat.R", format_stamp = "",
-  dir = fs::path(my_tempdir, "tests"), add_date = FALSE)
+testfile_testthat <- fs::path(fs::dir_create(fs::path(my_tempdir, "tests")),
+                              "testthat.R")
 fs::file_create(testfile_testthat)
 expect_true(fs::is_file(testfile_testthat))
 writeLines(text = c("library(testthat)", paste0("library(", pkg_name, ")"),
@@ -153,7 +147,7 @@ expect_warning(
                                signal = "warning")
     )
   ),
-  pattern = suggest_tinytest, strict = TRUE, fixed = FALSE)
+  pattern = suggest_tinytest, strict = TRUE)
 
 expect_warning(
   expect_true(
@@ -162,7 +156,7 @@ expect_warning(
                                signal = "warning")
     )
   ),
-  pattern = suggest_testthat, strict = TRUE, fixed = FALSE)
+  pattern = suggest_testthat, strict = TRUE)
 
 ##### files present, dependencies present #####
 # Create a description file that includes the relevant dependencies
