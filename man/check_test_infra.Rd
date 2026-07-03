@@ -10,7 +10,8 @@ check_test_infra(
 )
 }
 \arguments{
-\item{path_infra}{\link[checkinput:is_character]{character string} with a path
+\item{path_infra}{\link[checkinput:is_character]{character string} with a
+\link[checkinput:is_path]{valid path}
 to the file which determines the test infrastructure, see \code{Details}.}
 
 \item{signal}{\link[checkinput:is_character]{character string} indicating the
@@ -41,3 +42,18 @@ The \link[progutils:signal_text]{signal} indicated by argument \code{signal} is 
 to the package in the current working directory
 }
 }
+\examples{
+# "" is returned if all is fine
+check_test_infra(
+  path_infra = fs::path(find.package("develcoder"), "tests", "tinytest.R"))
+
+# An error occurs if the test infrastructure is not present
+try(check_test_infra(path_infra = fs::path_wd("tests", "othertest.R")))
+
+}
+\seealso{
+Other functions to check tests:
+\code{\link[=check_test_files]{check_test_files()}},
+\code{\link[=get_test_files]{get_test_files()}}
+}
+\concept{functions to check tests}

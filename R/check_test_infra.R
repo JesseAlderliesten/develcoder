@@ -1,7 +1,8 @@
 #' Check if test infrastructure is present and refers to the current package
 #'
 #' @inheritParams progutils::signal_text signal
-#' @param path_infra [character string][checkinput::is_character()] with a path
+#' @param path_infra [character string][checkinput::is_character()] with a
+#' [valid path][checkinput::is_path()]
 #' to the file which determines the test infrastructure, see `Details`.
 #'
 #' @details
@@ -22,7 +23,16 @@
 #' A character vector containing a character string with the text of the
 #' [signal][signal_text()], which is `""` if no signal is emitted.
 #'
+#' @family
+#' functions to check tests
+#'
 #' @examples
+#' # "" is returned if all is fine
+#' check_test_infra(
+#'   path_infra = fs::path(find.package("develcoder"), "tests", "tinytest.R"))
+#'
+#' # An error occurs if the test infrastructure is not present
+#' try(check_test_infra(path_infra = fs::path_wd("tests", "othertest.R")))
 #'
 #' @export
 check_test_infra <- function(path_infra = fs::path_wd("tests", "tinytest.R"),
