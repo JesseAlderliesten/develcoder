@@ -19,7 +19,6 @@
 #' - contains files that are ignored because they do not start with pattern
 #'   `pattern`, are not \R files, or are template files created by
 #'   [`tinytest`]( https://CRAN.R-project.org/package=tinytest)
-#' - contain test files without corresponding function files in folder `R`
 #' - does not contain any test files
 #'
 #' A character string with the text of this signal is also present as attribute
@@ -31,10 +30,13 @@
 #' a character string with the text of the [signal][signal_text()], which is
 #' `""` if no signal is emitted.
 #'
-#' @seealso
-#' [check_test_files()] that uses this function and checks some more
+#' @family
+#' functions to check tests
 #'
 #' @examples
+#' get_test_files(testdir = fs::path_wd("inst", "tinytest"), signal = "warning")
+#'
+#' try(get_test_files(testdir = fs::path_wd("inst", "othertest"), signal = "warning"))
 #'
 #' @export
 get_test_files <- function(testdir, pattern = "^test_|^test-", ignore_case = TRUE,
@@ -50,19 +52,16 @@ get_test_files <- function(testdir, pattern = "^test_|^test-", ignore_case = TRU
     text_signal <- c(text_signal, "test directory does not exist")
     testfiles <- character(0)
   } else {
-    testfiles <- grep(
-      pattern = pattern,
-      x = basename(fs::dir_ls(path = testdir, type = "file", fail = FALSE)),
-      ignore.case = ignore_case, value = TRUE)
+    testfiles <- basename(fs::dir_ls(path = testdir, type = "file", fail = FALSE))
 
     if(length(testfiles) == 0L) {
       no_test_files <- TRUE
     } else {
       no_test_files <- FALSE
       names_error_init <- !grepl(pattern = pattern, x = testfiles,
-                                 ignore.case = TRUE)
+                                 ignore.case = ignore_case)
       names_error_end <- !grepl(pattern = ".R$", x = testfiles,
-                                ignore.case = TRUE)
+                                ignore.case = ignore_case)
       # Template used by 'tinytest'
       names_error_template <- testfiles %in% paste0("test_", pkg_name_test, ".R")
       names_error <- names_error_init | names_error_end | names_error_template

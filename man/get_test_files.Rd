@@ -44,13 +44,21 @@ directory \code{testdir}:
 \item contains files that are ignored because they do not start with pattern
 \code{pattern}, are not \R files, or are template files created by
 \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
-\item contain test files without corresponding function files in folder \code{R}
 \item does not contain any test files
 }
 
 A character string with the text of this signal is also present as attribute
 \code{"info"} of the returned value.
 }
-\seealso{
-\code{\link[=check_test_files]{check_test_files()}} that uses this function and checks some more
+\examples{
+get_test_files(testdir = fs::path_wd("inst", "tinytest"), signal = "warning")
+
+try(get_test_files(testdir = fs::path_wd("inst", "othertest"), signal = "warning"))
+
 }
+\seealso{
+Other functions to check tests:
+\code{\link[=check_test_files]{check_test_files()}},
+\code{\link[=check_test_infra]{check_test_infra()}}
+}
+\concept{functions to check tests}
