@@ -2,53 +2,54 @@
 % Please edit documentation in R/check_test_infra.R
 \name{check_test_infra}
 \alias{check_test_infra}
-\title{Check if test infrastructure is present and refers to the current package}
+\title{Check test infrastructure}
 \usage{
-check_test_infra(
-  path_infra = fs::path_wd("tests", "tinytest.R"),
-  signal = c("error", "warning", "message", "quiet")
-)
+check_test_infra(path = fs::path_wd("tests", "tinytest.R"))
 }
 \arguments{
-\item{path_infra}{\link[checkinput:is_character]{character string} with a
-\link[checkinput:is_path]{valid path}
-to the file which determines the test infrastructure, see \code{Details}.}
-
-\item{signal}{\link[checkinput:is_character]{character string} indicating the
-type of signal to be used:
-\code{"error"} to throw an \link[=stop]{error}, \code{"warning"} to issue a \link{warning},
-\code{"message"} to show a \link{message}, or \code{"quiet"} to be quiet.}
+\item{path}{\link[checkinput:is_character]{character string} with a
+\link[checkinput:is_path]{valid path} to the file which determines the test
+infrastructure, see \code{Details}.}
 }
 \value{
-A character vector containing a character string with the text of the
-\link[progutils:signal_text]{signal}, which is \code{""} if no signal is emitted.
+A \link{list} with five elements:
+\itemize{
+\item \code{pkg}: character string containing the name of the package of which the
+test infrastructure is checked
+\item \code{name}: character string containing the name of the test infrastructure
+that is looked for
+\item \code{path}: the value of argument \code{path}, a character string with the path
+where the test infrastructure is looked for
+\item \code{status}: character string indicating the status of the test infrastructure:
+\code{"fine"} if it is present and refers to package \code{pkg}; \code{"wrong"} if it is
+present but does \strong{not} refer to package \code{pkg}; \code{"missing"} if it is
+\strong{not} present
+\item \code{dependency}: character string: \code{"fine"} if the package belonging to the
+testing infrastructure (i.e., \code{name}) is present among the dependencies of
+package \code{pkg}, otherwise \code{"missing"}
+}
 }
 \description{
-Check if test infrastructure is present and refers to the current package
+Check if test infrastructure is present and refers to the current package.
 }
 \details{
-The default \code{path_infra} points to file \code{tinytest.R} in directory \code{tests} of
-the current \link[=getwd]{working directory}, which belongs to the test
-infrastructure of \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}.
-To use the test infrastructure of
-\href{https://CRAN.R-project.org/package=testthat}{\code{testthat}}, use
-\code{path_infra = fs::path_wd("tests", "testthat.R")}.
+The default \code{path} points to file \code{tinytest.R} in directory \code{tests} of the
+current \link[=getwd]{working directory}, to check the test infrastructure of
+\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}. Use
+\code{path = fs::path_wd("tests", "testthat.R")} to check the test infrastructure
+of \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}}.
 
-The \link[progutils:signal_text]{signal} indicated by argument \code{signal} is emitted:
-\itemize{
-\item if the package indicated in \code{path_infra} is not among the dependencies
-\item if the file that determines the used testing infrastructure does not exist
-\item if the file that determines the used testing infrastructure does not refer
-to the package in the current working directory
-}
+\link[progutils:signal_text]{Signalling} problems detected with the test
+infrastructure is \strong{not} done by \code{check_test_infra()} but is deferred to
+\code{\link[=check_test_files]{check_test_files()}}.
 }
 \examples{
-# "" is returned if all is fine
-check_test_infra(
-  path_infra = fs::path(find.package("develcoder"), "tests", "tinytest.R"))
+path_develcoder <- find.package("develcoder")
+# test infrastructure is present
+check_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 
-# An error occurs if the test infrastructure is not present
-try(check_test_infra(path_infra = fs::path_wd("tests", "othertest.R")))
+# test infrastructure is not present
+check_test_infra(path = fs::path_wd("tests", "othertest.R"))
 
 }
 \seealso{
