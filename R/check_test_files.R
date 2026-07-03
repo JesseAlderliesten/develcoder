@@ -29,8 +29,8 @@
 #' - the test directories contain test files without corresponding function
 #'   files in folder `R`
 #' - folder `R` contains function files without corresponding test files
-#' - file `<pkg>\tests\tinytest.R` is present but its code does not contain the
-#'   name of the current package
+#' - files `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R` are present but
+#'   their code does not contain the name of the current package
 #' - a `reexports.Rd` file is present in folder `man` but no re-exported
 #'   functions are found in folder `R`
 #'
@@ -38,8 +38,8 @@
 #' If all \R files have a corresponding test file: `character(0)`. Otherwise, a
 #' character vector with the names of \R files for which no test file was found.
 #'
-#' @seealso
-#' [get_test_files()] that is used by this function
+#' @family
+#' functions to check tests
 #'
 #' @examples
 #'
