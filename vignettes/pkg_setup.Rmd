@@ -177,21 +177,23 @@ usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
-Then adjust the `YAML` file (i.e., `<pkg>\.github\workflows\check-no-suggests.yaml`)
-to include some other useful triggers for GHAs (see the template file
+Then adjust the `YAML` files (i.e., `<pkg>\.github\workflows\check-standard.yaml`
+and `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
+useful triggers for GHAs (see the template files `check-standard.yaml` and
 `check-no-suggests.yaml` in the folder `inst/templates`):
 
-- you made changes to code in the current repository:  
-  add `'push:'` to section `'on:'` to run GHA on pushes.
-- someone else proposed changes to code in the current repository:  
-  add `'pull_request:'` to section `'on:'` to run GHA on pull requests.
+- you made changes, or someone else proposed changes to code in the current
+  repository:  
+  add `pull_request:` to section `on:` to run GHA on pull requests.
+  NB. You can remove `push` from section `on:`: it should be sufficient to run R
+  CMD check locally before pushing and run GHA on pull requests.
 - you want to check if a reverse dependency (i.e., a package that depends on a
   package you changed) is still working fine:  
-  add `'workflow_dispatch:'` to section `'on:'` in the YAML file of the reverse
+  add `workflow_dispatch:` to section `on:` in the YAML file of the reverse
   dependency to be able to manually trigger GHA. See section
   `Use GitHub Actions` in `pkg_devel.Rmd` how to use it.
 - someone else made changes to packages your package depends on:  
-  add `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every Saturday on
+  add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every Saturday on
   04:23 UTC. The cron specification consists of five elements that indicate the
   minute (0 - 59), hour (0 - 23), day of the month (1 - 31), month (1 - 12), and
   day of the week (0 - 6). This timing is approximate and depends on how busy
@@ -199,7 +201,7 @@ to include some other useful triggers for GHAs (see the template file
 - If the package declares a dependency on a minimum `R` version, it is useful
   to specify the minimum declared `R` version to run in addition to the ones
   that are by default used in the template: for example, add  
-  `'- {os: ubuntu-latest,   r: '4.1.0'}'` to section `'matrix: config:'` to run
+  `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to run
   `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum version.
 
 For further documentation, see section `GHA: documentation and help` in the
