@@ -42,7 +42,13 @@
 #' check_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 #'
 #' # test infrastructure is not present
-#' check_test_infra(path = fs::path_wd("tests", "othertest.R"))
+#' tempdir_example <- progutils::create_tempdir(prefix = "check_test_infra")
+#' withr::with_dir(new = tempdir_example, {
+#'   # Set up a package without testing infrastructure
+#'   desc <- desc::description$new("!new")
+#'   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+#'   check_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
+#' })
 #'
 #' @export
 check_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
