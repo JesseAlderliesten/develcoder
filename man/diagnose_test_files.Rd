@@ -53,7 +53,7 @@ with pattern \code{pattern}, are not \R files, or are template files created by
 }
 
 \code{diagnose_test_files()} does \strong{not} warn about other problems detected with
-the test files: that is deferred to \code{\link[=check_test_files]{check_test_files()}}.
+the test files: that is deferred to \code{\link[=check_tests]{check_tests()}}.
 }
 \examples{
 path_develcoder <- find.package("develcoder")
@@ -78,7 +78,7 @@ withr::with_dir(new = tempdir_example, {
 }
 \seealso{
 Other functions to check tests:
-\code{\link[=check_test_files]{check_test_files()}},
+\code{\link[=check_tests]{check_tests()}},
 \code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
 }
 \concept{functions to check tests}

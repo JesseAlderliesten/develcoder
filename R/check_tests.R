@@ -1,4 +1,4 @@
-#' Check for the presence of test files
+#' Check tests
 #'
 #' Check if testing infrastructure is present and refers to the current package,
 #' and if function files have a corresponding test file and vice versa.
@@ -50,8 +50,8 @@
 #' @examples
 #'
 #' @export
-check_test_files <- function(path = getwd(), pattern = "^test_|^test-",
-                             ignore_case = TRUE) {
+check_tests <- function(path = getwd(), pattern = "^test_|^test-",
+                        ignore_case = TRUE) {
   stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
             checkinput::is_logical(ignore_case))
 

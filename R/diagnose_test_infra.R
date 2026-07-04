@@ -21,7 +21,7 @@
 #'   package
 #'
 #' `diagnose_test_infra()` does **not** warn about problems detected with the
-#' test infrastructure: that is deferred to [check_test_files()].
+#' test infrastructure: that is deferred to [check_tests()].
 #'
 #' @returns
 #' A [list] with three elements:

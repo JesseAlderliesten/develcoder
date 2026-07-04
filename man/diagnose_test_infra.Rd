@@ -45,7 +45,7 @@ package
 }
 
 \code{diagnose_test_infra()} does \strong{not} warn about problems detected with the
-test infrastructure: that is deferred to \code{\link[=check_test_files]{check_test_files()}}.
+test infrastructure: that is deferred to \code{\link[=check_tests]{check_tests()}}.
 }
 \examples{
 path_develcoder <- find.package("develcoder")
@@ -64,7 +64,7 @@ withr::with_dir(new = tempdir_example, {
 }
 \seealso{
 Other functions to check tests:
-\code{\link[=check_test_files]{check_test_files()}},
+\code{\link[=check_tests]{check_tests()}},
 \code{\link[=diagnose_test_files]{diagnose_test_files()}}
 }
 \concept{functions to check tests}

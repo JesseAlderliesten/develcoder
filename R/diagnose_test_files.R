@@ -21,7 +21,7 @@
 #'   [`tinytest`](https://CRAN.R-project.org/package=tinytest)
 #'
 #' `diagnose_test_files()` does **not** warn about other problems detected with
-#' the test files: that is deferred to [check_test_files()].
+#' the test files: that is deferred to [check_tests()].
 #'
 #' @returns
 #' A [list] with six elements:
