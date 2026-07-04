@@ -108,7 +108,7 @@ expect_error(
   pattern = "is_logical(ignore_case) is not TRUE", fixed = TRUE)
 
 expect_error(
-  check_test_infra(path_infra = testdir, signal = "h"),
+  get_test_files(testdir = testdir, signal = "h"),
   pattern = "'arg' should be one of", fixed = TRUE)
 
 
