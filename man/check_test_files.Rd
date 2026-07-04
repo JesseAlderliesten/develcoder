@@ -50,15 +50,16 @@ created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
 \item the test directories contain test files without corresponding function
 files in folder \code{R}
 \item folder \code{R} contains function files without corresponding test files
-\item files \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R} are present but
-their code does not contain the name of the current package
+\item none of the files \verb{<pkg>\\tests\\tinytest.R} and \verb{<pkg>\\tests\\testthat.R}
+that indicate which test infrastructure is used are present, or they do not
+refer to the current package
 \item a \code{reexports.Rd} file is present in folder \code{man} but no re-exported
 functions are found in folder \code{R}
 }
 }
 \seealso{
 Other functions to check tests:
-\code{\link[=check_test_infra]{check_test_infra()}},
-\code{\link[=get_test_files]{get_test_files()}}
+\code{\link[=diagnose_test_files]{diagnose_test_files()}},
+\code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
 }
 \concept{functions to check tests}

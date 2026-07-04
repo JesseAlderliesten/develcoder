@@ -1,14 +1,14 @@
 #### Tests ####
 ##### files and deps missing #####
 # Create a temporary directory and temporarily set the working directory to it
-my_tempdir_p1 <- progutils::create_tempdir(prefix = "check_test_infra")
+my_tempdir_p1 <- progutils::create_tempdir(prefix = "diagnose_test_infra")
 withr::local_dir(new = my_tempdir_p1)
 pkg_name <- basename(my_tempdir_p1)
 path_tinytest <- fs::path(my_tempdir_p1, "tests", "tinytest.R")
 path_testthat <- fs::path(my_tempdir_p1, "tests", "testthat.R")
 
 expect_error(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   pattern = "No DESCRIPTION file found", fixed = TRUE)
 
 # Create a description file that does not include any dependencies
@@ -18,13 +18,13 @@ desc$write(file = path_desc)
 
 # Run tests
 expect_identical(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
        status = "missing", dependency = "missing")
 )
 
 expect_identical(
-  check_test_infra(path = path_testthat),
+  diagnose_test_infra(path = path_testthat),
   list(pkg = pkg_name, name = "testthat", path = path_testthat,
        status = "missing", dependency = "missing")
 )
@@ -53,20 +53,20 @@ desc <- desc::desc_set_dep(
 
 # Run tests again
 expect_identical(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
        status = "wrong", dependency = "missing")
 )
 
 expect_identical(
-  check_test_infra(path = path_testthat),
+  diagnose_test_infra(path = path_testthat),
   list(pkg = pkg_name, name = "testthat", path = path_testthat,
        status = "wrong", dependency = "missing")
 )
 
 ##### files missing, deps present #####
 # Create a temporary directory and temporarily set the working directory to it
-my_tempdir_p2 <- progutils::create_tempdir(prefix = "check_test_infra")
+my_tempdir_p2 <- progutils::create_tempdir(prefix = "diagnose_test_infra")
 withr::local_dir(new = my_tempdir_p2)
 pkg_name <- basename(my_tempdir_p2)
 path_tinytest <- fs::path(my_tempdir_p2, "tests", "tinytest.R")
@@ -83,13 +83,13 @@ desc <- desc::desc_set_dep(
 
 # Run tests
 expect_identical(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
        status = "missing", dependency = "fine")
 )
 
 expect_identical(
-  check_test_infra(path = path_testthat),
+  diagnose_test_infra(path = path_testthat),
   list(pkg = pkg_name, name = "testthat", path = path_testthat,
        status = "missing", dependency = "fine")
 )
@@ -118,13 +118,13 @@ path_desc <- fs::path(my_tempdir_p2, "DESCRIPTION")
 desc$write(file = path_desc)
 
 expect_identical(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
        status = "fine", dependency = "missing")
 )
 
 expect_identical(
-  check_test_infra(path = path_testthat),
+  diagnose_test_infra(path = path_testthat),
   list(pkg = pkg_name, name = "testthat", path = path_testthat,
        status = "fine", dependency = "missing")
 )
@@ -141,13 +141,13 @@ desc <- desc::desc_set_dep(
 
 # Run tests
 expect_identical(
-  check_test_infra(path = path_tinytest),
+  diagnose_test_infra(path = path_tinytest),
   list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
        status = "fine", dependency = "fine")
 )
 
 expect_identical(
-  check_test_infra(path = path_testthat),
+  diagnose_test_infra(path = path_testthat),
   list(pkg = pkg_name, name = "testthat", path = path_testthat,
        status = "fine", dependency = "fine")
 )
@@ -155,14 +155,14 @@ expect_identical(
 ##### Arguments that result in an error #####
 expect_warning(
   expect_error(
-    check_test_infra(path = 3),
+    diagnose_test_infra(path = 3),
     pattern = "is_path(path) is not TRUE", fixed = TRUE),
   pattern = paste0("'path' should be a non-empty, non-NA_character_",
                    " character string"), strict = TRUE, fixed = TRUE)
 
 expect_warning(
   expect_error(
-    check_test_infra(path = "c"),
+    diagnose_test_infra(path = "c"),
     pattern = "is_path(path) is not TRUE", fixed = TRUE),
   pattern = "'path' should contain file separators", strict = TRUE, fixed = TRUE)
 

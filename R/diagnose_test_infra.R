@@ -2,9 +2,9 @@
 #'
 #' Check if test infrastructure is present and refers to the current package.
 #'
-#' @param path [character string][checkinput::is_character()] with a
-#' [valid path][checkinput::is_path()] to the file which determines the test
-#' infrastructure, see `Details`.
+#' @param path [character string][checkinput::is_character()] containing a
+#' [valid path][checkinput::is_path()] where to look for the file that
+#' determines the test infrastructure.
 #'
 #' @details
 #' The default `path` points to file `tinytest.R` in directory `tests` of the
@@ -14,7 +14,7 @@
 #' of [`testthat`](https://CRAN.R-project.org/package=testthat).
 #'
 #' [Signalling][progutils::signal_text()] problems detected with the test
-#' infrastructure is **not** done by `check_test_infra()` but is deferred to
+#' infrastructure is **not** done by `diagnose_test_infra()` but is deferred to
 #' [check_test_files()].
 #'
 #' @returns
@@ -39,19 +39,19 @@
 #' @examples
 #' path_develcoder <- find.package("develcoder")
 #' # test infrastructure is present
-#' check_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
+#' diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 #'
 #' # test infrastructure is not present
-#' tempdir_example <- progutils::create_tempdir(prefix = "check_test_infra")
+#' tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_infra")
 #' withr::with_dir(new = tempdir_example, {
 #'   # Set up a package without testing infrastructure
 #'   desc <- desc::description$new("!new")
 #'   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
-#'   check_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
+#'   diagnose_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
 #' })
 #'
 #' @export
-check_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
+diagnose_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
   stopifnot(checkinput::is_path(path))
 
   path_desc <- fs::path(dirname(dirname(path)), "DESCRIPTION")
@@ -67,10 +67,8 @@ check_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
     stop("No package name found, incorrect 'path'?: ", path)
   }
 
-  overview_infra <- list(pkg = pkg, name = name, path = path, status = NA,
-                         dependency = NA)
-
-
+  overview_infra <- list(pkg = pkg, name = name, path = path,
+                         status = NA_character_, dependency = NA_character_)
   if(fs::is_file(path)) {
     if(any(grepl(pattern = paste0("\"", pkg, "\""),
                  x = readLines(con = path, warn = FALSE),
