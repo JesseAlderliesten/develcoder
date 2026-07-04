@@ -41,7 +41,7 @@
 #' @export
 get_test_files <- function(testdir, pattern = "^test_|^test-", ignore_case = TRUE,
                            signal = c("error", "warning", "message", "quiet")) {
-  # checking 'signal' is deferred to progutils::signal_text()
+  signal <- match.arg(signal, several.ok = FALSE)
   stopifnot(checkinput::is_path(testdir), checkinput::is_character(pattern),
             checkinput::is_logical(ignore_case))
 
