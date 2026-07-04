@@ -1,38 +1,44 @@
 #' Check for the presence of test files
 #'
-#' Check if all function files have a corresponding test file and vice versa.
+#' Check if testing infrastructure is present and refers to the current package,
+#' and if function files have a corresponding test file and vice versa.
 #'
-#' @inheritParams get_test_files pattern ignore_case
-#' @param path_pkg [character string][checkinput::is_character()] containing a
-#' valid [path][checkinput::is_path()] to the package to be checked. The default
-#' is the [working directory][getwd()].
+#' @inheritParams diagnose_test_files
+#' @param path [character string][checkinput::is_character()] containing a
+#' valid [path][checkinput::is_path()] to the package of which to check testing
+#' infrastructure and test files. The default is the [working directory][getwd()].
 #'
 #' @details
 #' This function looks for \R files starting with pattern `pattern` in folders
 #' `inst/tinytest`, `tinytest`, and `tests/testthat` in the directory indicated
-#' by `path_pkg`, where [`tinytest`](https://CRAN.R-project.org/package=tinytest)
+#' by `path`, where [`tinytest`](https://CRAN.R-project.org/package=tinytest)
 #' and [`testthat`](https://CRAN.R-project.org/package=testthat) place their
 #' test files, respectively.
 #'
-#' It is checked that all test files have corresponding function files and vice
-#' versa. Function files of re-exported functions are ignored when looking for
-#' corresponding test files because these functions should be tested in the
-#' package from which they are re-exported.
+#' It is checked that testing infrastructure is present and refers to the
+#' current package, and that all test files have corresponding function files
+#' and vice versa. Function files of re-exported functions are ignored when
+#' looking for corresponding test files because these functions should be tested
+#' in the package from which they are re-exported.
 #'
 #' Warnings are issued if:
 #'
-#' - none of the test directories exist
-#' - none of the test directories contain any test files
-#' - the test directories contain files that are ignored because their names do
-#'   not start with pattern `pattern`, are not \R files, or are template files
-#'   created by [`tinytest`]( https://CRAN.R-project.org/package=tinytest)
-#' - the test directories contain test files without corresponding function
-#'   files in folder `R`
+#' - none of the test directories [exist][fs::dir_exists()]
+#' - none of the test directories contain test files
+#' - test directories contain files that are ignored because their names do
+#'   **not** start with pattern `pattern`, are not \R files, or are template
+#'   files created by [`tinytest`](https://CRAN.R-project.org/package=tinytest)
+#' - test directories contain test files without corresponding function files in
+#'   folder `R`
 #' - folder `R` contains function files without corresponding test files
-#' - files `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R` are present but
-#'   their code does not contain the name of the current package
-#' - a `reexports.Rd` file is present in folder `man` but no re-exported
-#'   functions are found in folder `R`
+#' - folder `R` does not contain any function files
+#' - files `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R` determining
+#'   which test infrastructure is used are present but do **not** refer to the
+#'   current package, or the packages that govern their test infrastructure are
+#'   not among the dependencies of the tested package
+#' - file `<pkg>\tests\tinytest.R` nor `<pkg>\tests\testthat.R` is present
+#' - file `reexports.Rd` is present in folder `man` but no re-exported functions
+#'   are present in folder `R`
 #'
 #' @returns
 #' If all \R files have a corresponding test file: `character(0)`. Otherwise, a
@@ -44,77 +50,77 @@
 #' @examples
 #'
 #' @export
-check_test_files <- function(path_pkg = getwd(), pattern = "^test_|^test-",
+check_test_files <- function(path = getwd(), pattern = "^test_|^test-",
                              ignore_case = TRUE) {
-  stopifnot(checkinput::is_path(path_pkg))
-  pkg_name <- basename(path_pkg)
-  warn_text <- character(0)
+  stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
+            checkinput::is_logical(ignore_case))
 
-  warn_text <- c(
-    warn_text,
-    check_test_infra(path_infra = fs::path(path_pkg, "tests", "tinytest.R")),
-    check_test_infra(path_infra = fs::path(path_pkg, "tests", "testthat.R"))
-  )
+  path_desc <- fs::path(path, "DESCRIPTION")
+  if(!fs::is_file(path_desc)) {
+    stop("No DESCRIPTION file found at ", progutils::paste_quoted(path_desc),
+         ", incorrect 'path'?:\n", path)
+  }
+
+  pkg <- basename(path)
+  path_infra_tinytest <- fs::path(path, "tests", "tinytest.R")
+  infra_tinytest <- diagnose_test_infra(path = path_infra_tinytest)
+  path_infra_testthat <- fs::path(path, "tests", "testthat.R")
+  infra_testthat <- diagnose_test_infra(path = path_infra_testthat)
+  if(infra_tinytest$status == "missing" && infra_testthat$status == "missing") {
+    warning("No file determining the used testing infrastructure exists:\n",
+            progutils::paste_quoted(path_infra_tinytest), ",\n",
+            progutils::paste_quoted(path_infra_testthat))
+  }
 
   # The 'inst/tinytest' directory is relevant during package development, the
   # others are relevant when the package is installed.
-  path_tinytest_inst <- fs::path(path_pkg, "inst", "tinytest")
-  path_tinytest <- fs::path(path_pkg, "tinytest")
-  path_testthat <- fs::path(path_pkg, "tests", "testthat")
+  path_tinytest_inst <- fs::path(path, "inst", "tinytest")
+  path_tinytest <- fs::path(path, "tinytest")
+  path_testthat <- fs::path(path, "tests", "testthat")
 
-  tinytest_test_files_inst <- get_test_files(
-    testdir = path_tinytest_inst, pattern = pattern, ignore_case = ignore_case,
-    signal = "quiet")
-  tinytest_test_files <- get_test_files(
-    testdir = path_tinytest, pattern = pattern, ignore_case = ignore_case,
-    signal = "quiet")
-  testthat_test_files <- get_test_files(
-    testdir = path_testthat, pattern = pattern, ignore_case = ignore_case,
-    signal = "quiet")
+  files_tinytest_inst <- diagnose_test_files(
+    path = path_tinytest_inst, pattern = pattern, ignore_case = ignore_case)
+  files_tinytest <- diagnose_test_files(
+    path = path_tinytest, pattern = pattern, ignore_case = ignore_case)
+  files_testthat <- diagnose_test_files(
+    path = path_testthat, pattern = pattern, ignore_case = ignore_case)
 
+  test_files_present <- c(files_tinytest_inst$test_files,
+                          files_tinytest$test_files,
+                          files_testthat$test_files)
+  bool_dir_missing <- c(files_tinytest_inst$status_testdir,
+                        files_tinytest$status_testdir,
+                        files_testthat$status_testdir) == "missing"
   all_paths <- c(path_tinytest_inst, path_tinytest, path_testthat)
-  test_files_present <- c(tinytest_test_files_inst, tinytest_test_files,
-                          testthat_test_files)
-  all_attributes <- c(attr(tinytest_test_files_inst, "info"),
-                      attr(tinytest_test_files, "info"),
-                      attr(testthat_test_files, "info"))
-  bool_dir_not_exist <- grepl(pattern = "does not exist",
-                              x = all_attributes, fixed = TRUE)
-  bool_dir_no_test_files <- grepl(pattern = "does not contain any testfiles",
-                                  x = all_attributes, fixed = TRUE)
 
-  if(all(bool_dir_not_exist)) {
-    warn_text <- c(warn_text,
-                   paste0("None of the test directories exist:\n",
-                          progutils::paste_quoted(all_paths)))
+  if(all(bool_dir_missing)) {
+    warning("None of the test directories exist:\n",
+            progutils::paste_quoted(all_paths))
+  } else {
+    if(length(test_files_present) == 0L) {
+      warning("None of the test directories contains test files:\n",
+              progutils::paste_quoted(all_paths))
+    }
   }
 
-  if(all(bool_dir_not_exist | bool_dir_no_test_files)) {
-    warn_text <- c(warn_text,
-                   paste0("None of the test directories contains test files:\n",
-                          progutils::paste_quoted(all_paths)))
-  }
-
-  R_files <- list.files(fs::path(path_pkg, "R"))
+  R_files <- list.files(fs::path(path, "R"))
   bool_proj_pkg_R_file <- grepl(pattern = ".package.R$", x = R_files,
                                 ignore.case = TRUE)
-
   if(any(bool_proj_pkg_R_file)) {
     R_files <- R_files[!bool_proj_pkg_R_file]
   }
 
   if(any(grepl(pattern = "^reexports.Rd$",
-               x = list.files(path = file.path(path_pkg, "man")),
+               x = list.files(path = file.path(path, "man")),
                ignore.case = TRUE))) {
-    exported_funcs <- getNamespaceExports(pkg_name)
+    exported_funcs <- getNamespaceExports(pkg)
 
     if(length(exported_funcs) == 0L ||
        # Based on https://stackoverflow.com/a/74487073/32365738
        length(progutils::not_in(exported_funcs,
-                                ls(envir = asNamespace(pkg_name)))) == 0L) {
-      warn_text <- c(warn_text,
-                     paste0("File 'reexports.Rd' is present in folder 'man' but no",
-                            " re-exported functions were found in folder 'R'!"))
+                                ls(envir = asNamespace(pkg)))) == 0L) {
+      warning("File 'reexports.Rd' is present in folder 'man' but no",
+              " re-exported functions were found in folder 'R'!")
     } else {
       # Re-exported functions are ignored when looking for test files
       # corresponding to function files because these functions should be tested
@@ -123,37 +129,26 @@ check_test_files <- function(path_pkg = getwd(), pattern = "^test_|^test-",
     }
   }
 
-  expected_test_files <- R_files
-  # Programming note:
-  # - This can be simplified if progutils::not_in() can handle zero-length input
-  if(length(test_files_present) == 0) {
-    tests_missing <- expected_test_files
-    tests_extraneous <- character(0)
+  if(length(R_files) > 0L) {
+    expected_test_files <- paste0("test_", R_files)
   } else {
-    if(length(expected_test_files) > 0L) {
-      tests_missing <- progutils::not_in(expected_test_files, test_files_present)
-      tests_extraneous <- progutils::not_in(test_files_present, expected_test_files)
-    } else {
-      tests_missing <- character(0)
-      tests_extraneous <- expected_test_files
-    }
+    warning("No function files found.")
+    expected_test_files <- character(0)
   }
 
+  tests_missing <- progutils::not_in(expected_test_files, test_files_present)
+  tests_extraneous <- progutils::not_in(test_files_present, expected_test_files)
   if(length(tests_missing) > 0L) {
-    warn_text <- c(warn_text,
-                   paste0("No test file found corresponding to function file ",
-                          progutils::paste_quoted(sort(tests_missing))))
+    warning("No test file found corresponding to function file ",
+            progutils::paste_quoted(
+              sort(gsub(pattern = "^test_", replacement = "", x = tests_missing))
+            )
+    )
   }
 
   if(length(tests_extraneous) > 0L) {
-    warn_text <- c(warn_text,
-                   paste0("No function file found corresponding to test file ",
-                          progutils::paste_quoted(sort(tests_extraneous))))
-  }
-
-  if(length(warn_text) > 0L) {
-    warning(progutils::wrap_text(paste0(warn_text, collapse = ".\n"),
-                                 ignore_newlines = FALSE))
+    warning("No function file found corresponding to test file ",
+            progutils::paste_quoted(sort(tests_extraneous)))
   }
 
   tests_missing

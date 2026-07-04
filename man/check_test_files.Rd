@@ -4,16 +4,12 @@
 \alias{check_test_files}
 \title{Check for the presence of test files}
 \usage{
-check_test_files(
-  path_pkg = getwd(),
-  pattern = "^test_|^test-",
-  ignore_case = TRUE
-)
+check_test_files(path = getwd(), pattern = "^test_|^test-", ignore_case = TRUE)
 }
 \arguments{
-\item{path_pkg}{\link[checkinput:is_character]{character string} containing a
-valid \link[checkinput:is_path]{path} to the package to be checked. The default
-is the \link[=getwd]{working directory}.}
+\item{path}{\link[checkinput:is_character]{character string} containing a
+valid \link[checkinput:is_path]{path} to the package of which to check testing
+infrastructure and test files. The default is the \link[=getwd]{working directory}.}
 
 \item{pattern}{\link[checkinput:is_character]{character string} containing a
 \link[=regex]{regular expression} used to select test files.}
@@ -26,35 +22,40 @@ If all \R files have a corresponding test file: \code{character(0)}. Otherwise, 
 character vector with the names of \R files for which no test file was found.
 }
 \description{
-Check if all function files have a corresponding test file and vice versa.
+Check if testing infrastructure is present and refers to the current package,
+and if function files have a corresponding test file and vice versa.
 }
 \details{
 This function looks for \R files starting with pattern \code{pattern} in folders
 \code{inst/tinytest}, \code{tinytest}, and \code{tests/testthat} in the directory indicated
-by \code{path_pkg}, where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+by \code{path}, where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
 and \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their
 test files, respectively.
 
-It is checked that all test files have corresponding function files and vice
-versa. Function files of re-exported functions are ignored when looking for
-corresponding test files because these functions should be tested in the
-package from which they are re-exported.
+It is checked that testing infrastructure is present and refers to the
+current package, and that all test files have corresponding function files
+and vice versa. Function files of re-exported functions are ignored when
+looking for corresponding test files because these functions should be tested
+in the package from which they are re-exported.
 
 Warnings are issued if:
 \itemize{
-\item none of the test directories exist
-\item none of the test directories contain any test files
-\item the test directories contain files that are ignored because their names do
-not start with pattern \code{pattern}, are not \R files, or are template files
-created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
-\item the test directories contain test files without corresponding function
-files in folder \code{R}
+\item none of the test directories \link[fs:dir_exists]{exist}
+\item none of the test directories contain test files
+\item test directories contain files that are ignored because their names do
+\strong{not} start with pattern \code{pattern}, are not \R files, or are template
+files created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+\item test directories contain test files without corresponding function files in
+folder \code{R}
 \item folder \code{R} contains function files without corresponding test files
-\item none of the files \verb{<pkg>\\tests\\tinytest.R} and \verb{<pkg>\\tests\\testthat.R}
-that indicate which test infrastructure is used are present, or they do not
-refer to the current package
-\item a \code{reexports.Rd} file is present in folder \code{man} but no re-exported
-functions are found in folder \code{R}
+\item folder \code{R} does not contain any function files
+\item files \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R} determining
+which test infrastructure is used are present but do \strong{not} refer to the
+current package, or the packages that govern their test infrastructure are
+not among the dependencies of the tested package
+\item file \verb{<pkg>\\tests\\tinytest.R} nor \verb{<pkg>\\tests\\testthat.R} is present
+\item file \code{reexports.Rd} is present in folder \code{man} but no re-exported functions
+are present in folder \code{R}
 }
 }
 \seealso{
