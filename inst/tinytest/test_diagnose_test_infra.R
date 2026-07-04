@@ -17,16 +17,18 @@ path_desc <- fs::path(my_tempdir_p1, "DESCRIPTION")
 desc$write(file = path_desc)
 
 # Run tests
-expect_identical(
-  diagnose_test_infra(path = path_tinytest),
-  list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
-       status = "missing", dependency = "missing")
+expect_silent(
+  expect_identical(
+    diagnose_test_infra(path = path_tinytest),
+    list(name = "tinytest", status = "missing", dependency = "missing")
+  )
 )
 
-expect_identical(
-  diagnose_test_infra(path = path_testthat),
-  list(pkg = pkg_name, name = "testthat", path = path_testthat,
-       status = "missing", dependency = "missing")
+expect_silent(
+  expect_identical(
+    diagnose_test_infra(path = path_testthat),
+    list(name = "testthat", status = "missing", dependency = "missing")
+  )
 )
 
 ##### files and deps wrong #####
@@ -52,17 +54,31 @@ desc <- desc::desc_set_dep(
   package = "test", type = "Suggests", file = path_desc)
 
 # Run tests again
-expect_identical(
-  diagnose_test_infra(path = path_tinytest),
-  list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
-       status = "wrong", dependency = "missing")
-)
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_tinytest),
+    list(name = "tinytest", status = "wrong", dependency = "missing")
+  ), pattern = paste0("testing infrastructure exists.+", pkg_name),
+  strict = TRUE)
 
-expect_identical(
-  diagnose_test_infra(path = path_testthat),
-  list(pkg = pkg_name, name = "testthat", path = path_testthat,
-       status = "wrong", dependency = "missing")
-)
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_tinytest),
+    list(name = "tinytest", status = "wrong", dependency = "missing")
+  ), pattern = "package 'tinytest'", strict = TRUE, fixed = TRUE)
+
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_testthat),
+    list(name = "testthat", status = "wrong", dependency = "missing")
+  ), pattern = paste0("testing infrastructure exists.+", pkg_name),
+  strict = TRUE)
+
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_testthat),
+    list(name = "testthat", status = "wrong", dependency = "missing")
+  ), pattern = "package 'testthat'", strict = TRUE, fixed = TRUE)
 
 ##### files missing, deps present #####
 # Create a temporary directory and temporarily set the working directory to it
@@ -84,14 +100,12 @@ desc <- desc::desc_set_dep(
 # Run tests
 expect_identical(
   diagnose_test_infra(path = path_tinytest),
-  list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
-       status = "missing", dependency = "fine")
+  list(name = "tinytest", status = "missing", dependency = "fine")
 )
 
 expect_identical(
   diagnose_test_infra(path = path_testthat),
-  list(pkg = pkg_name, name = "testthat", path = path_testthat,
-       status = "missing", dependency = "fine")
+  list(name = "testthat", status = "missing", dependency = "fine")
 )
 
 ##### files present, deps missing #####
@@ -117,17 +131,17 @@ desc <- desc::description$new("!new")
 path_desc <- fs::path(my_tempdir_p2, "DESCRIPTION")
 desc$write(file = path_desc)
 
-expect_identical(
-  diagnose_test_infra(path = path_tinytest),
-  list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
-       status = "fine", dependency = "missing")
-)
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_tinytest),
+    list(name = "tinytest", status = "fine", dependency = "missing")
+  ), pattern = "package 'tinytest'", strict = TRUE, fixed = TRUE)
 
-expect_identical(
-  diagnose_test_infra(path = path_testthat),
-  list(pkg = pkg_name, name = "testthat", path = path_testthat,
-       status = "fine", dependency = "missing")
-)
+expect_warning(
+  expect_identical(
+    diagnose_test_infra(path = path_testthat),
+    list(name = "testthat", status = "fine", dependency = "missing")
+  ), pattern = "package 'testthat'", strict = TRUE, fixed = TRUE)
 
 ##### files present, deps present #####
 # Create a description file that includes the relevant dependencies
@@ -142,14 +156,12 @@ desc <- desc::desc_set_dep(
 # Run tests
 expect_identical(
   diagnose_test_infra(path = path_tinytest),
-  list(pkg = pkg_name, name = "tinytest", path = path_tinytest,
-       status = "fine", dependency = "fine")
+  list(name = "tinytest", status = "fine", dependency = "fine")
 )
 
 expect_identical(
   diagnose_test_infra(path = path_testthat),
-  list(pkg = pkg_name, name = "testthat", path = path_testthat,
-       status = "fine", dependency = "fine")
+  list(name = "testthat", status = "fine", dependency = "fine")
 )
 
 ##### Arguments that result in an error #####

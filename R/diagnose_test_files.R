@@ -1,4 +1,4 @@
-#' Get test files
+#' Diagnose test files
 #'
 #' Get test files, with an overview of various diagnostics
 #'
@@ -15,14 +15,16 @@
 #' [`tinytest`](https://CRAN.R-project.org/package=tinytest) stores tests when a
 #' package is in development.
 #'
-#' [Signalling][progutils::signal_text()] problems detected with the test files
-#' is **not** done by `diagnose_test_files()` but is deferred to [check_test_files()].
+#' A warning is issued if:
+#' - `path` contains files that are ignored because their names do **not** start
+#'   with pattern `pattern`, are not \R files, or are template files created by
+#'   [`tinytest`](https://CRAN.R-project.org/package=tinytest)
+#'
+#' `diagnose_test_files()` does **not** warn about other problems detected with
+#' the test files: that is deferred to [check_test_files()].
 #'
 #' @returns
-#' A [list] with eight elements:
-#' - `pkg`: character string containing the name of the package of which test
-#'   files are checked
-#' - `path`: the value of argument `path`
+#' A [list] with six elements:
 #' - `pattern`: the value of argument `pattern`
 #' - `ignore_case`: the value of argument `ignore_case`
 #' - `status_testdir`: character string: `"fine"` if the test directory
@@ -64,13 +66,16 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
   stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
             checkinput::is_logical(ignore_case))
 
-  pkg <- basename(dirname(dirname(path)))
-  if(pkg == ".") {
-    stop("No package name found, incorrect 'path'?: ", path)
+  path_desc <- fs::path(dirname(dirname(path)), "DESCRIPTION")
+  if(!fs::is_file(path_desc)) {
+    stop("No DESCRIPTION file found at ", progutils::paste_quoted(path_desc),
+         ", incorrect 'path'?:\n", path)
   }
 
+  pkg <- basename(dirname(dirname(path)))
+
   overview_test_files <- list(
-    pkg = pkg, path = path, pattern = pattern, ignore_case = ignore_case,
+    pattern = pattern, ignore_case = ignore_case,
     status_testdir = "missing", status_test_files = "missing",
     test_files = character(0), ignored_files = character(0))
 
@@ -90,6 +95,10 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
         overview_test_files$status_test_files <- "wrong"
         overview_test_files$ignored_files <- testfiles[names_error]
         testfiles <- testfiles[!names_error]
+        warning("Ignoring files whose names do not start with 'pattern' (",
+                progutils::paste_quoted(pattern),
+                "), are not R files, or are template file created by 'tinytest':\n",
+                progutils::paste_quoted(overview_test_files$ignored_files))
         if(length(testfiles) == 0L) {
           overview_test_files$status_test_files <- "missing"
         }

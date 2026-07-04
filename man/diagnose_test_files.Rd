@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnose_test_files.R
 \name{diagnose_test_files}
 \alias{diagnose_test_files}
-\title{Get test files}
+\title{Diagnose test files}
 \usage{
 diagnose_test_files(
   path = fs::path_wd("inst", "tinytest"),
@@ -21,11 +21,8 @@ diagnose_test_files(
 \code{pattern}?}
 }
 \value{
-A \link{list} with eight elements:
+A \link{list} with six elements:
 \itemize{
-\item \code{pkg}: character string containing the name of the package of which test
-files are checked
-\item \code{path}: the value of argument \code{path}
 \item \code{pattern}: the value of argument \code{pattern}
 \item \code{ignore_case}: the value of argument \code{ignore_case}
 \item \code{status_testdir}: character string: \code{"fine"} if the test directory
@@ -48,8 +45,15 @@ The default \code{path} points to directory \code{inst/tinytest} of the current
 \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}} stores tests when a
 package is in development.
 
-\link[progutils:signal_text]{Signalling} problems detected with the test files
-is \strong{not} done by \code{diagnose_test_files()} but is deferred to \code{\link[=check_test_files]{check_test_files()}}.
+A warning is issued if:
+\itemize{
+\item \code{path} contains files that are ignored because their names do \strong{not} start
+with pattern \code{pattern}, are not \R files, or are template files created by
+\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+}
+
+\code{diagnose_test_files()} does \strong{not} warn about other problems detected with
+the test files: that is deferred to \code{\link[=check_test_files]{check_test_files()}}.
 }
 \examples{
 path_develcoder <- find.package("develcoder")

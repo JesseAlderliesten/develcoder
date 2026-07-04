@@ -1,4 +1,4 @@
-#' Check test infrastructure
+#' Diagnose test infrastructure
 #'
 #' Check if test infrastructure is present and refers to the current package.
 #'
@@ -13,18 +13,20 @@
 #' `path = fs::path_wd("tests", "testthat.R")` to check the test infrastructure
 #' of [`testthat`](https://CRAN.R-project.org/package=testthat).
 #'
-#' [Signalling][progutils::signal_text()] problems detected with the test
-#' infrastructure is **not** done by `diagnose_test_infra()` but is deferred to
-#' [check_test_files()].
+#' A warning is issued if a file determining the used testing infrastructure
+#' (e.g., `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R`) exists but:
+#' - it does **not** refer to the tested package
+#' - the packages that govern the determined testing infrastructure (e.g.,
+#'   `tinytest` or `testthat`) is not among the dependencies of the tested
+#'   package
+#'
+#' `diagnose_test_infra()` does **not** warn about problems detected with the
+#' test infrastructure: that is deferred to [check_test_files()].
 #'
 #' @returns
-#' A [list] with five elements:
-#' - `pkg`: character string containing the name of the package of which the
-#'   test infrastructure is checked
+#' A [list] with three elements:
 #' - `name`: character string containing the name of the test infrastructure
 #'   that is looked for
-#' - `path`: the value of argument `path`, a character string with the path
-#'   where the test infrastructure is looked for
 #' - `status`: character string indicating the status of the test infrastructure:
 #'   `"fine"` if it is present and refers to package `pkg`; `"wrong"` if it is
 #'   present but does **not** refer to package `pkg`; `"missing"` if it is
@@ -63,12 +65,9 @@ diagnose_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
   name <- sub(pattern = "\\.R$", replacement = "", x = basename(path),
               ignore.case = TRUE)
   pkg <- basename(dirname(dirname(path)))
-  if(pkg == ".") {
-    stop("No package name found, incorrect 'path'?: ", path)
-  }
+  overview_infra <- list(name = name, status = NA_character_,
+                         dependency = NA_character_)
 
-  overview_infra <- list(pkg = pkg, name = name, path = path,
-                         status = NA_character_, dependency = NA_character_)
   if(fs::is_file(path)) {
     if(any(grepl(pattern = paste0("\"", pkg, "\""),
                  x = readLines(con = path, warn = FALSE),
@@ -98,6 +97,18 @@ diagnose_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
     overview_infra$dependency <- "fine"
   } else {
     overview_infra$dependency <- "missing"
+  }
+
+  if(overview_infra$status == "wrong") {
+    warning("The file determining the used testing infrastructure exists but",
+            " does not refer\nto package ", progutils::paste_quoted(pkg), ":\n'",
+            path, "'")
+  }
+
+  if(overview_infra$status != "missing" &&
+     overview_infra$dependency == "missing") {
+    warning("Add package '", name, "' as suggested dependency of package ",
+            progutils::paste_quoted(pkg), ".")
   }
 
   overview_infra

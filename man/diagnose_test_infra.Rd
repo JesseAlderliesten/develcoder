@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnose_test_infra.R
 \name{diagnose_test_infra}
 \alias{diagnose_test_infra}
-\title{Check test infrastructure}
+\title{Diagnose test infrastructure}
 \usage{
 diagnose_test_infra(path = fs::path_wd("tests", "tinytest.R"))
 }
@@ -12,14 +12,10 @@ diagnose_test_infra(path = fs::path_wd("tests", "tinytest.R"))
 determines the test infrastructure.}
 }
 \value{
-A \link{list} with five elements:
+A \link{list} with three elements:
 \itemize{
-\item \code{pkg}: character string containing the name of the package of which the
-test infrastructure is checked
 \item \code{name}: character string containing the name of the test infrastructure
 that is looked for
-\item \code{path}: the value of argument \code{path}, a character string with the path
-where the test infrastructure is looked for
 \item \code{status}: character string indicating the status of the test infrastructure:
 \code{"fine"} if it is present and refers to package \code{pkg}; \code{"wrong"} if it is
 present but does \strong{not} refer to package \code{pkg}; \code{"missing"} if it is
@@ -39,9 +35,17 @@ current \link[=getwd]{working directory}, to check the test infrastructure of
 \code{path = fs::path_wd("tests", "testthat.R")} to check the test infrastructure
 of \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}}.
 
-\link[progutils:signal_text]{Signalling} problems detected with the test
-infrastructure is \strong{not} done by \code{diagnose_test_infra()} but is deferred to
-\code{\link[=check_test_files]{check_test_files()}}.
+A warning is issued if a file determining the used testing infrastructure
+(e.g., \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R}) exists but:
+\itemize{
+\item it does \strong{not} refer to the tested package
+\item the packages that govern the determined testing infrastructure (e.g.,
+\code{tinytest} or \code{testthat}) is not among the dependencies of the tested
+package
+}
+
+\code{diagnose_test_infra()} does \strong{not} warn about problems detected with the
+test infrastructure: that is deferred to \code{\link[=check_test_files]{check_test_files()}}.
 }
 \examples{
 path_develcoder <- find.package("develcoder")
