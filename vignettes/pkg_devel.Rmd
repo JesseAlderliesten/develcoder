@@ -16,7 +16,6 @@ package release, and to set up for a new version. It assumes the package has
 been set up as described in the vignette *Package setup*:
 `vignette("pkg_setup", package = "develcoder")`.
 
-
 # Adding functions
 ## Set up
 ```{r functions, eval = FALSE}
@@ -28,7 +27,8 @@ devtools::document() # also runs devtools::load_all()
 Do:
 
 - Manually update the `NEWS` file:  
-  ``- Add `<func>()` to ...``.
+  `### Added functions`
+  ``- `<func>()` to ...``
 - If the added function relies on other packages, you have to update the
   dependencies given in the `DESCRIPTION` file: see section [Update dependencies].
 - When adding new function arguments to an existing function, it is best
@@ -102,10 +102,10 @@ Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit.
 
 ``` {r inherit parameters, eval = FALSE}
 # inherit from a function in the current package
-@inheritParams is_logical allow_NA
+#' @inheritParams is_logical allow_NA
 
 # inherit from a function in another package
-@inheritParams utils::installed.packages fields
+#' @inheritParams utils::installed.packages fields
 ```
 
 ### Add examples
@@ -307,12 +307,10 @@ from vignettes to help-pages or vice versa. `pkgdown` recognises calls like
 calls will be created on a package website (see the
 [documentation](https://pkgdown.r-lib.org/articles/linking.html) for details).
 
-
 # Adding miscellaneous files
 Non-standard files or folders should be added in the `inst/` directory to pass
 [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html). Those files and folders
 will be in the top directory in the installed package.
-
 
 # Preparing for updates
 
@@ -649,7 +647,7 @@ paragraph).
 If the package declares a dependency on a minimum `R` version, it is useful to
 specify the minimum declared `R` version to run in addition to the ones that are
 by default used in the template:  
-add `- {os: ubuntu-latest,   r: '4.1.0'}` to section `matrix: config:` to run
+add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to run
 `R` 4.1.0.
 
 ### GHA: documentation and help
