@@ -28,8 +28,8 @@ files are checked
 \item \code{path}: the value of argument \code{path}
 \item \code{pattern}: the value of argument \code{pattern}
 \item \code{ignore_case}: the value of argument \code{ignore_case}
-\item \code{testdir}: character string: \code{"fine"} if the test directory indicated by
-\code{path} is present, otherwise \code{"missing"}
+\item \code{status_testdir}: character string: \code{"fine"} if the test directory
+indicated by \code{path} is present, otherwise \code{"missing"}
 \item \code{status_test_files}: character string indicating the status of the test
 files: \code{"fine"} if test files are present; \code{"wrong"} if files are ignored;
 \code{"missing"} if no test files are present

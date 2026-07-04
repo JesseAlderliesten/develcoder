@@ -25,8 +25,8 @@
 #' - `path`: the value of argument `path`
 #' - `pattern`: the value of argument `pattern`
 #' - `ignore_case`: the value of argument `ignore_case`
-#' - `testdir`: character string: `"fine"` if the test directory indicated by
-#'   `path` is present, otherwise `"missing"`
+#' - `status_testdir`: character string: `"fine"` if the test directory
+#'   indicated by `path` is present, otherwise `"missing"`
 #' - `status_test_files`: character string indicating the status of the test
 #'   files: `"fine"` if test files are present; `"wrong"` if files are ignored;
 #'   `"missing"` if no test files are present
@@ -71,12 +71,12 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
 
   overview_test_files <- list(
     pkg = pkg, path = path, pattern = pattern, ignore_case = ignore_case,
-    testdir = "missing", status_test_files = "missing",
+    status_testdir = "missing", status_test_files = "missing",
     test_files = character(0), ignored_files = character(0))
 
   testdir_present <- fs::dir_exists(path)
   if(testdir_present) {
-    overview_test_files$testdir <- "present"
+    overview_test_files$status_testdir <- "present"
     testfiles <- basename(fs::dir_ls(path = path, type = "file", fail = FALSE))
     if(length(testfiles) > 0L) {
       names_error_init <- !grepl(pattern = pattern, x = testfiles,
