@@ -1,7 +1,12 @@
+#### To do ####
+# - Add scenario where template files for tinytest or testthat are left (should
+#   result in a warning)
+
+
 #### Tests ####
 ##### Setup #####
 # Create a temporary directory and temporarily set the working directory to it
-my_tempdir <- progutils::create_tempdir(prefix = "test_get_testfiles")
+my_tempdir <- progutils::create_tempdir(prefix = "diagnose_test_files")
 withr::local_dir(new = my_tempdir)
 pkg_name <- basename(my_tempdir)
 path_testdir <- fs::path(my_tempdir, "inst", "tinytest")
