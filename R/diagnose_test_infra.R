@@ -16,8 +16,8 @@
 #' A warning is issued if a file determining the used testing infrastructure
 #' (e.g., `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R`) exists but:
 #' - it does **not** refer to the tested package
-#' - the packages that govern the determined testing infrastructure (e.g.,
-#'   `tinytest` or `testthat`) is not among the dependencies of the tested
+#' - the package that governs the determined testing infrastructure (e.g.,
+#'   `tinytest` or `testthat`) is missing from the dependencies of the tested
 #'   package
 #'
 #' `diagnose_test_infra()` does **not** warn about problems detected with the

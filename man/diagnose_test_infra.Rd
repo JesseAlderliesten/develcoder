@@ -39,8 +39,8 @@ A warning is issued if a file determining the used testing infrastructure
 (e.g., \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R}) exists but:
 \itemize{
 \item it does \strong{not} refer to the tested package
-\item the packages that govern the determined testing infrastructure (e.g.,
-\code{tinytest} or \code{testthat}) is not among the dependencies of the tested
+\item the package that governs the determined testing infrastructure (e.g.,
+\code{tinytest} or \code{testthat}) is missing from the dependencies of the tested
 package
 }
 
