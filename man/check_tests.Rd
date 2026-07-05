@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_tests.R
 \name{check_tests}
 \alias{check_tests}
-\title{Check for the presence of test files}
+\title{Check tests}
 \usage{
 check_tests(path = getwd(), pattern = "^test_|^test-", ignore_case = TRUE)
 }
@@ -18,8 +18,9 @@ infrastructure and test files. The default is the \link[=getwd]{working director
 \code{pattern}?}
 }
 \value{
-If all \R files have a corresponding test file: \code{character(0)}. Otherwise, a
-character vector with the names of \R files for which no test file was found.
+If all function files in folder \code{R} have a corresponding used test file, or
+no function files are present: \code{character(0)}. Otherwise, a character vector
+with the names of function files for which no used test file was found.
 }
 \description{
 Check if testing infrastructure is present and refers to the current package,
@@ -27,16 +28,18 @@ and if function files have a corresponding test file and vice versa.
 }
 \details{
 This function looks for \R files starting with pattern \code{pattern} in folders
-\code{inst/tinytest}, \code{tinytest}, and \code{tests/testthat} in the directory indicated
-by \code{path}, where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+\code{inst/tinytest} and \code{tests/testthat} in the directory indicated by \code{path},
+which is where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
 and \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their
 test files, respectively.
 
 It is checked that testing infrastructure is present and refers to the
 current package, and that all test files have corresponding function files
-and vice versa. Function files of re-exported functions are ignored when
-looking for corresponding test files because these functions should be tested
-in the package from which they are re-exported.
+and vice versa. Test files are ignored if the corresponding test
+infrastructure is missing or wrong, with a warning. Function files of
+re-exported functions are ignored when looking for corresponding test files
+because these functions should be tested in the package from which they are
+re-exported.
 
 Warnings are issued if:
 \itemize{
@@ -45,14 +48,17 @@ Warnings are issued if:
 \item test directories contain files that are ignored because their names do
 \strong{not} start with pattern \code{pattern}, are not \R files, or are template
 files created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+or \href{https://testthat.r-lib.org/}{\code{testthat}}
+\item test directories used by \code{tinytest} or \code{testthat} contain test files while
+their test architecture is not set up
 \item test directories contain test files without corresponding function files in
 folder \code{R}
 \item folder \code{R} contains function files without corresponding test files
 \item folder \code{R} does not contain any function files
 \item files \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R} determining
 which test infrastructure is used are present but do \strong{not} refer to the
-current package, or the packages that govern their test infrastructure are
-not among the dependencies of the tested package
+current package, or the packages \code{tinytest} and \code{testthat} are missing from
+the dependencies of the tested package
 \item file \verb{<pkg>\\tests\\tinytest.R} nor \verb{<pkg>\\tests\\testthat.R} is present
 \item file \code{reexports.Rd} is present in folder \code{man} but no re-exported functions
 are present in folder \code{R}
