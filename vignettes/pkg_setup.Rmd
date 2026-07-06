@@ -105,7 +105,7 @@ Do:
   - See
     [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
-  - Knit the `README.Rmd` file to produce a `README.Md` file.
+  - Knit the `README.Rmd` file to produce a `README.md` file.
 
 ### Troubleshooting
 The `usethis` practice of using `devtools::build_readme()` to update `README.md`
