@@ -119,4 +119,4 @@ expect_error(
 
 #### Remove objects used in tests ####
 unlink(my_tempdir, recursive = TRUE)
-rm(my_tempdir, path_misc_file, path_testdir, pkg_name)
+rm(desc, my_tempdir, path_desc, path_misc_file, path_testdir, pkg_name)
