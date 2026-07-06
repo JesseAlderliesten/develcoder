@@ -698,7 +698,7 @@ the `_pkgdown.yml` file (run `tools::pkgVignettes(package = "<pkg>")$names`
 to get their names; see the
 [documentation](https://pkgdown.r-lib.org/reference/build_articles.html) and for
 example the `_pkgdown.yml`
-[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml)
+[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/main/.github/workflows/pkgdown.yaml)
 and non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in the
 `checkrpkgs` package.
@@ -712,8 +712,8 @@ Then build the reference with `pkgdown::build_reference()` and view it locally
 by opening the file `"<pkg>\docs\index.html"` and browse to `Reference` to see
 the package index.
 
-## Merge devel-branch with master
-To merge the `devel` branch with `master`, go the the `devel` branch on GitHub.
+## Merge devel-branch with main
+To merge the `devel` branch with `main`, go the the `devel` branch on GitHub.
 `<Contribute>` > `Open Pull Request`. Copy the updated `NEWS` in the
 `description` field and use the button `Create pull request`.
 
@@ -733,12 +733,12 @@ the `closed` tab, and scroll down to the button `Delete branch`.
 
 ### Overwrite devel-branch after merge
 In RStudio, open the relevant project to check there are no commits left. Then
-you can move to the `master` branch and `Pull` to get all updates you just
-committed to the `master` branch. Then click the `New branch` button in RStudio
-(besides the `Switch branch` icon indicating which branch (e.g., `master` or
+you can move to the `main` branch and `Pull` to get all updates you just
+committed to the `main` branch. Then click the `New branch` button in RStudio
+(besides the `Switch branch` icon indicating which branch (e.g., `main` or
 `devel`) you are using), use `devel` as branch name and click `Create`. You will
 be notified that `devel` already exists and asked if you want to overwrite it.
-**If** you have just merged `devel` into `master`, you can choose to overwrite
+**If** you have just merged `devel` into `main`, you can choose to overwrite
 it to have a new `devel` branch.
 
 ### Set up a new branch
@@ -751,7 +751,7 @@ also create a completely new branch:
   `copy URL to clipboard`.
 - In RStudio: `File` > `New project` > `Version control` > `Git` and paste the
   copied URL in the `Repository URL` > `Create Project`.
-- Then (still in RStudio) in the `Git` menu change from `master` to the
+- Then (still in RStudio) in the `Git` menu change from `main` to the
   just-created branch.
 
 ## Installing the updated package
