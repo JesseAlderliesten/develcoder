@@ -57,6 +57,20 @@
 #' functions to check tests
 #'
 #' @examples
+#' path_develcoder <- find.package("develcoder")
+#' # test files are present
+#' check_tests(path = path_develcoder) # character(0)
+#'
+#' # warnings: test infrastructure, directories, and function files not present
+#' tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
+#' withr::with_dir(new = tempdir_example, {
+#'   # Set up a package without testing infrastructure
+#'   desc <- desc::description$new("!new")
+#'   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+#'   check_tests(path = tempdir_example)
+#' })
+#' # Remove temporary directory
+#' unlink(tempdir_example, recursive = TRUE)
 #'
 #' @export
 check_tests <- function(path = getwd(), pattern = "^test_|^test-",
