@@ -85,7 +85,7 @@ License](https://jessealderliesten.github.io/develcoder/LICENSE.md).
 To cite package 'develcoder' in publications use:
 
   Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-  Packages_. R package version 0.8.0,
+  Packages_. R package version 0.9.0,
   <https://github.com/JesseAlderliesten/develcoder>.
 
 A BibTeX entry for LaTeX users is
@@ -94,7 +94,7 @@ A BibTeX entry for LaTeX users is
     title = {develcoder: Code and Templates to Develop R Packages},
     author = {Jesse Alderliesten},
     year = {2026},
-    note = {R package version 0.8.0},
+    note = {R package version 0.9.0},
     url = {https://github.com/JesseAlderliesten/develcoder},
   }
 ```
@@ -120,13 +120,12 @@ A BibTeX entry for LaTeX users is
 
 ## All functions
 
-- [`check_test_files()`](https://jessealderliesten.github.io/develcoder/reference/check_test_files.md)
-  : Check for the presence of test files
-- [`check_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/check_test_infra.md)
-  : Check if test infrastructure is present and refers to the current
-  package
-- [`get_test_files()`](https://jessealderliesten.github.io/develcoder/reference/get_test_files.md)
-  : Get test files
+- [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md)
+  : Check tests
+- [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md)
+  : Diagnose test files
+- [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
+  : Diagnose test infrastructure
 
 # Articles
 

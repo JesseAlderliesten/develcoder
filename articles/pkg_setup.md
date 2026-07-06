@@ -97,14 +97,6 @@ cffr::cff_write(dependencies = FALSE) # Create a citation file
 
 ### README
 
-The `usethis` practice of using
-[`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
-to update `README.md` requires that `README.Rmd` and `README.md` are
-staged at the same time. To remove this requirement, delete the the
-(hidden) file `.git/hooks/pre-commit` from the `R` project folder (see
-the section `Description` in
-[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
-
 ``` r
 
 usethis::use_readme_rmd()
@@ -120,7 +112,17 @@ Do:
   - See
     [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates`.
-  - Knit the `README.Rmd` file to produce a `README.Md` file.
+  - Knit the `README.Rmd` file to produce a `README.md` file.
+
+#### Troubleshooting
+
+The `usethis` practice of using
+[`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
+to update `README.md` requires that `README.Rmd` and `README.md` are
+staged at the same time. To remove this requirement, delete the the
+(hidden) file `.git/hooks/pre-commit` from the `R` project folder (see
+the section `Description` in
+[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 
 ### Package overview
 
@@ -145,8 +147,10 @@ usethis::use_news_md() # Create NEWS.md
 
 ## Set up testing infrastructure
 
-I use package [tinytest](https://CRAN.R-project.org/package=tinytest) to
-create tests. This can be set up through:
+It is convenient to have a collection of tests for your functions.
+Various packages can be used to create and run such tests. To use
+package [tinytest](https://CRAN.R-project.org/package=tinytest) for
+testing, set up its infrastructure through:
 
 ``` r
 
@@ -154,8 +158,8 @@ tinytest::setup_tinytest(pkgdir = ".")
 devtools::document()
 ```
 
-Use the following code if you prefer to use package
-[testthat](https://cran.r-project.org/package=testthat) instead:
+To use package [testthat](https://cran.r-project.org/package=testthat)
+for testing, set up its infrastructure through:
 
 ``` r
 
@@ -198,22 +202,24 @@ usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
-Then adjust the `YAML` file (i.e.,
+Then adjust the `YAML` files (i.e.,
+`<pkg>\.github\workflows\check-standard.yaml` and
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
-useful triggers for GHAs (see the template file `check-no-suggests.yaml`
-in the folder `inst/templates`):
+useful triggers for GHAs (see the template files `check-standard.yaml`
+and `check-no-suggests.yaml` in the folder `inst/templates`):
 
-- you made changes to code in the current repository:  
-  add `'push:'` to section `'on:'` to run GHA on pushes.
-- someone else proposed changes to code in the current repository:  
-  add `'pull_request:'` to section `'on:'` to run GHA on pull requests.
+- you made changes, or someone else proposed changes to code in the
+  current repository:  
+  add `pull_request:` to section `on:` to run GHA on pull requests. NB.
+  You can remove `push` from section `on:`: it should be sufficient to
+  run R CMD check locally before pushing and run GHA on pull requests.
 - you want to check if a reverse dependency (i.e., a package that
   depends on a package you changed) is still working fine:  
-  add `'workflow_dispatch:'` to section `'on:'` in the YAML file of the
+  add `workflow_dispatch:` to section `on:` in the YAML file of the
   reverse dependency to be able to manually trigger GHA. See section
   `Use GitHub Actions` in `pkg_devel.Rmd` how to use it.
 - someone else made changes to packages your package depends on:  
-  add `'schedule: - cron: "23 4 * * 6"'` to section `'on:'` to run every
+  add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every
   Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
@@ -222,15 +228,15 @@ in the folder `inst/templates`):
   useful to specify the minimum declared `R` version to run in addition
   to the ones that are by default used in the template: for example,
   add  
-  `'- {os: ubuntu-latest, r: '4.1.0'}'` to section `'matrix: config:'`
-  to run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
+  `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
+  run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
   version.
 
 For further documentation, see section `GHA: documentation and help` in
 the vignette *Package development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
-## Use a package website
+## Set up a package website
 
 One advantage of using a website for your package is that it
 automatically creates
@@ -240,12 +246,14 @@ to functions and documentation you refer to.
 To set up a package website, you can use
 [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
 To also set up a [GitHub action](#automate-checks) to automatically
-build and update your site if you push changes to your package to
-GitHub, run the following code:
+build and update your site if you push changes to your package to GitHub
+(defined in the file `<pkg>\.github\workflows\pkgdown.yaml`), run the
+following code:
 
 ``` r
 
-usethis::use_pkgdown_github_pages() # This first calls usethis::use_pkgdown()
+# calls usethis::use_pkgdown() and creates '<pkg>\.github\workflows\pkgdown.yaml'
+usethis::use_pkgdown_github_pages()
 devtools::document() # To update package-wide documentation
 ```
 
@@ -256,10 +264,11 @@ structure `https://<username>.github.io/<repository>/`, e.g.,
 Refer from the `README` to the pkgdown website and add the line
 `light-switch: true` below the `template` heading in the `_pkgdown.YML`
 file (located in the top-level package folder or in folder `pkgdown`;
-can also have extension `.YAML`; this is **not** the `YAML` file
-defining testing workflows in
-`<pkg>\.github\workflows\check-no-suggests.yaml`) to add a light-switch
-to the pkgdown-website (see the
+can also have extension `.YAML`; it is **not** the file
+`<pkg>\.github\workflows\pkgdown.yaml` that defines the [GitHub
+Action](#automate-checks) to automatically build and update your site if
+you push changes to your package to GitHub) to add a light-switch to the
+pkgdown-website (see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
@@ -268,3 +277,9 @@ for this repository).
 See the chapter about [`pkgdown`](https://r-pkgs.org/website.html) in
 the book [`R packages`](https://r-pkgs.org/) and the documentation for
 package [`pkgdown`](https://pkgdown.r-lib.org/) for further details.
+
+## Further development
+
+Further package development is described in the vignette *Package
+development*:
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).

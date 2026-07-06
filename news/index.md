@@ -1,12 +1,36 @@
 # Changelog
 
+## develcoder 0.9.0
+
+#### Breaking changes
+
+- `check_test_files()`: renamed to `check_tests`, with major overhaul to
+  work with
+  [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
+  and
+  [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md)
+  and include various additional checks.
+- `check_test_infra()` and `get_test_files()`: renamed to
+  [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
+  and
+  [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md),
+  with major overhauls to use them more easily in `check_test_files()`.
+  For `get_test_files()`, warn about ignored files and respect argument
+  `ignore_case`.
+
+#### Documentation
+
+- Vignette `pkg_devel`: URLs should use protocol `https://` instead of
+  `http://`, not the other way around. Point out to install the package
+  before knitting the `README`. Expand info on checking reverse
+  dependencies. Some change in overall structure.
+
 ## develcoder 0.8.0
 
 #### Breaking changes
 
 - Dependency `desc`: move from `Suggests` to `Imports` because it is
-  used by
-  [`check_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/check_test_infra.md).
+  used by `check_test_infra()`.
 - Dependency `fs`: require minimum version `1.2.4` because function
   `dir_ls()` with argument `fail` is used in a vignette.
 - Suggested dependency `goodpractice`: require minimum version `1.1.0`
@@ -22,9 +46,8 @@
 
 #### Added functions
 
-- [`check_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/check_test_infra.md)
-  to check if the infrastructure for testing is present and refers to
-  the current package.
+- `check_test_infra()` to check if the infrastructure for testing is
+  present and refers to the current package.
 
 #### Documentation
 
@@ -52,12 +75,9 @@
 
 #### Added functions
 
-- [`check_test_files()`](https://jessealderliesten.github.io/develcoder/reference/check_test_files.md)
-  to check if all function files have a corresponding test file and vice
-  versa.
-- [`get_test_files()`](https://jessealderliesten.github.io/develcoder/reference/get_test_files.md):
-  helper function for
-  [`check_test_files()`](https://jessealderliesten.github.io/develcoder/reference/check_test_files.md).
+- `check_test_files()` to check if all function files have a
+  corresponding test file and vice versa.
+- `get_test_files()`: helper function for `check_test_files()`.
 
 #### Documentation
 

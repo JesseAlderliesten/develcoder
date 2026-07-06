@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,13 +166,6 @@ for details on the format.</p>
 <div class="section level3">
 <h3 id="readme">README<a class="anchor" aria-label="anchor" href="#readme"></a>
 </h3>
-<p>The <code>usethis</code> practice of using
-<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>
-requires that <code>README.Rmd</code> and <code>README.md</code> are
-staged at the same time. To remove this requirement, delete the the
-(hidden) file <code>.git/hooks/pre-commit</code> from the <code>R</code>
-project folder (see the section <code>Description</code> in
-<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">use_readme_rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Do:</p>
@@ -186,10 +179,21 @@ work if the GitHub repository is private):<br><code>![](https://img.shields.io/g
 <li>See <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link"><code>README_template.Rmd</code></a>
 in the folder <code>inst/templates</code>.</li>
 <li>Knit the <code>README.Rmd</code> file to produce a
-<code>README.Md</code> file.</li>
+<code>README.md</code> file.</li>
 </ul>
 </li>
 </ul>
+<div class="section level4">
+<h4 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
+</h4>
+<p>The <code>usethis</code> practice of using
+<code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>
+requires that <code>README.Rmd</code> and <code>README.md</code> are
+staged at the same time. To remove this requirement, delete the the
+(hidden) file <code>.git/hooks/pre-commit</code> from the <code>R</code>
+project folder (see the section <code>Description</code> in
+<code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
@@ -214,13 +218,15 @@ to give an overview of the functions in the package.</p>
 <div class="section level2">
 <h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
-<p>I use package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> to
-create tests. This can be set up through:</p>
+<p>It is convenient to have a collection of tests for your functions.
+Various packages can be used to create and run such tests. To use
+package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> for
+testing, set up its infrastructure through:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Use the following code if you prefer to use package <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a>
-instead:</p>
+<p>To use package <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a> for
+testing, set up its infrastructure through:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html" class="external-link">use_test</a></span><span class="op">(</span><span class="st">"&lt;func&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -253,28 +259,28 @@ even if dependencies in <code>Suggests</code> are not installed.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-standard"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-no-suggests"</span><span class="op">)</span></span></code></pre></div>
-<p>Then adjust the <code>YAML</code> file (i.e.,
+<p>Then adjust the <code>YAML</code> files (i.e.,
+<code>&lt;pkg&gt;\.github\workflows\check-standard.yaml</code> and
 <code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
-include some other useful triggers for GHAs (see the template file
-<code>check-no-suggests.yaml</code> in the folder
-<code>inst/templates</code>):</p>
+include some other useful triggers for GHAs (see the template files
+<code>check-standard.yaml</code> and <code>check-no-suggests.yaml</code>
+in the folder <code>inst/templates</code>):</p>
 <ul>
-<li>you made changes to code in the current repository:<br>
-add <code>'push:'</code> to section <code>'on:'</code> to run GHA on
-pushes.</li>
-<li>someone else proposed changes to code in the current
-repository:<br>
-add <code>'pull_request:'</code> to section <code>'on:'</code> to run
-GHA on pull requests.</li>
+<li>you made changes, or someone else proposed changes to code in the
+current repository:<br>
+add <code>pull_request:</code> to section <code>on:</code> to run GHA on
+pull requests. NB. You can remove <code>push</code> from section
+<code>on:</code>: it should be sufficient to run R CMD check locally
+before pushing and run GHA on pull requests.</li>
 <li>you want to check if a reverse dependency (i.e., a package that
 depends on a package you changed) is still working fine:<br>
-add <code>'workflow_dispatch:'</code> to section <code>'on:'</code> in
-the YAML file of the reverse dependency to be able to manually trigger
-GHA. See section <code>Use GitHub Actions</code> in
+add <code>workflow_dispatch:</code> to section <code>on:</code> in the
+YAML file of the reverse dependency to be able to manually trigger GHA.
+See section <code>Use GitHub Actions</code> in
 <code>pkg_devel.Rmd</code> how to use it.</li>
 <li>someone else made changes to packages your package depends on:<br>
-add <code>'schedule: - cron: "23 4 * * 6"'</code> to section
-<code>'on:'</code> to run every Saturday on 04:23 UTC. The cron
+add <code>schedule: - cron: "23 4 * * 6"</code> to section
+<code>on:</code> to run every Saturday on 04:23 UTC. The cron
 specification consists of five elements that indicate the minute (0 -
 59), hour (0 - 23), day of the month (1 - 31), month (1 - 12), and day
 of the week (0 - 6). This timing is approximate and depends on how busy
@@ -282,9 +288,9 @@ the servers are.</li>
 <li>If the package declares a dependency on a minimum <code>R</code>
 version, it is useful to specify the minimum declared <code>R</code>
 version to run in addition to the ones that are by default used in the
-template: for example, add<br><code>'- {os: ubuntu-latest,   r: '4.1.0'}'</code> to section
-<code>'matrix: config:'</code> to run <code>R</code> version 4.1.0 if
-your package declares <code>R</code> 4.1.0 as minimum version.</li>
+template: for example, add<br><code>- {os: ubuntu-latest, r: '4.1.0'}</code> to section
+<code>matrix: config:</code> to run <code>R</code> version 4.1.0 if your
+package declares <code>R</code> 4.1.0 as minimum version.</li>
 </ul>
 <p>For further documentation, see section
 <code>GHA: documentation and help</code> in the vignette <em>Package
@@ -292,17 +298,19 @@ development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 <div class="section level2">
-<h2 id="use-a-package-website">Use a package website<a class="anchor" aria-label="anchor" href="#use-a-package-website"></a>
+<h2 id="set-up-a-package-website">Set up a package website<a class="anchor" aria-label="anchor" href="#set-up-a-package-website"></a>
 </h2>
 <p>One advantage of using a website for your package is that it
 automatically creates <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><code>hyperlinked cross-references</code></a>
 to functions and documentation you refer to.</p>
 <p>To set up a package website, you can use
 <code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>. To also set up a <a href="#automate-checks">GitHub action</a> to automatically build and
-update your site if you push changes to your package to GitHub, run the
-following code:</p>
+update your site if you push changes to your package to GitHub (defined
+in the file <code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code>),
+run the following code:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># This first calls usethis::use_pkgdown()</span></span>
+<code class="sourceCode R"><span><span class="co"># calls usethis::use_pkgdown() and creates '&lt;pkg&gt;\.github\workflows\pkgdown.yaml'</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-wide documentation</span></span></code></pre></div>
 <p>After a few minutes, the website should be present. The URL has the
 structure
@@ -312,16 +320,24 @@ e.g., <code>https://jessealderliesten.github.io/develcoder/</code>.</p>
 line <code>light-switch: true</code> below the <code>template</code>
 heading in the <code>_pkgdown.YML</code> file (located in the top-level
 package folder or in folder <code>pkgdown</code>; can also have
-extension <code>.YAML</code>; this is <strong>not</strong> the
-<code>YAML</code> file defining testing workflows in
-<code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
-add a light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
+extension <code>.YAML</code>; it is <strong>not</strong> the file
+<code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code> that defines the
+<a href="#automate-checks">GitHub Action</a> to automatically build and
+update your site if you push changes to your package to GitHub) to add a
+light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
 and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
 code</a> for this repository).</p>
 <p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link"><code>pkgdown</code></a> in the
 book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> and the
 documentation for package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> for further
 details.</p>
+</div>
+<div class="section level2">
+<h2 id="further-development">Further development<a class="anchor" aria-label="anchor" href="#further-development"></a>
+</h2>
+<p>Further package development is described in the vignette <em>Package
+development</em>:
+<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -21,7 +21,7 @@ devtools::document() # also runs devtools::load_all()
 Do:
 
 - Manually update the `NEWS` file:  
-  `` - Add `<func>()` to ... ``.
+  `### Added functions` `` - `<func>()` to ... ``
 - If the added function relies on other packages, you have to update the
   dependencies given in the `DESCRIPTION` file: see section [Update
   dependencies](#update-dependencies).
@@ -103,11 +103,12 @@ functions. Since `roxygen2` 8.0.0, it is possible to specify which
 arguments to inherit.
 
 ``` r
+
 # inherit from a function in the current package
-@inheritParams is_logical allow_NA
+#' @inheritParams is_logical allow_NA
 
 # inherit from a function in another package
-@inheritParams utils::installed.packages fields
+#' @inheritParams utils::installed.packages fields
 ```
 
 #### Add examples
@@ -192,13 +193,13 @@ tinytest::run_test_file(
 Testing file paths requires some thought because the file separator
 depends on the operating system (see `.Platform$file.sep`) and the
 backward slash is used as escape character in `R` such that it needs to
-be escaped itself by doubling them. Thus, a check on the presence of
+be escaped itself by doubling them. Thus, a check on the presence of two
 successive slashes and backslashes in string `string` would use
 `grepl(pattern = "//", x = string, fixed = TRUE)` and
 `grepl(pattern = "\\\\", x = string, fixed = TRUE)`. The message to
 point out their presence would be written as
-`message("Successive '/' or '\\\\'")` which would be printed as
-`Successive '/' or '\\'`.
+`message("Successive '/' or '\\'")` which would be printed as
+`Successive '/' or '\'`.
 
 To circumvent the hassle of getting the correct type and number of
 slashes to compare with the path recorded in a message, check only for
@@ -373,8 +374,8 @@ tests.
 ``` r
 
 devtools::document()
-tinytest::test_all() # or devtools::test()
-develcoder::check_test_files()
+tinytest::test_all() # or devtools::test() if testthat was used to create tests
+develcoder::check_tests() # character(0) if all is fine
 ```
 
 ### Automated checks
@@ -428,7 +429,7 @@ for details about the environment variables):
   - should be accessible (e.g., point to public GitHub repositories, not
     to private repositories)
   - should be direct links, not redirects
-  - should use the protocol `http://` instead of `https://`
+  - should use the protocol `https://` instead of `http://`
   - should use the canonical forms expected by CRAN, not the ‘simple’
     forms displayed in the webbrowser:
     - `https://CRAN.R-project.org/package=<pkg>` for packages
@@ -604,7 +605,6 @@ my_checks_goodpractice <- progutils::not_in(
     # does not find test-files in inst/tinytest, use check_test_files() instead.
     "tidyverse_test_file_names",
     "tidyverse_whitespace_linter",
-    
     # Checks similar to those from 'rcmdcheck' and 'urlchecker' are also used by
     # devtools::check() that already has been run above
     goodpractice_all_checks[
@@ -622,33 +622,86 @@ res_goodpractice_failed
 res_goodpractice
 ```
 
-#### See also
+### Update package-wide documentation
 
-- usethis::use_release_issue()
-- <https://bioconductor.org/packages/release/bioc/html/BiocCheck.html>
-- <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package>
+#### DESCRIPTION
 
-### Locally test update
+Run
+[`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
+to normalize the `DESCRIPTION` file:
 
 ``` r
 
-devtools::document()
-.libPaths() # Check if output of .libPaths() is correct.
-# If the next line leads to the error 'lazy-load database
-# '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt', you should restart R
-# and again run the next line.
-devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
-
-
-# Load the package and view the help files as usual outside devtools:
-library(basename(getwd()), character.only = TRUE)
-browseVignettes(package = basename(getwd()))
-?progutils::reorder_levels
+desc::desc_normalize()
 ```
+
+To show the `DESCRIPTION` file, use
+[`desc::desc()`](https://desc.r-lib.org/reference/desc.html) or
+`utils::packageDescription(pkg = basename(getwd()))`. To only show the
+dependencies, use
+[`desc::desc_get_deps()`](https://desc.r-lib.org/reference/desc_get_deps.html)
+or
+`utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))`.
+
+Manually increment the package version in the `DESCRIPTION` file, or run
+`R` as administrator and then use
+[`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
+In the latter case, do **not** automatically `commit` the change, but do
+so manually to adjust the commit message to `Bump to version x.y.z`.
+Indicating the version number in the commit title makes it easier to
+find changes back later on (the pull request can have a description of
+the changes, i.e., the updated section of the `NEWS` file). See package
+[`lifecycle`](https://CRAN.R-project.org/package=lifecycle) on how to
+add badges to packages and functions to indicate their lifecycle and its
+vignette
+[`Lifecycle stages`](https://lifecycle.r-lib.org/articles/stages.html),
+chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html), and the
+[Semantic Versioning Specification](https://semver.org/) on versioning.
+
+#### CITATION
+
+Update the `CITATION.cff` file to reflect the new package version (this
+code updates the citation file if it exists and otherwise uses the
+`DESCRIPTION` file to create a citation file):
+
+``` r
+
+cffr::cff_write(dependencies = FALSE) # Create or update a citation file
+```
+
+#### README
+
+Install the development version of the package by running
+[`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
+to ensure the updated version number without Git-commit will be included
+in the citation format in the `README`:
+
+``` r
+
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
+```
+
+Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation
+in the `README` should then display the updated version number. The
+version badge at the top will still display the old version number, but
+that will be changed to the updated number when pushed to GitHub.
+
+If the requirement that `README.Rmd` and `README.md` are staged at the
+same time was accidentally introduced, delete the the (hidden) file
+`.git/hooks/pre-commit` from the R-project folder (see the `Description`
+section in
+[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
+to remove that requirement.
+
+#### NEWS
+
+Restyle and publish the `NEWS` file.
 
 ### Check reverse dependencies
 
-**Acknowledgement** This section reproduces a
+**Acknowledgement**
+
+This section reproduces a
 [contribution](https://stat.ethz.ch/pipermail/r-package-devel/2026q2/012397.html)
 by Ivan Krylov to the [R-pkg-devel mailing
 list](https://stat.ethz.ch/mailman/listinfo/r-package-devel) of 26 May
@@ -661,57 +714,39 @@ to get the list of reverse dependencies, then use
 `utils::download.packages(...)` to obtain their latest tarballs and
 finally run
 [`tools::check_packages_in_dir()`](https://rdrr.io/r/tools/check_packages_in_dir.html)
-to check them. See also
-[`xfun::rev_check()`](https://rdrr.io/pkg/xfun/man/rev_check.html),
-package [crandalf](https://github.com/yihui/crandalf), and package
-[revdepcheck](https://revdepcheck.r-lib.org/).
+to check them.
 
-### Update package-wide documentation
+[`tools::package_dependencies()`](https://rdrr.io/r/tools/package_dependencies.html)
+and the related
+[`tools::dependsOnPkgs()`](https://rdrr.io/r/tools/dependsOnPkgs.html)
+only take packages from CRAN into account.
+`devtools::revdep(pkg = <your pkg>, bioconductor = TRUE)` also takes
+packages from [BioConductor](https://bioconductor.org/) into account. To
+take other non-CRAN packages into account, use
+[`revdepcheck::revdep_check()`](https://revdepcheck.r-lib.org/reference/revdep_check.html)
+or
+[`xfun::rev_check()`](https://pkg.yihui.org/xfun/manual#sec:man-rev_check)
+(which has a [GitHub Action](#use-github-actions):
+[crandalf](https://github.com/yihui/crandalf)). If you find reverse
+dependencies that broke because of your changes, you can identify their
+maintainers using `devtools::revdep_maintainers(pkg = <your pkg>)` to
+notify them.
 
-- `README`: after adjusting the `README.Rmd`, `Knit` it to produce a
-  `README.Md` file. You can follow the `usethis` practice of using
-  [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
-  to update `README.md`, which requires that `README.Rmd` and
-  `README.md` are staged at the same time. To remove this requirement,
-  delete the the (hidden) file `.git/hooks/pre-commit` from the
-  R-project folder (see the `Description` section in
-  [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
-- `NEWS`: restyle and publish the `NEWS` file at each new package
-  release.
-- `DESCRIPTION`:
-  - run
-    [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
-    to normalize the `DESCRIPTION` file (use
-    [`desc::desc()`](https://desc.r-lib.org/reference/desc.html) or
-    `utils::packageDescription(pkg = basename(getwd()))` to show the
-    `DESCRIPTION` file, and
-    [`desc::desc_get_deps()`](https://desc.r-lib.org/reference/desc_get_deps.html)
-    or
-    `utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))`
-    to only show the dependencies).
-  - Manually increment the package version in the `DESCRIPTION` file, or
-    run `R` as administrator and then use
-    [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
-    In the latter case, do **not** automatically `commit` the change,
-    but do so manually to adjust the commit message to
-    `Bump to version x.y.z`. Indicating the version number in the commit
-    title makes it easier to find changes back later on (the pull
-    request can have a description of the changes, i.e., the updated
-    section of the `NEWS` file). See package
-    [`lifecycle`](https://CRAN.R-project.org/package=lifecycle) on how
-    to add badges to packages and functions to indicate their lifecycle
-    and its vignette
-    [`Lifecycle stages`](https://lifecycle.r-lib.org/articles/stages.html),
-    chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html), and the
-    [Semantic Versioning Specification](https://semver.org/) on
-    versioning.
-- `CITATION.cff`: update your citation file to reflect the new package
-  version (this code updates the citation file if it exists and
-  otherwise uses the `DESCRIPTION` file to create a citation file):
+### Locally test update
 
 ``` r
 
-cffr::cff_write(dependencies = FALSE) # Create or update a citation file
+devtools::document()
+.libPaths() # Check if output of .libPaths() is correct.
+# If the next line leads to the error 'lazy-load database
+# '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt', you should restart R
+# and again run the next line.
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
+
+# Load the package and view the help files as usual outside devtools:
+library(basename(getwd()), character.only = TRUE)
+browseVignettes(package = basename(getwd()))
+?progutils::reorder_levels
 ```
 
 ## Updating
@@ -877,11 +912,17 @@ Then you can delete the old package version from your PC
 version following your own instructions on the GitHub pages of the
 relevant packages.
 
-## Searching for packages
+### See also
+
+- usethis::use_release_issue()
+- <https://bioconductor.org/packages/release/bioc/html/BiocCheck.html>
+- <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package>
+
+#### Searching for packages
 
 - [`pkgmatch`](https://github.com/ropensci-review-tools/pkgmatch) and
   the section `Similar tools` in its `README`.
-- <https://CRAN.R-project.org/package=pkgsearch>
+- [`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch)
 
 ## Troubleshooting
 

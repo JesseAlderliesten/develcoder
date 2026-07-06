@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,24 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.0" id="develcoder-090">develcoder 0.9.0<a class="anchor" aria-label="anchor" href="#develcoder-090"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-9-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-9-0"></a></h4>
+<ul><li>
+<code>check_test_files()</code>: renamed to <code>check_tests</code>, with major overhaul to work with <code><a href="../reference/diagnose_test_infra.html">diagnose_test_infra()</a></code> and <code><a href="../reference/diagnose_test_files.html">diagnose_test_files()</a></code> and include various additional checks.</li>
+<li>
+<code>check_test_infra()</code> and <code>get_test_files()</code>: renamed to <code><a href="../reference/diagnose_test_infra.html">diagnose_test_infra()</a></code> and <code><a href="../reference/diagnose_test_files.html">diagnose_test_files()</a></code>, with major overhauls to use them more easily in <code>check_test_files()</code>. For <code>get_test_files()</code>, warn about ignored files and respect argument <code>ignore_case</code>.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="documentation-0-9-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-9-0"></a></h4>
+<ul><li>Vignette <code>pkg_devel</code>: URLs should use protocol <code>https://</code> instead of <code>http://</code>, not the other way around. Point out to install the package before knitting the <code>README</code>. Expand info on checking reverse dependencies. Some change in overall structure.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="develcoder-080">develcoder 0.8.0<a class="anchor" aria-label="anchor" href="#develcoder-080"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-8-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-8-0"></a></h4>
-<ul><li>Dependency <code>desc</code>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code><a href="../reference/check_test_infra.html">check_test_infra()</a></code>.</li>
+<ul><li>Dependency <code>desc</code>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code>check_test_infra()</code>.</li>
 <li>Dependency <code>fs</code>: require minimum version <code>1.2.4</code> because function <code>dir_ls()</code> with argument <code>fail</code> is used in a vignette.</li>
 <li>Suggested dependency <code>goodpractice</code>: require minimum version <code>1.1.0</code> which changed default argument <code>checks</code> in <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::goodpractice()</a></code>.</li>
 <li>Dependency <code>progutils</code>: increase minimum version from <code>0.9.0</code> to <code>0.13.0</code> to prevent spurious warnings from <code>wrap_text()</code>.</li>
@@ -58,7 +72,7 @@
 <div class="section level4">
 <h4 id="added-functions-0-8-0">Added functions<a class="anchor" aria-label="anchor" href="#added-functions-0-8-0"></a></h4>
 <ul><li>
-<code><a href="../reference/check_test_infra.html">check_test_infra()</a></code> to check if the infrastructure for testing is present and refers to the current package.</li>
+<code>check_test_infra()</code> to check if the infrastructure for testing is present and refers to the current package.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-8-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-8-0"></a></h4>
@@ -78,9 +92,9 @@
 <div class="section level4">
 <h4 id="added-functions-0-7-0">Added functions<a class="anchor" aria-label="anchor" href="#added-functions-0-7-0"></a></h4>
 <ul><li>
-<code><a href="../reference/check_test_files.html">check_test_files()</a></code> to check if all function files have a corresponding test file and vice versa.</li>
+<code>check_test_files()</code> to check if all function files have a corresponding test file and vice versa.</li>
 <li>
-<code><a href="../reference/get_test_files.html">get_test_files()</a></code>: helper function for <code><a href="../reference/check_test_files.html">check_test_files()</a></code>.</li>
+<code>get_test_files()</code>: helper function for <code>check_test_files()</code>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-7-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-7-0"></a></h4>
