@@ -1,3 +1,21 @@
+# develcoder 0.9.0
+
+### Breaking changes
+- `check_test_files()`: renamed to `check_tests`, with major overhaul to work
+  with `diagnose_test_infra()` and `diagnose_test_files()` and include various
+  additional checks.
+- `check_test_infra()` and `get_test_files()`: renamed to `diagnose_test_infra()`
+  and `diagnose_test_files()`, with major overhauls to use them more easily in
+  `check_test_files()`. For `get_test_files()`, warn about ignored files and
+  respect argument `ignore_case`.
+
+### Documentation
+- Vignette `pkg_devel`: URLs should use protocol `https://` instead of `http://`,
+  not the other way around. Point out to install the package before knitting the
+  `README`. Expand info on checking reverse dependencies. Some change in overall
+  structure.
+
+
 # develcoder 0.8.0
 
 ### Breaking changes
