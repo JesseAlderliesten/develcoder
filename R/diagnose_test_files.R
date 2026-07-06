@@ -72,7 +72,7 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
          ", incorrect 'path'?:\n", path)
   }
 
-  pkg <- basename(dirname(dirname(path)))
+  pkg <- basename(dirname(path_desc))
 
   overview_test_files <- list(
     pattern = pattern, ignore_case = ignore_case,
@@ -95,10 +95,10 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
         overview_test_files$status_test_files <- "wrong"
         overview_test_files$ignored_files <- testfiles[names_error]
         testfiles <- testfiles[!names_error]
-        warning("Ignoring files whose names do not start with 'pattern' (",
-                progutils::paste_quoted(pattern),
-                "), are not R files, or are template file created by 'tinytest':\n",
-                progutils::paste_quoted(overview_test_files$ignored_files))
+        warning("Ignoring files that are not R files, are template files created by ",
+                progutils::paste_quoted(basename(path)), " or\nhave names that",
+                " do not start with 'pattern' (", progutils::paste_quoted(pattern),
+                "):\n", progutils::paste_quoted(overview_test_files$ignored_files))
         if(length(testfiles) == 0L) {
           overview_test_files$status_test_files <- "missing"
         }
