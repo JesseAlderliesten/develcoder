@@ -322,7 +322,7 @@ package [testthat](https://testthat.r-lib.org/) to create tests.
 ``` {r update tests, eval = FALSE}
 devtools::document()
 tinytest::test_all() # or devtools::test() if testthat was used to create tests
-develcoder::check_test_files()
+develcoder::check_tests() # character(0) if all is fine
 ```
 
 ## Automated checks
@@ -563,9 +563,15 @@ Install the development version of the package by running `devtools::install()`
 to ensure the updated version number without Git-commit will be included in the
 citation format in the `README`:
 ```{r install, eval = FALSE}
-devtools::install()
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 ```
-Then `Knit` the `README.Rmd` to produce a `README.Md` file. If the requirement
+
+Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation in the
+`README` should then display the updated version number. The version badge at
+the top will still display the old version number, but that will be changed to
+the updated number when pushed to GitHub.
+
+If the requirement
 that `README.Rmd` and `README.md` are staged at the same time was accidentally
 introduced, delete the the (hidden) file `.git/hooks/pre-commit` from the
 R-project folder (see the `Description` section in
@@ -610,7 +616,6 @@ devtools::document()
 # '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt', you should restart R
 # and again run the next line.
 devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
-
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
