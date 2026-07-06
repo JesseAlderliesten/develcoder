@@ -18,9 +18,11 @@ infrastructure and test files. The default is the \link[=getwd]{working director
 \code{pattern}?}
 }
 \value{
-If all function files in folder \code{R} have a corresponding used test file, or
-no function files are present: \code{character(0)}. Otherwise, a character vector
-with the names of function files for which no used test file was found.
+If all function files in folder \code{R} have a corresponding used test file and
+vice versa (which also is the case if no test files and no function files are
+present): \code{character(0)}. Otherwise, a character vector with the names of
+test files for which no function file is present and function files for which
+no used test file is present.
 }
 \description{
 Check if testing infrastructure is present and refers to the current package,
@@ -54,6 +56,7 @@ their test architecture is not set up
 \item test directories contain test files without corresponding function files in
 folder \code{R}
 \item folder \code{R} contains function files without corresponding test files
+\item folder \code{R} contains files that are not R files
 \item folder \code{R} does not contain any function files
 \item files \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R} determining
 which test infrastructure is used are present but do \strong{not} refer to the

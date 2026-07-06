@@ -36,6 +36,7 @@
 #' - test directories contain test files without corresponding function files in
 #'   folder `R`
 #' - folder `R` contains function files without corresponding test files
+#' - folder `R` contains files that are not R files
 #' - folder `R` does not contain any function files
 #' - files `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R` determining
 #'   which test infrastructure is used are present but do **not** refer to the
@@ -46,9 +47,11 @@
 #'   are present in folder `R`
 #'
 #' @returns
-#' If all function files in folder `R` have a corresponding used test file, or
-#' no function files are present: `character(0)`. Otherwise, a character vector
-#' with the names of function files for which no used test file was found.
+#' If all function files in folder `R` have a corresponding used test file and
+#' vice versa (which also is the case if no test files and no function files are
+#' present): `character(0)`. Otherwise, a character vector with the names of
+#' test files for which no function file is present and function files for which
+#' no used test file is present.
 #'
 #' @family
 #' functions to check tests
@@ -120,7 +123,15 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
     }
   }
 
-  R_files <- list.files(fs::path(path, "R"))
+  path_R <- fs::path(path, "R")
+  R_files <- list.files(path_R)
+  bool_not_R <- !endsWith(x = R_files, suffix = ".R")
+  if(any(bool_not_R)) {
+    warning("Ignoring non-R files in folder '", path_R, "':\n",
+            progutils::paste_quoted(R_files[bool_not_R]))
+    R_files <- R_files[!bool_not_R]
+  }
+
   bool_proj_pkg_R_file <- grepl(pattern = ".package.R$", x = R_files)
   if(any(bool_proj_pkg_R_file)) {
     R_files <- R_files[!bool_proj_pkg_R_file]
@@ -146,18 +157,24 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   }
 
   if(length(R_files) > 0L) {
-    expected_test_files <- paste0("test_", R_files)
+    expected_test_files <- R_files
   } else {
     warning("No function files found.")
     expected_test_files <- character(0)
   }
 
-  tests_missing <- progutils::not_in(expected_test_files, test_files_present)
-  tests_extraneous <- progutils::not_in(test_files_present, expected_test_files)
+  tests_missing <- progutils::not_in(
+    expected_test_files,
+    gsub(pattern = pattern, replacement = "", x = test_files_present,
+         ignore.case = ignore_case))
+  tests_extraneous <- progutils::not_in(
+    gsub(pattern = pattern, replacement = "", x = test_files_present,
+         ignore.case = ignore_case),
+    expected_test_files)
   if(length(tests_missing) > 0L) {
     warning("No test file found corresponding to function file ",
             progutils::paste_quoted(
-              sort(gsub(pattern = "^test_", replacement = "", x = tests_missing))
+              sort(gsub(pattern = pattern, replacement = "", x = tests_missing))
             )
     )
   }
@@ -167,5 +184,5 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
             progutils::paste_quoted(sort(tests_extraneous)))
   }
 
-  tests_missing
+  sort(c(tests_missing, tests_extraneous))
 }
