@@ -72,7 +72,9 @@ Some legal details are provided at
 [CRAN](https://cran.r-project.org/) only
 [allows](https://cran.r-project.org/web/packages/policies.html#Source-packages)
 packages with licences from
-[this list](https://svn.r-project.org/R/trunk/share/licenses/license.db).
+[this list](https://svn.r-project.org/R/trunk/share/licenses/license.db). See
+the section `Licences` in `help("library")` on how to notify users that a
+package uses a license that is not-known-to-be-Free or Open Source Software.
 `usethis` provides utility functions to add licenses (see
 `help("licenses", package = "usethis")`. For example, to add a MIT license:
 
