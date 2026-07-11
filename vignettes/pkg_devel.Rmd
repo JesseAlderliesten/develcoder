@@ -84,7 +84,7 @@ func_name <- function(x, allow_NA = TRUE) {
 }
 ```
 
-### Inherit documentation and parameters
+### Inherit documentation
 It is possible to inherit sections of the documentation from other functions.
 Inherited sections are **silently** ignored if that section is also defined in
 the file itself.
@@ -111,7 +111,7 @@ Since `roxygen2` 8.0.0, it is possible to specify which arguments to inherit.
 ### Add examples
 Examples that create output files should write them to a temporary directory
 that is cleaned up afterwards. See the section `Usage in practice` in
-`help("create_tempdir", package = "progutils")`.
+`help("create_tempdir", package = "progutils")` and section `Add tests` below.
 
 Although examples rendered on a website created with
 [`pkgdown`](https://pkgdown.r-lib.org/) will display the output underneath the
@@ -139,12 +139,26 @@ https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
 ## Add tests
 Tests that create output files should write them to a temporary directory
 that is cleaned up afterwards. See the section
-`Usage in practice` in `help("create_tempdir", package = "progutils")`. More
-generally, tests should restore the global environment (including any options)
-to its original state if they changed it. This prevents influencing subsequent
-code. See the vignette
-[`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html) from
-package `testthat` for more details.
+`Usage in practice` in `help("create_tempdir", package = "progutils")` and the
+vignette [`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html)
+from package `testthat` for more details. In addition, changed options and
+graphical parameters should be restored to their original state to prevent
+influencing subsequent code (see the
+[entry in the CRAN cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
+for details). The following pattern shows how to do so for single option or
+parameter:
+
+```{r, eval = FALSE}
+orig_opt <- options(<option> = <value>)
+orig_par <- par(<parameter> = <value>)
+<do stuff>
+par(orig_par)
+options(<option> = orig_opt)
+```
+
+To reset all parameters at once, use `orig_par <- par(no.readonly = TRUE)`. To
+restore options that are changed inside a function, add `on.exit(par(orig_par))`
+immediately after changing the option.
 
 Note that `expect_silent(...)` tests that no errors or warnings are emitted,
 **not** that no messages are emitted.
