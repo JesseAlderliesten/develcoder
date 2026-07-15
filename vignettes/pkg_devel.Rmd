@@ -255,9 +255,11 @@ usethis::use_package("R", type = "Depends", min_version = "4.1.0")
 # Declare a dependency on a package: 'use_package()' to declare a minimum
 # version and 'use_dev_package()' to specify the remote repository to download
 # the package from.
+utils::packageVersion("checkinput")
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
                          remote = "github::JesseAlderliesten/checkinput")
+utils::packageVersion("progutils")
 usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "progutils", type = "Imports",
                          remote = "github::JesseAlderliesten/progutils")
