@@ -65,16 +65,14 @@ Visit the [develcoder
 website](https://jessealderliesten.github.io/develcoder/) to explore the
 package, or install `develcoder` from
 [GitHub](https://github.com/JesseAlderliesten/develcoder) using the
-following R code (you need to run R as administrator):
+following R code:
 
 ``` r
-if(!requireNamespace("remotes", quietly = TRUE)) {
-   install.packages(pkgs = "remotes", quiet = FALSE)
+if(!requireNamespace("remotes")) {
+   install.packages(pkgs = "remotes")
 }
 remotes::install_github(repo = "JesseAlderliesten/develcoder",
-                        dependencies = NA, upgrade = FALSE, force = FALSE,
-                        quiet = FALSE, build_vignettes = TRUE, lib = NULL,
-                        verbose = getOption("verbose"))
+                        upgrade = FALSE, build_vignettes = TRUE, lib = NULL)
 ```
 
 For more information about installing and configuring R and RStudio, see
