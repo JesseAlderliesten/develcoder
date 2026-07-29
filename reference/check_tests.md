@@ -98,3 +98,42 @@ Warnings are issued if:
 Other functions to check tests:
 [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md),
 [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
+
+## Examples
+
+``` r
+path_develcoder <- find.package("develcoder")
+# test files are present
+check_tests(path = path_develcoder) # character(0)
+#> Warning: No file determining the used testing infrastructure exists:
+#> '/home/runner/work/_temp/Library/develcoder/tests/tinytest.R',
+#> '/home/runner/work/_temp/Library/develcoder/tests/testthat.R'
+#> Warning: None of the test directories exist:
+#> '/home/runner/work/_temp/Library/develcoder/inst/tinytest'
+#> '/home/runner/work/_temp/Library/develcoder/tests/testthat'
+#> Warning: Ignoring non-R files in folder '/home/runner/work/_temp/Library/develcoder/R':
+#> 'develcoder'
+#> 'develcoder.rdb'
+#> 'develcoder.rdx'
+#> Warning: No function files found.
+#> character(0)
+
+# warnings: test infrastructure, directories, and function files not present
+tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
+withr::with_dir(new = tempdir_example, {
+  # Set up a package without testing infrastructure
+  desc <- desc::description$new("!new")
+  desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+  check_tests(path = tempdir_example)
+})
+#> Warning: No file determining the used testing infrastructure exists:
+#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/tinytest.R',
+#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/testthat.R'
+#> Warning: None of the test directories exist:
+#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/inst/tinytest'
+#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/testthat'
+#> Warning: No function files found.
+#> character(0)
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
+```

@@ -36,7 +36,7 @@ information. Such files can exist in various locations, for example at
 [`usethis setup`](https://usethis.r-lib.org/articles/usethis-setup.html)
 and
 [`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
-for details on setting up a package.
+for details on creating a package.
 
 ``` r
 
@@ -72,10 +72,13 @@ Source](https://opensource.guide/legal/).
 [CRAN](https://cran.r-project.org/) only
 [allows](https://cran.r-project.org/web/packages/policies.html#Source-packages)
 packages with licences from [this
-list](https://svn.r-project.org/R/trunk/share/licenses/license.db).
-`usethis` provides utility functions to add licenses (see
-`help("licenses", package = "usethis")`. For example, to add a MIT
-license:
+list](https://svn.r-project.org/R/trunk/share/licenses/license.db). See
+the section `Licences` in
+[`help("library")`](https://rdrr.io/r/base/library.html) on how to
+notify users that a package uses a license that is not-known-to-be-Free
+or Open Source Software. `usethis` provides utility functions to add
+licenses (see `help("licenses", package = "usethis")`. For example, to
+add a MIT license:
 
 ``` r
 
@@ -126,12 +129,12 @@ the section `Description` in
 
 ### Package overview
 
-The file `R/<pkg>-package.R` makes that `help("<pkg>")` produces a
-relevant description of the package with links to GitHub and to the
-package website if package `<pkg>` has been loaded (i.e.,
-`library(<pkg>)` has been run). It is also used by `usethis` to list
-imported functions, and can be configured to give an overview of the
-functions in the package.
+A package overview through the file `R/<pkg>-package.R` makes that
+`help("<pkg>")` produces a relevant description of the package with
+links to GitHub and to the package website if package `<pkg>` has been
+loaded (i.e., `library(<pkg>)` has been run). It is also used by
+`usethis` to list imported functions, and can be configured to give an
+overview of the functions in the package.
 
 ``` r
 
@@ -147,7 +150,8 @@ usethis::use_news_md() # Create NEWS.md
 
 ## Set up testing infrastructure
 
-It is convenient to have a collection of tests for your functions.
+It is convenient to have a collection of tests for your functions (see
+the Chapter [‘Testing basics’](https://r-pkgs.org/testing-basics.html)).
 Various packages can be used to create and run such tests. To use
 package [tinytest](https://CRAN.R-project.org/package=tinytest) for
 testing, set up its infrastructure through:
@@ -189,9 +193,16 @@ usethis::git_default_branch_rediscover()
 ## Automate checks
 
 GitHub Actions (GHA) is a continuous integration service to
-automatically run code upon certain triggers. Setting GHA to run
-`check-no-suggests.yaml` from
-[`r-lib`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
+automatically run code upon certain triggers. These triggers are defined
+in
+[workflows](https://docs.github.com/en/actions/reference/workflows-and-actions).
+The workflow
+[`check-standard.yaml`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
+from [`r-lib`](https://github.com/r-lib) runs
+[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) for the latest
+version of R on Linux, MacOS and Windows, as well as the previous and
+development version of R on Linux. The workflow
+[`check-no-suggests.yaml`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-no-suggests.yaml)
 checks that the code passes
 [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) even if
 dependencies in `Suggests` are not installed.
@@ -202,7 +213,7 @@ usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
-Then adjust the `YAML` files (i.e.,
+After setting up these workflows, adjust the created `YAML` files (i.e.,
 `<pkg>\.github\workflows\check-standard.yaml` and
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
 useful triggers for GHAs (see the template files `check-standard.yaml`
@@ -217,7 +228,9 @@ and `check-no-suggests.yaml` in the folder `inst/templates`):
   depends on a package you changed) is still working fine:  
   add `workflow_dispatch:` to section `on:` in the YAML file of the
   reverse dependency to be able to manually trigger GHA. See section
-  `Use GitHub Actions` in `pkg_devel.Rmd` how to use it.
+  `Use GitHub Actions` in the vignette *Package development*
+  ([`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
+  for info on how to use it.
 - someone else made changes to packages your package depends on:  
   add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every
   Saturday on 04:23 UTC. The cron specification consists of five
@@ -229,8 +242,8 @@ and `check-no-suggests.yaml` in the folder `inst/templates`):
   to the ones that are by default used in the template: for example,
   add  
   `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
-  run `R` version 4.1.0 if your package declares `R` 4.1.0 as minimum
-  version.
+  also run the workflow with `R` version 4.1.0 if your package declares
+  `R` 4.1.0 as minimum version.
 
 For further documentation, see section `GHA: documentation and help` in
 the vignette *Package development*:
@@ -274,9 +287,10 @@ and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
 for this repository).
 
-See the chapter about [`pkgdown`](https://r-pkgs.org/website.html) in
-the book [`R packages`](https://r-pkgs.org/) and the documentation for
-package [`pkgdown`](https://pkgdown.r-lib.org/) for further details.
+See the documentation about package
+[`pkgdown`](https://pkgdown.r-lib.org/) and the
+[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
+for further details.
 
 ## Further development
 

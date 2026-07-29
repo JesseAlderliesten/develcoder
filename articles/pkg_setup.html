@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,7 @@ example at
 <code>D:\Userdata\&lt;username&gt;\Documents\.Rprofile</code>: see
 <code><a href="https://rdrr.io/r/base/Startup.html" class="external-link">help("Startup")</a></code>. See the <code>usethis</code> vignette <a href="https://usethis.r-lib.org/articles/usethis-setup.html" class="external-link"><code>usethis setup</code></a>
 and <code><a href="https://usethis.r-lib.org/reference/use_description.html" class="external-link">help(topic = "use_description", package = usethis)</a></code> for
-details on setting up a package.</p>
+details on creating a package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_to_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">pkgname</span><span class="op">)</span></span>
 <span><span class="va">path_to_package</span></span>
@@ -147,9 +147,12 @@ Exchange</a></li>
 Source</a>.</p>
 <p><a href="https://cran.r-project.org/" class="external-link">CRAN</a> only <a href="https://cran.r-project.org/web/packages/policies.html#Source-packages" class="external-link">allows</a>
 packages with licences from <a href="https://svn.r-project.org/R/trunk/share/licenses/license.db" class="external-link">this
-list</a>. <code>usethis</code> provides utility functions to add
-licenses (see <code>help("licenses", package = "usethis")</code>. For
-example, to add a MIT license:</p>
+list</a>. See the section <code>Licences</code> in
+<code><a href="https://rdrr.io/r/base/library.html" class="external-link">help("library")</a></code> on how to notify users that a package uses
+a license that is not-known-to-be-Free or Open Source Software.
+<code>usethis</code> provides utility functions to add licenses (see
+<code>help("licenses", package = "usethis")</code>. For example, to add
+a MIT license:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -198,7 +201,8 @@ project folder (see the section <code>Description</code> in
 <div class="section level3">
 <h3 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
 </h3>
-<p>The file <code>R/&lt;pkg&gt;-package.R</code> makes that
+<p>A package overview through the file
+<code>R/&lt;pkg&gt;-package.R</code> makes that
 <code>help("&lt;pkg&gt;")</code> produces a relevant description of the
 package with links to GitHub and to the package website if package
 <code>&lt;pkg&gt;</code> has been loaded (i.e.,
@@ -218,7 +222,8 @@ to give an overview of the functions in the package.</p>
 <div class="section level2">
 <h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
-<p>It is convenient to have a collection of tests for your functions.
+<p>It is convenient to have a collection of tests for your functions
+(see the Chapter <a href="https://r-pkgs.org/testing-basics.html" class="external-link">‘Testing basics’</a>).
 Various packages can be used to create and run such tests. To use
 package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link">tinytest</a> for
 testing, set up its infrastructure through:</p>
@@ -252,14 +257,19 @@ the vignette <em>Using Git and GitHub</em>:
 <h2 id="automate-checks">Automate checks<a class="anchor" aria-label="anchor" href="#automate-checks"></a>
 </h2>
 <p>GitHub Actions (GHA) is a continuous integration service to
-automatically run code upon certain triggers. Setting GHA to run
-<code>check-no-suggests.yaml</code> from <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml" class="external-link"><code>r-lib</code></a>
+automatically run code upon certain triggers. These triggers are defined
+in <a href="https://docs.github.com/en/actions/reference/workflows-and-actions" class="external-link">workflows</a>.
+The workflow <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml" class="external-link"><code>check-standard.yaml</code></a>
+from <a href="https://github.com/r-lib" class="external-link"><code>r-lib</code></a> runs <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD checks</code></a>
+for the latest version of R on Linux, MacOS and Windows, as well as the
+previous and development version of R on Linux. The workflow <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-no-suggests.yaml" class="external-link"><code>check-no-suggests.yaml</code></a>
 checks that the code passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD checks</code></a>
 even if dependencies in <code>Suggests</code> are not installed.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-standard"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-no-suggests"</span><span class="op">)</span></span></code></pre></div>
-<p>Then adjust the <code>YAML</code> files (i.e.,
+<p>After setting up these workflows, adjust the created
+<code>YAML</code> files (i.e.,
 <code>&lt;pkg&gt;\.github\workflows\check-standard.yaml</code> and
 <code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
 include some other useful triggers for GHAs (see the template files
@@ -276,8 +286,10 @@ before pushing and run GHA on pull requests.</li>
 depends on a package you changed) is still working fine:<br>
 add <code>workflow_dispatch:</code> to section <code>on:</code> in the
 YAML file of the reverse dependency to be able to manually trigger GHA.
-See section <code>Use GitHub Actions</code> in
-<code>pkg_devel.Rmd</code> how to use it.</li>
+See section <code>Use GitHub Actions</code> in the vignette <em>Package
+development</em>
+(<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>) for info on
+how to use it.</li>
 <li>someone else made changes to packages your package depends on:<br>
 add <code>schedule: - cron: "23 4 * * 6"</code> to section
 <code>on:</code> to run every Saturday on 04:23 UTC. The cron
@@ -289,8 +301,9 @@ the servers are.</li>
 version, it is useful to specify the minimum declared <code>R</code>
 version to run in addition to the ones that are by default used in the
 template: for example, add<br><code>- {os: ubuntu-latest, r: '4.1.0'}</code> to section
-<code>matrix: config:</code> to run <code>R</code> version 4.1.0 if your
-package declares <code>R</code> 4.1.0 as minimum version.</li>
+<code>matrix: config:</code> to also run the workflow with
+<code>R</code> version 4.1.0 if your package declares <code>R</code>
+4.1.0 as minimum version.</li>
 </ul>
 <p>For further documentation, see section
 <code>GHA: documentation and help</code> in the vignette <em>Package
@@ -327,10 +340,8 @@ update your site if you push changes to your package to GitHub) to add a
 light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
 and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
 code</a> for this repository).</p>
-<p>See the chapter about <a href="https://r-pkgs.org/website.html" class="external-link"><code>pkgdown</code></a> in the
-book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> and the
-documentation for package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> for further
-details.</p>
+<p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and the <a href="https://r-pkgs.org/website.html" class="external-link"><code>chapter</code></a> from the
+<code>R packages</code> book for further details.</p>
 </div>
 <div class="section level2">
 <h2 id="further-development">Further development<a class="anchor" aria-label="anchor" href="#further-development"></a>
@@ -350,7 +361,7 @@ development</em>:
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

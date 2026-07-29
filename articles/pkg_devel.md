@@ -82,7 +82,7 @@ func_name <- function(x, allow_NA = TRUE) {
 }
 ```
 
-#### Inherit documentation and parameters
+#### Inherit documentation
 
 It is possible to inherit sections of the documentation from other
 functions. Inherited sections are **silently** ignored if that section
@@ -116,7 +116,8 @@ arguments to inherit.
 Examples that create output files should write them to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
-[`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
+[`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html)
+and section `Add tests` below.
 
 Although examples rendered on a website created with
 [`pkgdown`](https://pkgdown.r-lib.org/) will display the output
@@ -152,13 +153,28 @@ For an overview of mathematical notation see:
 Tests that create output files should write them to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
-[`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html).
-More generally, tests should not make changes (without restoring the
-original state) that could influence subsequent tests. Examples of such
-changes are any options and changes to the state of the global
-environment (see the vignette
+[`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html)
+and the vignette
 [`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html)
-from package `testthat` for more details).
+from package `testthat` for more details. In addition, changed options
+and graphical parameters should be restored to their original state to
+prevent influencing subsequent code (see the [entry in the CRAN
+cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
+for details). The following pattern shows how to do so for single option
+or parameter:
+
+``` r
+orig_opt <- options(<option> = <value>)
+orig_par <- par(<parameter> = <value>)
+<do stuff>
+par(orig_par)
+options(<option> = orig_opt)
+```
+
+To reset all parameters at once, use
+`orig_par <- par(no.readonly = TRUE)`. To restore options that are
+changed inside a function, add `on.exit(par(orig_par))` immediately
+after changing the option.
 
 Note that `expect_silent(...)` tests that no errors or warnings are
 emitted, **not** that no messages are emitted.
@@ -210,10 +226,9 @@ check like `tinytest::expect_true(fs::dir_exists(string))`.
 
 First, you should consider if you really need a new dependency. Some
 additional effort in choosing dependencies or in coding can allow to
-depend on ‘lighter’ dependencies (i.e., dependencies that themselves
-have not too many dependencies), which makes a project more stable over
-time. See the various contributions to the
-[`tinyverse`](https://www.tinyverse.org/).
+depend on dependencies that themselves have not too many dependencies,
+which makes a project more stable over time. See the various
+contributions to the [`tinyverse`](https://www.tinyverse.org/).
 
 #### Importing packages or functions
 
@@ -273,9 +288,11 @@ usethis::use_package("R", type = "Depends", min_version = "4.1.0")
 # Declare a dependency on a package: 'use_package()' to declare a minimum
 # version and 'use_dev_package()' to specify the remote repository to download
 # the package from.
+utils::packageVersion("checkinput")
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
                          remote = "github::JesseAlderliesten/checkinput")
+utils::packageVersion("progutils")
 usethis::use_package(package = "progutils", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "progutils", type = "Imports",
                          remote = "github::JesseAlderliesten/progutils")
@@ -284,8 +301,8 @@ devtools::document()
 
 Do:
 
-- Specify the minimum declared `R` version as workflow in GitHub
-  Actions, see the section [Use GitHub Actions](#use-github-actions).
+- Add the minimum declared `R` version to workflows for GitHub Actions,
+  see the section [Use GitHub Actions](#use-github-actions).
 
 ## Adding vignettes
 
@@ -313,8 +330,8 @@ vignettes that R finds.
 
 Use `utils::vignette("<vignette_title>")` (e.g.,
 [`utils::vignette("pkg_devel")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
-and `tools::Rd2txt("path/to/file.Rd")` to render a vignette or an `Rd`
-file in the `help` pane of RStudio, respectively.
+to render a vignette in the `help` pane of RStudio. To do so with an
+`Rd` file, use `tools::Rd2txt("path/to/file.Rd")`.
 
 ### Styling
 
@@ -336,7 +353,7 @@ toc_depth: 3
 ### Linking
 
 - Link to another section in the same document:  
-  `[<Section title>]` or `[<link text>][<Section title>]`.
+  `[<link text>][<Section title>]` or `[<Section title>]`.
 - Link to a help page of a package:  
   `help("<func>", package = "<pkg>")` (unfortunately,
   `help("<pkg>::<func>")` does **not** work).
@@ -345,19 +362,18 @@ toc_depth: 3
 - Link to another vignette in the same package:  
   `[<link text>](<vignette_filename>.html)`
 
-There are [**no**](https://r-pkgs.org/vignettes.html#links) official
-ways to link from vignettes to help-pages or vice versa. `pkgdown`
-recognises calls like `` `<func>()` `` and `` `<pkg>::<func>()` ``, such
-that relevant links for such calls will be created on a package website
-(see the
-[documentation](https://pkgdown.r-lib.org/articles/linking.html) for
+There is [**no**](https://r-pkgs.org/vignettes.html#links) official way
+to link from vignettes to help-pages or vice versa. `pkgdown` recognises
+calls like `` `<func>()` `` and `` `<pkg>::<func>()` ``, such that
+relevant links for such calls will be created on a package website (see
+the [documentation](https://pkgdown.r-lib.org/articles/linking.html) for
 details).
 
 ## Adding miscellaneous files
 
-Non-standard files or folders should be added in the `inst/` directory
-to pass [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html). Those
-files and folders will be in the top directory in the installed package.
+Non-standard files or folders should be added in the `inst` directory to
+pass [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html). Those files
+and folders will be in the top directory in the installed package.
 
 ## Preparing for updates
 
@@ -410,7 +426,7 @@ book ‘R packages’ on how to proceed if checks fail.
 
 The call to
 [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-used here is more strict than the default, following suggestions from
+used below is more strict than the default, following suggestions from
 the [Writing R extensions
 manual](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Suggested-packages)
 and from [R
@@ -423,8 +439,16 @@ for details about the environment variables):
 - Using `remote = TRUE` (and thus `incoming = TRUE`) to run additional
   checks that are used by CRAN for new package submissions.
 
-  These checks identify problems with linked URLs (i.e., not with URLs
-  in comments). URLs:
+  These checks flag dependencies that are on GitHub, leading to NOTEs
+  like  
+  `Strong dependencies not in the CRAN or BioC software repositories: <pkg>`,  
+  `Suggests or Enhances not in mainstream repositories: <pkg>`, and  
+  `Unknown, possibly misspelled, fields in DESCRIPTION: 'Remotes'`.  
+  If you do **not** intend to submit to CRAN, you can ignore these
+  NOTEs.
+
+  These checks also identify problems with linked URLs (i.e., not with
+  URLs in comments). URLs:
 
   - should be accessible (e.g., point to public GitHub repositories, not
     to private repositories)
@@ -443,14 +467,6 @@ for details about the environment variables):
       to the [CRAN
       policies](https://CRAN.R-project.org/web/packages/policies.html).
 
-  These checks also flag dependencies that are on GitHub, leading to
-  NOTEs like  
-  `Strong dependencies not in the CRAN or BioC software repositories: <pkg>`,  
-  `Suggests or Enhances not in mainstream repositories: <pkg>`, and  
-  `Unknown, possibly misspelled, fields in DESCRIPTION: 'Remotes'`.  
-  If you do **not** intend to submit to CRAN, you can ignore these
-  NOTEs.
-
 - Using `TRUE` for environment variable `_R_CHECK_DEPENDS_ONLY_` to run
   code while only using dependencies listed in the `Depends` and
   `Imports` fields of the `DESCRIPTION` file. This catches cases where a
@@ -461,41 +477,6 @@ for details about the environment variables):
 - Using `TRUE` for environment variable `_R_CHECK_SUGGESTS_ONLY_` to run
   code while only using dependencies listed in the `Depends`, `Imports`
   and `Suggests` fields of the `DESCRIPTION` file.
-
-- If you get the warning:
-  `Warning in get_engine(options$engine): Unknown language engine '<name>' (must be registered via knit_engines$set())`,
-  you probably forgot to indicate the knit-engine when naming a code
-  chunk:
-
-      ```{use-sum}
-      1 + 1
-      ```
-
-  erroneously tries to use the engine `use-sum`, whereas the probably
-  intended `{r use-sum}` correctly indicates that the `r` engine should
-  be used and the code chunk should be named `use-sum`:
-
-      ```{r use-sum}
-      1 + 1
-      ```
-
-  See `sort(names(knitr::knit_engines$get()))` for the available
-  knit-engines.
-
-- If you get the error
-  `Failed with error: 'there is no package called '<pkg>''`
-  `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`, you
-  probably forgot to use `library(<pkg>)` in a code chunck, used a
-  package that is not declared as dependency in the `DESCRIPTION` file,
-  or used a package that is declared as suggested dependency (i.e., is
-  in the `Suggests` field of the `DESCRIPTION` file) without running
-  that code conditionally on the presence of `<pkg>` through
-  `if(requireNamespace(<pkg>)) {<code>}`. The latter is catched by using
-  argument `env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)` when running
-  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
-
-- If checks fail because of `LaTeX` errors when building the manual, you
-  can use `manual = FALSE`.
 
 ``` r
 
@@ -673,8 +654,8 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 
 Install the development version of the package by running
 [`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
-to ensure the updated version number without Git-commit will be included
-in the citation format in the `README`:
+to ensure the updated version number without Git-commit ID will be
+included in the citation format in the `README`:
 
 ``` r
 
@@ -684,7 +665,7 @@ devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation
 in the `README` should then display the updated version number. The
 version badge at the top will still display the old version number, but
-that will be changed to the updated number when pushed to GitHub.
+that will change to the updated number when pushed to GitHub.
 
 If the requirement that `README.Rmd` and `README.md` are staged at the
 same time was accidentally introduced, delete the the (hidden) file
@@ -758,12 +739,12 @@ section `Automate checks` in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)).
 
 To check if a reverse dependency (i.e., a package that depends on a
-package you changed) is still working fine: go to the `Actions` tab of
-the reverse dependency, select the action you want to trigger (e.g.,
-`check-standard.yaml`), and use the `Run workflow` button shown at the
-top of the overview with workflow runs to run the GHA. You can select
-which branch it should run on, but you need to trigger it once manually
-on the `main` branch to be able to trigger it manually on other
+package you changed) that you created is still working fine: go to the
+`Actions` tab of the reverse dependency, select the action you want to
+trigger (e.g., `check-standard.yaml`), and use the `Run workflow` button
+shown at the top of the overview with workflow runs to run the GHA. You
+can select which branch it should run on but need to trigger it once
+manually on the `main` branch to be able to trigger it manually on other
 branches.
 
 Scheduled jobs that failed can be rerun through the button `Re-run jobs`
@@ -779,9 +760,10 @@ previous paragraph).
 
 If the package declares a dependency on a minimum `R` version, it is
 useful to specify the minimum declared `R` version to run in addition to
-the ones that are by default used in the template:  
-add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
-run `R` 4.1.0.
+the ones that are by default used in the template: for example, add
+`- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to also
+run the workflow with `R` 4.1.0 if your package declares `R` 4.1.0 as
+minimum version.
 
 #### GHA: documentation and help
 
@@ -807,7 +789,8 @@ package.
 
 See the documentation about package
 [`pkgdown`](https://pkgdown.r-lib.org/) and the
-[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book.
+[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
+for further details.
 
 ``` r
 
@@ -817,7 +800,7 @@ pkgdown::build_site()
 
 Open `docs/index.html` in a web browser to preview the website, or look
 at the files that constitute your package’s website are in the local
-`docs/` directory.
+`docs` directory.
 
 Instead of manually updating the pkgdown website, one can use a [GitHub
 Action](#use-github-actions) workflow (e.g.,
@@ -840,7 +823,7 @@ order in the `_pkgdown.yml` file (run
 the
 [documentation](https://pkgdown.r-lib.org/reference/build_articles.html)
 and for example the `_pkgdown.yml`
-[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/master/.github/workflows/pkgdown.yaml)
+[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/main/.github/workflows/pkgdown.yaml)
 and non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in
 the `checkrpkgs` package.
@@ -857,11 +840,13 @@ Then build the reference with
 and view it locally by opening the file `"<pkg>\docs\index.html"` and
 browse to `Reference` to see the package index.
 
-### Merge devel-branch with master
+### Merge devel-branch with main
 
-To merge the `devel` branch with `master`, go the the `devel` branch on
-GitHub. `<Contribute>` \> `Open Pull Request`. Copy the updated `NEWS`
-in the `description` field and use the button `Create pull request`.
+To merge the `devel` branch with `main` (i.e., to incorporate the
+changes you made to the `devel` branch in the `main` branch), go the the
+`devel` branch on GitHub. Then use `<Contribute>` \>
+`Open Pull Request`. Copy the updated `NEWS` in the `description` field
+and use the button `Create pull request`.
 
 If the message
 `No conflicts with base branch: Merging can be performed automatically`,
@@ -876,19 +861,19 @@ previous paragraph.
 
 After a successful merge, you will see a message that you can delete the
 `devel`-branch, which you can do. To do so later, go to `Pull requests`,
-select the `closed` tab, and scroll down to the button `Delete branch`.
+select the `Closed` tab, and scroll down to the button `Delete branch`.
 
 #### Overwrite devel-branch after merge
 
 In RStudio, open the relevant project to check there are no commits
-left. Then you can move to the `master` branch and `Pull` to get all
-updates you just committed to the `master` branch. Then click the
+left. Then you can move to the `main` branch and `Pull` to get all
+updates you just committed to the `main` branch. Then click the
 `New branch` button in RStudio (besides the `Switch branch` icon
-indicating which branch (e.g., `master` or `devel`) you are using), use
+indicating which branch (e.g., `main` or `devel`) you are using), use
 `devel` as branch name and click `Create`. You will be notified that
 `devel` already exists and asked if you want to overwrite it. **If** you
-have just merged `devel` into `master`, you can choose to overwrite it
-to have a new `devel` branch.
+have just merged `devel` into `main`, you can choose to overwrite it to
+have a new `devel` branch.
 
 #### Set up a new branch
 
@@ -902,7 +887,7 @@ can also create a completely new branch:
   button \> `copy URL to clipboard`.
 - In RStudio: `File` \> `New project` \> `Version control` \> `Git` and
   paste the copied URL in the `Repository URL` \> `Create Project`.
-- Then (still in RStudio) in the `Git` menu change from `master` to the
+- Then (still in RStudio) in the `Git` menu change from `main` to the
   just-created branch.
 
 ### Installing the updated package
@@ -914,7 +899,7 @@ relevant packages.
 
 ### See also
 
-- usethis::use_release_issue()
+- [usethis::use_release_issue()](https://usethis.r-lib.org/reference/use_release_issue.html)
 - <https://bioconductor.org/packages/release/bioc/html/BiocCheck.html>
 - <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package>
 
@@ -926,13 +911,48 @@ relevant packages.
 
 ## Troubleshooting
 
-To prevent `regex`-classes in example code from being interpreted as
-links (which leads to the error
-`@section Could not resolve link to topic ":blank:" in the dependencies or base packages`)
-when running
-[`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
-use backticks (`` ` ``) to format a line as code, or wrap consecutive
-lines in `` \code{...}` ``.
+- If running checks lead to the warning
+  `Warning in get_engine(options$engine): Unknown language engine '<name>' (must be registered via knit_engines$set())`,
+  you probably forgot to indicate the knit-engine when naming a code
+  chunk:
+
+      ```{use-sum}
+      1 + 1
+      ```
+
+  erroneously tries to use the engine `use-sum`, whereas the probably
+  intended `{r use-sum}` correctly indicates that the `r` engine should
+  be used and the code chunk should be named `use-sum`:
+
+      ```{r use-sum}
+      1 + 1
+      ```
+
+  See `sort(names(knitr::knit_engines$get()))` for the available
+  knit-engines.
+
+- If running checks lead to the error
+  `Failed with error: 'there is no package called '<pkg>''`
+  `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`, you
+  probably forgot to use `library(<pkg>)` in a code chunck, used a
+  package that is not declared as dependency in the `DESCRIPTION` file,
+  or used a package that is declared as suggested dependency (i.e., is
+  in the `Suggests` field of the `DESCRIPTION` file) without running
+  that code conditionally on the presence of `<pkg>` through
+  `if(requireNamespace(<pkg>)) {<code>}`. The latter is catched by using
+  argument `env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)` when running
+  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
+
+- If checks fail because of `LaTeX` errors when building the manual, you
+  can use `manual = FALSE`.
+
+- If running
+  [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+  leads to the error
+  `@section Could not resolve link to topic ":blank:" in the dependencies or base packages`,
+  `regex`-classes in example code are being interpreted as links. To
+  prevent this, use backticks (`` ` ``) to format a line as code, or
+  wrap consecutive lines in `` \code{...}` ``.
 
 ## Documentation and help
 
@@ -956,8 +976,8 @@ lines in `` \code{...}` ``.
   from the [R Contribution Working
   Group](https://contributor.r-project.org/)
 - The [`package development guide`](https://devguide.ropensci.org/), the
-  [Statistical Software Peer
-  Review](https://stats-devguide.ropensci.org/) guide, and a section
+  [`Statistical Software Peer Review`](https://stats-devguide.ropensci.org/)
+  guide, and a section
   [`Publish packages`](https://docs.r-universe.dev/publish.html) in the
   [`R universe documentation`](https://docs.r-universe.dev/) from
   [rOpenSci](https://ropensci.org/)

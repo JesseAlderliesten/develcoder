@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,27 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.10.0" id="develcoder-0100">develcoder 0.10.0<a class="anchor" aria-label="anchor" href="#develcoder-0100"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-10-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h4>
+<ul><li>Dependency <code>cffr</code>: require minimum version <code>0.2.0</code> to be able to use argument <code>dependencies</code> of <code>cff_create()</code> and <code>cff_write()</code>.</li>
+<li>Dependency <code>checkinput</code>: increase minimum version from <code>1.0.0</code> to <code>1.3.0</code> to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
+<li>Dependency <code>checkrpkgs</code>: increase minimum versions from <code>1.0.0</code> to <code>1.1.0</code> to have correct versions of suggested dependencies.</li>
+<li>Dependency <code>devtools</code>: require minimum version <code>2.0.0</code> because that is the major release after the conscious uncoupling.</li>
+<li>Dependency <code>fs</code>: require minimum version <code>1.3.0</code> to be able to use argument <code>recurse</code>.</li>
+<li>Dependency <code>progutils</code>: increase minimum version from <code>0.13.0</code> to <code>0.14.0</code> to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
+<li>Dependency <code>tinytest</code>: require minimum version <code>1.4.1</code> to be able to use argument <code>strict</code> in <code>expect_message()</code> and <code>expect_warning()</code>.</li>
+<li>Dependency <code>tools</code>: require minimum version <code>4.1.0</code> to be able to use <code>package_dependencies()</code> with different dependency types for direct and recursive dependencies.</li>
+<li>Dependency <code>usethis</code>: require minimum version <code>2.0.1</code> to be able to use <code>git_branch_rename()</code>, <code>git_branch_rediscover()</code>, and <code>use_pkgdown_github_pages()</code>.</li>
+<li>
+<code><a href="../reference/check_tests.html">check_tests()</a></code> and <code><a href="../reference/diagnose_test_files.html">diagnose_test_files()</a></code>: use argument <code>collapse</code> of <code>paste_quoted()</code> to separate the quoted file names by newlines instead of by commas.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="miscellaneous-0-10-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-10-0"></a></h4>
+<ul><li>Update and add tests (work in progress).</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.0" id="develcoder-090">develcoder 0.9.0<a class="anchor" aria-label="anchor" href="#develcoder-090"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-9-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-9-0"></a></h4>
@@ -63,10 +84,10 @@
 <div class="section level4">
 <h4 id="breaking-changes-0-8-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-8-0"></a></h4>
 <ul><li>Dependency <code>desc</code>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code>check_test_infra()</code>.</li>
-<li>Dependency <code>fs</code>: require minimum version <code>1.2.4</code> because function <code>dir_ls()</code> with argument <code>fail</code> is used in a vignette.</li>
+<li>Dependency <code>fs</code>: require minimum version <code>1.2.4</code> to be able to use function <code>dir_ls()</code> with argument <code>fail</code> in a vignette.</li>
 <li>Suggested dependency <code>goodpractice</code>: require minimum version <code>1.1.0</code> which changed default argument <code>checks</code> in <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::goodpractice()</a></code>.</li>
 <li>Dependency <code>progutils</code>: increase minimum version from <code>0.9.0</code> to <code>0.13.0</code> to prevent spurious warnings from <code>wrap_text()</code>.</li>
-<li>Dependency <code>remotes</code>: require minimum version <code>2.2.0</code> because function <code>install_version()</code> with the specification of minimum version is used in a vignette.</li>
+<li>Dependency <code>remotes</code>: require minimum version <code>2.2.0</code> to be able to use function <code>install_version()</code> with the specification of a minimum version in a vignette.</li>
 <li>Add suggested dependency <code>withr</code> to create temporary projects when testing.</li>
 </ul></div>
 <div class="section level4">
@@ -160,7 +181,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

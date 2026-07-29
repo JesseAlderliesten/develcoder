@@ -152,4 +152,6 @@ withr::with_dir(new = tempdir_example, {
 #> $ignored_files
 #> character(0)
 #> 
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
 ```

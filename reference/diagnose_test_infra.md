@@ -98,4 +98,6 @@ withr::with_dir(new = tempdir_example, {
 #> $dependency
 #> [1] "missing"
 #> 
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
 ```

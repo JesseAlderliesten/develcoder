@@ -22,7 +22,7 @@ The `rmarkdown` package requires a
 [`MikTex`](https://miktex.org/) or
 [`TinyTeX`](https://yihui.org/tinytex/) (for debugging see
 [here](https://yihui.org/tinytex/r/)), to convert R Markdown files to a
-PDF. See the ‘R markdown cookbook’ and the ‘Definitive guide’ (both
+PDF. See the `R markdown cookbook` and the `Definitive guide` (both
 mentioned at [Useful resources](#useful-resources) below) for extensive
 help. When installing [`MikTex`](https://miktex.org/) as LaTeX
 distribution, set `install for all users` and
@@ -53,22 +53,21 @@ options(tinytex.verbose = FALSE)
   [Posit](https://posit.co/)
 - the maintainer’s website on [`knitr`](https://yihui.org/knitr/)
 - the [`Markdown guide`](https://www.markdownguide.org/)
-- the book [RMarkdown for Scientists](https://rmd4sci.njtierney.com/)
+- the book [`RMarkdown for Scientists`](https://rmd4sci.njtierney.com/)
   by N. Tierney
 
 ## Global Settings for knitr used by R Markdown
 
 For a list of available options, see `str(knitr::opts_chunk$get())` and
-the overviews at the maintainer’s website
-([here](https://yihui.org/knitr/options/) and
-[here](https://yihui.org/knitr/objects/)).
+the overviews of [options](https://yihui.org/knitr/options/) and
+[objects storing options](https://yihui.org/knitr/objects/) at the
+maintainer’s website.
 
 The option `echo = FALSE` hides code from the output. Use numeric values
 to include the code of particular chunks. To collect all code as an the
-appendix at the end of of a document, see the section about putting
-[code in an
-appendix](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix) from
-the ‘rmarkdown cookbook’.
+appendix at the end of of a document, see the section
+[`Put together all code in the appendix`](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix)
+from the `rmarkdown cookbook`.
 
 If the option `include = FALSE` is used, code and results are not
 included in output, but code **is** executed such that its results can
@@ -138,17 +137,16 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 
 ## Adding and collecting code chuncks
 
-Add a new chunk by either (1) clicking the `Insert Chunk` button on the
-toolbar, (2) pressing `Ctrl+Alt+I`, or (3) typing the delimiters
-```` ```{r} ```` above and ```` ``` ```` below the code chunk.
+Add a new chunk by either using the `Code` \> `Insert Chunk` button or
+typing the delimiters ```` ```{r} ```` above and ```` ``` ```` below the
+code chunk.
 
 To collect all chunks in a R Markdown document that contain R code in a
 conventional R script use
-`knitr::purl("FilenameRMarkdownFile.Rmd", documentation = 0)`.
-
-Note that the various R Markdown options are not incorporated in such an
-R script, which might hamper exactly reproducing the analyses as
-executed when running the R Markdown file, see the note in
+`knitr::purl("<filename>.Rmd", documentation = 0)`. However, the various
+R Markdown options will **not** be incorporated in such an R script,
+which might hamper exactly reproducing the analyses as executed when
+running the R Markdown file, see the note in
 [`help("purl", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
 ## Formatting in R Markdown
@@ -163,7 +161,8 @@ is rendered as:
 Using *italic words* and *also italic words* or **bold words** or even
 *An **italic and bold phrase** in italic text*
 
-Partially bold text does **not** work inside link text in R \<= 4.1.0.
+Partially bold text does **not** work inside link text in R version
+4.1.0 or earlier.
 
 ### Code chunks
 
@@ -244,7 +243,7 @@ signs (`+`), or dashes (`-`).
     1. item one
     2. item two
 
-These lists would render as:
+These lists are rendered as:
 
 non-numbered list:
 
