@@ -60,6 +60,8 @@ withr::with_dir(new = tempdir_example, {
   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
   diagnose_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
 })
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
 
 }
 \seealso{

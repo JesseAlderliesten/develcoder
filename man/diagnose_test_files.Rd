@@ -74,6 +74,8 @@ withr::with_dir(new = tempdir_example, {
   fs::dir_create(fs::path(tempdir_example, "inst", "tinytest"))
   diagnose_test_files(path = fs::path(tempdir_example, "inst", "tinytest"))
 })
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
 
 }
 \seealso{

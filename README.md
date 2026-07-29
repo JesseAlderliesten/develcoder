@@ -65,16 +65,14 @@ Visit the [develcoder
 website](https://jessealderliesten.github.io/develcoder/) to explore the
 package, or install `develcoder` from
 [GitHub](https://github.com/JesseAlderliesten/develcoder) using the
-following R code (you need to run R as administrator):
+following R code:
 
 ``` r
-if(!requireNamespace("remotes", quietly = TRUE)) {
-   install.packages(pkgs = "remotes", quiet = FALSE)
+if(!requireNamespace("remotes")) {
+   install.packages(pkgs = "remotes")
 }
 remotes::install_github(repo = "JesseAlderliesten/develcoder",
-                        dependencies = NA, upgrade = FALSE, force = FALSE,
-                        quiet = FALSE, build_vignettes = TRUE, lib = NULL,
-                        verbose = getOption("verbose"))
+                        upgrade = FALSE, build_vignettes = TRUE, lib = NULL)
 ```
 
 For more information about installing and configuring R and RStudio, see
@@ -91,7 +89,7 @@ License](LICENSE.md).
     To cite package 'develcoder' in publications use:
 
       Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-      Packages_. R package version 0.9.0,
+      Packages_. R package version 0.10.0,
       <https://github.com/JesseAlderliesten/develcoder>.
 
     A BibTeX entry for LaTeX users is
@@ -100,7 +98,7 @@ License](LICENSE.md).
         title = {develcoder: Code and Templates to Develop R Packages},
         author = {Jesse Alderliesten},
         year = {2026},
-        note = {R package version 0.9.0},
+        note = {R package version 0.10.0},
         url = {https://github.com/JesseAlderliesten/develcoder},
       }
 

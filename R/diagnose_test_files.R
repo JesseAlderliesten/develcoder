@@ -59,6 +59,8 @@
 #'   fs::dir_create(fs::path(tempdir_example, "inst", "tinytest"))
 #'   diagnose_test_files(path = fs::path(tempdir_example, "inst", "tinytest"))
 #' })
+#' # Remove temporary directory
+#' unlink(tempdir_example, recursive = TRUE)
 #'
 #' @export
 diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
@@ -95,10 +97,13 @@ diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
         overview_test_files$status_test_files <- "wrong"
         overview_test_files$ignored_files <- testfiles[names_error]
         testfiles <- testfiles[!names_error]
-        warning("Ignoring files that are not R files, are template files created by ",
-                progutils::paste_quoted(basename(path)), " or\nhave names that",
-                " do not start with 'pattern' (", progutils::paste_quoted(pattern),
-                "):\n", progutils::paste_quoted(overview_test_files$ignored_files))
+        warning(
+          "Ignoring files that are not R files, are template files created by ",
+          progutils::paste_quoted(basename(path)), " or\nhave names that",
+          " do not start with 'pattern' (", progutils::paste_quoted(pattern),
+          "):\n", progutils::paste_quoted(overview_test_files$ignored_files,
+                                          collapse = "\n")
+        )
         if(length(testfiles) == 0L) {
           overview_test_files$status_test_files <- "missing"
         }

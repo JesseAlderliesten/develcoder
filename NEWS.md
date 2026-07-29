@@ -1,3 +1,34 @@
+# develcoder 0.10.0
+
+### Breaking changes
+- Dependency `cffr`: require minimum version `0.2.0` to be able to use argument
+  `dependencies` of `cff_create()` and `cff_write()`.
+- Dependency `checkinput`: increase minimum version from `1.0.0` to `1.3.0` to
+  be able to use argument `collapse` of `paste_quoted()`.
+- Dependency `checkrpkgs`: increase minimum versions from `1.0.0` to `1.1.0` to
+  have correct versions of suggested dependencies.
+- Dependency `devtools`: require minimum version `2.0.0` because that is the
+  major release after the conscious uncoupling.
+- Dependency `fs`: require minimum version `1.3.0` to be able to use argument
+  `recurse`.
+- Dependency `progutils`: increase minimum version from `0.13.0` to `0.14.0` to
+  be able to use argument `collapse` of `paste_quoted()`.
+- Dependency `tinytest`: require minimum version `1.4.1` to be able to use
+  argument `strict` in `expect_message()` and `expect_warning()`.
+- Dependency `tools`: require minimum version `4.1.0` to be able to use
+  `package_dependencies()` with different dependency types for direct and
+  recursive dependencies.
+- Dependency `usethis`: require minimum version `2.0.1` to be able to use
+  `git_branch_rename()`, `git_branch_rediscover()`, and
+  `use_pkgdown_github_pages()`.
+- `check_tests()` and `diagnose_test_files()`: use argument `collapse` of
+  `paste_quoted()` to separate the quoted file names by newlines instead of by
+  commas.
+
+### Miscellaneous
+- Update and add tests (work in progress).
+
+
 # develcoder 0.9.0
 
 ### Breaking changes
@@ -21,14 +52,14 @@
 ### Breaking changes
 - Dependency `desc`: move from `Suggests` to `Imports` because it is used by
   `check_test_infra()`.
-- Dependency `fs`: require minimum version `1.2.4` because function `dir_ls()`
-  with argument `fail` is used in a vignette.
+- Dependency `fs`: require minimum version `1.2.4` to be able to use function
+  `dir_ls()` with argument `fail` in a vignette.
 - Suggested dependency `goodpractice`: require minimum version `1.1.0` which
   changed default argument `checks` in `goodpractice::goodpractice()`.
 - Dependency `progutils`: increase minimum version from `0.9.0` to `0.13.0` to
   prevent spurious warnings from `wrap_text()`.
-- Dependency `remotes`: require minimum version `2.2.0` because function
-  `install_version()` with the specification of minimum version is used in a
+- Dependency `remotes`: require minimum version `2.2.0` to be able to use
+  function `install_version()` with the specification of a minimum version in a
   vignette.
 - Add suggested dependency `withr` to create temporary projects when testing.
 

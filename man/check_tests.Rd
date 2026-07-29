@@ -67,6 +67,23 @@ the dependencies of the tested package
 are present in folder \code{R}
 }
 }
+\examples{
+path_develcoder <- find.package("develcoder")
+# test files are present
+check_tests(path = path_develcoder) # character(0)
+
+# warnings: test infrastructure, directories, and function files not present
+tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
+withr::with_dir(new = tempdir_example, {
+  # Set up a package without testing infrastructure
+  desc <- desc::description$new("!new")
+  desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+  check_tests(path = tempdir_example)
+})
+# Remove temporary directory
+unlink(tempdir_example, recursive = TRUE)
+
+}
 \seealso{
 Other functions to check tests:
 \code{\link[=diagnose_test_files]{diagnose_test_files()}},
