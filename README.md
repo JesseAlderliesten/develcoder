@@ -89,7 +89,7 @@ License](LICENSE.md).
     To cite package 'develcoder' in publications use:
 
       Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-      Packages_. R package version 0.9.0,
+      Packages_. R package version 0.10.0,
       <https://github.com/JesseAlderliesten/develcoder>.
 
     A BibTeX entry for LaTeX users is
@@ -98,7 +98,7 @@ License](LICENSE.md).
         title = {develcoder: Code and Templates to Develop R Packages},
         author = {Jesse Alderliesten},
         year = {2026},
-        note = {R package version 0.9.0},
+        note = {R package version 0.10.0},
         url = {https://github.com/JesseAlderliesten/develcoder},
       }
 

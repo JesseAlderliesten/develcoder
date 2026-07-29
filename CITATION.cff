@@ -8,7 +8,7 @@ message: 'To cite package "develcoder" in publications use:'
 type: software
 license: MIT
 title: 'develcoder: Code and Templates to Develop R Packages'
-version: 0.9.0
+version: 0.10.0
 abstract: Code and templates to set up, develop, and maintain R packages. This package
   heavily relies on packages 'devtools' and 'usethis'.
 authors:
