@@ -109,8 +109,11 @@ expect_warning(
   ),
   pattern = paste0(
     pattern_ignored, "'tinytest' or\nhave names.+\\^test_\\|\\^test-.+\n",
-    progutils::paste_quoted(sort(c(ignored_tinytest, ignored_general)),
-                            collapse = "\n")),
+    progutils::paste_quoted(
+      # Select only the first and last item to prevent tests failing because of
+      # differences in the sorting order of '-' and '_'.
+      sort(c(ignored_tinytest, progutils::head_tail(ignored_general, n = 1L))),
+      collapse = "\n.*")),
   strict = TRUE)
 
 expect_warning(
@@ -120,8 +123,11 @@ expect_warning(
   ),
   pattern = paste0(
     pattern_ignored, "'testthat' or\nhave names.+\\^test_\\|\\^test-.+\n",
-    progutils::paste_quoted(sort(c(ignored_testthat, ignored_general)),
-                            collapse = "\n")),
+    progutils::paste_quoted(
+      # Select only the first and last item to prevent tests failing because of
+      # differences in the sorting order of '-' and '_'.
+      sort(c(ignored_testthat, progutils::head_tail(ignored_general, n = 1L))),
+      collapse = "\n.*")),
   strict = TRUE)
 
 unlink(c(fs::path(path_testthat, ignored_general),
