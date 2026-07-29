@@ -7,10 +7,6 @@ pkg_name <- basename(my_tempdir_p1)
 path_tinytest <- fs::path(my_tempdir_p1, "tests", "tinytest.R")
 path_testthat <- fs::path(my_tempdir_p1, "tests", "testthat.R")
 
-expect_error(
-  diagnose_test_infra(path = path_tinytest),
-  pattern = "No DESCRIPTION file found", fixed = TRUE)
-
 # Create a description file that does not include any dependencies
 desc <- desc::description$new("!new")
 path_desc <- fs::path(my_tempdir_p1, "DESCRIPTION")
@@ -164,19 +160,8 @@ expect_identical(
   list(name = "testthat", status = "fine", dependency = "fine")
 )
 
-##### Arguments that result in an error #####
-expect_warning(
-  expect_error(
-    diagnose_test_infra(path = 3),
-    pattern = "is_path(path) is not TRUE", fixed = TRUE),
-  pattern = paste0("'path' should be a non-empty, non-NA_character_",
-                   " character string"), strict = TRUE, fixed = TRUE)
-
-expect_warning(
-  expect_error(
-    diagnose_test_infra(path = "c"),
-    pattern = "is_path(path) is not TRUE", fixed = TRUE),
-  pattern = "'path' should contain file separators", strict = TRUE, fixed = TRUE)
+##### Arguments that should result in an error #####
+# These are checked in 'test_check_tests.R'
 
 
 #### Remove objects used in tests ####
