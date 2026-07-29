@@ -105,7 +105,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(length(files_tinytest$test_files) > 0L && infra_tinytest$status != "fine") {
     warning(warn_ignore_p1, " tinytest ", warn_ignore_p2,
             " 'tinytest::setup_tinytest()' ", warn_ignore_p3,
-            progutils::paste_quoted(files_tinytest$test_files))
+            progutils::paste_quoted(files_tinytest$test_files, collapse = "\n"))
     files_tinytest$ignored_files <- c(files_tinytest$ignored_files,
                                       files_tinytest$test_files)
     files_tinytest$test_files <- character(0)
@@ -116,7 +116,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(length(files_testthat$test_files) > 0L && infra_testthat$status != "fine") {
     warning(warn_ignore_p1, " testthat ", warn_ignore_p2,
             " 'usethis::use_testthat()' ", warn_ignore_p3,
-            progutils::paste_quoted(files_testthat$test_files))
+            progutils::paste_quoted(files_testthat$test_files, collapse = "\n"))
     files_testthat$ignored_files <- c(files_testthat$ignored_files,
                                       files_testthat$test_files)
     files_testthat$test_files <- character(0)
@@ -129,11 +129,11 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
 
   if(all(bool_dir_missing)) {
     warning("None of the test directories exist:\n",
-            progutils::paste_quoted(all_paths))
+            progutils::paste_quoted(all_paths, collapse = "\n"))
   } else {
     if(length(test_files_present) == 0L) {
       warning("None of the test directories contain used test files:\n",
-              progutils::paste_quoted(all_paths))
+              progutils::paste_quoted(all_paths, collapse = "\n"))
     }
   }
 
@@ -142,7 +142,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   bool_not_R <- !endsWith(x = R_files, suffix = ".R")
   if(any(bool_not_R)) {
     warning("Ignoring non-R files in folder '", path_R, "':\n",
-            progutils::paste_quoted(R_files[bool_not_R]))
+            progutils::paste_quoted(R_files[bool_not_R], collapse = "\n"))
     R_files <- R_files[!bool_not_R]
   }
 
@@ -188,14 +188,15 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(length(tests_missing) > 0L) {
     warning("No test file found corresponding to function file ",
             progutils::paste_quoted(
-              sort(gsub(pattern = pattern, replacement = "", x = tests_missing))
+              sort(gsub(pattern = pattern, replacement = "", x = tests_missing)),
+              collapse = "\n"
             )
     )
   }
 
   if(length(tests_extraneous) > 0L) {
     warning("No function file found corresponding to test file ",
-            progutils::paste_quoted(sort(tests_extraneous)))
+            progutils::paste_quoted(sort(tests_extraneous), collapse = "\n"))
   }
 
   sort(c(tests_missing, tests_extraneous))
