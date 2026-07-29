@@ -17,10 +17,10 @@ Imports:
     fs (>= 1.3.0),
     progutils (>= 0.14.0)
 Suggests: 
-    cffr,
-    checkrpkgs (>= 1.0.0),
+    cffr (>= 0.2.0),
+    checkrpkgs (>= 1.1.0),
     codetools,
-    devtools,
+    devtools (>= 2.0.0),
     goodpractice (>= 1.1.0),
     knitr,
     pkgdepends,
@@ -29,9 +29,9 @@ Suggests:
     revdepcheck,
     rmarkdown,
     testthat,
-    tinytest,
-    tools,
-    usethis,
+    tinytest (>= 1.4.1),
+    tools (>= 4.1.0),
+    usethis (>= 2.0.1),
     utils,
     withr,
     xfun
