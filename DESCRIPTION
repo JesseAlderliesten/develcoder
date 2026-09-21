@@ -19,6 +19,7 @@ Imports:
 Suggests: 
     cffr (>= 0.2.0),
     checkrpkgs (>= 1.1.0),
+    checktor,
     codetools,
     devtools (>= 2.0.0),
     goodpractice (>= 1.1.0),
