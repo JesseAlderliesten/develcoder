@@ -55,6 +55,10 @@ options(tinytex.verbose = FALSE)
 - the [`Markdown guide`](https://www.markdownguide.org/)
 - the book [`RMarkdown for Scientists`](https://rmd4sci.njtierney.com/)
   by N. Tierney
+- Chapters from The Epidemiologist R Handbook:
+  [`Reports with R Markdown`](https://epirhandbook.com/en/new_pages/rmarkdown.html)
+  and
+  [`Organizing routine reports`](https://epirhandbook.com/en/new_pages/reportfactory.html)
 
 ## Global Settings for knitr used by R Markdown
 

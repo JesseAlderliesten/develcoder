@@ -117,7 +117,7 @@ Examples that create output files should write them to a temporary
 directory that is cleaned up afterwards. See the section
 `Usage in practice` in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html)
-and section `Add tests` below.
+and section [Add tests](#add-tests) below.
 
 Although examples rendered on a website created with
 [`pkgdown`](https://pkgdown.r-lib.org/) will display the output
@@ -145,10 +145,31 @@ book `R packages`.
 
 Newlines can be forced using `\cr`.
 
-For an overview of mathematical notation see:
+For an overview of mathematical notation see
 <https://rpruim.github.io/s341/S19/from-class/MathinRmd.html>
 
 ### Add tests
+
+#### Background
+
+For background on testing:
+
+- [`Unit tests`](https://contributions.bioconductor.org/tests.html)
+- [`Testing basics`](https://r-pkgs.org/testing-basics.html) and
+  subsequent chapters.
+- [`Code Testing`](https://book.the-turing-way.org/reproducible-research/testing/)
+  and subsequent chapters.
+- This [curated overview of
+  packages](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#packages-tests)
+  that also includes packages that test non-code aspects (e.g., examples
+  or documentation) and packages that help with generating test suites.
+
+To attach a package during testing, use `devtools::load_all(<pkg>)`.
+Alternatively, use
+`attach(loadNamespace("<pkg>"), name = "<some_name>")` which can be
+undone by `detach("<some_name>")`.
+
+#### Cleaning up
 
 Tests that create output files should write them to a temporary
 directory that is cleaned up afterwards. See the section
@@ -160,8 +181,8 @@ from package `testthat` for more details. In addition, changed options
 and graphical parameters should be restored to their original state to
 prevent influencing subsequent code (see the [entry in the CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
-for details). The following pattern shows how to do so for single option
-or parameter:
+for details). The following pattern shows how to do so for a single
+option or parameter:
 
 ``` r
 orig_opt <- options(<option> = <value>)
@@ -210,10 +231,10 @@ Testing file paths requires some thought because the file separator
 depends on the operating system (see `.Platform$file.sep`) and the
 backward slash is used as escape character in `R` such that it needs to
 be escaped itself by doubling them. Thus, a check on the presence of two
-successive slashes and backslashes in string `string` would use
+successive slashes or backslashes in string `string` would use
 `grepl(pattern = "//", x = string, fixed = TRUE)` and
-`grepl(pattern = "\\\\", x = string, fixed = TRUE)`. The message to
-point out their presence would be written as
+`grepl(pattern = "\\\\", x = string, fixed = TRUE)`, respectively. The
+message to point out their presence would be written as
 `message("Successive '/' or '\\'")` which would be printed as
 `Successive '/' or '\'`.
 
@@ -504,10 +525,10 @@ webpage might display ‘504 Gateway Time-out’ if it has not finished
 yet).
 
 These checks might malfunction if your package has dependencies that are
-not on CRAN or BioConductor. These dependencies should have been flagged
+not on CRAN or BioConductor. Such dependencies should have been flagged
 above by `devtools::check(manual = TRUE, remote = TRUE)` as
 `not in the CRAN or BioC software repositories` or as
-`not in mainstream repositories`).
+`not in mainstream repositories`.
 
 ``` r
 
@@ -538,6 +559,16 @@ utils::aspell_package_Rd_files(dir = getwd())
 utils::aspell_package_vignettes(dir = getwd())
 ```
 
+#### checktor
+
+[Checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides
+various checks supplementing R CMD check.
+
+``` r
+
+checktor::checktor()
+```
+
 #### goodpractice
 
 Runs checks of its own and checks from various other packages.
@@ -548,9 +579,12 @@ because their [‘own’
 checks](https://docs.ropensci.org/pkgcheck/articles/list-checks.html)
 are largely covered by the checks from `devtools` used
 [above](#devtools-local), their checks from `goodpractice` are already
-covered here, and the checks from
+covered here (see also [this
+post](https://docs.ropensci.org/pkgcheck/articles/autotest-pkgcheck-gp.html)
+on the relation between `goodpractice` and `pkgcheck`), and the checks
+from
 [pkgstats](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
-are not interesting and require system libraries `ctags-universal` and
+are not very useful and require system libraries `ctags-universal` and
 `GNU global`. However, the `pkgcheck` [GitHub
 action](https://github.com/ropensci-review-tools/pkgcheck-action) (see
 also [here](https://github.com/r-universe-org/workflows)) might be
@@ -832,7 +866,7 @@ To create a custom function index, include a section `reference:` in the
 `_pkgdown.yml` file with the desired headings and topics, see the
 [documentation](https://pkgdown.r-lib.org/reference/build_reference.html),
 an [official
-example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml)
+example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml),
 and [my own
 example](https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml).
 Then build the reference with
@@ -954,6 +988,15 @@ relevant packages.
   prevent this, use backticks (`` ` ``) to format a line as code, or
   wrap consecutive lines in `` \code{...}` ``.
 
+- Errors can arise if package development is not done from a clean R
+  session. Use
+  [`loadedNamespaces()`](https://rdrr.io/r/base/ns-load.html) to check
+  which packages are loaded.
+
+- See also section `Troubleshooting` in the vignette about R packages in
+  package `checkrpkgs`:
+  [Troubleshooting](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
+
 ## Documentation and help
 
 ### Guidelines on package development
@@ -1016,3 +1059,4 @@ relevant packages.
 - The R
   [`NEWS`](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html) for
   the development branch
+- Chapters from [Advanced R](https://adv-r.hadley.nz/techniques.html).

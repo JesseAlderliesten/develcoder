@@ -127,11 +127,11 @@ withr::with_dir(new = tempdir_example, {
   check_tests(path = tempdir_example)
 })
 #> Warning: No file determining the used testing infrastructure exists:
-#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/tinytest.R',
-#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/testthat.R'
+#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/tinytest.R',
+#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat.R'
 #> Warning: None of the test directories exist:
-#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/inst/tinytest'
-#> '/tmp/RtmpMZ702x/check_tests1a7f4ae2abcf/tests/testthat'
+#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/inst/tinytest'
+#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat'
 #> Warning: No function files found.
 #> character(0)
 # Remove temporary directory

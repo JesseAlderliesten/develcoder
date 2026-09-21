@@ -7,6 +7,14 @@ code is needed only once to set up a package from scratch. Further
 package development is described in the vignette *Package development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
+## Check existing packages
+
+See the pointers given at the [task
+view](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-the-package-landscape),
+and the [search page](https://r-universe.dev/) of R-universe, which is
+[also available](https://rwarehouse.netlify.app/) with AI-assisted
+extended search capabilities.
+
 ## Choose a name
 
 ``` r
@@ -217,7 +225,10 @@ After setting up these workflows, adjust the created `YAML` files (i.e.,
 `<pkg>\.github\workflows\check-standard.yaml` and
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
 useful triggers for GHAs (see the template files `check-standard.yaml`
-and `check-no-suggests.yaml` in the folder `inst/templates`):
+and `check-no-suggests.yaml` in the folder `templates` in the local
+package folder or in
+[inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
+on the GitHub repository):
 
 - you made changes, or someone else proposed changes to code in the
   current repository:  
@@ -236,7 +247,8 @@ and `check-no-suggests.yaml` in the folder `inst/templates`):
   Saturday on 04:23 UTC. The cron specification consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
-  timing is approximate and depends on how busy the servers are.
+  timing is approximate and the actual time the check is run depends on
+  how busy the servers are.
 - If the package declares a dependency on a minimum `R` version, it is
   useful to specify the minimum declared `R` version to run in addition
   to the ones that are by default used in the template: for example,
