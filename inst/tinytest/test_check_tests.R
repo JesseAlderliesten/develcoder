@@ -410,9 +410,9 @@ expect_warning(
   expect_identical(
     check_tests(
       path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = TRUE),
-    c("file3.R", "some_func_tinytest.R"),
-  ), pattern = paste0("Test files will be ignored because test infrastructure",
-                      " for tinytest is missing")
+    c("file3.R", "some_func_tinytest.R")),
+  pattern = paste0("Test files will be ignored because test infrastructure",
+                   " for tinytest is missing")
 )
 
 expect_silent(
