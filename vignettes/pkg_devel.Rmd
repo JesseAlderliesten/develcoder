@@ -474,6 +474,14 @@ utils::aspell_package_Rd_files(dir = getwd())
 utils::aspell_package_vignettes(dir = getwd())
 ```
 
+### checktor
+[Checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides various 
+checks supplementing R CMD check.
+
+``` {r checks-checktor, eval = FALSE}
+checktor::checktor()
+```
+
 ### goodpractice
 Runs checks of its own and checks from various other packages.
 
@@ -536,8 +544,6 @@ res_goodpractice_failed
 # res_goodpractice$checks$<check_name>
 res_goodpractice
 ```
-
-See also https://cran.r-project.org/package=checktor
 
 ## Update package-wide documentation
 
