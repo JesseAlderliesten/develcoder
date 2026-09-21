@@ -199,138 +199,154 @@ expect_warning(
   strict = TRUE)
 unlink(path_misc)
 
+##### misc #####
+# testdir missing; testdir empty; testdir non-empty but without testfiles;
+# testdir with testfiles and ignored files that not have func files;
+# testdir with only testfiles: checked in file 'test_diagnose_test_files.R'
 
-#### Nog doen ####
+##### All files fine but infra wrong #####
+tinytest::setup_tinytest(pkgdir = my_tempdir, verbose = FALSE)
+# Remove placeholder
+unlink(fs::path(my_tempdir, "inst", "tinytest", paste0("test_", pkg_name, ".R")))
 
+expect_silent(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    character(0)
+  )
+)
 
+fs::file_create(fs::path(my_tempdir, "R", "file2.R"))
+fs::file_create(fs::path(my_tempdir, "tests", "testthat", "test-file3.R"))
 
-# ##### testdir missing #####
-# # See file 'test_diagnose_test_files.R'
-#
-# pattern_no_infra <- paste0("No file determining the used testing infrastructure",
-#                            " exists.+tinytest\\.R.+testthat\\.R")
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = pattern_no_infra, strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "None of the test directories exist.+tinytest.+testthat",
-#   strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "No function files found", strict = TRUE)
-#
-# ##### testdir empty #####
-# fs::dir_create(path = my_tempdir)
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = pattern_no_infra, strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "None of the test directories exist.+tinytest.+testthat",
-#   strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "No function files found", strict = TRUE)
-#
-# ##### testdir non-empty, no testfiles #####
-# fs::dir_create(path = path_testdir)
-# path_misc_file <- fs::path(path_testdir, "misc_file.R")
-# fs::file_create(path_misc_file)
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = pattern_no_infra, strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "Ignoring files whose names.+\\^test_\\|\\^test-.+misc_file\\.R",
-#   strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = paste0("None of the test directories contain used test",
-#                    " files.+tinytest.+testthat"),
-#   strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(check_tests(path = my_tempdir), character(0)),
-#   pattern = "No function files found", strict = TRUE)
-#
-# ##### testdir with only testfiles #####
-# fs::file_create(fs::path(path_testdir, "test_file2.R"))
-# unlink(path_misc_file)
-#
-# expect_warning(
-#   expect_identical(
-#     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-#     character(0)
-#   ),
-#   pattern = pattern_no_infra, strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(
-#     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-#     character(0)
-#   ),
-#   pattern = "No function files found", strict = TRUE)
-#
-# expect_warning(
-#   expect_identical(
-#     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-#     character(0)
-#   ),
-#   pattern = "No function file found corresponding to test file 'test_file.R'",
-#   strict = TRUE)
-#
-# ##### All files fine but infra wrong #####
-# # Set up testthat infrastructure
-#
-# # DOES NOT create the correct files in the tempdir but in the current project
-# # (i.e., develcoder?!)
-# usethis::ui_silence(usethis::use_testthat())
-#
-# # Add missing files
-# fs::file_create(fs::path(my_tempdir, "R", "file2.R"))
-# fs::file_create(fs::path(my_tempdir, "tests", "testthat", "test-file3.R"))
-#
-# # Notes:
-# # - No warning about missing 'tinytest' test infrastructure because testthat
-# #   test infrastructure is present
-# # - Should warn about 'testthat' template file
-# expect_warning(
-#   expect_identical(
-#     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-#     c("test_file.R", "test_file2.R", "test_file3.R")
-#   ),
-#   pattern = paste0("The file determining the used testing infrastructure",
-#                    " exists but does not refer\nto package ",
-#                    progutils::paste_quoted(pkg_name)),
-#   strict = TRUE, fixed = TRUE)
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R")
+  ), pattern = "No test file found corresponding to function file 'file2.R'",
+  strict = TRUE, fixed = TRUE
+)
 
-##### testdir with testfiles and ignored files that not have func files #####
-##### testdir but infra wrong #####
-##### testdir but infra missing #####
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R")
+  ), pattern = "No function file found corresponding to test file 'file3.R'",
+  strict = TRUE, fixed = TRUE
+)
+
+expect_silent(
+  expect_identical(
+    diagnose_test_infra(path = fs::path(my_tempdir, "inst", "tinytest")),
+    list(name = "tinytest", status = "missing", dependency = "fine")
+  )
+)
+
+expect_silent(
+  expect_identical(
+    diagnose_test_files(path = fs::path(my_tempdir, "inst", "tinytest")),
+    list(pattern = "^test_|^test-", ignore_case = TRUE,
+         status_testdir = "present", status_test_files = "fine",
+         test_files = c("test-other_func_tinytest.R", "test_some_func_tinytest.R"),
+         ignored_files = character(0))
+  )
+)
+
+# Set up testthat infrastructure
+# NB. Using `usethis::use_testthat()` does not work: that does NOT create the
+# correct files in the tempdir but in the current project (i.e., develcoder)
+testfile_testthat <- fs::path(fs::dir_create(fs::path(my_tempdir, "tests")),
+                              "testthat.R")
+fs::file_create(testfile_testthat)
+expect_true(fs::is_file(testfile_testthat))
+writeLines(text = c("library(testthat)", paste0("library(", pkg_name, ")"),
+                    paste0("test_check(\"", pkg_name, "\")")),
+           con = testfile_testthat)
+
+# TO DO:
+# - Should warn about 'testthat' template file?
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R")
+  ),
+  pattern = "No test file found corresponding to function file 'file2.R'",
+  strict = TRUE, fixed = TRUE)
+
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R")
+  ),
+  pattern = "No function file found corresponding to test file 'file3.R'",
+  strict = TRUE, fixed = TRUE)
+
+# Remove tinytest test infrastructure
+unlink(fs::path(my_tempdir, "tests", "tinytest.R"))
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
+  ),
+  pattern = "No test file found corresponding to function file 'file2.R'",
+  strict = TRUE, fixed = TRUE)
+
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
+  ),
+  pattern = "No function file found corresponding to test file 'file3.R'",
+  strict = TRUE, fixed = TRUE)
+
+expect_warning(
+  expect_identical(
+    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
+    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
+  ),
+  pattern = paste0("Test files will be ignored because test infrastructure for",
+                   " tinytest is missing\nor does not refer to the current package",
+                   " .run 'tinytest::setup_tinytest.)' to\ncreate the test",
+                   " infrastructure.:\n'test-other_func_tinytest.R'\n'test_some_func_tinytest.R'"),
+  strict = TRUE)
+
+expect_silent(
+  expect_identical(
+    diagnose_test_infra(path = fs::path(my_tempdir, "inst", "tinytest")),
+    list(name = "tinytest", status = "missing", dependency = "fine")
+  )
+)
+
+expect_silent(
+  expect_identical(
+    diagnose_test_infra(path = fs::path(my_tempdir, "tests", "testthat.R")),
+    list(name = "testthat", status = "fine", dependency = "fine")
+  )
+)
+
 ##### testthat template files in <pkg>\tests\testthat
+
 ##### tinytest template files in <pkg>\inst\tinytest
+
 ##### testfiles duplicated in tinytest/testthat
+
 ##### testfiles that only differ in case from each other #####
+
 ##### func files that only differ in case from each other #####
+
 ##### R dir empty #####
+
 ##### R dir missing #####
 
 #### Fine ####
 
 ##### 'pattern' is respected #####
+old_func <- c("file2.R", "file3.R", "other_func_tinytest.R")
 some_func <- c("some_func_testthat.R", "some_func_tinytest.R")
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test-"),
-    some_func
+    c(old_func, some_func)
   ),
   pattern = paste0(
     pattern_ignored,
@@ -340,7 +356,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test-"),
-    some_func
+    c(old_func, some_func)
   ),
   pattern = paste0(
     pattern_ignored,
@@ -350,10 +366,11 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test-"),
-    some_func
+    c(old_func, some_func)
   ),
-  pattern = paste0(pattern_no_test_file,
-                   progutils::paste_quoted(some_func, collapse = "\n")),
+  pattern = paste0(
+    pattern_no_test_file,
+    progutils::paste_quoted(c(old_func[-2], some_func), collapse = "\n")),
   strict = TRUE)
 
 expect_warning(
@@ -374,7 +391,7 @@ expect_warning(
     diagnose_test_files(path = path_testthat, pattern = "^test-"),
     list(pattern = "^test-", ignore_case = TRUE,
          status_testdir = "present", status_test_files = "wrong",
-         test_files = "test-other_func_testthat.R",
+         test_files = c("test-file3.R", "test-other_func_testthat.R"),
          ignored_files = "test_some_func_testthat.R")
   ),
   pattern = paste0(
@@ -384,16 +401,18 @@ expect_warning(
 
 ##### 'ignore_case' is respected #####
 unlink(c(fs::path(path_tinytest, "test-other_func_tinytest.R"),
-         fs::path(path_testthat, "test-other_func_testthat.R")))
+         fs::path(path_testthat, "test-other_func_testthat.R"),
+         fs::path(path_R, "file2.R"), fs::path(path_R, "other_func_tinytest.R")))
 fs::file_create(fs::path(path_tinytest, "TEst-other_func_tinytest.R"))
 fs::file_create(fs::path(path_testthat, "TEst-other_func_testthat.R"))
 
-expect_silent(
+expect_warning(
   expect_identical(
     check_tests(
       path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = TRUE),
-    character(0)
-  )
+    c("file3.R", "some_func_tinytest.R"),
+  ), pattern = paste0("Test files will be ignored because test infrastructure",
+                      " for tinytest is missing")
 )
 
 expect_silent(
