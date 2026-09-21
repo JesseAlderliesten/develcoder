@@ -1,3 +1,24 @@
+# develcoder 0.11.0
+
+### Breaking changes
+- Added `checktor` as suggested dependency because it is used in a vignette.
+- Dependency `checkinput`: increase minimum version from `1.3.0` to `1.4.0` to
+  use stricter argument checking for `all_numbers()`, `is_number()` and related
+  functions.
+- Dependency `usethis`: increase minimum version from `2.0.1` to `2.2.0` to have
+  more robust `use_r()` and `use_test()`.
+
+### Miscellaneous
+- Vignette `Package setup`: add section `Check existing packages`.
+- Vignette `Package development`: add subsection `Background` pointing to useful
+  resources in section `Add tests`. Add checks by `checktor`. Add various
+  references.
+- Vignette `R Markdown and knitr`: link to relevant chapters from
+  `The Epidemiologist R Handbook`.
+- Added some more references.
+- The used version of `roxygen2` increased from `8.0.0` to `8.1.0`.
+
+
 # develcoder 0.10.0
 
 ### Breaking changes
