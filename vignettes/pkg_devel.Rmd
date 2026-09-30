@@ -151,9 +151,17 @@ For background on testing:
   that also includes packages that test non-code aspects (e.g., examples or
   documentation) and packages that help with generating test suites.
 
-To attach a package during testing, use `devtools::load_all(<pkg>)`.
-Alternatively, use `attach(loadNamespace("<pkg>"), name = "<some_name>")` which
-can be undone by `detach("<some_name>")`.
+Use `devtools::load_all(<pkg>)` to attach a package during testing (with
+`unloadNamespace("develcoder")` to detach it), or use
+`attach(loadNamespace("<pkg>", versionCheck = list(op = ">", version = package_version("1.2.3"))))`
+to specify which version to load, with `detach("<pkg>")` to detach it.
+`devtools::is_dev_package(<pkg>)` shows if a
+package was loaded through `devtools::load_all(<pkg>)`, and 
+`devtools::loaded_packages()` shows loaded packages with the path from which
+they were loaded that can also be used to identify development packages. See
+the section `Loading and attaching packages` in the vignette *R packages* from
+package `checkrpkgs`for details on non-development packages:
+`vignette("r_pkgs", package = "checkrpkgs")`.
 
 ### Cleaning up
 Tests that create output files should write them to a temporary directory
