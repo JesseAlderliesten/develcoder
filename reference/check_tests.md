@@ -118,6 +118,7 @@ check_tests(path = path_develcoder) # character(0)
 #> Warning: No function files found.
 #> character(0)
 
+if(requireNamespace("withr", quietly = TRUE)) {
 # warnings: test infrastructure, directories, and function files not present
 tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
 withr::with_dir(new = tempdir_example, {
@@ -126,14 +127,14 @@ withr::with_dir(new = tempdir_example, {
   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
   check_tests(path = tempdir_example)
 })
-#> Warning: No file determining the used testing infrastructure exists:
-#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/tinytest.R',
-#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat.R'
-#> Warning: None of the test directories exist:
-#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/inst/tinytest'
-#> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat'
-#> Warning: No function files found.
-#> character(0)
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)
+}
+#> Warning: No file determining the used testing infrastructure exists:
+#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/tinytest.R',
+#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat.R'
+#> Warning: None of the test directories exist:
+#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/inst/tinytest'
+#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat'
+#> Warning: No function files found.
 ```

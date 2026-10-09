@@ -9,7 +9,7 @@ and if function files have a corresponding test file and vice versa."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,6 +145,7 @@ are present in folder <code>R</code></p></li>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"withr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># warnings: test infrastructure, directories, and function files not present</span></span></span>
 <span class="r-in"><span><span class="va">tempdir_example</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">create_tempdir</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"check_tests"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_dir.html" class="external-link">with_dir</a></span><span class="op">(</span>new <span class="op">=</span> <span class="va">tempdir_example</span>, <span class="op">{</span></span></span>
@@ -153,16 +154,16 @@ are present in folder <code>R</code></p></li>
 <span class="r-in"><span>  <span class="va">desc</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span>file <span class="op">=</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="va">tempdir_example</span>, <span class="st">"DESCRIPTION"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">check_tests</span><span class="op">(</span>path <span class="op">=</span> <span class="va">tempdir_example</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No file determining the used testing infrastructure exists:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/tinytest.R',</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat.R'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>None of the test directories exist:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/inst/tinytest'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/Rtmpfnj07Y/check_tests19f411147f4f/tests/testthat'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
 <span class="r-in"><span><span class="co"># Remove temporary directory</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tempdir_example</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No file determining the used testing infrastructure exists:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/tinytest.R',</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat.R'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>None of the test directories exist:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/inst/tinytest'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

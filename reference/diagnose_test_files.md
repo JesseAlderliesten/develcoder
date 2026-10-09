@@ -123,6 +123,7 @@ diagnose_test_files(path = fs::path(path_develcoder, "inst", "othertest"))
 #> character(0)
 #> 
 
+if(requireNamespace("withr", quietly = TRUE)) {
 # empty test directory
 tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_files")
 withr::with_dir(new = tempdir_example, {
@@ -134,24 +135,7 @@ withr::with_dir(new = tempdir_example, {
   fs::dir_create(fs::path(tempdir_example, "inst", "tinytest"))
   diagnose_test_files(path = fs::path(tempdir_example, "inst", "tinytest"))
 })
-#> $pattern
-#> [1] "^test_|^test-"
-#> 
-#> $ignore_case
-#> [1] TRUE
-#> 
-#> $status_testdir
-#> [1] "present"
-#> 
-#> $status_test_files
-#> [1] "missing"
-#> 
-#> $test_files
-#> character(0)
-#> 
-#> $ignored_files
-#> character(0)
-#> 
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)
+}
 ```

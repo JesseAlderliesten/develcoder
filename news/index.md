@@ -1,5 +1,31 @@
 # Changelog
 
+## develcoder 0.12.0
+
+#### Breaking changes
+
+- Dependency `cffr`: move from `Suggests` to `Imports` and increase
+  minimum version from `0.2.0` to `0.5.0` to use `cff_read()` in
+  [`pkg_name_correct()`](https://jessealderliesten.github.io/develcoder/reference/pkg_name_correct.md).
+
+#### New functions
+
+- Add function
+  [`pkg_name_correct()`](https://jessealderliesten.github.io/develcoder/reference/pkg_name_correct.md)
+  and its helper
+  [`match_pkg_name()`](https://jessealderliesten.github.io/develcoder/reference/match_pkg_name.md)
+  to check that the correct package name is used in various files in the
+  package directory.
+
+#### Miscellaneous
+
+- `README`: add contact/contribution info.
+- Vignette `Package development`: add subsection `Check package name`
+  using
+  [`pkg_name_correct()`](https://jessealderliesten.github.io/develcoder/reference/pkg_name_correct.md).
+  Additions on getting information about loaded or attached packages.
+  Updated some links.
+
 ## develcoder 0.11.0
 
 #### Breaking changes

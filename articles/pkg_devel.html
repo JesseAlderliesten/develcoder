@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,7 +173,9 @@ that section is also defined in the file itself.</p>
 </h4>
 <p>It is possible to inherit the description of parameters from other
 functions. Since <code>roxygen2</code> 8.0.0, it is possible to specify
-which arguments to inherit.</p>
+which arguments to inherit (i.e., to filter arguments; for arguments
+that share a single description this works from <code>roxygen2</code>
+8.1.1)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># inherit from a function in the current package</span></span>
 <span><span class="co">#' @inheritParams is_logical allow_NA</span></span>
@@ -225,15 +227,25 @@ and subsequent chapters.</li>
 <li>
 <a href="https://book.the-turing-way.org/reproducible-research/testing/" class="external-link"><code>Code Testing</code></a>
 and subsequent chapters.</li>
-<li>This <a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#packages-tests" class="external-link">curated
-overview of packages</a> that also includes packages that test non-code
-aspects (e.g., examples or documentation) and packages that help with
-generating test suites.</li>
+<li>Section <code>Packages tests</code> from the CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link"><code>Package Development and Maintenance</code></a>
+with an annotated thematic collection of R packages that assist in
+developing R packages.</li>
 </ul>
-<p>To attach a package during testing, use
-<code>devtools::load_all(&lt;pkg&gt;)</code>. Alternatively, use
-<code>attach(loadNamespace("&lt;pkg&gt;"), name = "&lt;some_name&gt;")</code>
-which can be undone by <code>detach("&lt;some_name&gt;")</code>.</p>
+<p>Use <code>devtools::load_all(&lt;pkg&gt;)</code> to attach a package
+during testing (with <code>unloadNamespace("develcoder")</code> to
+detach it), or use
+<code>attach(loadNamespace("&lt;pkg&gt;", versionCheck = list(op = "&gt;", version = package_version("1.2.3"))))</code>
+to specify which version to load, with
+<code>detach("&lt;pkg&gt;")</code> to detach it.
+<code>devtools::is_dev_package(&lt;pkg&gt;)</code> shows if a package
+was loaded through <code>devtools::load_all(&lt;pkg&gt;)</code>, and
+<code><a href="https://devtools.r-lib.org/reference/loaded_packages.html" class="external-link">devtools::loaded_packages()</a></code> shows loaded packages with the
+path from which they were loaded that can also be used to identify
+development packages. See the section
+<code>Loading and attaching packages</code> in the vignette <em>R
+packages</em> from package <code>checkrpkgs</code>for details on
+non-development packages:
+<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p>
 </div>
 <div class="section level4">
 <h4 id="cleaning-up">Cleaning up<a class="anchor" aria-label="anchor" href="#cleaning-up"></a>
@@ -450,12 +462,26 @@ package.</p>
 <h2 id="preparing-for-updates">Preparing for updates<a class="anchor" aria-label="anchor" href="#preparing-for-updates"></a>
 </h2>
 <div class="section level3">
+<h3 id="check-package-name">Check package name<a class="anchor" aria-label="anchor" href="#check-package-name"></a>
+</h3>
+<p>Check if the correct package name is used in various files in the
+package directory. The best way to ensure the correct package name is
+used is to use dedicated functions to create the package structure and
+the relevant files, e.g., <code><a href="https://usethis.r-lib.org/reference/create_package.html" class="external-link">usethis::create_package()</a></code>,
+<code>cffr::cff_write(dependencies = FALSE)</code>,
+<code><a href="https://usethis.r-lib.org/reference/use_news_md.html" class="external-link">usethis::use_news_md()</a></code>, and
+<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code> instead of copying old packages to
+start new packages.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pkg_name_correct.html">pkg_name_correct</a></span><span class="op">(</span>pkg_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="check-tests">Check tests<a class="anchor" aria-label="anchor" href="#check-tests"></a>
 </h3>
 <p>Check if there are functions for which no test file was written and
 run all test files. Use <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code> instead of
 <code><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">tinytest::test_all()</a></code> if you used package <a href="https://testthat.r-lib.org/" class="external-link">testthat</a> to create tests.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># or devtools::test() if testthat was used to create tests</span></span>
 <span><span class="fu">develcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/check_tests.html">check_tests</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># character(0) if all is fine</span></span></code></pre></div>
@@ -544,7 +570,7 @@ dependencies listed in the <code>Depends</code>, <code>Imports</code>
 and <code>Suggests</code> fields of the <code>DESCRIPTION</code>
 file.</p></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">TRUE</span>, remote <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span>manual <span class="op">=</span> <span class="cn">TRUE</span>, remote <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -571,7 +597,7 @@ flagged above by
 <code>devtools::check(manual = TRUE, remote = TRUE)</code> as
 <code>not in the CRAN or BioC software repositories</code> or as
 <code>not in mainstream repositories</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check_win.html" class="external-link">check_win_release</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check_mac_release.html" class="external-link">check_mac_release</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -579,7 +605,7 @@ flagged above by
 <h4 id="codetools">codetools<a class="anchor" aria-label="anchor" href="#codetools"></a>
 </h4>
 <p>Check R code for possible problems.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Return is invisible and silent if all is well</span></span>
 <span><span class="fu">codetools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/codetools/man/checkUsage.html" class="external-link">checkUsagePackage</a></span><span class="op">(</span>pack <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -589,16 +615,16 @@ flagged above by
 <h4 id="utils">utils<a class="anchor" aria-label="anchor" href="#utils"></a>
 </h4>
 <p>Spell checking. This requires system libraries like <a href="http://aspell.net/" class="external-link">Aspell</a>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/aspell-utils.html" class="external-link">aspell_package_Rd_files</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/aspell-utils.html" class="external-link">aspell_package_vignettes</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="checktor">checktor<a class="anchor" aria-label="anchor" href="#checktor"></a>
 </h4>
-<p><a href="https://r-pkg.thecoatlessprofessor.com/checktor/" class="external-link">Checktor</a>
+<p><a href="https://r-pkg.thecoatlessprofessor.com/checktor/" class="external-link">checktor</a>
 provides various checks supplementing R CMD check.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">checktor</span><span class="fu">::</span><span class="fu"><a href="https://r-pkg.thecoatlessprofessor.com/checktor/reference/checktor.html" class="external-link">checktor</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -617,7 +643,7 @@ are not very useful and require system libraries
 <code>pkgcheck</code> <a href="https://github.com/ropensci-review-tools/pkgcheck-action" class="external-link">GitHub
 action</a> (see also <a href="https://github.com/r-universe-org/workflows" class="external-link">here</a>) might be
 useful.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select checks</span></span>
 <span><span class="co"># Show groups of checks: goodpractice::all_check_groups()</span></span>
 <span><span class="co"># Show all checks in some groups: goodpractice::checks_by_group(c("cyclocomp", "lintr"))</span></span>
@@ -671,7 +697,7 @@ useful.</p>
 </h4>
 <p>Run <code><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc::desc_normalize()</a></code> to normalize the
 <code>DESCRIPTION</code> file:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">desc</span><span class="fu">::</span><span class="fu"><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc_normalize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To show the <code>DESCRIPTION</code> file, use
 <code><a href="https://desc.r-lib.org/reference/desc.html" class="external-link">desc::desc()</a></code> or
@@ -699,7 +725,7 @@ on versioning.</p>
 <p>Update the <code>CITATION.cff</code> file to reflect the new package
 version (this code updates the citation file if it exists and otherwise
 uses the <code>DESCRIPTION</code> file to create a citation file):</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create or update a citation file</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -709,7 +735,7 @@ uses the <code>DESCRIPTION</code> file to create a citation file):</p>
 <code><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">devtools::install()</a></code> to ensure the updated version number
 without Git-commit ID will be included in the citation format in the
 <code>README</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>quick <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Then <code>Knit</code> the <code>README.Rmd</code> to produce a
 <code>README.md</code> file. The citation in the <code>README</code>
@@ -760,7 +786,7 @@ notify them.</p>
 <div class="section level3">
 <h3 id="locally-test-update">Locally test update<a class="anchor" aria-label="anchor" href="#locally-test-update"></a>
 </h3>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Check if output of .libPaths() is correct.</span></span>
 <span><span class="co"># If the next line leads to the error 'lazy-load database</span></span>
@@ -833,7 +859,7 @@ package.</p>
 </h3>
 <p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and the <a href="https://r-pkgs.org/website.html" class="external-link"><code>chapter</code></a> from the
 <code>R packages</code> book for further details.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To manually update the website</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Open <code>docs/index.html</code> in a web browser to preview the
@@ -939,7 +965,6 @@ GitHub pages of the relevant packages.</p>
 <ul>
 <li><a href="https://usethis.r-lib.org/reference/use_release_issue.html" class="external-link">usethis::use_release_issue()</a></li>
 <li><a href="https://bioconductor.org/packages/release/bioc/html/BiocCheck.html" class="external-link uri">https://bioconductor.org/packages/release/bioc/html/BiocCheck.html</a></li>
-<li><a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package" class="external-link uri">https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package</a></li>
 </ul>
 <div class="section level4">
 <h4 id="searching-for-packages">Searching for packages<a class="anchor" aria-label="anchor" href="#searching-for-packages"></a>
@@ -1057,9 +1082,7 @@ about package development by <a href="https://posit.co/" class="external-link">P
 that explains how to get information about to-be-installed and
 already-installed packages, and how to get the source code of R
 functions</li>
-<li>
-<a href="https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md" class="external-link"><code>Package Development and Maintenance</code></a>
-(currently a proposal for a <a href="https://cran.r-project.org/web/views/" class="external-link"><code>CRAN Task View</code></a>)
+<li>The CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment" class="external-link"><code>Package Development and Maintenance</code></a>
 with an annotated thematic collection of R packages that assist in
 developing R packages</li>
 <li>The R <a href="https://cran.r-project.org/doc/manuals/r-devel/NEWS.html" class="external-link"><code>NEWS</code></a>

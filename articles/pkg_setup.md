@@ -10,10 +10,14 @@ package development is described in the vignette *Package development*:
 ## Check existing packages
 
 See the pointers given at the [task
-view](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-the-package-landscape),
+view](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape),
 and the [search page](https://r-universe.dev/) of R-universe, which is
 [also available](https://rwarehouse.netlify.app/) with AI-assisted
-extended search capabilities.
+extended search capabilities, to search for functionality in existing
+packages. See the section `R packages` in the vignette *R packages* in
+package [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
+([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html))
+for an overview of repositories containing R packages.
 
 ## Choose a name
 

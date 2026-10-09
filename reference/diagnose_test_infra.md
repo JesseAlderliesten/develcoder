@@ -81,6 +81,7 @@ diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 #> [1] "fine"
 #> 
 
+if(requireNamespace("withr", quietly = TRUE)) {
 # test infrastructure is not present
 tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_infra")
 withr::with_dir(new = tempdir_example, {
@@ -89,15 +90,7 @@ withr::with_dir(new = tempdir_example, {
   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
   diagnose_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
 })
-#> $name
-#> [1] "tinytest"
-#> 
-#> $status
-#> [1] "missing"
-#> 
-#> $dependency
-#> [1] "missing"
-#> 
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)
+}
 ```

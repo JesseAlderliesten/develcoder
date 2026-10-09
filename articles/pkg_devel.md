@@ -100,7 +100,8 @@ is also defined in the file itself.
 
 It is possible to inherit the description of parameters from other
 functions. Since `roxygen2` 8.0.0, it is possible to specify which
-arguments to inherit.
+arguments to inherit (i.e., to filter arguments; for arguments that
+share a single description this works from `roxygen2` 8.1.1)
 
 ``` r
 
@@ -159,15 +160,23 @@ For background on testing:
   subsequent chapters.
 - [`Code Testing`](https://book.the-turing-way.org/reproducible-research/testing/)
   and subsequent chapters.
-- This [curated overview of
-  packages](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#packages-tests)
-  that also includes packages that test non-code aspects (e.g., examples
-  or documentation) and packages that help with generating test suites.
+- Section `Packages tests` from the CRAN Task View
+  [`Package Development and Maintenance`](https://cran.r-project.org/view=PackageDevelopment#packages-tests)
+  with an annotated thematic collection of R packages that assist in
+  developing R packages.
 
-To attach a package during testing, use `devtools::load_all(<pkg>)`.
-Alternatively, use
-`attach(loadNamespace("<pkg>"), name = "<some_name>")` which can be
-undone by `detach("<some_name>")`.
+Use `devtools::load_all(<pkg>)` to attach a package during testing (with
+`unloadNamespace("develcoder")` to detach it), or use
+`attach(loadNamespace("<pkg>", versionCheck = list(op = ">", version = package_version("1.2.3"))))`
+to specify which version to load, with `detach("<pkg>")` to detach it.
+`devtools::is_dev_package(<pkg>)` shows if a package was loaded through
+`devtools::load_all(<pkg>)`, and
+[`devtools::loaded_packages()`](https://devtools.r-lib.org/reference/loaded_packages.html)
+shows loaded packages with the path from which they were loaded that can
+also be used to identify development packages. See the section
+`Loading and attaching packages` in the vignette *R packages* from
+package `checkrpkgs`for details on non-development packages:
+[`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 #### Cleaning up
 
@@ -398,6 +407,24 @@ and folders will be in the top directory in the installed package.
 
 ## Preparing for updates
 
+### Check package name
+
+Check if the correct package name is used in various files in the
+package directory. The best way to ensure the correct package name is
+used is to use dedicated functions to create the package structure and
+the relevant files, e.g.,
+[`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html),
+`cffr::cff_write(dependencies = FALSE)`,
+[`usethis::use_news_md()`](https://usethis.r-lib.org/reference/use_news_md.html),
+and
+[`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html)
+instead of copying old packages to start new packages.
+
+``` r
+
+pkg_name_correct(pkg_name = basename(getwd()))
+```
+
 ### Check tests
 
 Check if there are functions for which no test file was written and run
@@ -561,7 +588,7 @@ utils::aspell_package_vignettes(dir = getwd())
 
 #### checktor
 
-[Checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides
+[checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides
 various checks supplementing R CMD check.
 
 ``` r
@@ -935,7 +962,6 @@ relevant packages.
 
 - [usethis::use_release_issue()](https://usethis.r-lib.org/reference/use_release_issue.html)
 - <https://bioconductor.org/packages/release/bioc/html/BiocCheck.html>
-- <https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md#checking-a-package>
 
 #### Searching for packages
 
@@ -1051,11 +1077,10 @@ relevant packages.
   explains how to get information about to-be-installed and
   already-installed packages, and how to get the source code of R
   functions
-- [`Package Development and Maintenance`](https://github.com/hturner/pkg-dev-ctv/blob/main/proposal.md)
-  (currently a proposal for a
-  [`CRAN Task View`](https://cran.r-project.org/web/views/)) with an
-  annotated thematic collection of R packages that assist in developing
-  R packages
+- The CRAN Task View
+  [`Package Development and Maintenance`](https://cran.r-project.org/view=PackageDevelopment)
+  with an annotated thematic collection of R packages that assist in
+  developing R packages
 - The R
   [`NEWS`](https://cran.r-project.org/doc/manuals/r-devel/NEWS.html) for
   the development branch
