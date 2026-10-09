@@ -63,6 +63,7 @@ A single \link[desc:description]{DESCRIPTION} file should be present in
 work with the used \code{fs::dir_ls()} if \code{pkg_dir} is not \code{"."}.
 }
 \examples{
+if(requireNamespace("withr", quietly = TRUE)) {
 # Create a temporary directory and temporarily set the working directory to it
 my_tempdir <- progutils::create_tempdir(prefix = "ex_pkg_name_correct")
 pkg_name <- basename(my_tempdir)
@@ -105,6 +106,7 @@ pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
 
 # return to normal working directory
 withr::deferred_run()
+}
 
 }
 \seealso{

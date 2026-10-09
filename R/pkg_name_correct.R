@@ -47,6 +47,7 @@
 #' [usethis::use_news_md()], [usethis::use_pkgdown()]
 #'
 #' @examples
+#' if(requireNamespace("withr", quietly = TRUE)) {
 #' # Create a temporary directory and temporarily set the working directory to it
 #' my_tempdir <- progutils::create_tempdir(prefix = "ex_pkg_name_correct")
 #' pkg_name <- basename(my_tempdir)
@@ -89,6 +90,7 @@
 #'
 #' # return to normal working directory
 #' withr::deferred_run()
+#' }
 #'
 #' @export
 pkg_name_correct <- function(

@@ -48,6 +48,7 @@
 #' # test directory is missing
 #' diagnose_test_files(path = fs::path(path_develcoder, "inst", "othertest"))
 #'
+#' if(requireNamespace("withr", quietly = TRUE)) {
 #' # empty test directory
 #' tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_files")
 #' withr::with_dir(new = tempdir_example, {
@@ -61,6 +62,7 @@
 #' })
 #' # Remove temporary directory
 #' unlink(tempdir_example, recursive = TRUE)
+#' }
 #'
 #' @export
 diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),

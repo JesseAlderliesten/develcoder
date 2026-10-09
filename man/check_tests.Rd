@@ -72,6 +72,7 @@ path_develcoder <- find.package("develcoder")
 # test files are present
 check_tests(path = path_develcoder) # character(0)
 
+if(requireNamespace("withr", quietly = TRUE)) {
 # warnings: test infrastructure, directories, and function files not present
 tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
 withr::with_dir(new = tempdir_example, {
@@ -82,6 +83,7 @@ withr::with_dir(new = tempdir_example, {
 })
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)
+}
 
 }
 \seealso{
