@@ -89,6 +89,11 @@ This project is licensed under the terms of the [MIT License](LICENSE.md).
 citation(basename(getwd()))
 ```
 
+## Contact
+Please open a
+[GitHub issue](https://github.com/JesseAlderliesten/develcoder/issues) if you
+have suggestions for improvement of `develcoder`.
+
 ## Similar resources
 - The book [`R packages`](https://r-pkgs.org/) by H. Wickham and J. Bryan
 - The chapter

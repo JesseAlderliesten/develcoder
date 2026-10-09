@@ -1,3 +1,4 @@
-if(requireNamespace("tinytest", quietly = TRUE)) {
+if(requireNamespace("tinytest", quietly = TRUE) &&
+   requireNamespace("withr", quietly = TRUE)) {
   tinytest::test_package("develcoder")
 }

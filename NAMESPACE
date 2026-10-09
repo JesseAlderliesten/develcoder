@@ -3,3 +3,5 @@
 export(check_tests)
 export(diagnose_test_files)
 export(diagnose_test_infra)
+export(match_pkg_name)
+export(pkg_name_correct)

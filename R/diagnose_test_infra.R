@@ -43,6 +43,7 @@
 #' # test infrastructure is present
 #' diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 #'
+#' if(requireNamespace("withr", quietly = TRUE)) {
 #' # test infrastructure is not present
 #' tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_infra")
 #' withr::with_dir(new = tempdir_example, {
@@ -53,6 +54,7 @@
 #' })
 #' # Remove temporary directory
 #' unlink(tempdir_example, recursive = TRUE)
+#' }
 #'
 #' @export
 diagnose_test_infra <- function(path = fs::path_wd("tests", "tinytest.R")) {
