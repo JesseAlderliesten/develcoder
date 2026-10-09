@@ -149,7 +149,7 @@ For background on testing:
 - [`Code Testing`](https://book.the-turing-way.org/reproducible-research/testing/)
   and subsequent chapters.
 - Section `Packages tests` from the CRAN Task View
-  [`Package Development and Maintenance`](https://cran.r-project.org/view=PackageDevelopment)
+  [`Package Development and Maintenance`](https://cran.r-project.org/web/views/PackageDevelopment.html#packages-tests)
   with an annotated thematic collection of R packages that assist in developing
   R packages.
 
