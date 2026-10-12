@@ -11,6 +11,7 @@ pattern_no_test_file <- "No test file found corresponding to function file "
 error_path <- "'path' should be a non-empty, non-NA_character_ character string"
 error_path_sep <- "'path' should contain file separators"
 error_not_path <- "is_path(path) is not TRUE"
+all_fine <- list(missing = character(0), extraneous = character(0))
 
 #### setup ####
 
@@ -48,8 +49,8 @@ fs::dir_create(path_R)
 tinytest_funcs <- c("some_func_tinytest.R", "other_func_tinytest.R")
 testthat_funcs <- c("some_func_testthat.R", "other_func_testthat.R")
 test_funcs <- c(tinytest_funcs, testthat_funcs)
-other_funcs <- sort(
-  test_funcs[startsWith(x = test_funcs, prefix = "other_func_")])
+other_funcs <- # sort(
+  test_funcs[startsWith(x = test_funcs, prefix = "other_func_")] #)
 fs::file_create(fs::path(path_R, test_funcs))
 path_other_funcs <- fs::file_create(fs::path(path_R, other_funcs))
 
@@ -88,7 +89,7 @@ fs::file_create(
 expect_silent(
   expect_identical(
     check_tests(path = my_tempdir),
-    character(0)
+    all_fine
   )
 )
 
@@ -105,7 +106,7 @@ path_ignored_testthat <- fs::file_create(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    character(0)
+    all_fine
   ),
   pattern = paste0(
     pattern_ignored, "'tinytest' or\nhave names.+\\^test_\\|\\^test-.+\n",
@@ -119,7 +120,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    character(0)
+    all_fine
   ),
   pattern = paste0(
     pattern_ignored, "'testthat' or\nhave names.+\\^test_\\|\\^test-.+\n",
@@ -141,7 +142,8 @@ path_ignored_R_testthat <- fs::file_create(fs::path(path_R, ignored_testthat))
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c(ignored_testthat, ignored_tinytest)
+    list(missing = c(ignored_testthat, ignored_tinytest),
+         extraneous = character(0))
   ),
   pattern = paste0(
     pattern_ignored, "'tinytest' or\nhave names.+\\^test_\\|\\^test-.+\n",
@@ -151,7 +153,8 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c(ignored_testthat, ignored_tinytest)
+    list(missing = c(ignored_testthat, ignored_tinytest),
+         extraneous = character(0))
   ),
   pattern = paste0(
     pattern_ignored, "'testthat' or\nhave names.+\\^test_\\|\\^test-.+\n",
@@ -161,7 +164,8 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c(ignored_testthat, ignored_tinytest)
+    list(missing = c(ignored_testthat, ignored_tinytest),
+         extraneous = character(0))
   ),
   pattern = paste0(pattern_no_test_file,
                    progutils::paste_quoted(c(ignored_testthat, ignored_tinytest),
@@ -177,7 +181,7 @@ unlink(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    other_funcs
+    list(missing = character(0), extraneous = other_funcs)
   ),
   pattern = paste0("No function file found corresponding to test file ",
                    progutils::paste_quoted(other_funcs, collapse = "\n")),
@@ -192,7 +196,7 @@ path_misc <- fs::file_create(fs::path(path_R, "misc_file.txt"))
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    character(0)
+    all_fine
   ),
   pattern = paste0("Ignoring non-R files in folder '", path_R,
                    "':\n'misc_file.txt'"),
@@ -212,7 +216,7 @@ unlink(fs::path(my_tempdir, "inst", "tinytest", paste0("test_", pkg_name, ".R"))
 expect_silent(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    character(0)
+    all_fine
   )
 )
 
@@ -222,7 +226,7 @@ fs::file_create(fs::path(my_tempdir, "tests", "testthat", "test-file3.R"))
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R")
+    list(missing = "file2.R", extraneous = "file3.R")
   ), pattern = "No test file found corresponding to function file 'file2.R'",
   strict = TRUE, fixed = TRUE
 )
@@ -230,7 +234,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R")
+    list(missing = "file2.R", extraneous = "file3.R")
   ), pattern = "No function file found corresponding to test file 'file3.R'",
   strict = TRUE, fixed = TRUE
 )
@@ -268,7 +272,7 @@ writeLines(text = c("library(testthat)", paste0("library(", pkg_name, ")"),
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R")
+    list(missing = "file2.R", extraneous = "file3.R")
   ),
   pattern = "No test file found corresponding to function file 'file2.R'",
   strict = TRUE, fixed = TRUE)
@@ -276,7 +280,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R")
+    list(missing = "file2.R", extraneous = "file3.R")
   ),
   pattern = "No function file found corresponding to test file 'file3.R'",
   strict = TRUE, fixed = TRUE)
@@ -286,24 +290,19 @@ unlink(fs::path(my_tempdir, "tests", "tinytest.R"))
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
+    list(missing = c("file2.R", "other_func_tinytest.R", "some_func_tinytest.R"),
+         extraneous = "file3.R")
   ),
   pattern = "No test file found corresponding to function file 'file2.R'",
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
-  ),
+  check_tests(path = my_tempdir, pattern = "^test_|^test-"),
   pattern = "No function file found corresponding to test file 'file3.R'",
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-    c("file2.R", "file3.R", "other_func_tinytest.R", "some_func_tinytest.R")
-  ),
+  check_tests(path = my_tempdir, pattern = "^test_|^test-"),
   pattern = paste0("Test files will be ignored because test infrastructure for",
                    " tinytest is missing\nor does not refer to the current package",
                    " .run 'tinytest::setup_tinytest.)' to\ncreate the test",
@@ -346,7 +345,7 @@ some_func <- c("some_func_testthat.R", "some_func_tinytest.R")
 expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test-"),
-    c(old_func, some_func)
+    list(missing = c(old_func[-2], some_func), extraneous = old_func[2])
   ),
   pattern = paste0(
     pattern_ignored,
@@ -354,20 +353,14 @@ expect_warning(
   strict = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^test-"),
-    c(old_func, some_func)
-  ),
+  check_tests(path = my_tempdir, pattern = "^test-"),
   pattern = paste0(
     pattern_ignored,
     "'testthat' or\nhave names.+\\^test-.+\n'test_some_func_testthat.R'"),
   strict = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^test-"),
-    c(old_func, some_func)
-  ),
+  check_tests(path = my_tempdir, pattern = "^test-"),
   pattern = paste0(
     pattern_no_test_file,
     progutils::paste_quoted(c(old_func[-2], some_func), collapse = "\n")),
@@ -408,9 +401,8 @@ fs::file_create(fs::path(path_testthat, "TEst-other_func_testthat.R"))
 
 expect_warning(
   expect_identical(
-    check_tests(
-      path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = TRUE),
-    c("file3.R", "some_func_tinytest.R")),
+    check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = TRUE),
+    list(missing = "some_func_tinytest.R", extraneous = "file3.R")),
   pattern = paste0("Test files will be ignored because test infrastructure",
                    " for tinytest is missing")
 )
@@ -428,9 +420,9 @@ expect_silent(
 
 expect_warning(
   expect_identical(
-    check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-",
-                ignore_case = FALSE),
-    some_func
+    check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
+    list(missing = c("some_func_testthat.R", "some_func_tinytest.R"),
+         extraneous = character(0))
   ),
   pattern = paste0(
     pattern_ignored,
@@ -438,20 +430,14 @@ expect_warning(
   strict = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
-    some_func
-  ),
+  check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
   pattern = paste0(
     pattern_ignored,
     "'testthat' or\nhave names.+\\^TEst_\\|\\^TEst-.+\n'test_some_func_testthat.R'"),
   strict = TRUE)
 
 expect_warning(
-  expect_identical(
-    check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
-    some_func
-  ),
+  check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
   pattern = paste0(pattern_no_test_file,
                    progutils::paste_quoted(some_func, collapse = "\n")),
   strict = TRUE)

@@ -28,7 +28,7 @@ expect_identical(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("No file determining the used testing infrastructure exists",
                    ".+tests/tinytest\\.R.+tests/testthat\\.R"),
@@ -38,7 +38,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = "None of the test directories exist.+inst/tinytest.+tests/testthat",
   strict = TRUE
@@ -47,7 +47,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = "No function files found", strict = TRUE, fixed = TRUE
 )
@@ -65,7 +65,7 @@ expect_identical(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("No file determining the used testing infrastructure exists",
                    ".+tests/tinytest\\.R.+tests/testthat\\.R"),
@@ -75,7 +75,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = "None of the test directories contain used test files.+inst/tinytest.+tests/testthat",
   strict = TRUE
@@ -84,7 +84,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = "No function files found", strict = TRUE, fixed = TRUE
 )
@@ -105,7 +105,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("No file determining the used testing infrastructure exists",
                    ".+tests/tinytest\\.R.+tests/testthat\\.R"),
@@ -115,7 +115,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("Ignoring files that are not R files, are template files",
                    " created by 'tinytest' or\nhave names that do not start",
@@ -124,19 +124,13 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "None of the test directories contain used test files.+inst/tinytest.+tests/testthat",
   strict = TRUE
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "No function files found", strict = TRUE, fixed = TRUE
 )
 
@@ -155,7 +149,7 @@ expect_warning(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("No file determining the used testing infrastructure exists",
                    ".+tests/tinytest\\.R.+tests/testthat\\.R"),
@@ -163,10 +157,7 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = paste0("Ignoring files that are not R files, are template files",
                    " created by 'tinytest' or\nhave names that do not start",
                    " with 'pattern' ('^test_|^test-'):\n'misc-file.R'\n'misc_file.R'"),
@@ -174,10 +165,7 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = paste0("Test files will be ignored because test infrastructure for",
                    " tinytest is missing\nor does not refer to the current package",
                    " .run 'tinytest::setup_tinytest.)' to\ncreate the test",
@@ -186,19 +174,13 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "None of the test directories contain used test files.+inst/tinytest.+tests/testthat",
   strict = TRUE
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "No function files found", strict = TRUE, fixed = TRUE
 )
 
@@ -217,7 +199,7 @@ expect_identical(
 expect_warning(
   expect_identical(
     check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
+    list(missing = character(0), extraneous = character(0))
   ),
   pattern = paste0("No file determining the used testing infrastructure exists",
                    ".+tests/tinytest\\.R.+tests/testthat\\.R"),
@@ -225,10 +207,7 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = paste0("Test files will be ignored because test infrastructure for",
                    " tinytest is missing\nor does not refer to the current package",
                    " .run 'tinytest::setup_tinytest.)' to\ncreate the test",
@@ -237,19 +216,13 @@ expect_warning(
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "None of the test directories contain used test files.+inst/tinytest.+tests/testthat",
   strict = TRUE
 )
 
 expect_warning(
-  expect_identical(
-    check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
-    character(0)
-  ),
+  check_tests(path = dirname(dirname(path_testdir)), pattern = "^test_|^test-"),
   pattern = "No function files found", strict = TRUE, fixed = TRUE
 )
 

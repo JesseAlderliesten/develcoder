@@ -49,9 +49,10 @@
 #' @returns
 #' If all function files in folder `R` have a corresponding used test file and
 #' vice versa (which also is the case if no test files and no function files are
-#' present): `character(0)`. Otherwise, a character vector with the names of
-#' test files for which no function file is present and function files for which
-#' no used test file is present.
+#' present): `character(0)`. Otherwise, a list containing components `missing`
+#' and `extraneous` containing character vectors with the names of function
+#' files for which no used test file is present, and the names of test files for
+#' which no function file is present, respectively.
 #'
 #' @family
 #' functions to check tests
@@ -190,7 +191,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(length(tests_missing) > 0L) {
     warning("No test file found corresponding to function file ",
             progutils::paste_quoted(
-              sort(gsub(pattern = pattern, replacement = "", x = tests_missing)),
+              gsub(pattern = pattern, replacement = "", x = tests_missing),
               collapse = "\n"
             )
     )
@@ -198,8 +199,8 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
 
   if(length(tests_extraneous) > 0L) {
     warning("No function file found corresponding to test file ",
-            progutils::paste_quoted(sort(tests_extraneous), collapse = "\n"))
+            progutils::paste_quoted(tests_extraneous, collapse = "\n"))
   }
 
-  sort(c(tests_missing, tests_extraneous))
+  list(missing = tests_missing, extraneous = tests_extraneous)
 }
