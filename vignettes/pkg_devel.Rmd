@@ -99,7 +99,9 @@ Use the tag `@keywords internal` instead of `@export` to create an `.Rd` file
 (and thus a manual page) while omitting the function from the function index.
 This is recommended for internal functions that are not supposed to be called by
 the user. Use the tag `@noRd` instead of `@export` to not generate an `.Rd` file
-at all (and thus omit the function from the index).
+at all (and thus omit the function from the index). In both cases, the function
+is **not** exported and thus should be called using the triple-colon operator:
+`<pkg>:::<func>()`.
 
 ### Inherit documentation
 It is possible to inherit sections of the documentation from other functions.
