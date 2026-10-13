@@ -413,8 +413,8 @@ package [testthat](https://testthat.r-lib.org/) to create tests.
 
 ``` {r update tests, eval = FALSE}
 devtools::document()
-tinytest::test_all() # or devtools::test() if testthat was used to create tests
 develcoder::check_tests() # character(0) if all is fine
+tinytest::test_all() # or devtools::test() if testthat was used to create tests
 ```
 
 ## Automated checks
@@ -425,6 +425,24 @@ code [here](https://github.com/r-hub/cransays)) provides information about the
 status of packages during package submission to CRAN.
 
 The next sections provide code to run checks from various packages.
+
+### codetools
+Check R code for possible problems.
+
+``` {r checks-codetools, eval = FALSE}
+devtools::load_all()
+# Return is invisible and silent if all is well
+codetools::checkUsagePackage(pack = basename(getwd()),
+                             all = TRUE, suppressParamAssigns = TRUE)
+```
+
+### checktor
+[checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides various 
+checks supplementing R CMD check.
+
+``` {r checks-checktor, eval = FALSE}
+checktor::checktor()
+```
 
 ### devtools (local)
 The default `devtools::check()` from
@@ -512,30 +530,12 @@ devtools::check_win_release()
 devtools::check_mac_release()
 ```
 
-### codetools
-Check R code for possible problems.
-
-``` {r checks-codetools, eval = FALSE}
-devtools::load_all()
-# Return is invisible and silent if all is well
-codetools::checkUsagePackage(pack = basename(getwd()),
-                             all = TRUE, suppressParamAssigns = TRUE)
-```
-
 ### utils
 Spell checking. This requires system libraries like [Aspell](http://aspell.net/).
 
 ``` {r checks-utils, eval = FALSE}
 utils::aspell_package_Rd_files(dir = getwd())
 utils::aspell_package_vignettes(dir = getwd())
-```
-
-### checktor
-[checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides various 
-checks supplementing R CMD check.
-
-``` {r checks-checktor, eval = FALSE}
-checktor::checktor()
 ```
 
 ### goodpractice
