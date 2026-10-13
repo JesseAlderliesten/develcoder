@@ -376,8 +376,15 @@ output:
 toc_depth: 3
 ```
 
-It is good practice to describe the used system setup at the bottom of a
-vignette, e.g., using `utils::SessionInfo()` or `sessioninfo::session_info()`.
+It is good practice to give the session information at the bottom of a vignette,
+e.g., using `utils::SessionInfo()` or `sessioninfo::session_info()`:
+
+```` {r session info, eval = FALSE}
+## sessionInfo
+```{r, echo = FALSE}
+utils::sessionInfo()
+```
+````
 
 ## Linking
 - Link to another section in the same document:  
