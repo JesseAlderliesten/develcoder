@@ -157,19 +157,17 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(any(grepl(pattern = "^reexports.Rd$",
                x = list.files(path = file.path(path, "man")),
                ignore.case = TRUE))) {
-    exported_funcs <- getNamespaceExports(pkg)
-
-    if(length(exported_funcs) == 0L ||
-       # Based on https://stackoverflow.com/a/74487073/32365738
-       length(progutils::not_in(exported_funcs,
-                                ls(envir = asNamespace(pkg)))) == 0L) {
+    # Based on https://stackoverflow.com/a/74487073/32365738
+    reexported_funcs <- progutils::not_in(getNamespaceExports(pkg),
+                                          ls(envir = asNamespace(pkg)))
+    if(length(reexported_funcs) == 0L) {
       warning("File 'reexports.Rd' is present in folder 'man' but no",
               " re-exported functions were found in folder 'R'!")
     } else {
       # Re-exported functions are ignored when looking for test files
       # corresponding to function files because these functions should be tested
       # in the package from which they are re-exported.
-      R_files <- progutils::not_in(R_files, paste0(exported_funcs, ".R"))
+      R_files <- progutils::not_in(R_files, paste0(reexported_funcs, ".R"))
     }
   }
 
