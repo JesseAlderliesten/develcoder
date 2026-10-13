@@ -9,13 +9,16 @@ package development is described in the vignette *Package development*:
 
 ## Check existing packages
 
-See the pointers given at the [task
-view](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape),
-and the [search page](https://r-universe.dev/) of R-universe, which is
-[also available](https://rwarehouse.netlify.app/) with AI-assisted
-extended search capabilities, to search for functionality in existing
-packages. See the section `R packages` in the vignette *R packages* in
-package [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
+To search for functionality in existing packages, see the pointers given
+at the CRAN task view [Package
+Development](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape),
+the [search page](https://r-universe.dev/) of R-universe which is [also
+available](https://rwarehouse.netlify.app/) with AI-assisted extended
+search capabilities, packages
+[`pkgmatch`](https://CRAN.R-project.org/package=pkgmatch) and
+[`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). See also
+section `R packages` in the vignette *R packages* in package
+[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
 ([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html))
 for an overview of repositories containing R packages.
 
@@ -126,7 +129,7 @@ Do:
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
   - See
     [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
-    in the folder `inst/templates`.
+    in the folder `inst/templates` for pointers on useful content.
   - Knit the `README.Rmd` file to produce a `README.md` file.
 
 #### Troubleshooting
@@ -135,8 +138,8 @@ The `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` requires that `README.Rmd` and `README.md` are
 staged at the same time. To remove this requirement, delete the the
-(hidden) file `.git/hooks/pre-commit` from the `R` project folder (see
-the section `Description` in
+hidden file `.git/hooks/pre-commit` from the `R` project folder (see the
+section `Description` in
 [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
 
 ### Package overview
@@ -273,7 +276,12 @@ automatically creates
 to functions and documentation you refer to.
 
 To set up a package website, you can use
-[`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
+[`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html),
+see the documentation about package
+[`pkgdown`](https://pkgdown.r-lib.org/) and the
+[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
+for further details.
+
 To also set up a [GitHub action](#automate-checks) to automatically
 build and update your site if you push changes to your package to GitHub
 (defined in the file `<pkg>\.github\workflows\pkgdown.yaml`), run the
@@ -292,21 +300,16 @@ structure `https://<username>.github.io/<repository>/`, e.g.,
 
 Refer from the `README` to the pkgdown website and add the line
 `light-switch: true` below the `template` heading in the `_pkgdown.YML`
-file (located in the top-level package folder or in folder `pkgdown`;
-can also have extension `.YAML`; it is **not** the file
-`<pkg>\.github\workflows\pkgdown.yaml` that defines the [GitHub
-Action](#automate-checks) to automatically build and update your site if
-you push changes to your package to GitHub) to add a light-switch to the
-pkgdown-website (see the
+file to add a light-switch to the pkgdown-website, see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)
-for this repository).
-
-See the documentation about package
-[`pkgdown`](https://pkgdown.r-lib.org/) and the
-[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
-for further details.
+for this repository. The `_pkgdown.YML` file is located in the top-level
+package folder or in folder `pkgdown` and can also have extension
+`.YAML`; it is **not** the file `<pkg>\.github\workflows\pkgdown.yaml`
+that defines the [GitHub Action](#automate-checks) to automatically
+build and update your site if you push changes to your package to
+GitHub.
 
 ## Further development
 

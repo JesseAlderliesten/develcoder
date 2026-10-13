@@ -37,9 +37,11 @@ check_tests(path = getwd(), pattern = "^test_|^test-", ignore_case = TRUE)
 
 If all function files in folder `R` have a corresponding used test file
 and vice versa (which also is the case if no test files and no function
-files are present): `character(0)`. Otherwise, a character vector with
-the names of test files for which no function file is present and
-function files for which no used test file is present.
+files are present): `character(0)`. Otherwise, a list containing
+components `missing` and `extraneous` containing character vectors with
+the names of function files for which no used test file is present, and
+the names of test files for which no function file is present,
+respectively.
 
 ## Details
 
@@ -116,7 +118,12 @@ check_tests(path = path_develcoder) # character(0)
 #> 'develcoder.rdb'
 #> 'develcoder.rdx'
 #> Warning: No function files found.
+#> $missing
 #> character(0)
+#> 
+#> $extraneous
+#> character(0)
+#> 
 
 if(requireNamespace("withr", quietly = TRUE)) {
 # warnings: test infrastructure, directories, and function files not present
@@ -131,10 +138,10 @@ withr::with_dir(new = tempdir_example, {
 unlink(tempdir_example, recursive = TRUE)
 }
 #> Warning: No file determining the used testing infrastructure exists:
-#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/tinytest.R',
-#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat.R'
+#> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/tinytest.R',
+#> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/testthat.R'
 #> Warning: None of the test directories exist:
-#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/inst/tinytest'
-#> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat'
+#> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/inst/tinytest'
+#> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/testthat'
 #> Warning: No function files found.
 ```

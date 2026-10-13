@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,9 +75,9 @@
 
     
     
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h2>
+<div class="section level3">
+<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
 <p>This vignette contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link"><code>R Markdown</code></a>
 and <a href="https://yihui.org/knitr/" class="external-link"><code>knitr</code></a>.</p>
 <p>An R Markdown file (<code>.Rmd</code>) is a plain-text file with R
@@ -108,9 +108,9 @@ Exchange post</a>.</p>
 <span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/latexmk.html" class="external-link">pdflatex</a></span><span class="op">(</span><span class="st">'test.tex'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>tinytex.verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="useful-resources">Useful resources<a class="anchor" aria-label="anchor" href="#useful-resources"></a>
-</h2>
+<div class="section level3">
+<h3 id="useful-resources">Useful resources<a class="anchor" aria-label="anchor" href="#useful-resources"></a>
+</h3>
 <ul>
 <li>the <a href="https://pkg.yihui.org/rmarkdown-cookbook/" class="external-link"><code>R markdown cookbook</code></a>
 by Y. Xie, C. Dervieux, and E. Riederer</li>
@@ -131,9 +131,9 @@ and <a href="https://epirhandbook.com/en/new_pages/reportfactory.html" class="ex
 </li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="global-settings-for-knitr-used-by-r-markdown">Global Settings for knitr used by R Markdown<a class="anchor" aria-label="anchor" href="#global-settings-for-knitr-used-by-r-markdown"></a>
-</h2>
+<div class="section level3">
+<h3 id="global-settings-for-knitr-used-by-r-markdown">Global Settings for knitr used by R Markdown<a class="anchor" aria-label="anchor" href="#global-settings-for-knitr-used-by-r-markdown"></a>
+</h3>
 <p>For a list of available options, see
 <code>str(knitr::opts_chunk$get())</code> and the overviews of <a href="https://yihui.org/knitr/options/" class="external-link">options</a> and <a href="https://yihui.org/knitr/objects/" class="external-link">objects storing options</a> at
 the maintainer’s website.</p>
@@ -153,9 +153,9 @@ settings. If the option <code>error = FALSE</code> is used, code
 execution stops on error, which makes more sense in interactive use
 during development of the script.</p>
 </div>
-<div class="section level2">
-<h2 id="loading-files">Loading files<a class="anchor" aria-label="anchor" href="#loading-files"></a>
-</h2>
+<div class="section level3">
+<h3 id="loading-files">Loading files<a class="anchor" aria-label="anchor" href="#loading-files"></a>
+</h3>
 <p>Files that have to be used by the <code>R Markdown</code> script
 (e.g., <code>R</code> scripts that are sourced, data files that are
 read) should be placed in the same directory as the
@@ -178,9 +178,9 @@ and that <code>max.deparse.length</code> within <code>source(...)</code>
 has to be increased to ensure that all of the source code is printed
 (see <code><a href="https://rdrr.io/r/base/source.html" class="external-link">help("source")</a></code>).</p>
 </div>
-<div class="section level2">
-<h2 id="knitting-documents-to-html-and-pdf">Knitting documents to HTML and PDF<a class="anchor" aria-label="anchor" href="#knitting-documents-to-html-and-pdf"></a>
-</h2>
+<div class="section level3">
+<h3 id="knitting-documents-to-html-and-pdf">Knitting documents to HTML and PDF<a class="anchor" aria-label="anchor" href="#knitting-documents-to-html-and-pdf"></a>
+</h3>
 <p>The following lines can be used to knit documents (i.e., generate
 output in HTML or PDF files containing the script with its output and
 additional text) containing a file name including a time-stamp. Using
@@ -200,9 +200,9 @@ using the <code>Knit</code> button in <code>RStudio</code>),
 <span>                  output_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Filename"</span>, <span class="va">DateTimeStamp</span>, <span class="st">".pdf"</span><span class="op">)</span>,</span>
 <span>                  output_dir <span class="op">=</span> <span class="st">"./knitteddocs"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="adding-and-collecting-code-chuncks">Adding and collecting code chuncks<a class="anchor" aria-label="anchor" href="#adding-and-collecting-code-chuncks"></a>
-</h2>
+<div class="section level3">
+<h3 id="adding-and-collecting-code-chuncks">Adding and collecting code chuncks<a class="anchor" aria-label="anchor" href="#adding-and-collecting-code-chuncks"></a>
+</h3>
 <p>Add a new chunk by either using the <code>Code</code> &gt;
 <code>Insert Chunk</code> button or typing the delimiters
 <code>```{r}</code> above and <code>```</code> below the code chunk.</p>
@@ -214,12 +214,13 @@ incorporated in such an R script, which might hamper exactly reproducing
 the analyses as executed when running the R Markdown file, see the note
 in <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">help("purl", package = "knitr")</a></code>.</p>
 </div>
-<div class="section level2">
-<h2 id="formatting-in-r-markdown">Formatting in R Markdown<a class="anchor" aria-label="anchor" href="#formatting-in-r-markdown"></a>
-</h2>
 <div class="section level3">
-<h3 id="italic-and-bold-text">Italic and bold text<a class="anchor" aria-label="anchor" href="#italic-and-bold-text"></a>
+<h3 id="formatting-in-r-markdown">Formatting in R Markdown<a class="anchor" aria-label="anchor" href="#formatting-in-r-markdown"></a>
 </h3>
+<p>Newlines can be forced using <code>\cr</code>.</p>
+<div class="section level4">
+<h4 id="italic-and-bold-text">Italic and bold text<a class="anchor" aria-label="anchor" href="#italic-and-bold-text"></a>
+</h4>
 <pre><code>Using *italic words* and _also italic words_ or **bold words** or even
 _An **italic and bold phrase** in italic text_</code></pre>
 <p>is rendered as:</p>
@@ -229,9 +230,9 @@ phrase</strong> in italic text</em></p>
 <p>Partially bold text does <strong>not</strong> work inside link text
 in R version 4.1.0 or earlier.</p>
 </div>
-<div class="section level3">
-<h3 id="code-chunks">Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"></a>
-</h3>
+<div class="section level4">
+<h4 id="code-chunks">Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"></a>
+</h4>
 <p>R code chunks can be shown with or without its output through
 argument <code>eval</code> (which is <code>TRUE</code> by default):</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="st">```</span><span class="at">{r code-chunk-example}</span></span>
@@ -255,9 +256,9 @@ argument <code>eval</code> (which is <code>TRUE</code> by default):</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="table">Table<a class="anchor" aria-label="anchor" href="#table"></a>
-</h3>
+<div class="section level4">
+<h4 id="table">Table<a class="anchor" aria-label="anchor" href="#table"></a>
+</h4>
 <pre><code>| Name       | Description                      |
 | :--------- | :--------------------------------|
 | `Name one` | Some description                 |
@@ -280,9 +281,9 @@ argument <code>eval</code> (which is <code>TRUE</code> by default):</p>
 </tbody>
 </table>
 </div>
-<div class="section level3">
-<h3 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
-</h3>
+<div class="section level4">
+<h4 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
+</h4>
 <p>Lists need an empty line before the first item to be correctly
 rendered. Sub-items are created by indenting them. Numbered lists
 (ordered lists) are created by using a number followed by a dot
@@ -318,9 +319,9 @@ numbered list:
 <li>item two</li>
 </ol>
 </div>
-<div class="section level3">
-<h3 id="escaping">Escaping<a class="anchor" aria-label="anchor" href="#escaping"></a>
-</h3>
+<div class="section level4">
+<h4 id="escaping">Escaping<a class="anchor" aria-label="anchor" href="#escaping"></a>
+</h4>
 <p>To include <code>n</code> delimiters <code>(`)</code> in the
 <strong>output</strong>, escape them by enclosing with
 <code>n + 1</code> delimiters:<br>
@@ -339,6 +340,43 @@ code which escapes chunk headings), use</p>
 <code class="sourceCode R"><span><span class="fl">1</span> <span class="op">+</span> <span class="fl">2</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 3</span></span></code></pre>
 </div>
+</div>
+<div class="section level2">
+<h2 id="mathematical-notation">Mathematical notation<a class="anchor" aria-label="anchor" href="#mathematical-notation"></a>
+</h2>
+<p>For an overview of mathematical notation see <a href="https://rpruim.github.io/s341/S19/from-class/MathinRmd.html" class="external-link uri">https://rpruim.github.io/s341/S19/from-class/MathinRmd.html</a></p>
+</div>
+<div class="section level2">
+<h2 id="sessioninfo">sessionInfo<a class="anchor" aria-label="anchor" href="#sessioninfo"></a>
+</h2>
+<pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.5 LTS</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
+<span><span class="co">##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span></span>
+<span><span class="co">##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
+<span><span class="co">## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## tzcode source: system (glibc)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    </span></span>
+<span><span class="co">##  [5] xfun_0.61         cachem_1.1.0      knitr_1.52        htmltools_0.5.9  </span></span>
+<span><span class="co">##  [9] rmarkdown_2.32    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      </span></span>
+<span><span class="co">## [13] pkgdown_2.2.1     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2</span></span>
+<span><span class="co">## [17] compiler_4.6.1    tools_4.6.1       ragg_1.5.2        bslib_0.12.0     </span></span>
+<span><span class="co">## [21] evaluate_1.0.5    yaml_2.3.12       otel_0.2.0        jsonlite_2.0.0   </span></span>
+<span><span class="co">## [25] rlang_1.3.0       fs_2.1.0          htmlwidgets_1.6.4</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

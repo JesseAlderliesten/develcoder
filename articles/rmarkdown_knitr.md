@@ -1,6 +1,6 @@
 # R Markdown and knitr
 
-## Introduction
+### Introduction
 
 This vignette contains information about using
 [`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
@@ -41,7 +41,7 @@ tinytex::pdflatex('test.tex')
 options(tinytex.verbose = FALSE)
 ```
 
-## Useful resources
+### Useful resources
 
 - the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/)
   by Y. Xie, C. Dervieux, and E. Riederer
@@ -60,7 +60,7 @@ options(tinytex.verbose = FALSE)
   and
   [`Organizing routine reports`](https://epirhandbook.com/en/new_pages/reportfactory.html)
 
-## Global Settings for knitr used by R Markdown
+### Global Settings for knitr used by R Markdown
 
 For a list of available options, see `str(knitr::opts_chunk$get())` and
 the overviews of [options](https://yihui.org/knitr/options/) and
@@ -85,7 +85,7 @@ production settings. If the option `error = FALSE` is used, code
 execution stops on error, which makes more sense in interactive use
 during development of the script.
 
-## Loading files
+### Loading files
 
 Files that have to be used by the `R Markdown` script (e.g., `R` scripts
 that are sourced, data files that are read) should be placed in the same
@@ -114,7 +114,7 @@ and that `max.deparse.length` within `source(...)` has to be increased
 to ensure that all of the source code is printed (see
 [`help("source")`](https://rdrr.io/r/base/source.html)).
 
-## Knitting documents to HTML and PDF
+### Knitting documents to HTML and PDF
 
 The following lines can be used to knit documents (i.e., generate output
 in HTML or PDF files containing the script with its output and
@@ -139,7 +139,7 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
                   output_dir = "./knitteddocs")
 ```
 
-## Adding and collecting code chuncks
+### Adding and collecting code chuncks
 
 Add a new chunk by either using the `Code` \> `Insert Chunk` button or
 typing the delimiters ```` ```{r} ```` above and ```` ``` ```` below the
@@ -153,9 +153,11 @@ which might hamper exactly reproducing the analyses as executed when
 running the R Markdown file, see the note in
 [`help("purl", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
-## Formatting in R Markdown
+### Formatting in R Markdown
 
-### Italic and bold text
+Newlines can be forced using `\cr`.
+
+#### Italic and bold text
 
     Using *italic words* and _also italic words_ or **bold words** or even
     _An **italic and bold phrase** in italic text_
@@ -168,7 +170,7 @@ Using *italic words* and *also italic words* or **bold words** or even
 Partially bold text does **not** work inside link text in R version
 4.1.0 or earlier.
 
-### Code chunks
+#### Code chunks
 
 R code chunks can be shown with or without its output through argument
 `eval` (which is `TRUE` by default):
@@ -213,7 +215,7 @@ sum(c(1, 2))
 mean(c(1, 2))
 ```
 
-### Table
+#### Table
 
     | Name       | Description                      |
     | :--------- | :--------------------------------|
@@ -227,7 +229,7 @@ gives:
 | `Name one` | Some description |
 | `Name two` | Some description |
 
-### Lists
+#### Lists
 
 Lists need an empty line before the first item to be correctly rendered.
 Sub-items are created by indenting them. Numbered lists (ordered lists)
@@ -261,7 +263,7 @@ numbered list:
 1.  item one
 2.  item two
 
-### Escaping
+#### Escaping
 
 To include `n` delimiters `` (`) `` in the **output**, escape them by
 enclosing with `n + 1` delimiters:  
@@ -285,3 +287,39 @@ to show how to create a code chunk like
 ```
 
     ## [1] 3
+
+## Mathematical notation
+
+For an overview of mathematical notation see
+<https://rpruim.github.io/s341/S19/from-class/MathinRmd.html>
+
+## sessionInfo
+
+    ## R version 4.6.1 (2026-06-24)
+    ## Platform: x86_64-pc-linux-gnu
+    ## Running under: Ubuntu 24.04.5 LTS
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+    ## 
+    ## locale:
+    ##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+    ##  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+    ##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+    ## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+    ## 
+    ## time zone: UTC
+    ## tzcode source: system (glibc)
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
+    ##  [5] xfun_0.61         cachem_1.1.0      knitr_1.52        htmltools_0.5.9  
+    ##  [9] rmarkdown_2.32    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      
+    ## [13] pkgdown_2.2.1     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2
+    ## [17] compiler_4.6.1    tools_4.6.1       ragg_1.5.2        bslib_0.12.0     
+    ## [21] evaluate_1.0.5    yaml_2.3.12       otel_0.2.0        jsonlite_2.0.0   
+    ## [25] rlang_1.3.0       fs_2.1.0          htmlwidgets_1.6.4

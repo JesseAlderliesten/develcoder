@@ -9,7 +9,7 @@ and if function files have a corresponding test file and vice versa."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,9 +81,10 @@ infrastructure and test files. The default is the <a href="https://rdrr.io/r/bas
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>If all function files in folder <code>R</code> have a corresponding used test file and
 vice versa (which also is the case if no test files and no function files are
-present): <code>character(0)</code>. Otherwise, a character vector with the names of
-test files for which no function file is present and function files for which
-no used test file is present.</p>
+present): <code>character(0)</code>. Otherwise, a list containing components <code>missing</code>
+and <code>extraneous</code> containing character vectors with the names of function
+files for which no used test file is present, and the names of test files for
+which no function file is present, respectively.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -143,7 +144,12 @@ are present in folder <code>R</code></p></li>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> 'develcoder.rdb'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> 'develcoder.rdx'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $missing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $extraneous</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"withr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># warnings: test infrastructure, directories, and function files not present</span></span></span>
@@ -158,11 +164,11 @@ are present in folder <code>R</code></p></li>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tempdir_example</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No file determining the used testing infrastructure exists:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/tinytest.R',</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat.R'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/tinytest.R',</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/testthat.R'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>None of the test directories exist:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/inst/tinytest'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpuZ4Pyb/check_tests199b6b85f60f/tests/testthat'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/inst/tinytest'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpAHAAbz/check_tests1c2162bb9d2/tests/testthat'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,13 +87,14 @@ development</em>:
 <div class="section level2">
 <h2 id="check-existing-packages">Check existing packages<a class="anchor" aria-label="anchor" href="#check-existing-packages"></a>
 </h2>
-<p>See the pointers given at the <a href="https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape" class="external-link">task
-view</a>, and the <a href="https://r-universe.dev/" class="external-link">search page</a> of
-R-universe, which is <a href="https://rwarehouse.netlify.app/" class="external-link">also
-available</a> with AI-assisted extended search capabilities, to search
-for functionality in existing packages. See the section
-<code>R packages</code> in the vignette <em>R packages</em> in package
-<a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><code>checkrpkgs</code></a>
+<p>To search for functionality in existing packages, see the pointers
+given at the CRAN task view <a href="https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape" class="external-link">Package
+Development</a>, the <a href="https://r-universe.dev/" class="external-link">search page</a>
+of R-universe which is <a href="https://rwarehouse.netlify.app/" class="external-link">also
+available</a> with AI-assisted extended search capabilities, packages <a href="https://CRAN.R-project.org/package=pkgmatch" class="external-link"><code>pkgmatch</code></a>
+and <a href="https://CRAN.R-project.org/package=pkgsearch" class="external-link"><code>pkgsearch</code></a>.
+See also section <code>R packages</code> in the vignette <em>R
+packages</em> in package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><code>checkrpkgs</code></a>
 (<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>) for an
 overview of repositories containing R packages.</p>
 </div>
@@ -193,7 +194,8 @@ in the <code>README.Rmd</code> file (the badge does <strong>not</strong>
 work if the GitHub repository is private):<br><code>![](https://img.shields.io/github/r-package/v/&lt;repository&gt;/&lt;pkg&gt;?color=blue)</code>
 </li>
 <li>See <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd" class="external-link"><code>README_template.Rmd</code></a>
-in the folder <code>inst/templates</code>.</li>
+in the folder <code>inst/templates</code> for pointers on useful
+content.</li>
 <li>Knit the <code>README.Rmd</code> file to produce a
 <code>README.md</code> file.</li>
 </ul>
@@ -206,7 +208,7 @@ in the folder <code>inst/templates</code>.</li>
 <code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> to update <code>README.md</code>
 requires that <code>README.Rmd</code> and <code>README.md</code> are
 staged at the same time. To remove this requirement, delete the the
-(hidden) file <code>.git/hooks/pre-commit</code> from the <code>R</code>
+hidden file <code>.git/hooks/pre-commit</code> from the <code>R</code>
 project folder (see the section <code>Description</code> in
 <code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code>).</p>
 </div>
@@ -332,10 +334,14 @@ development</em>:
 automatically creates <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><code>hyperlinked cross-references</code></a>
 to functions and documentation you refer to.</p>
 <p>To set up a package website, you can use
-<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>. To also set up a <a href="#automate-checks">GitHub action</a> to automatically build and
-update your site if you push changes to your package to GitHub (defined
-in the file <code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code>),
-run the following code:</p>
+<code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">usethis::use_pkgdown()</a></code>, see the documentation about package
+<a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and the <a href="https://r-pkgs.org/website.html" class="external-link"><code>chapter</code></a> from the
+<code>R packages</code> book for further details.</p>
+<p>To also set up a <a href="#automate-checks">GitHub action</a> to
+automatically build and update your site if you push changes to your
+package to GitHub (defined in the file
+<code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code>), run the
+following code:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># calls usethis::use_pkgdown() and creates '&lt;pkg&gt;\.github\workflows\pkgdown.yaml'</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -346,17 +352,16 @@ structure
 e.g., <code>https://jessealderliesten.github.io/develcoder/</code>.</p>
 <p>Refer from the <code>README</code> to the pkgdown website and add the
 line <code>light-switch: true</code> below the <code>template</code>
-heading in the <code>_pkgdown.YML</code> file (located in the top-level
-package folder or in folder <code>pkgdown</code>; can also have
-extension <code>.YAML</code>; it is <strong>not</strong> the file
+heading in the <code>_pkgdown.YML</code> file to add a light-switch to
+the pkgdown-website, see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
+and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
+code</a> for this repository. The <code>_pkgdown.YML</code> file is
+located in the top-level package folder or in folder
+<code>pkgdown</code> and can also have extension <code>.YAML</code>; it
+is <strong>not</strong> the file
 <code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code> that defines the
 <a href="#automate-checks">GitHub Action</a> to automatically build and
-update your site if you push changes to your package to GitHub) to add a
-light-switch to the pkgdown-website (see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
-and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
-code</a> for this repository).</p>
-<p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and the <a href="https://r-pkgs.org/website.html" class="external-link"><code>chapter</code></a> from the
-<code>R packages</code> book for further details.</p>
+update your site if you push changes to your package to GitHub.</p>
 </div>
 <div class="section level2">
 <h2 id="further-development">Further development<a class="anchor" aria-label="anchor" href="#further-development"></a>
