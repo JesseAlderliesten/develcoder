@@ -49,9 +49,10 @@
 #' @returns
 #' If all function files in folder `R` have a corresponding used test file and
 #' vice versa (which also is the case if no test files and no function files are
-#' present): `character(0)`. Otherwise, a character vector with the names of
-#' test files for which no function file is present and function files for which
-#' no used test file is present.
+#' present): `character(0)`. Otherwise, a list containing components `missing`
+#' and `extraneous` containing character vectors with the names of function
+#' files for which no used test file is present, and the names of test files for
+#' which no function file is present, respectively.
 #'
 #' @family
 #' functions to check tests
@@ -156,19 +157,17 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(any(grepl(pattern = "^reexports.Rd$",
                x = list.files(path = file.path(path, "man")),
                ignore.case = TRUE))) {
-    exported_funcs <- getNamespaceExports(pkg)
-
-    if(length(exported_funcs) == 0L ||
-       # Based on https://stackoverflow.com/a/74487073/32365738
-       length(progutils::not_in(exported_funcs,
-                                ls(envir = asNamespace(pkg)))) == 0L) {
+    # Based on https://stackoverflow.com/a/74487073/32365738
+    reexported_funcs <- progutils::not_in(getNamespaceExports(pkg),
+                                          ls(envir = asNamespace(pkg)))
+    if(length(reexported_funcs) == 0L) {
       warning("File 'reexports.Rd' is present in folder 'man' but no",
               " re-exported functions were found in folder 'R'!")
     } else {
       # Re-exported functions are ignored when looking for test files
       # corresponding to function files because these functions should be tested
       # in the package from which they are re-exported.
-      R_files <- progutils::not_in(R_files, paste0(exported_funcs, ".R"))
+      R_files <- progutils::not_in(R_files, paste0(reexported_funcs, ".R"))
     }
   }
 
@@ -190,7 +189,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   if(length(tests_missing) > 0L) {
     warning("No test file found corresponding to function file ",
             progutils::paste_quoted(
-              sort(gsub(pattern = pattern, replacement = "", x = tests_missing)),
+              gsub(pattern = pattern, replacement = "", x = tests_missing),
               collapse = "\n"
             )
     )
@@ -198,8 +197,8 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
 
   if(length(tests_extraneous) > 0L) {
     warning("No function file found corresponding to test file ",
-            progutils::paste_quoted(sort(tests_extraneous), collapse = "\n"))
+            progutils::paste_quoted(tests_extraneous, collapse = "\n"))
   }
 
-  sort(c(tests_missing, tests_extraneous))
+  list(missing = tests_missing, extraneous = tests_extraneous)
 }

@@ -1,3 +1,22 @@
+# develcoder 0.13.0
+
+### Breaking changes
+- Add dependency `BiocCheck` to `Suggests` because it is used in a vignette.
+- The value returned by `check_tests()` is now a list containing components
+  `missing` and `extraneous` with unsorted character vectors. `check_tests()`
+  now also handles non-exported functions correctly.
+
+### Miscellaneous
+- Vignette `Package setup`: some clarifications and updates.
+- Vignette `Package development`: many clarifications and updates. Add section
+  `BiocCheck` showing how to run its checks. Add an introduction to section
+  `Documentation` referring to the relevant `roxygen2` documentation and a
+  subsection `Suppress documentation`. Add subsection `Sorting order` to section
+  `Add tests` to point out some issues with getting reproducible sorted output.
+  Change the order of sections to have a more logical order and have fast checks
+  before slow checks.
+
+
 # develcoder 0.12.0
 
 ### Breaking changes

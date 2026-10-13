@@ -20,9 +20,10 @@ infrastructure and test files. The default is the \link[=getwd]{working director
 \value{
 If all function files in folder \code{R} have a corresponding used test file and
 vice versa (which also is the case if no test files and no function files are
-present): \code{character(0)}. Otherwise, a character vector with the names of
-test files for which no function file is present and function files for which
-no used test file is present.
+present): \code{character(0)}. Otherwise, a list containing components \code{missing}
+and \code{extraneous} containing character vectors with the names of function
+files for which no used test file is present, and the names of test files for
+which no function file is present, respectively.
 }
 \description{
 Check if testing infrastructure is present and refers to the current package,
