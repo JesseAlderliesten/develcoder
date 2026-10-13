@@ -403,6 +403,7 @@ packages to start new packages.
 
 ``` {r pkg name in files, eval = FALSE}
 develcoder::pkg_name_correct(pkg_name = basename(getwd()))
+# invisible character(0) if all is fine
 ```
 
 ## Check tests
@@ -482,15 +483,15 @@ for details about the environment variables):
 
 ``` {r checks-devtools, eval = FALSE}
 devtools::document()
-devtools::check(manual = TRUE, remote = TRUE)
-devtools::check(manual = TRUE, remote = TRUE,
-                env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE,
-                             "_R_CHECK_SUGGESTS_ONLY_" = TRUE))
 devtools::release_checks()
 if(utils::packageVersion("devtools") >= "2.5.0") {
   # check for missing `\value` and `\examples` fields in `Rd` files
   devtools::check_doc_fields()
 }
+devtools::check(manual = TRUE, remote = TRUE)
+devtools::check(manual = TRUE, remote = TRUE,
+                env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE,
+                             "_R_CHECK_SUGGESTS_ONLY_" = TRUE))
 ```
 
 ### devtools (remote)
