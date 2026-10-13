@@ -141,6 +141,8 @@ running the R Markdown file, see the note in `help("purl", package = "knitr")`.
 
 
 ## Formatting in R Markdown
+Newlines can be forced using `\cr`.
+
 ### Italic and bold text
 
 ````
@@ -255,3 +257,11 @@ to show how to create a code chunk like
 ```{r use-sum}
 1 + 2
 ```
+
+# Mathematical notation
+For an overview of mathematical notation see
+https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
+
+# sessionInfo
+```{r, echo = FALSE}
+utils::sessionInfo()
