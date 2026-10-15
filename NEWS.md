@@ -1,3 +1,11 @@
+# develcoder 0.14.0
+
+### Miscellaneous
+- Vignette `R markdown and knitr`: additions on formatting and escaping.
+- Other vignettes: many stylistic updates to language and layout, some
+  additions.
+
+
 # develcoder 0.13.0
 
 ### Breaking changes

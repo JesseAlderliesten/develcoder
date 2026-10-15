@@ -25,25 +25,24 @@ tests.
 Folder `vignettes` contains the following vignettes:
 
 - [`package setup`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
-  `vignette("pkg_setup", package = "develcoder")` contains code that is
-  needed only once to set up a package from scratch.
+  contains code that is needed only once to set up a package from
+  scratch: `vignette("pkg_setup", package = "develcoder")`
 - [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-  `vignette("pkg_devel", package = "develcoder")` contains code that is
-  useful during package development, including when preparing to release
-  a new package version and setting up for a new version.
+  contains code that is useful during package development, including
+  when preparing to release a new package version and setting up for a
+  new version: `vignette("pkg_devel", package = "develcoder")`
 - [`R Markdown and knitr`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
-  `vignette("rmarkdown_knitr", package = "develcoder")` contains
-  information about using
+  contains information about using
   [`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
-  [`knitr`](https://yihui.org/knitr/).
+  [`knitr`](https://yihui.org/knitr/):
+  `vignette("rmarkdown_knitr", package = "develcoder")`
 
 Folder
 [`inst/templates`](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
 contains the following templates (in the installed package these are in
 `develcoder/templates`):
 
-- `README_template.Rmd` for a `README.Rmd` file, to be put in the
-  top-directory of `<pkg>`.
+- `README_template.Rmd` for a `README.Rmd` file.
 - `check-no-suggests.yaml` for a GitHub Actions workflow checking if the
   package code can be run if the suggested packages are **not**
   installed
@@ -51,7 +50,7 @@ contains the following templates (in the installed package these are in
 - `pkgdown.yaml` for a GitHub Actions workflow to update the package
   website
 
-To use these files, put the `README.Rmd` file in the top-directory of
+To use these files, put the `README.Rmd` file in the top-level folder of
 `<pkg>`. The `yaml` files should be put in `<pkg>\.github\workflows`
 (see the section `Automate checks` in the vignette [package
 setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
@@ -89,7 +88,7 @@ License](LICENSE.md).
     To cite package 'develcoder' in publications use:
 
       Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-      Packages_. R package version 0.13.0,
+      Packages_. R package version 0.14.0,
       <https://github.com/JesseAlderliesten/develcoder>.
 
     A BibTeX entry for LaTeX users is
@@ -98,7 +97,7 @@ License](LICENSE.md).
         title = {develcoder: Code and Templates to Develop R Packages},
         author = {Jesse Alderliesten},
         year = {2026},
-        note = {R package version 0.13.0},
+        note = {R package version 0.14.0},
         url = {https://github.com/JesseAlderliesten/develcoder},
       }
 
@@ -110,17 +109,19 @@ have suggestions for improvement of `develcoder`.
 
 ## Similar resources
 
-- The book [`R packages`](https://r-pkgs.org/) by H. Wickham and J.
-  Bryan
+- The book [`R packages`](https://r-pkgs.org/) by Wickham and Bryan
 - The chapter
   [`Building R Packages`](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
   of
   [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
-  by R. D. Peng, S. Kross, and B. Anderson.
+  by Peng, Kross, and Anderson.
 - Slides from the workshop [Building tidy
-  tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by E.
-  Rand and I. Lyttle
+  tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by Rand
+  and Lyttle
+- Package [`packagepal`](https://CRAN.R-project.org/package=packagepal)
+  provides check lists on setting up a package and preparing for CRAN
+  release: `packagepal::checklist(type = "package")` and
+  `packagepal::checklist(type = "CRAN")`
 - The section `Documentation and help` in the
   [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
   vignette contains further references.
-- Package [`packagepal`](https://CRAN.R-project.org/package=packagepal)
