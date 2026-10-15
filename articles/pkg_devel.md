@@ -21,38 +21,39 @@ devtools::document() # also runs devtools::load_all()
 Do:
 
 - Manually update the `NEWS` file:  
-  `### Added functions` `` - `<func>()` to ... ``
-- If the added function relies on other packages, you have to update the
+  `### Added functions`  
+  `` - `<func>()` to ... ``
+- If the added function relies on other packages, update the
   dependencies given in the `DESCRIPTION` file: see section [Update
   dependencies](#update-dependencies).
-- When adding new function arguments to an existing function, it is best
-  practice to place the new argument after existing arguments and use a
-  default value that matches the old behaviour: then code written for
-  the old version will work the same as before the change, even if it
-  relies on positional matching, such that it is a **non**-breaking
+- When adding a new function argument to an existing function, place the
+  new argument after existing arguments and use a default value that
+  matches the old behaviour: then code written for the old version will
+  work the same as before the change even if it relies on positional
+  matching, such that adding the new argument is a **non**-breaking
   change.
-- When renaming functions, also change their names in the `_pkgdown.yml`
+- When renaming a function, also change its name in the `_pkgdown.yml`
   file if that file is used to create a custom index for the website:
   all exported functions should be included in the function index and
-  all functions included in the index should be an exported function,
+  all functions included in the index should be exported functions,
   otherwise
   [`pkgdown::build_reference()`](https://pkgdown.r-lib.org/reference/build_reference.html)
-  will throw errors (`topic missing from index` or
+  will throw an error (`topic missing from index` or
   `must be a known topic name or alias`, respectively) and the package
   website cannot be build.
 
 ### Add documentation
 
-Annotating function files using the
-[roxygen2](https://roxygen2.r-lib.org/) format allows the creation of
-documentation files, with file extension `.Rd`, through
+Function files can be annotated using the `roxygen` format. Then using
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
 which itself calls
-[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html).
+[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html),
+creates documentation files, with file extension `.Rd`.
 
-The vignettes of `roxygen2` describe many aspects of package
-documentation, see `browseVignettes(package = "roxygen2")`, among others
-vignettes with a general [introduction to
+The vignettes of [roxygen2](https://roxygen2.r-lib.org/) describe many
+aspects of package documentation, see
+`browseVignettes(package = "roxygen2")`, among others vignettes with a
+general [introduction to
 roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html) and a
 general [introduction to function
 documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
@@ -103,8 +104,10 @@ func_name <- function(x, allow_NA = TRUE) {
 #### Inherit documentation
 
 It is possible to inherit sections of the documentation from other
-functions. Inherited sections are **silently** ignored if that section
-is also defined in the file itself.
+functions, see the [introduction to function
+documentation](https://roxygen2.r-lib.org/articles/rd-functions.html)
+from package `roxygen2`. Inherited sections are **silently** ignored if
+they are also defined in the file itself.
 
 ``` r
 
@@ -118,7 +121,7 @@ is also defined in the file itself.
 
 It is possible to inherit the description of parameters from other
 functions. Since `roxygen2` 8.0.0, it is possible to specify which
-arguments to inherit (i.e., to filter arguments). F; for arguments that
+arguments to inherit (i.e., to filter arguments). For arguments that
 share a single description this works from `roxygen2` 8.1.1)
 
 ``` r
@@ -140,10 +143,13 @@ function index. This is recommended for internal functions that are not
 supposed to be called by the user. Use the tag `@noRd` instead of
 `@export` to not generate an `.Rd` file at all (and thus omit the
 function from the index). In both cases, the function is **not**
-exported and thus should be called using the triple-colon operator:
+exported and thus should be called using the triple-colon operator (see
+[`help(":::")`](https://rdrr.io/r/base/ns-dblcolon.html)):
 `<pkg>:::<func>()`.
 
 ### Add examples
+
+Examples are meant to show users how to use a function.
 
 To run all examples in a package:
 
@@ -152,14 +158,16 @@ To run all examples in a package:
 devtools::run_examples()
 ```
 
-Although examples rendered on a website created with
+Examples rendered on a website created with
 [`pkgdown`](https://pkgdown.r-lib.org/) will display the output
-underneath the code, help-files accessed through `help(<func>)` will
-not, such that it might be useful to include a short comment regarding
-what feature of the output is notable.
+underneath the code. However, help-files accessed through `help(<func>)`
+will not, such that it might be useful to include a short comment
+regarding what feature of the output is notable.
 
 To not run or not display code in examples, you can use the `dontrun`
-and `dontshow` tags, see the section
+and `dontshow` tags, see
+[`help("example", package = "utils")`](https://rdrr.io/r/utils/example.html),
+the section
 [`Examples`](https://cran.r-project.org/doc/manuals/R-exts.html#Documenting-functions)
 from the
 [`Writing R Extensions manual`](https://cran.r-project.org/doc/manuals/R-exts.html)
@@ -179,9 +187,12 @@ and section [Add tests](#add-tests) below.
 
 For background on testing:
 
-- [`Unit tests`](https://contributions.bioconductor.org/tests.html)
+- Chapter
+  [`Unit tests`](https://contributions.bioconductor.org/tests.html) from
+  the [`Bioconductor Packages`](https://contributions.bioconductor.org/)
+  guide
 - [`Testing basics`](https://r-pkgs.org/testing-basics.html) and
-  subsequent chapters.
+  subsequent chapters from the `R packages` book.
 - [`Code Testing`](https://book.the-turing-way.org/reproducible-research/testing/)
   and subsequent chapters.
 - Section `Packages tests` from the CRAN Task View
@@ -197,15 +208,12 @@ tinytest::test_all()
 
 # Run a specific test file, selecting the file by name
 tinytest::run_test_file(fs::path(getwd(), "inst", "tinytest", "test_funcname.R"))
-# Run specific test files, selecting the files by order
-tinytest::run_test_file(
-  list.files(fs::path(getwd(), "inst", "tinytest"), full.names = TRUE)[1:3])
 ```
 
 #### Expectations
 
-Note that `expect_silent(...)` tests that no errors or warnings are
-emitted, **not** that no messages are emitted.
+Note that `tinytest::expect_silent(...)` tests that no errors or
+warnings are emitted, **not** that no messages are emitted.
 
 ``` r
 
@@ -245,7 +253,7 @@ and the vignette
 from package `testthat` for more details. In addition, changed options
 and graphical parameters should be restored to their original state to
 prevent influencing subsequent code. The following pattern shows how to
-do so for a single option or parameter, see the [entry in the CRAN
+do so for a single option or parameter, see [this entry in the CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
 for details:
 
@@ -270,15 +278,15 @@ sorting using the `C` locale gives the order
 `c("-", "!", "_", "|", "=", "1", "a", "A")`, whereas sorting using
 `UTF-8` gives `c("!", "-", "1", "=", "A", "_", "a", "|")`. Notably, the
 latter places uppercase characters before instead of after lowercase
-characters and places **some** symbols between the uppercase and
-lowercase characters, which also changes the sorting order from
-`c("-", "_")` to `c("_", "-")`.
+characters and places some symbols between the uppercase and lowercase
+characters, which also changes the sorting order from `c("-", "_")` to
+`c("_", "-")`.
 
 The used locale can be set through
 [`Sys.getlocale()`](https://rdrr.io/r/base/locales.html) but is also
 influenced by the used operating system and other settings in `R`, see
-[`help("locales")`](https://rdrr.io/r/base/locales.html), [section
-`Locales` in the
+[`help("locales")`](https://rdrr.io/r/base/locales.html), section
+[`Locales` in the
 `R Installation and Administration manual`](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales)
 and section `Details` of
 [`help("Comparison")`](https://rdrr.io/r/base/Comparison.html).
@@ -297,19 +305,18 @@ message to point out their presence would be written as
 `message("Successive '/' or '\\'")` which would be printed as
 `Successive '/' or '\'`.
 
-An approach to circumvent the hassle of getting the correct type and
+One approach to prevent problems with getting the correct type and
 number of slashes to compare with the path recorded in a message is to
-check only for fixed parts of the message (e.g., `"Repeated"`), possibly
-followed by a check like
+check only for fixed parts of the message (e.g., `"Successive"`),
+possibly followed by a check like
 `tinytest::expect_true(fs::dir_exists(string))`.
 
 ### Update dependencies
 
-First, consider if you really need a new dependency. Some additional
-effort in choosing dependencies or in coding can allow to depend on
-dependencies that themselves have fewer dependencies, making a project
-more stable over time. See the various contributions to the
-[`tinyverse`](https://www.tinyverse.org/).
+First, consider if you really need a new dependency and which package
+that should be. Some additional effort in choosing dependencies or in
+coding might allow using dependencies that themselves have fewer
+dependencies, making a project more stable over time.
 
 #### Importing packages or functions
 
@@ -318,26 +325,40 @@ package: use
 `usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`
 to put the package in the `Imports:` field of the `DESCRIPTION` file,
 and in code use the package name followed by two colons and the function
-name, e.g., `utils::head(1:10)`. See the next section on specifying
-minimum versions.
+name, e.g.,
+[`checkinput::all_names()`](https://jessealderliesten.github.io/checkinput/reference/all_names.html)
+if package `checkinput` was imported. If the package is only used in
+examples or vignettes, or is considered as an optional addition, you can
+use `type = "Suggests"` to place it in the `Suggests:` field of the
+`DESCRIPTION` file. Then you should guard usage of that code through
+`if(requireNamespace(a, quietly = TRUE)) {<code>}`.
+
+It is possible to specify minimum package versions, see [the next
+section](#specifying-minimum-versions).
 
 ``` r
 
-usethis::use_package("utils", type = "Imports", min_version = "4.0.0")
+usethis::use_package("checkinput", type = "Imports", min_version = "1.0.0")
 ```
 
 Using two colons to specify the package is not possible if the function
 is an operator: then it is necessary to also list the **function** in
 the `NAMESPACE` file: use
-`usethis::use_import_from(package = "utils", fun = "?")` followed by
+`usethis::use_import_from(package = "<pkg>", fun = "<func>")` followed
+by
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
 to add a line like `#' @importFrom utils ?` to the file
 `R/<pkg>-package.R` that was created by
 [`usethis::use_package_doc()`](https://usethis.r-lib.org/reference/use_package_doc.html).
+[`usethis::use_import_from()`](https://usethis.r-lib.org/reference/use_import_from.html)
+does not have a `min_version` argument, so to specify one you have to
+use
+[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
+as described in the previous paragraph.
 
 ``` r
 
-# The first line is used specify a minimum version
+# The first line is used to specify a minimum version
 usethis::use_package("utils", type = "Imports", min_version = "4.0.0")
 usethis::use_import_from(package = "utils", fun = "?")
 devtools::document()
@@ -346,24 +367,28 @@ devtools::document()
 #### Specifying minimum versions
 
 Specifying a minimum package version when importing packages ensures
-that used features are actually present. Using argument
+that used functions are actually present. Using argument
 `min_version = TRUE` in
 [`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
 uses the currently installed package version but that probably is too
-strict because features are likely also present in older package
+strict because functions are likely also present in older package
 versions.
 
-To check in which version a used features was introduced, you can search
-the `NEWS` file of the relevant package for the function name to find
-the `NEWS` item announcing its introduction. If that does not work, you
-can search for the function file on the GitHub-page of the package and
-look in its history to see when it was created, or use the `Blame`
+To check in which version a used functions was introduced, you can
+search the `NEWS` file of the relevant package for the function name to
+find the `NEWS` item announcing its introduction. If that does not work,
+you can search for the function file on the GitHub-page of the package
+and look in its history to see when it was created, or use the `Blame`
 feature to get a fine-grained overview of when code in that file was
-changed to see when a feature was introduced. Finally, you can also
-specify different minimum package versions in checks through GitHub
-actions and iteratively change them to find the minimum version that
-passes the check. Then specify that version as minimum version in your
-`DESCRIPTION` file.
+changed to see when a function was introduced. Then click on the commit
+message to get an overview of the files that were changed in that commit
+and use the `Browse files` button to browse the repository as it was
+repository as it was at the time of the commit. Then click the
+`DESCRIPTION` file to see which version the package was in. Finally, you
+can also specify different minimum package versions in checks through
+[`GitHub actions`](#use-github-actions) and iteratively change them to
+find the minimum version that passes the check. Then specify that
+version as minimum version in your `DESCRIPTION` file.
 
 Since `R` 4.6.0, [`read.dcf()`](https://rdrr.io/r/base/dcf.html)
 recognises lines starting with `#` as comment lines, making it possible
@@ -391,8 +416,8 @@ devtools::document()
 
 Do:
 
-- Add the minimum declared `R` version to workflows for GitHub Actions,
-  see the section [Use GitHub Actions](#use-github-actions).
+- Add the minimum declared `R` version to workflows for
+  [`GitHub Actions`](#use-github-actions).
 
 ## Adding vignettes
 
@@ -425,9 +450,9 @@ to render a vignette in the `help` pane of RStudio, and
 
 ### Styling
 
-See the vignette *RMarkdown and knitr*:
+See the vignette *R Markdown and knitr*:
 [`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.md))
-on using RMarkdown to style vignettes.
+on using R Markdown to style vignettes.
 
 Put the next lines in the header of vignettes to get a table of
 contents:
@@ -441,7 +466,8 @@ toc_depth: 3
 ```
 
 It is good practice to give the session information at the bottom of a
-vignette, e.g., using `utils::SessionInfo()` or
+vignette, e.g., using
+[`utils::sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html) or
 [`sessioninfo::session_info()`](https://sessioninfo.r-lib.org/reference/session_info.html):
 
 ```` r
@@ -466,15 +492,19 @@ utils::sessionInfo()
 There is [**no**](https://r-pkgs.org/vignettes.html#links) official way
 to link from vignettes to help-pages or vice versa. `pkgdown` recognises
 calls like `` `<func>()` `` and `` `<pkg>::<func>()` ``, such that
-relevant links for such calls will be created on a package website (see
-the [documentation](https://pkgdown.r-lib.org/articles/linking.html) for
-details).
+relevant links for such calls will be created on a package website.
+However, calls in which arguments are supplied like
+`` `<pkg>::<func>(arg = x)` `` will not be linked, see the
+[documentation](https://pkgdown.r-lib.org/articles/linking.html) for
+details.
 
 ## Adding miscellaneous files
 
-Non-standard files or folders should be added in the `inst` directory to
-pass [`R CMD checks`](https://r-pkgs.org/R-CMD-check.html). Those files
-and folders will be in the top directory in the installed package.
+Non-standard files or folders should be added in the `inst` directory of
+the package to pass
+[`R CMD check`](https://r-pkgs.org/R-CMD-check.html). Those files and
+folders will be in the top-level package folder of the installed
+package.
 
 ## Preparing for updates
 
@@ -493,6 +523,7 @@ instead of copying old packages to start new packages.
 
 ``` r
 
+devtools::document()
 develcoder::pkg_name_correct(pkg_name = basename(getwd()))
 # invisible character(0) if all is fine
 ```
@@ -533,7 +564,7 @@ codetools::checkUsagePackage(pack = basename(getwd()),
 #### checktor
 
 [checktor](https://r-pkg.thecoatlessprofessor.com/checktor/) provides
-various checks supplementing R CMD check.
+various checks supplementing `R CMD check`.
 
 ``` r
 
@@ -551,8 +582,8 @@ checks.
 
 See the [CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/) and the
-appendix [`R-CMD-check`](https://r-pkgs.org/R-CMD-check.html) from the
-book ‘R packages’ on how to proceed if checks fail.
+appendix [`R CMD check`](https://r-pkgs.org/R-CMD-check.html) from the
+book `R packages` on how to proceed if checks fail.
 
 The call to
 [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
@@ -562,8 +593,7 @@ manual](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Suggested-p
 and from [R
 packages](https://r-pkgs.org/release.html#double-r-cmd-checking) to set
 arguments and [environment
-values](https://cran.r-project.org/doc/manuals/r-release/R-ints.html)
-(see the \[manual\] for details about the environment variables):
+values](https://cran.r-project.org/doc/manuals/r-release/R-ints.html):
 
 - Using `TRUE` for environment variable `_R_CHECK_SUGGESTS_ONLY_` to run
   code while only using dependencies listed in the `Depends`, `Imports`
@@ -608,7 +638,7 @@ values](https://cran.r-project.org/doc/manuals/r-release/R-ints.html)
     - `https://CRAN.R-project.org/web/packages/policies.html` to refer
       to the [CRAN
       policies](https://CRAN.R-project.org/web/packages/policies.html)
-      (R CMD check will still complain about this format).
+      (`R CMD check` will still complain about this format).
 
 ``` r
 
@@ -677,14 +707,14 @@ res_goodpractice
 
 #### BiocCheck
 
-Runs checks that supplement those of
+`BiocCheck` runs checks that supplement those of
 [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-to check adherence to the guide
-[`Bioconductor Packages`](https://contributions.bioconductor.org/).
-These checks should be run before submission to
-[BioConductor](https://bioconductor.org/) but are useful more broadly.
-See the overview of checks in its
-[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html)
+to check adherence to the
+[`Bioconductor Packages`](https://contributions.bioconductor.org/)
+guide, which is required before submission to
+[BioConductor](https://bioconductor.org/). See the overview of checks in
+its
+[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
 
 ``` r
 
@@ -706,7 +736,7 @@ flagged above by `devtools::check(manual = TRUE, remote = TRUE)` as
 `not in mainstream repositories`.
 
 These checks email with a link to the webpage showing the check results
-if the check is done (the webpage might display ‘504 Gateway Time-out’
+if the check is done (the webpage might display `504 Gateway Time-out`
 if the checks have not finished yet).
 
 ``` r
@@ -721,9 +751,9 @@ because their [‘own’
 checks](https://docs.ropensci.org/pkgcheck/articles/list-checks.html)
 are largely covered by the checks from `devtools` used
 [above](#devtools-local), their checks from `goodpractice` are already
-covered here (see also [this
+covered [above](#goodpractice) (see also [this
 post](https://docs.ropensci.org/pkgcheck/articles/autotest-pkgcheck-gp.html)
-on the relation between `goodpractice` and `pkgcheck`), and the checks
+on the relation between `goodpractice` and `pkgcheck`), and their checks
 from
 [pkgstats](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
 are not very useful and require system libraries `ctags-universal` and
@@ -756,7 +786,7 @@ to normalize the `DESCRIPTION` file:
 desc::desc_normalize()
 ```
 
-To show the `DESCRIPTION` file, Use
+To show the `DESCRIPTION` file, use
 [`desc::desc()`](https://desc.r-lib.org/reference/desc.html) or
 `utils::packageDescription(pkg = basename(getwd()))`. To only show the
 dependencies, use
@@ -772,11 +802,12 @@ Indicating the version number in the commit title makes it easier to
 find changes back later on (the pull request can have a description of
 the changes, i.e., the updated section of the `NEWS` file). See package
 [`lifecycle`](https://CRAN.R-project.org/package=lifecycle) on how to
-add badges to packages and functions to indicate their lifecycle and its
-vignette
+add badges to packages and functions to indicate their life cycle and
+its vignette
 [`Lifecycle stages`](https://lifecycle.r-lib.org/articles/stages.html),
-chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html), and the
-[Semantic Versioning Specification](https://semver.org/) on versioning.
+chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html) from the
+`R packages` book, and the [Semantic Versioning
+Specification](https://semver.org/) on versioning.
 
 #### CITATION
 
@@ -797,7 +828,7 @@ included in the citation format in the `README`:
 
 ``` r
 
-devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
+devtools::install(quick = TRUE, upgrade = FALSE, build_vignettes = TRUE)
 ```
 
 Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation
@@ -810,8 +841,8 @@ Notes:
   GitHub.
 - If the requirement that `README.Rmd` and `README.md` are staged at the
   same time was accidentally introduced, delete the the hidden file
-  `.git/hooks/pre-commit` from the R-project folder (see the
-  `Description` section in
+  `.git/hooks/pre-commit` from the R-project folder (see the section
+  `Description` in
   [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
   to remove that requirement.
 
@@ -861,8 +892,8 @@ notify them.
 devtools::document()
 .libPaths() # Check if output of .libPaths() is correct.
 # If the next line leads to the error 'lazy-load database
-# '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt', you should restart R
-# and again run the next line.
+# '.../R/win-library/<X.Y>/<pkg>/R/<pkg>.rdb' is corrupt',
+# you should restart R and again run the next line.
 devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 
 # Load the package and view the help files as usual outside devtools:
@@ -875,8 +906,8 @@ browseVignettes(package = basename(getwd()))
 
 ### Use GitHub Actions
 
-Set up `workflow_dispatch` to manually trigger GitHub Actions (GHA), see
-section `Automate checks` in the vignette *Package setup*:
+Set up `workflow_dispatch` to manually trigger `GitHub Actions` (`GHA`),
+see the section `Automate checks` in the vignette *Package setup*:
 [`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
 
 To check if a reverse dependency (i.e., a package that depends on a
@@ -884,20 +915,20 @@ package you changed) **that you created** is still working fine: go to
 the `Actions` tab of the reverse dependency, select the action you want
 to trigger (e.g., `check-standard.yaml`), and use the `Run workflow`
 button shown at the top of the overview with workflow runs to run the
-GHA. You can select which branch it should run on but need to trigger it
-once manually on the `main` branch to be able to trigger it manually on
-other branches.
+`GitHub Action`. You can select which branch it should run on but need
+to trigger it once manually on the `main` branch to be able to trigger
+it manually on other branches.
 
 Scheduled jobs that failed can be rerun through the button `Re-run jobs`
-\> `Re-run failed jobs` \> `Re-run jobs`. If the GitHub actions page
+\> `Re-run failed jobs` \> `Re-run jobs`. If the `GitHub actions` page
 (e.g., <https://github.com/JesseAlderliesten/develcoder/actions>)
-indicates the package passes the
-[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) whereas the badge
-on the `README` indicates it fails, make sure the `R CMD check`
-considers the `main` branch (i.e., if the `devel` branch passes but the
-`main` branch fails, the badge will have `failing`): use the
-`Run workflow` button to run the GHA on the `main` branch, see the
-previous paragraph.
+indicates the package passes
+[`R CMD check`](https://r-pkgs.org/R-CMD-check.html) whereas the badge
+on the `README` indicates it fails, make sure `R CMD check` considers
+the `main` branch (i.e., if the `devel` branch passes but the `main`
+branch fails, the badge will have `failing`): use the `Run workflow`
+button to run the `GitHub Action` on the `main` branch, see the previous
+paragraph.
 
 If the package declares a dependency on a minimum `R` version, it is
 useful to specify the minimum declared `R` version to run in addition to
@@ -908,20 +939,23 @@ minimum version.
 
 #### GHA: documentation and help
 
-For more background on GitHub Actions, including an explanation of the
-syntax used in `.yaml` files, see the section about
+For more background on `GitHub Actions` (`GHA`), including an
+explanation of the syntax used in `.yaml` files, see the section about
 [`GitHub Actions`](https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha)
 in the book [`R packages`](https://r-pkgs.org/), the GitHub
 [`reference`](https://docs.github.com/en/actions/reference/workflows-and-actions)
 and
-[`HowTo`](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
+[`How-to`](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
 and the section `Use GitHub Actions` in the vignette *Package
 development*:
-[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md),
+and the overview of `GitHub Actions` and example `Workflows` in the
+documentation of the [`actions`](https://github.com/r-lib/actions)
+package.
 
 For help debugging build failures, see the Appendix
-[`R-CMD-check`](https://r-pkgs.org/R-CMD-check.html) in the book
-[`R packages`](https://r-pkgs.org/) and the section [Where to find
+[`R CMD check`](https://r-pkgs.org/R-CMD-check.html) in the book
+`R packages` and the section [Where to find
 help](https://github.com/r-lib/actions#where-to-find-help) in the
 documentation of the [`actions`](https://github.com/r-lib/actions)
 package.
@@ -929,8 +963,8 @@ package.
 ### pkgdown website
 
 See the documentation about package
-[`pkgdown`](https://pkgdown.r-lib.org/) and the
-[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
+[`pkgdown`](https://pkgdown.r-lib.org/) and chapter
+[`Website`](https://r-pkgs.org/website.html) from the `R packages` book
 for further details.
 
 ``` r
@@ -959,23 +993,24 @@ and the
 [example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml).
 
 To customise the order in which `Articles` are listed, specify their
-order in the `_pkgdown.yml` file (run
-`tools::pkgVignettes(package = "<pkg>")$names` to get their names; see
-the
-[documentation](https://pkgdown.r-lib.org/reference/build_articles.html)
-and for example the `_pkgdown.yml`
-[file](https://github.com/JesseAlderliesten/checkrpkgs/blob/main/.github/workflows/pkgdown.yaml)
-and non-alphabetical order of the
+order in the `_pkgdown.yml` file: run
+`tools::pkgVignettes(package = "<pkg>")$names` to get their names. See
+the [`pkgdown`
+documentation](https://pkgdown.r-lib.org/reference/build_articles.html),
+the `_pkgdown.yml`
+[template](https://github.com/JesseAlderliesten/checkrpkgs/blob/main/.github/workflows/pkgdown.yaml)
+from `develcoder`, and the non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in
-the `checkrpkgs` package.
+the `checkrpkgs` package for examples.
 
 To create a custom function index, include a section `reference:` in the
-`_pkgdown.yml` file with the desired headings and topics, see the
-[documentation](https://pkgdown.r-lib.org/reference/build_reference.html),
-an [official
-example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml),
-and [my own
-example](https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml).
+`_pkgdown.yml` file with the desired headings and topics: see the
+[documentation](https://pkgdown.r-lib.org/reference/build_reference.html)
+and an
+[example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml)
+from [`pkgdown`](https://pkgdown.r-lib.org/) and [the `_pkgdown.yml`
+file from the `progutils`
+package](https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml).
 Then build the reference with
 [`pkgdown::build_reference()`](https://pkgdown.r-lib.org/reference/build_reference.html)
 and view it locally by opening the file `"<pkg>\docs\index.html"` and
@@ -1041,8 +1076,9 @@ relevant packages.
 ## CRAN submission
 
 See the policy documents mentioned in the [Guidelines on package
-development](#guidelines-on-package-development) and the [relevant
-chapter](https://r-pkgs.org/release.html) from the ‘R packages’ book.
+development](#guidelines-on-package-development) and the chapter
+[`Releasing to CRAN`](https://r-pkgs.org/release.html) from the
+`R packages` book.
 
 [`tools::CRAN_check_results()`](https://rdrr.io/r/tools/CRANtools.html),
 [`tools::CRAN_check_details()`](https://rdrr.io/r/tools/CRANtools.html)
@@ -1050,7 +1086,7 @@ and
 [`tools::CRAN_check_issues()`](https://rdrr.io/r/tools/CRANtools.html)
 give information about the current check status of CRAN packages.
 [cransays](https://r-hub.github.io/cransays/index.html) ([source
-code](https://github.com/r-hub/cransays)) provides information about the
+code](https://github.com/r-hub/cransays)) gives information about the
 status of packages during package submission to CRAN.
 
 ## Troubleshooting
@@ -1103,9 +1139,10 @@ status of packages during package submission to CRAN.
   [`loadedNamespaces()`](https://rdrr.io/r/base/ns-load.html) to check
   which packages are loaded.
 
-- See also section `Troubleshooting` in the vignette about R packages in
-  package `checkrpkgs`:
-  [Troubleshooting](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
+- See also section
+  [`Troubleshooting`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
+  in the vignette *R packages* from package `checkrpkgs`:  
+  [`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 ## Documentation and help
 
@@ -1138,35 +1175,52 @@ status of packages during package submission to CRAN.
 
 ### Other useful resources
 
-- The
-  [`CRAN cookbook`](https://contributor.r-project.org/cran-cookbook/)
-- The book [`R packages`](https://r-pkgs.org/) by Wickham and Bryan
-- The book [`R in production`](https://r-in-production.org/) by Wickham
-  and Masiello
-- The chapter
+#### Official documentation
+
+- The R [manuals](https://CRAN.R-project.org/manuals.html)
+- The R [`developer page`](https://developer.r-project.org/)
+- The R
+  [`NEWS`](https://cran.r-project.org/doc/manuals/r-release/NEWS.html)
+  for the development branch
+
+#### Books and chapters
+
+- [`Advanced R`](https://adv-r.hadley.nz/techniques.html) by Wickham
+- [`CRAN cookbook`](https://contributor.r-project.org/cran-cookbook/) by
+  Daly and Altmann
+- [`R in production`](https://r-in-production.org/) by Wickham and
+  Masiello
+- [`R packages`](https://r-pkgs.org/) by Wickham and Bryan
+- [`What they forgot to teach you about R`](https://rstats.wtf/) by
+  Bryan, Hester, Pileggi and Aja
+- Chapter
   [`Building R Packages`](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
   of
   [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
   by Peng, Kross, and Anderson
-- The website
-  [`What They Forgot to Teach You About R`](https://rstats.wtf/)
-- The R [`developer page`](https://developer.r-project.org/) with
-  [`developer guidelines`](https://developer.r-project.org/devel-guidelines.txt)
-  and
-  [`technical documentation`](https://developer.r-project.org/TechDocs/)
-- The
-  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/package-development/)
-  about package development by [Posit](https://posit.co/)
-- The package
-  [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/) that
+
+#### Packages
+
+- The CRAN Task View
+  [`Package Development and Maintenance`](https://cran.r-project.org/view=PackageDevelopment)
+  is an annotated thematic collection of R packages that assists in
+  developing R packages
+- [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
   explains how to get information about to-be-installed and
   already-installed packages, and how to get the source code of R
   functions
-- The CRAN Task View
-  [`Package Development and Maintenance`](https://cran.r-project.org/view=PackageDevelopment)
-  with an annotated thematic collection of R packages that assist in
-  developing R packages
-- The R
-  [`NEWS`](https://cran.r-project.org/doc/manuals/r-release/NEWS.html)
-  for the development branch
-- Chapters from [Advanced R](https://adv-r.hadley.nz/techniques.html).
+- [`devtools`](https://devtools.r-lib.org/)
+- [`pkgdown`](https://pkgdown.r-lib.org/)
+- [`roxygen2`](https://roxygen2.r-lib.org/)
+- [`usethis`](https://usethis.r-lib.org/)
+
+#### Miscellaneous
+
+- The slides from the workshop [Building tidy
+  tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by Rand
+  and Lyttle
+- The package development
+  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/package-development/)
+  from [Posit](https://posit.co/)
+- The
+  [`Guide for Reproducible Research`](https://book.the-turing-way.org/reproducible-research/reproducible-research/)

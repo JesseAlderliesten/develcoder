@@ -12,15 +12,15 @@ package development is described in the vignette *Package development*:
 To search for functionality in existing packages, see the pointers given
 at the CRAN task view [Package
 Development](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape),
-the [search page](https://r-universe.dev/) of R-universe which is [also
-available](https://rwarehouse.netlify.app/) with AI-assisted extended
-search capabilities, packages
+the [search page](https://r-universe.dev/) of R-universe which is also
+available with [AI-assisted extended search
+capabilities](https://rwarehouse.netlify.app/), packages
 [`pkgmatch`](https://CRAN.R-project.org/package=pkgmatch) and
-[`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). See also
-section `R packages` in the vignette *R packages* in package
+[`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). Section
+`R packages` in the vignette *R packages* from package
 [`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
 ([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html))
-for an overview of repositories containing R packages.
+gives an overview of repositories containing R packages.
 
 ## Choose a name
 
@@ -41,23 +41,28 @@ utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
 
 ## Create the package
 
-Creating the package through
+The code below creates the package through
+[`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html).
+See the `usethis` vignette
+[`usethis setup`](https://usethis.r-lib.org/articles/usethis-setup.html)
+and
+[`help("use_description", package = "usethis")`](https://usethis.r-lib.org/reference/use_description.html)
+for details.
+
 [`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html)
 uses information stored in `.Rprofile` files to fill in default
 information. Such files can exist in various locations, for example at
-`D:\Userdata\<username>\Documents\.Rprofile`: see
-[`help("Startup")`](https://rdrr.io/r/base/Startup.html). See the
-`usethis` vignette
-[`usethis setup`](https://usethis.r-lib.org/articles/usethis-setup.html)
-and
-[`help(topic = "use_description", package = usethis)`](https://usethis.r-lib.org/reference/use_description.html)
-for details on creating a package.
+`D:\Userdata\<username>\Documents\.Rprofile`: use
+[`usethis::edit_r_profile()`](https://usethis.r-lib.org/reference/edit.html)
+to open the file `usethis` finds and see
+[`help("Startup")`](https://rdrr.io/r/base/Startup.html) for details.
 
 ``` r
 
 path_to_package <- file.path(getwd(), pkgname)
 path_to_package
 usethis::create_package(path = path_to_package)
+desc::desc() # show contents of the DESCRIPTION file
 ```
 
 Do:
@@ -75,11 +80,15 @@ Overviews of licenses are available at various websites:
 
 - [Blue oak council](https://blueoakcouncil.org/list)
 - [choosealicense](https://choosealicense.com/appendix/)
+- [CreativeCommons](https://creativecommons.org/chooser/)
 - [ELRA License Wizard](http://wizard.elda.org/)
 - [GNU.org](https://www.gnu.org/licenses/license-list.html)
+- [Licensing
+  Assistant](https://interoperable-europe.ec.europa.eu/collection/eupl/solution/licensing-assistant)
 - [Open Source Initiative](https://opensource.org/licenses)
+- [SPDX license list](https://spdx.org/licenses/)
 - [System Package Data Exchange](https://spdx.org/licenses/)
-- [tl;drLegal](https://www.tldrlegal.com/contact-us)
+- [tl;drLegal](https://www.tldrlegal.com/browse)
 
 Some legal details are provided at [The Legal Side of Open
 Source](https://opensource.guide/legal/).
@@ -93,7 +102,7 @@ the section `Licences` in
 notify users that a package uses a license that is not-known-to-be-Free
 or Open Source Software. `usethis` provides utility functions to add
 licenses (see `help("licenses", package = "usethis")`. For example, to
-add a MIT license:
+add a [MIT license](https://choosealicense.com/licenses/mit/):
 
 ``` r
 
@@ -130,26 +139,27 @@ Do:
   - See
     [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates` for pointers on useful content.
-  - Knit the `README.Rmd` file to produce a `README.md` file.
+  - `Knit` the `README.Rmd` file to produce a `README.md` file.
 
 #### Troubleshooting
 
 The `usethis` practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` requires that `README.Rmd` and `README.md` are
-staged at the same time. To remove this requirement, delete the the
-hidden file `.git/hooks/pre-commit` from the `R` project folder (see the
+staged at the same time. To remove this requirement, delete the hidden
+file `.git/hooks/pre-commit` from the `R` project folder, see the
 section `Description` in
-[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)).
+[`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
+for details.
 
 ### Package overview
 
-A package overview through the file `R/<pkg>-package.R` makes that
+A package overview through the file `R/<pkg>-package.R` makes that, if
+package `<pkg>` has been loaded (i.e., `library(<pkg>)` has been run),
 `help("<pkg>")` produces a relevant description of the package with
-links to GitHub and to the package website if package `<pkg>` has been
-loaded (i.e., `library(<pkg>)` has been run). It is also used by
-`usethis` to list imported functions, and can be configured to give an
-overview of the functions in the package.
+links to GitHub and to the package website. It is also used by `usethis`
+to list imported functions, and can be configured to give an overview of
+the functions in the package.
 
 ``` r
 
@@ -195,8 +205,8 @@ vignette *Using Git and GitHub*:
 ``` r
 
 usethis::use_git(message = "Initial commit")
-# If you get the error message 'You are not the current owner of the GitHub
-# repository', restart R as administrator and try again.
+# If you get the error message 'You are not the current owner of the
+# GitHub repository', restart R as administrator and try again.
 usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
 # See also https://forum.posit.co/t/renaming-the-default-branch/119149
@@ -207,19 +217,21 @@ usethis::git_default_branch_rediscover()
 
 ## Automate checks
 
-GitHub Actions (GHA) is a continuous integration service to
-automatically run code upon certain triggers. These triggers are defined
-in
-[workflows](https://docs.github.com/en/actions/reference/workflows-and-actions).
+[`GitHub Actions`](https://docs.github.com/en/actions) (`GHA`) is a
+continuous integration service to automatically run code upon certain
+triggers. These triggers are defined in `workflows`, see the
+[reference](https://docs.github.com/en/actions/reference/workflows-and-actions)
+and the
+[How-to](https://docs.github.com/en/actions/how-tos/manage-workflow-runs).
 The workflow
 [`check-standard.yaml`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml)
 from [`r-lib`](https://github.com/r-lib) runs
-[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) for the latest
+[`R CMD check`](https://r-pkgs.org/R-CMD-check.html) for the latest
 version of R on Linux, MacOS and Windows, as well as the previous and
 development version of R on Linux. The workflow
 [`check-no-suggests.yaml`](https://github.com/r-lib/actions/blob/v2-branch/examples/check-no-suggests.yaml)
 checks that the code passes
-[`R CMD checks`](https://r-pkgs.org/R-CMD-check.html) even if
+[`R CMD check`](https://r-pkgs.org/R-CMD-check.html) even if
 dependencies in `Suggests` are not installed.
 
 ``` r
@@ -228,41 +240,45 @@ usethis::use_github_action("check-standard")
 usethis::use_github_action("check-no-suggests")
 ```
 
-After setting up these workflows, adjust the created `YAML` files (i.e.,
-`<pkg>\.github\workflows\check-standard.yaml` and
+After setting up these workflows, adjust the created `.yaml` files
+(i.e., `<pkg>\.github\workflows\check-standard.yaml` and
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
-useful triggers for GHAs (see the template files `check-standard.yaml`
-and `check-no-suggests.yaml` in the folder `templates` in the local
-package folder or in
+useful triggers for `GitHub Actions` (see the template files
+`check-standard.yaml` and `check-no-suggests.yaml` in the folder
+`templates` in the local package folder or in
 [inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
 on the GitHub repository):
 
 - you made changes, or someone else proposed changes to code in the
   current repository:  
-  add `pull_request:` to section `on:` to run GHA on pull requests. NB.
+  add `pull_request:` to section `on:` to run `GitHub Actions` on pull
+  requests.  
   You can remove `push` from section `on:`: it should be sufficient to
-  run R CMD check locally before pushing and run GHA on pull requests.
-- you want to check if a reverse dependency (i.e., a package that
-  depends on a package you changed) is still working fine:  
-  add `workflow_dispatch:` to section `on:` in the YAML file of the
-  reverse dependency to be able to manually trigger GHA. See section
-  `Use GitHub Actions` in the vignette *Package development*
+  run `R CMD check` locally before pushing and run `GitHub Actions` on
+  pull requests.
+- you made changes to a repository and want to check if a reverse
+  dependency (i.e., a package that depends on the package you changed)
+  is still working fine:  
+  add `workflow_dispatch:` to section `on:` in the `.yaml` file of the
+  reverse dependency to be able to manually trigger `GitHub Actions`.
+  See section `Use GitHub Actions` in the vignette *Package development*
   ([`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
-  for info on how to use it.
+  how to use it.
 - someone else made changes to packages your package depends on:  
   add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every
-  Saturday on 04:23 UTC. The cron specification consists of five
+  Saturday on 04:23 UTC. The [cron
+  specification](https://en.wikipedia.org/wiki/Cron) consists of five
   elements that indicate the minute (0 - 59), hour (0 - 23), day of the
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
   timing is approximate and the actual time the check is run depends on
   how busy the servers are.
-- If the package declares a dependency on a minimum `R` version, it is
-  useful to specify the minimum declared `R` version to run in addition
-  to the ones that are by default used in the template: for example,
-  add  
-  `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:` to
-  also run the workflow with `R` version 4.1.0 if your package declares
-  `R` 4.1.0 as minimum version.
+- If the package declares a dependency on a minimum `R` version in its
+  `DESCRIPTION` file, it is useful to specify that minimum declared `R`
+  version to run in addition to the default ones used in the template:
+  for example,  
+  add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:`
+  to also run the workflow with `R` version 4.1.0 if your package
+  declares `R` 4.1.0 as minimum version.
 
 For further documentation, see section `GHA: documentation and help` in
 the vignette *Package development*:
@@ -270,22 +286,21 @@ the vignette *Package development*:
 
 ## Set up a package website
 
-One advantage of using a website for your package is that it
-automatically creates
+Package websites automatically create
 [`hyperlinked cross-references`](https://r-pkgs.org/vignettes.html#links)
 to functions and documentation you refer to.
 
 To set up a package website, you can use
 [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html),
 see the documentation about package
-[`pkgdown`](https://pkgdown.r-lib.org/) and the
-[`chapter`](https://r-pkgs.org/website.html) from the `R packages` book
+[`pkgdown`](https://pkgdown.r-lib.org/) and the chapter
+[`Website`](https://r-pkgs.org/website.html) from the `R packages` book
 for further details.
 
 To also set up a [GitHub action](#automate-checks) to automatically
-build and update your site if you push changes to your package to GitHub
-(defined in the file `<pkg>\.github\workflows\pkgdown.yaml`), run the
-following code:
+build and update the package website if you push changes to your package
+to GitHub (defined in the file `<pkg>\.github\workflows\pkgdown.yaml`),
+run the following code:
 
 ``` r
 
@@ -308,11 +323,14 @@ for this repository. The `_pkgdown.YML` file is located in the top-level
 package folder or in folder `pkgdown` and can also have extension
 `.YAML`; it is **not** the file `<pkg>\.github\workflows\pkgdown.yaml`
 that defines the [GitHub Action](#automate-checks) to automatically
-build and update your site if you push changes to your package to
-GitHub.
+build and update the package website if you push changes to your package
+to GitHub.
 
-## Further development
+## Documentation and further development
 
 Further package development is described in the vignette *Package
 development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+Section [Documentation and
+help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help)
+from that vignette contains further references.

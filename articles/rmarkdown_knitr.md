@@ -10,26 +10,27 @@ An R Markdown file (`.Rmd`) is a plain-text file with R code and markup.
 The markup is written in
 [markdown](https://daringfireball.net/projects/markdown/). The R package
 [`rmarkdown`](https://cran.r-project.org/package=rmarkdown) converts R
-Markdown files to a single output file containing the R code, output of
-the R code, and additional text.
+Markdown files to an output file containing the R code, output of the R
+code, and additional text.
 
-The `rmarkdown` package requires either [`Pandoc`](https://pandoc.org/)
-or [RStudio](https://posit.co/products/open-source/rstudio) (which
-already includes `Pandoc`) to convert R Markdown files to an html-file.
+- Converting an R Markdown file to an HTML file requires either
+  [`Pandoc`](https://pandoc.org/) or
+  [RStudio](https://posit.co/products/open-source/rstudio) that already
+  includes `Pandoc`.
 
-The `rmarkdown` package requires a
-[`LaTeX`](https://www.latex-project.org/get/) distribution, such as
-[`MikTex`](https://miktex.org/) or
-[`TinyTeX`](https://yihui.org/tinytex/) (for debugging see
-[here](https://yihui.org/tinytex/r/)), to convert R Markdown files to a
-PDF. See the `R markdown cookbook` and the `Definitive guide` (both
-mentioned at [Useful resources](#useful-resources) below) for extensive
-help. When installing [`MikTex`](https://miktex.org/) as LaTeX
-distribution, set `install for all users` and
-`always install missing packages on the fly` (for all users), see [this
-Stack Exchange post](https://tex.stackexchange.com/questions/27138/).
+- Converting an R Markdown file to a PDF file requires a
+  [`LaTeX`](https://www.latex-project.org/get/) distribution, see the
+  `R markdown cookbook` and the `Definitive guide` (both mentioned at
+  [Documentation and help](#documentation-and-help)) for extensive help.
+  Two common choices are `MiKTex` and `TinyTeX`:
 
-For [`TinyTeX`](https://yihui.org/tinytex/):
+  - [`MiKTex`](https://miktex.org/): when installing `MiKTex`, set
+    `install for all users` and
+    `always install missing packages on the fly` for all users, see
+    [this Stack Exchange
+    post](https://tex.stackexchange.com/questions/27138/).
+  - [`TinyTeX`](https://yihui.org/tinytex/): use the following code to
+    set it up and see [here](https://yihui.org/tinytex/r/) for details:
 
 ``` r
 
@@ -41,31 +42,12 @@ tinytex::pdflatex('test.tex')
 options(tinytex.verbose = FALSE)
 ```
 
-### Useful resources
-
-- the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/)
-  by Y. Xie, C. Dervieux, and E. Riederer
-- the [`Definitive guide`](https://pkg.yihui.org/rmarkdown-book/) by Y.
-  Xie, J.J. Allaire, and G. Grolemund
-- a
-  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
-  and [website](https://rmarkdown.rstudio.com/) on R Markdown from
-  [Posit](https://posit.co/)
-- the maintainer’s website on [`knitr`](https://yihui.org/knitr/)
-- the [`Markdown guide`](https://www.markdownguide.org/)
-- the book [`RMarkdown for Scientists`](https://rmd4sci.njtierney.com/)
-  by N. Tierney
-- Chapters from The Epidemiologist R Handbook:
-  [`Reports with R Markdown`](https://epirhandbook.com/en/new_pages/rmarkdown.html)
-  and
-  [`Organizing routine reports`](https://epirhandbook.com/en/new_pages/reportfactory.html)
-
 ### Global Settings for knitr used by R Markdown
 
 For a list of available options, see `str(knitr::opts_chunk$get())` and
 the overviews of [options](https://yihui.org/knitr/options/) and
 [objects storing options](https://yihui.org/knitr/objects/) at the
-maintainer’s website.
+package website.
 
 The option `echo = FALSE` hides code from the output. Use numeric values
 to include the code of particular chunks. To collect all code as an the
@@ -73,14 +55,14 @@ appendix at the end of of a document, see the section
 [`Put together all code in the appendix`](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix)
 from the `rmarkdown cookbook`.
 
-If the option `include = FALSE` is used, code and results are not
-included in output, but code **is** executed such that its results can
-be used in other code chunks (useful as option for particular chunks,
-not as global option).
+If the option `include = FALSE` is used, code and results are **not**
+included in the output but code **is** executed such that its results
+can be used in other code chunks, which is useful as option for
+particular chunks, not as global option.
 
 If the option `error = TRUE` is used, code execution will **not** stop
 on error (unless `include = FALSE`), but instead the error message is
-included in the output. This is useful in non-interactive use in
+included in the output. This is useful for non-interactive use in
 production settings. If the option `error = FALSE` is used, code
 execution stops on error, which makes more sense in interactive use
 during development of the script.
@@ -89,38 +71,20 @@ during development of the script.
 
 Files that have to be used by the `R Markdown` script (e.g., `R` scripts
 that are sourced, data files that are read) should be placed in the same
-directory as the `R Markdown` file, because the working directory when
-evaluating `R` code chunks is the directory of the input document by
-default. The working directory can be changed using
+directory as the `R Markdown` file, because by default the working
+directory when evaluating `R` code chunks is the directory of the input
+document. The working directory can be changed using
 `opts_knit$set(root.dir = ...)` but should **not** be changed using
 [`setwd()`](https://rdrr.io/r/base/getwd.html), see the `Note` in
 [`help("knit", package = "knitr")`](https://rdrr.io/pkg/knitr/man/knit.html).
 
-An inferior alternative to including `file = ...` in the header is
-including
-
-``` r
-
-source("<path/to/file>.R", local = knitr::knit_global(),
-       echo = TRUE, max.deparse.length = 1000)
-```
-
-in the body of the chunk. That method has the disadvantages that bare
-source code is included in the knitted file without the accompanying
-comments, that specification of the environment through the argument
-`local` can be
-[error-prone](https://pkg.yihui.org/rmarkdown-cookbook/source-script.html)
-and that `max.deparse.length` within `source(...)` has to be increased
-to ensure that all of the source code is printed (see
-[`help("source")`](https://rdrr.io/r/base/source.html)).
-
 ### Knitting documents to HTML and PDF
 
-The following lines can be used to knit documents (i.e., generate output
-in HTML or PDF files containing the script with its output and
+The following lines can be used to `Knit` documents (i.e., generate
+output in HTML or PDF files containing the script with its output and
 additional text) containing a file name including a time-stamp. Using
 this way of creating documents creates and keeps local R objects in the
-current environment. Although that can be useful for inspection and
+current environment. Although that is useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
 before using it and final files should be created by knitting (e.g.,
@@ -145,8 +109,8 @@ Add a new chunk by either using the `Code` \> `Insert Chunk` button or
 typing the delimiters ```` ```{r} ```` above and ```` ``` ```` below the
 code chunk.
 
-To collect all chunks in a R Markdown document that contain R code in a
-conventional R script use
+To collect all chunks from a R Markdown document that contain R code
+into a conventional R script use
 `knitr::purl("<filename>.Rmd", documentation = 0)`. However, the various
 R Markdown options will **not** be incorporated in such an R script,
 which might hamper exactly reproducing the analyses as executed when
@@ -155,20 +119,49 @@ running the R Markdown file, see the note in
 
 ### Formatting in R Markdown
 
-Newlines can be forced using `\cr`.
+#### Section headings and linking
 
-#### Italic and bold text
+Section headings can be created by putting a number sign (`#`) before
+the heading text, with additional number signs creating sub-headings.
 
-    Using *italic words* and _also italic words_ or **bold words** or even
-    _An **italic and bold phrase** in italic text_
+Links to another section in the same document can be created by putting
+the section heading in square brackets: `[<Section title>]`. To show an
+alternative text in the link, put the alternative text in square
+brackets before the section heading: `[<link text>][<Section title>]`.
+To link to URLs, put the link text in square brackets followed by the
+URL in round brackets: `[<link text>](<vignette_filename>.html)`. If
+sections on the website are proper headings, you can refer to them by
+adding a hash followed by the heading, with spaces replaced by dashes
+(`-`).
+
+    This is a link to this section: [Formatting in R Markdown]. This is another link
+    to the same section, with alternative text as link:
+    [The same section][Formatting in R Markdown]. And a link to the same section in
+    [the online version of this vignette](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html#formatting-in-r-markdown).
+
+renders as:
+
+This is a link to this section: [Formatting in R
+Markdown](#formatting-in-r-markdown). This is another link to the same
+section, with alternative text as link: [The same
+section](#formatting-in-r-markdown). And a link to the same section in
+[the online version of this
+vignette](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html#formatting-in-r-markdown).
+
+#### Italic, bold, strike through
+
+    *italic words*, _other italic words_, **bold words**, the combination of
+    _An **italic and bold phrase** in italic text_ and ~~strike through~~ all
+    emphasise part of a text
 
 is rendered as:
 
-Using *italic words* and *also italic words* or **bold words** or even
-*An **italic and bold phrase** in italic text*
+*italic words*, *other italic words*, **bold words**, the combination of
+*An **italic and bold phrase** in italic text* and ~~strike through~~
+all emphasise part of a text
 
-Partially bold text does **not** work inside link text in R version
-4.1.0 or earlier.
+Partially bold text inside [link text](#section-headings-and-linking)
+requires R version 4.1.1 or later.
 
 #### Code chunks
 
@@ -265,8 +258,14 @@ numbered list:
 
 #### Escaping
 
-To include `n` delimiters `` (`) `` in the **output**, escape them by
-enclosing with `n + 1` delimiters:  
+To include symbols that indicate markup as literal symbols, escape the
+starting markup symbols with a backslash:
+`\*\*this is bold if not escaped**` renders as \*\*this is bold if not
+escaped\*\* , whereas `**this is bold if not escaped**` renders as the
+bold **this is bold if not escaped**.
+
+To include `` (`) `` in the **output**, escape them by enclosing with an
+additional delimiters:  
 for example, ``` `` `some text` `` ``` produces `` `some text` ``, and
 ```` ``` `` `some text` `` ``` ```` produces ``` `` `some text` `` ```.
 Do **not** start a line of code with a delimiter if you want to escape
@@ -288,10 +287,44 @@ to show how to create a code chunk like
 
     ## [1] 3
 
-## Mathematical notation
+#### Miscellaneous
+
+Newlines can be forced using `\cr` or by ending a line with two spaces
+followed by a newline.
+
+Qoutes can be formatting by putting `>` in front of a line.
 
 For an overview of mathematical notation see
 <https://rpruim.github.io/s341/S19/from-class/MathinRmd.html>
+
+## Documentation and help
+
+### Books and chapters
+
+- the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/)
+  by Xie, Dervieux, and Riederer
+- the [`Definitive guide`](https://pkg.yihui.org/rmarkdown-book/) by
+  Xie, Allaire, and Grolemund
+- the book [`RMarkdown for Scientists`](https://rmd4sci.njtierney.com/)
+  by Tierney
+- Chapters
+  [`Reports with R Markdown`](https://epirhandbook.com/en/new_pages/rmarkdown.html)
+  and
+  [`Organizing routine reports`](https://epirhandbook.com/en/new_pages/reportfactory.html)
+  from `The Epidemiologist R Handbook`
+
+### Websites
+
+- the package website for [`knitr`](https://yihui.org/knitr/)
+- the [`Markdown guide`](https://www.markdownguide.org/), with a section
+  on [basic syntax](https://www.markdownguide.org/basic-syntax/)
+- a [website](https://rmarkdown.rstudio.com/) on R Markdown from
+  [Posit](https://posit.co/)
+
+### Miscellaneous
+
+- a
+  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
 
 ## sessionInfo
 
