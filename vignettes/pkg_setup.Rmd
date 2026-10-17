@@ -25,9 +25,9 @@ with [AI-assisted extended search capabilities](https://rwarehouse.netlify.app/)
 packages [`pkgmatch`](https://CRAN.R-project.org/package=pkgmatch) and
 [`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). Section
 `R packages` in the vignette *R packages* from package
-[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
-(`vignette("r_pkgs", package = "checkrpkgs")`) gives an overview of repositories
-containing R packages.
+[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/) gives an
+overview of repositories containing R packages:
+(`vignette("r_pkgs", package = "checkrpkgs")`).
 
 # Choose a name
 ```{r name, eval = FALSE}
@@ -53,7 +53,8 @@ The code below creates the package through `usethis::create_package()`. See the
 `usethis::create_package()` uses information stored in `.Rprofile` files to fill
 in default information. Such files can exist in various locations, for example
 at `D:\Userdata\<username>\Documents\.Rprofile`: use `usethis::edit_r_profile()`
-to open the file `usethis` finds and see `help("Startup")` for details.
+to open the `.Rprofile` file that `usethis` finds, see `help("Startup")` for
+details.
 
 ```{r create, eval = FALSE}
 path_to_package <- file.path(getwd(), pkgname)
