@@ -695,8 +695,9 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 ### README
 Install the development version of the package by running `devtools::install()`
 to ensure the updated version number without Git-commit ID will be included in
-the citation format in the `README`, using `quick = FALSE` to ensure the year
-will be displayed:
+the citation format in the `README`, using `quick = FALSE` and
+`build_vignettes = TRUE` to ensure the year will be displayed:
+
 ```{r install, eval = FALSE}
 devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 ```
