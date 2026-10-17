@@ -229,7 +229,7 @@ single option or parameter, see
 [this entry in the CRAN cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
 for details:
 
-```{r, eval = FALSE}
+```{r options, eval = FALSE}
 orig_opt <- options(<option> = <value>)
 orig_par <- par(<parameter> = <value>)
 <code>
@@ -401,7 +401,7 @@ e.g., using `utils::sessionInfo()` or `sessioninfo::session_info()`:
 
 ```` {r session info, eval = FALSE}
 ## sessionInfo
-```{r, echo = FALSE}
+```{r sessionInfo, echo = FALSE}
 utils::sessionInfo()
 ```
 ````
