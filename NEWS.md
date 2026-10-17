@@ -1,3 +1,18 @@
+# develcoder 0.15.0
+
+### Breaking changes
+- Dependency `checkinput`: increase minimum version from `0.14.0` to `1.0.0` to
+  depend on a stable version.
+- Dependency `checkrpkgs`: increase minimum version from `1.1.0` to `1.3.0` that
+  depends on a stable version of `checkinput`.
+
+### Miscellaneous
+- Vignette `Package development`: add example code to update licenses. Note the
+  requirements to show the year in the `README`. Only use `callr = TRUE` in
+  `BiocCheck::BiocCheck()` to run it in an isolated R session if package `callr`
+  is installed and functional.
+
+
 # develcoder 0.14.0
 
 ### Miscellaneous

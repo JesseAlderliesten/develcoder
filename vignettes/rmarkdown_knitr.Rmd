@@ -291,5 +291,5 @@ https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
 - a [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
 
 # sessionInfo
-```{r, echo = FALSE}
+```{r sessionInfo, echo = FALSE}
 utils::sessionInfo()

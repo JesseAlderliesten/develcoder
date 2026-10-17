@@ -229,7 +229,7 @@ single option or parameter, see
 [this entry in the CRAN cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
 for details:
 
-```{r, eval = FALSE}
+```{r options, eval = FALSE}
 orig_opt <- options(<option> = <value>)
 orig_par <- par(<parameter> = <value>)
 <code>
@@ -401,7 +401,7 @@ e.g., using `utils::sessionInfo()` or `sessioninfo::session_info()`:
 
 ```` {r session info, eval = FALSE}
 ## sessionInfo
-```{r, echo = FALSE}
+```{r sessionInfo, echo = FALSE}
 utils::sessionInfo()
 ```
 ````
@@ -453,7 +453,8 @@ package [testthat](https://testthat.r-lib.org/) to create tests.
 
 ``` {r update tests, eval = FALSE}
 devtools::document()
-develcoder::check_tests() # character(0) if all is fine
+develcoder::check_tests()
+# list with character(0) for elements 'missing' and 'extraneous' if all is fine
 tinytest::test_all() # or devtools::test() if testthat was used to create tests
 ```
 
@@ -599,10 +600,12 @@ adherence to the
 [`Bioconductor Packages`](https://contributions.bioconductor.org/) guide, which
 is required before submission to [BioConductor](https://bioconductor.org/).
 See the overview of checks in its
-[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html). 
+[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
+Several of the checks are probably too strict if you do not intend to submit the
+package to `BioConductor`.
 
 ``` {r checks-bioccheck, eval = FALSE}
-BiocCheck::BiocCheck(package = getwd(), callr = TRUE)
+BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 ```
 
 ### Other checks
@@ -671,6 +674,16 @@ to packages and functions to indicate their life cycle and its vignette
 [`Lifecycle`](https://r-pkgs.org/lifecycle.html) from the `R packages` book, and
 the [Semantic Versioning Specification](https://semver.org/) on versioning.
 
+### License
+Add a license if none is present, or update it to have the correct year in it.
+`usethis` provides utility functions to add licenses (see
+`help("licenses", package = "usethis")`. For example, to add or update a
+[MIT license](https://choosealicense.com/licenses/mit/):
+
+```{r license, eval = FALSE}
+usethis::use_mit_license()
+```
+
 ### CITATION
 Use the `DESCRIPTION` file to create a `CITATION.cff` citation file, or update
 such file to reflect the new package version:
@@ -682,9 +695,11 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 ### README
 Install the development version of the package by running `devtools::install()`
 to ensure the updated version number without Git-commit ID will be included in
-the citation format in the `README`:
+the citation format in the `README`, using `quick = FALSE` and
+`build_vignettes = TRUE` to ensure the year will be displayed:
+
 ```{r install, eval = FALSE}
-devtools::install(quick = TRUE, upgrade = FALSE, build_vignettes = TRUE)
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 ```
 
 Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation in the
@@ -967,7 +982,7 @@ status of packages during package submission to CRAN.
 
 ### Official documentation
 
-- The R [manuals](https://CRAN.R-project.org/manuals.html)
+- The R [`manuals`](https://CRAN.R-project.org/manuals.html)
 - The R [`developer page`](https://developer.r-project.org/)
 - The R [`NEWS`](https://cran.r-project.org/doc/manuals/r-release/NEWS.html)
   for the development branch
@@ -1003,10 +1018,13 @@ status of packages during package submission to CRAN.
 ### Miscellaneous
 
 - The slides from the workshop
-  [Building tidy tools](https://rstudio-conf-2022.github.io/build-tidy-tools/)
+  [`Building tidy tools`](https://rstudio-conf-2022.github.io/build-tidy-tools/)
   by Rand and Lyttle
 - The package development
   [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/package-development/)
   from [Posit](https://posit.co/)
 - The
   [`Guide for Reproducible Research`](https://book.the-turing-way.org/reproducible-research/reproducible-research/)
+  from `The Turing Way handbook to reproducible, ethical and collaborative data science`
+- [`GitHub Gardening`](https://book.the-turing-way.org/community-handbook/github-gardening/)
+  from `The Turing Way handbook to reproducible, ethical and collaborative data science`
