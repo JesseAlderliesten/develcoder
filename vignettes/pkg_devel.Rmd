@@ -605,7 +605,7 @@ Several of the checks are probably too strict if you do not intend to submit the
 package to `BioConductor`.
 
 ``` {r checks-bioccheck, eval = FALSE}
-BiocCheck::BiocCheck(package = getwd(), callr = TRUE)
+BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 ```
 
 ### Other checks
