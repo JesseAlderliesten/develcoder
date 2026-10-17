@@ -453,7 +453,8 @@ package [testthat](https://testthat.r-lib.org/) to create tests.
 
 ``` {r update tests, eval = FALSE}
 devtools::document()
-develcoder::check_tests() # character(0) if all is fine
+develcoder::check_tests()
+# list with character(0) for elements 'missing' and 'extraneous' if all is fine
 tinytest::test_all() # or devtools::test() if testthat was used to create tests
 ```
 
@@ -671,6 +672,16 @@ to packages and functions to indicate their life cycle and its vignette
 [`Lifecycle`](https://r-pkgs.org/lifecycle.html) from the `R packages` book, and
 the [Semantic Versioning Specification](https://semver.org/) on versioning.
 
+### License
+Add a license if none is present, or update it to have the correct year in it.
+`usethis` provides utility functions to add licenses (see
+`help("licenses", package = "usethis")`. For example, to add or update a
+[MIT license](https://choosealicense.com/licenses/mit/):
+
+```{r license, eval = FALSE}
+usethis::use_mit_license()
+```
+
 ### CITATION
 Use the `DESCRIPTION` file to create a `CITATION.cff` citation file, or update
 such file to reflect the new package version:
@@ -682,9 +693,10 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 ### README
 Install the development version of the package by running `devtools::install()`
 to ensure the updated version number without Git-commit ID will be included in
-the citation format in the `README`:
+the citation format in the `README`, using `quick = FALSE` to ensure the year
+will be displayed:
 ```{r install, eval = FALSE}
-devtools::install(quick = TRUE, upgrade = FALSE, build_vignettes = TRUE)
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 ```
 
 Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation in the
