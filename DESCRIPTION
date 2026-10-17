@@ -16,7 +16,7 @@ Imports:
     checkinput (>= 1.4.0),
     desc,
     fs (>= 1.3.0),
-    progutils (>= 0.14.0)
+    progutils (>= 1.0.0)
 Suggests:
     BiocCheck,
     checkrpkgs (>= 1.1.0),
