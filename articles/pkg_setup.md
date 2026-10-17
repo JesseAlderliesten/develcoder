@@ -18,9 +18,9 @@ capabilities](https://rwarehouse.netlify.app/), packages
 [`pkgmatch`](https://CRAN.R-project.org/package=pkgmatch) and
 [`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). Section
 `R packages` in the vignette *R packages* from package
-[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/)
-([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html))
-gives an overview of repositories containing R packages.
+[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/) gives an
+overview of repositories containing R packages:
+([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html)).
 
 ## Choose a name
 
@@ -54,7 +54,7 @@ uses information stored in `.Rprofile` files to fill in default
 information. Such files can exist in various locations, for example at
 `D:\Userdata\<username>\Documents\.Rprofile`: use
 [`usethis::edit_r_profile()`](https://usethis.r-lib.org/reference/edit.html)
-to open the file `usethis` finds and see
+to open the `.Rprofile` file that `usethis` finds, see
 [`help("Startup")`](https://rdrr.io/r/base/Startup.html) for details.
 
 ``` r

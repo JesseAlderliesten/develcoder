@@ -472,7 +472,7 @@ vignette, e.g., using
 
 ```` r
 ## sessionInfo
-```{r, echo = FALSE}
+```{r sessionInfo, echo = FALSE}
 utils::sessionInfo()
 ```
 ````
@@ -541,7 +541,8 @@ tests.
 ``` r
 
 devtools::document()
-develcoder::check_tests() # character(0) if all is fine
+develcoder::check_tests()
+# list with character(0) for elements 'missing' and 'extraneous' if all is fine
 tinytest::test_all() # or devtools::test() if testthat was used to create tests
 ```
 
@@ -715,10 +716,12 @@ guide, which is required before submission to
 [BioConductor](https://bioconductor.org/). See the overview of checks in
 its
 [vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
+Several of the checks are probably too strict if you do not intend to
+submit the package to `BioConductor`.
 
 ``` r
 
-BiocCheck::BiocCheck(package = getwd(), callr = TRUE)
+BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 ```
 
 #### Other checks
@@ -809,6 +812,18 @@ chapter [`Lifecycle`](https://r-pkgs.org/lifecycle.html) from the
 `R packages` book, and the [Semantic Versioning
 Specification](https://semver.org/) on versioning.
 
+#### License
+
+Add a license if none is present, or update it to have the correct year
+in it. `usethis` provides utility functions to add licenses (see
+`help("licenses", package = "usethis")`. For example, to add or update a
+[MIT license](https://choosealicense.com/licenses/mit/):
+
+``` r
+
+usethis::use_mit_license()
+```
+
 #### CITATION
 
 Use the `DESCRIPTION` file to create a `CITATION.cff` citation file, or
@@ -824,11 +839,12 @@ cffr::cff_write(dependencies = FALSE) # Create or update a citation file
 Install the development version of the package by running
 [`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
 to ensure the updated version number without Git-commit ID will be
-included in the citation format in the `README`:
+included in the citation format in the `README`, using `quick = FALSE`
+and `build_vignettes = TRUE` to ensure the year will be displayed:
 
 ``` r
 
-devtools::install(quick = TRUE, upgrade = FALSE, build_vignettes = TRUE)
+devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 ```
 
 Then `Knit` the `README.Rmd` to produce a `README.md` file. The citation
@@ -1177,7 +1193,7 @@ status of packages during package submission to CRAN.
 
 #### Official documentation
 
-- The R [manuals](https://CRAN.R-project.org/manuals.html)
+- The R [`manuals`](https://CRAN.R-project.org/manuals.html)
 - The R [`developer page`](https://developer.r-project.org/)
 - The R
   [`NEWS`](https://cran.r-project.org/doc/manuals/r-release/NEWS.html)
@@ -1216,11 +1232,16 @@ status of packages during package submission to CRAN.
 
 #### Miscellaneous
 
-- The slides from the workshop [Building tidy
-  tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by Rand
-  and Lyttle
+- The slides from the workshop
+  [`Building tidy tools`](https://rstudio-conf-2022.github.io/build-tidy-tools/)
+  by Rand and Lyttle
 - The package development
   [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/package-development/)
   from [Posit](https://posit.co/)
 - The
   [`Guide for Reproducible Research`](https://book.the-turing-way.org/reproducible-research/reproducible-research/)
+  from
+  `The Turing Way handbook to reproducible, ethical and collaborative data science`
+- [`GitHub Gardening`](https://book.the-turing-way.org/community-handbook/github-gardening/)
+  from
+  `The Turing Way handbook to reproducible, ethical and collaborative data science`
