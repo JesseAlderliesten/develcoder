@@ -7,6 +7,8 @@
 #' @param path [character string][checkinput::is_character()] containing a
 #' valid [path][checkinput::is_path()] to the package of which to check testing
 #' infrastructure and test files. The default is the [working directory][getwd()].
+#' @param test_vignettes `TRUE` or `FALSE`: should `vignettes` have a
+#' corresponding `test` file?
 #'
 #' @details
 #' This function looks for \R files starting with pattern `pattern` in folders
@@ -15,13 +17,16 @@
 #' and [`testthat`](https://CRAN.R-project.org/package=testthat) place their
 #' test files, respectively.
 #'
-#' It is checked that testing infrastructure is present and refers to the
-#' current package, and that all test files have corresponding function files
-#' and vice versa. Test files are ignored if the corresponding test
-#' infrastructure is missing or wrong, with a warning. Function files of
-#' re-exported functions are ignored when looking for corresponding test files
-#' because these functions should be tested in the package from which they are
-#' re-exported.
+#' It is checked that testing infrastructure referring to the current package is
+#' present. Test files are ignored if the corresponding test infrastructure is
+#' missing or wrong, with a warning.
+#'
+#' It is checked that all test files have a corresponding `.R` function file in
+#' folder `R` or an `.Rmd` vignette in folder `vignettes`. It is also checked
+#' that all function files and, if `test_vignettes` is `TRUE`, all vignettes,
+#' have a corresponding test file. Function files of re-exported functions are
+#' ignored when looking for corresponding test files because these functions
+#' should be tested in the package from which they are re-exported.
 #'
 #' Warnings are issued if:
 #'
@@ -33,26 +38,27 @@
 #'   or [`testthat`](https://testthat.r-lib.org/)
 #' - test directories used by `tinytest` or `testthat` contain test files while
 #'   their test architecture is not set up
-#' - test directories contain test files without corresponding function files in
-#'   folder `R`
+#' - test directories contain test files without corresponding function file in
+#'   folder `R` or vignette in folder `vignettes`
 #' - folder `R` contains function files without corresponding test files
-#' - folder `R` contains files that are not R files
+#' - folder `R` contains files that are not \R files
 #' - folder `R` does not contain any function files
-#' - files `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R` determining
-#'   which test infrastructure is used are present but do **not** refer to the
-#'   current package, or the packages `tinytest` and `testthat` are missing from
-#'   the dependencies of the tested package
-#' - file `<pkg>\tests\tinytest.R` nor `<pkg>\tests\testthat.R` is present
-#' - file `reexports.Rd` is present in folder `man` but no re-exported functions
-#'   are present in folder `R`
+#' - folder `vignettes` contains files that are not `.Rmd` files
+#' - folder `vignettes` contains `.Rmd` files without corresponding test files
+#'   while `test_vignettes` is `TRUE`
+#' - files `tests\tinytest.R` or `tests\testthat.R` determining which test
+#'   infrastructure is used are present but do **not** refer to the current
+#'   package, or the packages `tinytest` and `testthat` are missing from the
+#'   dependencies of the tested package
+#' - file `tests\tinytest.R` nor `tests\testthat.R` is present
+#' - file `man\reexports.Rd` is present but no re-exported functions are present
+#'   in folder `R`
 #'
 #' @returns
-#' If all function files in folder `R` have a corresponding used test file and
-#' vice versa (which also is the case if no test files and no function files are
-#' present): `character(0)`. Otherwise, a list containing components `missing`
-#' and `extraneous` containing character vectors with the names of function
-#' files for which no used test file is present, and the names of test files for
-#' which no function file is present, respectively.
+#' If all is fine: `character(0)`. Otherwise, a list containing components
+#' `missing` and `extraneous` containing character vectors with the names of
+#' function files for which no used test file is present, and the names of test
+#' files for which no function file is present, respectively.
 #'
 #' @family
 #' functions to check tests
@@ -77,9 +83,10 @@
 #'
 #' @export
 check_tests <- function(path = getwd(), pattern = "^test_|^test-",
-                        ignore_case = TRUE) {
+                        ignore_case = TRUE, test_vignettes = FALSE) {
   stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
-            checkinput::is_logical(ignore_case))
+            checkinput::is_logical(ignore_case),
+            checkinput::is_logical(test_vignettes))
 
   path_desc <- fs::path(path, "DESCRIPTION")
   if(!fs::is_file(path_desc)) {
@@ -136,7 +143,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   } else {
     if(length(test_files_present) == 0L) {
       warning("None of the test directories contain used test files:\n",
-              progutils::paste_quoted(all_paths, collapse = "\n"))
+              progutils::paste_quoted(all_paths, collapse = ",\n"))
     }
   }
 
@@ -145,7 +152,7 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   bool_not_R <- !endsWith(x = R_files, suffix = ".R")
   if(any(bool_not_R)) {
     warning("Ignoring non-R files in folder '", path_R, "':\n",
-            progutils::paste_quoted(R_files[bool_not_R], collapse = "\n"))
+            progutils::paste_quoted(R_files[bool_not_R], collapse = ",\n"))
     R_files <- R_files[!bool_not_R]
   }
 
@@ -154,9 +161,10 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
     R_files <- R_files[!bool_proj_pkg_R_file]
   }
 
-  if(any(grepl(pattern = "^reexports.Rd$",
-               x = list.files(path = file.path(path, "man")),
-               ignore.case = TRUE))) {
+  files_man <- list.files(path = file.path(path, "man"),
+                          pattern = "^Reexports.Rd$",
+                          ignore.case = TRUE)
+  if(length(files_man) > 0L) {
     # Based on https://stackoverflow.com/a/74487073/32365738
     reexported_funcs <- progutils::not_in(getNamespaceExports(pkg),
                                           ls(envir = asNamespace(pkg)))
@@ -171,11 +179,34 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
     }
   }
 
+  expected_test_files <- character(0)
   if(length(R_files) > 0L) {
-    expected_test_files <- R_files
+    expected_test_files <- c(expected_test_files, R_files)
   } else {
-    warning("No function files found.")
-    expected_test_files <- character(0)
+    warning("No function files found in folder '", path_R, "'.")
+  }
+
+  path_vignettes <- fs::path(path, "vignettes")
+  vignettes_files <- character(0L)
+  if(fs::dir_exists(path_vignettes)) {
+    vignettes_files <- basename(
+      fs::dir_ls(path = path_vignettes, type = "file", fail = FALSE))
+    bool_not_Rmd <- !endsWith(x = vignettes_files, suffix = ".Rmd")
+    if(any(bool_not_Rmd)) {
+      warning("Ignoring non-Rmd files in folder '", path_vignettes, "':\n",
+              progutils::paste_quoted(vignettes_files[bool_not_Rmd],
+                                      collapse = ",\n"))
+      vignettes_files <- sub(pattern = ".Rmd$", replacement = ".R",
+                             x = vignettes_files[!bool_not_Rmd],
+                             ignore.case = TRUE)
+    }
+    if(length(vignettes_files) == 0L) {
+      warning("No vignettes found in folder '", path_vignettes, "'.")
+    } else {
+      if(test_vignettes) {
+        expected_test_files <- c(expected_test_files, vignettes_files)
+      }
+    }
   }
 
   tests_missing <- progutils::not_in(
@@ -185,19 +216,19 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
   tests_extraneous <- progutils::not_in(
     gsub(pattern = pattern, replacement = "", x = test_files_present,
          ignore.case = ignore_case),
-    expected_test_files)
+    c(expected_test_files, vignettes_files))
   if(length(tests_missing) > 0L) {
-    warning("No test file found corresponding to function file ",
+    warning("No test file found corresponding to function file\n",
             progutils::paste_quoted(
               gsub(pattern = pattern, replacement = "", x = tests_missing),
-              collapse = "\n"
+              collapse = ",\n"
             )
     )
   }
 
   if(length(tests_extraneous) > 0L) {
-    warning("No function file found corresponding to test file ",
-            progutils::paste_quoted(tests_extraneous, collapse = "\n"))
+    warning("No function file or vignette found corresponding to test file\n",
+            progutils::paste_quoted(tests_extraneous, collapse = ",\n"))
   }
 
   list(missing = tests_missing, extraneous = tests_extraneous)

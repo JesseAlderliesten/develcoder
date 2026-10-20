@@ -4,7 +4,12 @@
 \alias{check_tests}
 \title{Check tests}
 \usage{
-check_tests(path = getwd(), pattern = "^test_|^test-", ignore_case = TRUE)
+check_tests(
+  path = getwd(),
+  pattern = "^test_|^test-",
+  ignore_case = TRUE,
+  test_vignettes = FALSE
+)
 }
 \arguments{
 \item{path}{\link[checkinput:is_character]{character string} containing a
@@ -16,14 +21,15 @@ infrastructure and test files. The default is the \link[=getwd]{working director
 
 \item{ignore_case}{\code{TRUE} or \code{FALSE}: ignore case when matching filenames to
 \code{pattern}?}
+
+\item{test_vignettes}{\code{TRUE} or \code{FALSE}: should \code{vignettes} have a
+corresponding \code{test} file?}
 }
 \value{
-If all function files in folder \code{R} have a corresponding used test file and
-vice versa (which also is the case if no test files and no function files are
-present): \code{character(0)}. Otherwise, a list containing components \code{missing}
-and \code{extraneous} containing character vectors with the names of function
-files for which no used test file is present, and the names of test files for
-which no function file is present, respectively.
+If all is fine: \code{character(0)}. Otherwise, a list containing components
+\code{missing} and \code{extraneous} containing character vectors with the names of
+function files for which no used test file is present, and the names of test
+files for which no function file is present, respectively.
 }
 \description{
 Check if testing infrastructure is present and refers to the current package,
@@ -36,13 +42,16 @@ which is where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest
 and \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their
 test files, respectively.
 
-It is checked that testing infrastructure is present and refers to the
-current package, and that all test files have corresponding function files
-and vice versa. Test files are ignored if the corresponding test
-infrastructure is missing or wrong, with a warning. Function files of
-re-exported functions are ignored when looking for corresponding test files
-because these functions should be tested in the package from which they are
-re-exported.
+It is checked that testing infrastructure referring to the current package is
+present. Test files are ignored if the corresponding test infrastructure is
+missing or wrong, with a warning.
+
+It is checked that all test files have a corresponding \code{.R} function file in
+folder \code{R} or an \code{.Rmd} vignette in folder \code{vignettes}. It is also checked
+that all function files and, if \code{test_vignettes} is \code{TRUE}, all vignettes,
+have a corresponding test file. Function files of re-exported functions are
+ignored when looking for corresponding test files because these functions
+should be tested in the package from which they are re-exported.
 
 Warnings are issued if:
 \itemize{
@@ -54,18 +63,21 @@ files created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinyte
 or \href{https://testthat.r-lib.org/}{\code{testthat}}
 \item test directories used by \code{tinytest} or \code{testthat} contain test files while
 their test architecture is not set up
-\item test directories contain test files without corresponding function files in
-folder \code{R}
+\item test directories contain test files without corresponding function file in
+folder \code{R} or vignette in folder \code{vignettes}
 \item folder \code{R} contains function files without corresponding test files
-\item folder \code{R} contains files that are not R files
+\item folder \code{R} contains files that are not \R files
 \item folder \code{R} does not contain any function files
-\item files \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R} determining
-which test infrastructure is used are present but do \strong{not} refer to the
-current package, or the packages \code{tinytest} and \code{testthat} are missing from
-the dependencies of the tested package
-\item file \verb{<pkg>\\tests\\tinytest.R} nor \verb{<pkg>\\tests\\testthat.R} is present
-\item file \code{reexports.Rd} is present in folder \code{man} but no re-exported functions
-are present in folder \code{R}
+\item folder \code{vignettes} contains files that are not \code{.Rmd} files
+\item folder \code{vignettes} contains \code{.Rmd} files without corresponding test files
+while \code{test_vignettes} is \code{TRUE}
+\item files \verb{tests\\tinytest.R} or \verb{tests\\testthat.R} determining which test
+infrastructure is used are present but do \strong{not} refer to the current
+package, or the packages \code{tinytest} and \code{testthat} are missing from the
+dependencies of the tested package
+\item file \verb{tests\\tinytest.R} nor \verb{tests\\testthat.R} is present
+\item file \verb{man\\reexports.Rd} is present but no re-exported functions are present
+in folder \code{R}
 }
 }
 \examples{
