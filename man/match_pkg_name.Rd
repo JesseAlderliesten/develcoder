@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_pkg_name.R
 \name{match_pkg_name}
 \alias{match_pkg_name}
-\title{Match package name}
+\title{Match Package Name}
 \usage{
 match_pkg_name(
   pkg_name,
@@ -37,8 +37,10 @@ The paths to the files that were checked, returned \link[=invisible]{invisibly}.
 Match a package name to the content of files.
 }
 \examples{
-match_pkg_name(pkg_name = "develcoder", warn_files_absent = FALSE)
-match_pkg_name(pkg_name = "develcoder", warn_files_absent = TRUE)
+match_pkg_name(pkg_name = "develcoder",
+               warn_files_absent = FALSE)
+match_pkg_name(pkg_name = "develcoder",
+               warn_files_absent = TRUE)
 
 }
 \seealso{

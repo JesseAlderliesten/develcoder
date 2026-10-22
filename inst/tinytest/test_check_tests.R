@@ -7,7 +7,9 @@
 pattern_desc <- "No DESCRIPTION file found"
 pattern_ignored <- paste0("Ignoring files that are not R files, are template",
                           " files created by ")
-pattern_no_test_file <- "No test file found corresponding to function file "
+pattern_no_test_file <- "No test file found corresponding to function file\n"
+pattern_no_func_file <- paste0("No function file or vignette found",
+                               " corresponding to test file\n")
 error_path <- "'path' should be a non-empty, non-NA_character_ character string"
 error_path_sep <- "'path' should contain file separators"
 error_not_path <- "is_path(path) is not TRUE"
@@ -169,7 +171,7 @@ expect_warning(
   ),
   pattern = paste0(pattern_no_test_file,
                    progutils::paste_quoted(c(ignored_testthat, ignored_tinytest),
-                                           collapse = "\n")),
+                                           collapse = ",\n")),
   strict = TRUE)
 
 ##### some function files missing #####
@@ -183,8 +185,8 @@ expect_warning(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = character(0), extraneous = other_funcs)
   ),
-  pattern = paste0("No function file found corresponding to test file ",
-                   progutils::paste_quoted(other_funcs, collapse = "\n")),
+  pattern = paste0(pattern_no_func_file,
+                   progutils::paste_quoted(other_funcs, collapse = ",\n")),
   strict = TRUE)
 
 # Re-create function files
@@ -227,7 +229,7 @@ expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
-  ), pattern = "No test file found corresponding to function file 'file2.R'",
+  ), pattern = paste0(pattern_no_test_file, "'file2.R'"),
   strict = TRUE, fixed = TRUE
 )
 
@@ -235,7 +237,7 @@ expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
-  ), pattern = "No function file found corresponding to test file 'file3.R'",
+  ), pattern = paste0(pattern_no_func_file, "'file3.R'"),
   strict = TRUE, fixed = TRUE
 )
 
@@ -274,7 +276,7 @@ expect_warning(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
   ),
-  pattern = "No test file found corresponding to function file 'file2.R'",
+  pattern = paste0(pattern_no_test_file, "'file2.R'"),
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
@@ -282,7 +284,7 @@ expect_warning(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
   ),
-  pattern = "No function file found corresponding to test file 'file3.R'",
+  pattern = paste0(pattern_no_func_file, "'file3.R'"),
   strict = TRUE, fixed = TRUE)
 
 # Remove tinytest test infrastructure
@@ -293,12 +295,12 @@ expect_warning(
     list(missing = c("file2.R", "other_func_tinytest.R", "some_func_tinytest.R"),
          extraneous = "file3.R")
   ),
-  pattern = "No test file found corresponding to function file 'file2.R'",
+  pattern = paste0(pattern_no_test_file, "'file2.R'"),
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
   check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-  pattern = "No function file found corresponding to test file 'file3.R'",
+  pattern = paste0(pattern_no_func_file, "'file3.R'"),
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
@@ -363,7 +365,7 @@ expect_warning(
   check_tests(path = my_tempdir, pattern = "^test-"),
   pattern = paste0(
     pattern_no_test_file,
-    progutils::paste_quoted(c(old_func[-2], some_func), collapse = "\n")),
+    progutils::paste_quoted(c(old_func[-2], some_func), collapse = ",\n")),
   strict = TRUE)
 
 expect_warning(
@@ -439,7 +441,7 @@ expect_warning(
 expect_warning(
   check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
   pattern = paste0(pattern_no_test_file,
-                   progutils::paste_quoted(some_func, collapse = "\n")),
+                   progutils::paste_quoted(some_func, collapse = ",\n")),
   strict = TRUE)
 
 expect_warning(
