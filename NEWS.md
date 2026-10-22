@@ -1,22 +1,36 @@
+# develcoder 0.16.0
+
+### Breaking changes
+- `check_tests()`: also look in folder `<pkg>/vignettes` for vignettes
+  corresponding to test functions. Add argument `test_vignettes` to look for
+  test functions corresponding to vignettes.
+
+### Documentation
+- Make layout more uniform.
+- Wrap lines in 'Usage' and 'Example' sections to 65 characters.
+- Capitalize function titles.
+- Avoid markup in section titles.
+
+
 # develcoder 0.15.0
 
 ### Breaking changes
-- Dependency `checkinput`: increase minimum version from `0.14.0` to `1.0.0` to
+- Dependency **checkinput**: increase minimum version from 0.14.0 to 1.0.0 to
   depend on a stable version.
-- Dependency `checkrpkgs`: increase minimum version from `1.1.0` to `1.3.0` that
-  depends on a stable version of `checkinput`.
+- Dependency **checkrpkgs**: increase minimum version from 1.1.0 to 1.3.0 that
+  depends on a stable version of **checkinput**.
 
 ### Miscellaneous
-- Vignette `Package development`: add example code to update licenses. Note the
-  requirements to show the year in the `README`. Only use `callr = TRUE` in
-  `BiocCheck::BiocCheck()` to run it in an isolated R session if package `callr`
-  is installed and functional.
+- Vignette *Package development*: add example code to update licenses. Note the
+  requirements to show the year in the README. Only use `callr = TRUE` in
+  `BiocCheck::BiocCheck()` to run it in an isolated R session if package
+  **callr** is installed and functional.
 
 
 # develcoder 0.14.0
 
 ### Miscellaneous
-- Vignette `R markdown and knitr`: additions on formatting and escaping.
+- Vignette *R markdown and knitr*: additions on formatting and escaping.
 - Other vignettes: many stylistic updates to language and layout, some
   additions.
 
@@ -24,18 +38,18 @@
 # develcoder 0.13.0
 
 ### Breaking changes
-- Add dependency `BiocCheck` to `Suggests` because it is used in a vignette.
+- Add dependency **BiocCheck** to `Suggests` because it is used in a vignette.
 - The value returned by `check_tests()` is now a list containing components
   `missing` and `extraneous` with unsorted character vectors. `check_tests()`
   now also handles non-exported functions correctly.
 
 ### Miscellaneous
-- Vignette `Package setup`: some clarifications and updates.
-- Vignette `Package development`: many clarifications and updates. Add section
-  `BiocCheck` showing how to run its checks. Add an introduction to section
-  `Documentation` referring to the relevant `roxygen2` documentation and a
-  subsection `Suppress documentation`. Add subsection `Sorting order` to section
-  `Add tests` to point out some issues with getting reproducible sorted output.
+- Vignette *Package setup*: some clarifications and updates.
+- Vignette *Package development*: many clarifications and updates. Add section
+  'BiocCheck' showing how to run its checks. Add an introduction to section
+  'Documentation' referring to the relevant **roxygen2** documentation and a
+  subsection 'Suppress documentation'. Add subsection 'Sorting order' to section
+  'Add tests' to point out some issues with getting reproducible sorted output.
   Change the order of sections to have a more logical order and have fast checks
   before slow checks.
 
@@ -43,8 +57,8 @@
 # develcoder 0.12.0
 
 ### Breaking changes
-- Dependency `cffr`: move from `Suggests` to `Imports` and increase minimum
-  version from `0.2.0` to `0.5.0` to use `cff_read()` in `pkg_name_correct()`.
+- Dependency **cffr**: move from `Suggests` to `Imports` and increase minimum
+  version from 0.2.0 to 0.5.0 to use `cff_read()` in `pkg_name_correct()`.
 
 ### New functions
 - Add function `pkg_name_correct()` and its helper `match_pkg_name()` to check
@@ -52,8 +66,8 @@
   directory.
 
 ### Miscellaneous
-- `README`: add contact/contribution info.
-- Vignette `Package development`: add subsection `Check package name` using
+- README: add contact/contribution info.
+- Vignette *Package development*: add subsection 'Check package name' using
   `pkg_name_correct()`. Additions on getting information about loaded or
   attached packages. Updated some links.
 
@@ -61,45 +75,45 @@
 # develcoder 0.11.0
 
 ### Breaking changes
-- Added `checktor` as suggested dependency because it is used in a vignette.
-- Dependency `checkinput`: increase minimum version from `1.3.0` to `1.4.0` to
-  use stricter argument checking for `all_numbers()`, `is_number()` and related
+- Added **checktor** as suggested dependency because it is used in a vignette.
+- Dependency **checkinput**: increase minimum version from 1.3.0 to 1.4.0 to use
+  stricter argument checking for `all_numbers()`, `is_number()` and related
   functions.
-- Dependency `usethis`: increase minimum version from `2.0.1` to `2.2.0` to have
+- Dependency **usethis**: increase minimum version from 2.0.1 to 2.2.0 to have
   more robust `use_r()` and `use_test()`.
 
 ### Miscellaneous
-- Vignette `Package setup`: add section `Check existing packages`.
-- Vignette `Package development`: add subsection `Background` pointing to useful
-  resources in section `Add tests`. Add checks by `checktor`. Add various
+- Vignette *Package setup*: add section 'Check existing packages'.
+- Vignette *Package development*: add subsection 'Background' pointing to useful
+  resources in section 'Add tests'. Add checks by **checktor**. Add various
   references.
-- Vignette `R Markdown and knitr`: link to relevant chapters from
-  `The Epidemiologist R Handbook`.
+- Vignette *R Markdown and knitr*: link to relevant chapters from The
+  Epidemiologist R Handbook.
 - Added some more references.
-- The used version of `roxygen2` increased from `8.0.0` to `8.1.0`.
+- The used version of **roxygen2** increased from 8.0.0 to 8.1.0.
 
 
 # develcoder 0.10.0
 
 ### Breaking changes
-- Dependency `cffr`: require minimum version `0.2.0` to be able to use argument
+- Dependency **cffr**: require minimum version 0.2.0 to be able to use argument
   `dependencies` of `cff_create()` and `cff_write()`.
-- Dependency `checkinput`: increase minimum version from `1.0.0` to `1.3.0` to
-  be able to use argument `collapse` of `paste_quoted()`.
-- Dependency `checkrpkgs`: increase minimum versions from `1.0.0` to `1.1.0` to
+- Dependency **checkinput**: increase minimum version from 1.0.0 to 1.3.0 to be
+  able to use argument `collapse` of `paste_quoted()`.
+- Dependency **checkrpkgs**: increase minimum versions from 1.0.0 to 1.1.0 to
   have correct versions of suggested dependencies.
-- Dependency `devtools`: require minimum version `2.0.0` because that is the
+- Dependency **devtools**: require minimum version 2.0.0 because that is the
   major release after the conscious uncoupling.
-- Dependency `fs`: require minimum version `1.3.0` to be able to use argument
+- Dependency **fs**: require minimum version 1.3.0 to be able to use argument
   `recurse`.
-- Dependency `progutils`: increase minimum version from `0.13.0` to `0.14.0` to
-  be able to use argument `collapse` of `paste_quoted()`.
-- Dependency `tinytest`: require minimum version `1.4.1` to be able to use
+- Dependency **progutils**: increase minimum version from 0.13.0 to 0.14.0 to be
+  able to use argument `collapse` of `paste_quoted()`.
+- Dependency **tinytest**: require minimum version 1.4.1 to be able to use
   argument `strict` in `expect_message()` and `expect_warning()`.
-- Dependency `tools`: require minimum version `4.1.0` to be able to use
+- Dependency **tools**: require minimum version 4.1.0 to be able to use
   `package_dependencies()` with different dependency types for direct and
   recursive dependencies.
-- Dependency `usethis`: require minimum version `2.0.1` to be able to use
+- Dependency **usethis**: require minimum version 2.0.1 to be able to use
   `git_branch_rename()`, `git_branch_rediscover()`, and
   `use_pkgdown_github_pages()`.
 - `check_tests()` and `diagnose_test_files()`: use argument `collapse` of
@@ -122,51 +136,52 @@
   respect argument `ignore_case`.
 
 ### Documentation
-- Vignette `pkg_devel`: URLs should use protocol `https://` instead of `http://`,
-  not the other way around. Point out to install the package before knitting the
-  `README`. Expand info on checking reverse dependencies. Some change in overall
-  structure.
+- Vignette *Package development*: URLs should use protocol `https://` instead of
+  `http://`, not the other way around. Point out to install the package before
+  knitting the README. Expand info on checking reverse dependencies. Some
+  change in overall structure.
 
 
 # develcoder 0.8.0
 
 ### Breaking changes
-- Dependency `desc`: move from `Suggests` to `Imports` because it is used by
+- Dependency **desc**: move from `Suggests` to `Imports` because it is used by
   `check_test_infra()`.
-- Dependency `fs`: require minimum version `1.2.4` to be able to use function
+- Dependency **fs**: require minimum version 1.2.4 to be able to use function
   `dir_ls()` with argument `fail` in a vignette.
-- Suggested dependency `goodpractice`: require minimum version `1.1.0` which
+- Suggested dependency **goodpractice**: require minimum version 1.1.0 which
   changed default argument `checks` in `goodpractice::goodpractice()`.
-- Dependency `progutils`: increase minimum version from `0.9.0` to `0.13.0` to
+- Dependency **progutils**: increase minimum version from 0.9.0 to 0.13.0 to
   prevent spurious warnings from `wrap_text()`.
-- Dependency `remotes`: require minimum version `2.2.0` to be able to use
+- Dependency **remotes**: require minimum version 2.2.0 to be able to use
   function `install_version()` with the specification of a minimum version in a
   vignette.
-- Add suggested dependency `withr` to create temporary projects when testing.
+- Add suggested dependency **withr** to create temporary projects when testing.
 
 ### Added functions
 - `check_test_infra()` to check if the infrastructure for testing is present and
   refers to the current package.
 
 ### Documentation
-- Vignette `pkg_setup`: expand section on licenses. Move documentation on GitHub
-  Actions to vignette `pkg_devel`.
-- Vignette `pkg_devel`: discuss choosing dependencies. Add section with
+- Vignette *Package setup*: expand section on licenses. Move documentation on GitHub
+  Actions to vignette *Package development*.
+- Vignette *Package development*: discuss choosing dependencies. Add section with
   documentation and help for GitHub Actions. Explain how to show the
-  `DESCRIPTION` file when discussing how to normalise it. Various clarifications.
-- Vignette `rmarkdown_knitr`: fuller discussion of R markdown file and package.
+  DESCRIPTION file when discussing how to normalise it. Various clarifications.
+- Vignette *R Markdown and knitr*: fuller discussion of R markdown file and package.
 
 
 # develcoder 0.7.0
 
 ### Breaking changes
-- Dependencies `checkinput`, `fs`, and `progutils`: move from `Suggests` to
-  `Imports` because they are used by `missing_test_files()`, increasing minimum
-  version for `progutils` from `>= 0.5.0` to `>= 0.9.0` to use a safe version of
+- Dependencies **checkinput**, **fs**, and **progutils**: move from `Suggests`
+  to `Imports` because they are used by `missing_test_files()`, increasing
+  minimum version of **progutils** from 0.5.0 to 0.9.0 to use a safe version of
   `create_tempdir()`.
-- Add dependency `testthat` to `Suggests` because it is mentioned in a vignette.
-- Remove dependency `pkgcheck` because their checks are already covered by
-  `goodpractice`.
+- Add dependency **testthat** to `Suggests` because it is mentioned in a
+  vignette.
+- Remove dependency **pkgcheck** because their checks are already covered by
+  **goodpractice**.
 
 ### Added functions
 - `check_test_files()` to check if all function files have a corresponding test
@@ -174,62 +189,62 @@
 - `get_test_files()`: helper function for `check_test_files()`.
 
 ### Documentation
-- Vignette `pkg_setup`: explain how to use `testthat` instead of `tinytest`. Add
-  a clearer introduction to `pkgdown`.
-- Vignette `pkg_devel`: various additions: explain how to not run or not display
-  code in examples. Elaborate explanation how to find when a feature was
-  introduced. Elaborate section `Automated checks`. No longer suggest using
-  `pkgcheck` which requires system libraries.
-- Vignette `rmarkdown_knitr`: expand section with examples of formatting,
+- Vignette *Package setup*: explain how to use **testthat** instead of
+  **tinytest**. Add a clearer introduction to **pkgdown**.
+- Vignette *Package development*: various additions: explain how to not run or
+  not display code in examples. Elaborate explanation how to find when a feature
+  was introduced. Elaborate section 'Automated checks'. No longer suggest using
+  **pkgcheck** which requires system libraries.
+- Vignette *R Markdown and knitr*: expand section with examples of formatting,
   showing both the code and the output.
 
 
 # develcoder 0.6.0
 
 ### Breaking changes
-- Add dependency `desc` to `Suggests` because it is used in a vignette.
-- Dependency `checkrpkgs`: require minimum version `1.0.0` to depend on a stable
+- Add dependency **desc** to `Suggests` because it is used in a vignette.
+- Dependency **checkrpkgs**: require minimum version 1.0.0 to depend on a stable
   version.
 
 
 # develcoder 0.5.0
 
 ### Breaking changes
-- Dependency `checkinput`: require minimum version `1.0.0` to depend on a stable
+- Dependency **checkinput**: require minimum version 1.0.0 to depend on a stable
   version.
 
 ### Documentation
-- Remove old `NEWS`.
+- Remove old NEWS.
 - Section 'Add package-wide documentation': put code closer to remarks.
 
 
 # develcoder 0.4.0
 
 ### Breaking changes
-- Dependency `progutils`: increase minimum version from `0.2.0` to `0.5.0` to
+- Dependency **progutils**: increase minimum version from 0.2.0 to 0.5.0 to
   prevent `progutils::create_dir()` from unsafely returning the working
   directory if creating the directory fails.
-- Dependencies `checkinput` and `checkrpkgs`: remove unnecessary requirements
-  for a minimum version.
+- Dependencies **checkinput** and **checkrpkgs**: remove unnecessary
+  requirements for a minimum version.
 
 
 # develcoder 0.3.0
 
 ### Breaking changes
-- Add dependencies `revdepcheck` and `xfun` to `Imports` because they are used
-  in a vignette to check reverse dependencies.
+- Add dependencies **revdepcheck** and **xfun** to `Imports` because they are
+  used in a vignette to check reverse dependencies.
 
 ### Documentation
-- Vignette `Package setup`: remove section 'Importing packages or functions'
+- Vignette *Package setup*: remove section 'Importing packages or functions'
   because it duplicates section 'Update dependencies' from the vignette
-  `Package development`.
-- Vignette `Package development`: add section 'Check reverse dependencies'.
-- Remove the `NEWS` template: looking at real `NEWS` files is much more useful.
+  *Package development*.
+- Vignette *Package development*: add section 'Check reverse dependencies'.
+- Remove the NEWS template: looking at real NEWS files is much more useful.
 
 
 # develcoder 0.2.0
 
 ### Breaking changes
-- Dependencies: increase minimum version of `checkinput` from `0.7.0` to `0.8.0`,
-  of `progutils` from `0.0.9` to `0.2.0`, and of `checkrpkgs` to `>= 0.9.0` to
-  update argument name `allow_zero` to `allow_zero_length`.
+- Dependencies: increase minimum version of **checkinput** from 0.7.0 to 0.8.0,
+  of **progutils** from 0.0.9 to 0.2.0, and of **checkrpkgs** to 0.9.0 to update
+  argument name `allow_zero` to `allow_zero_length`.

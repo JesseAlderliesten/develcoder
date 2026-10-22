@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # develcoder
 
 <!-- badges: start -->
@@ -10,39 +8,43 @@
 [![R-CMD-check-no-suggests](https://github.com/JesseAlderliesten/develcoder/actions/workflows/check-no-suggests.yaml/badge.svg)](https://github.com/JesseAlderliesten/develcoder/actions/workflows/check-no-suggests.yaml)
 <!-- badges: end -->
 
-`develcoder` is an [R](https://www.r-project.org/) package containing
-code and templates to develop R packages. It is based on the book
-[`R packages`](https://r-pkgs.org/) by Hadley Wickham and Jennifer
-Bryan, using R packages
-[`devtools`](https://CRAN.R-project.org/package=devtools) and
-[`usethis`](https://CRAN.R-project.org/package=usethis). I use
-[`tinytest`](https://CRAN.R-project.org/package=tinytest) instead of
-[`testthat`](https://cran.r-project.org/package=testthat) for unit
-tests.
+**develcoder** is an [R](https://www.r-project.org/) package containing
+code and templates to develop R packages. It is based on the book [R
+packages](https://r-pkgs.org/) by Wickham and Bryan and heavily uses the
+R [packages](https://cran.r-project.org/web/packages/)
+[**devtools**](https://CRAN.R-project.org/package=devtools),
+[**usethis**](https://CRAN.R-project.org/package=usethis), and
+[**tinytest**](https://CRAN.R-project.org/package=tinytest).
 
 ## Structure
 
-Folder `vignettes` contains the following vignettes:
+Folder
+[‘vignettes’](https://github.com/JesseAlderliesten/develcoder/tree/main/vignettes)
+contains the following vignettes:
 
-- [`package setup`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
-  contains code that is needed only once to set up a package from
-  scratch: `vignette("pkg_setup", package = "develcoder")`
-- [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-  contains code that is useful during package development, including
-  when preparing to release a new package version and setting up for a
-  new version: `vignette("pkg_devel", package = "develcoder")`
-- [`R Markdown and knitr`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html)
-  contains information about using
-  [`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
-  [`knitr`](https://yihui.org/knitr/):
+- [package
+  setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html),
+  containing code that is needed only once to set up a package from
+  scratch:  
+  `vignette("pkg_setup", package = "develcoder")`
+- [package
+  development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html),
+  containing code that is useful during package development, including
+  when preparing to release a new package version:  
+  `vignette("pkg_devel", package = "develcoder")`
+- [R Markdown and
+  knitr](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html),
+  containing information about using [R
+  Markdown](https://pkgs.rstudio.com/rmarkdown/) and
+  [**knitr**](https://yihui.org/knitr/):  
   `vignette("rmarkdown_knitr", package = "develcoder")`
 
 Folder
-[`inst/templates`](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
+[‘inst/templates’](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
 contains the following templates (in the installed package these are in
-`develcoder/templates`):
+folder ‘develcoder/templates’):
 
-- `README_template.Rmd` for a `README.Rmd` file.
+- `README_template.Rmd` for a README.Rmd file.
 - `check-no-suggests.yaml` for a GitHub Actions workflow checking if the
   package code can be run if the suggested packages are **not**
   installed
@@ -50,20 +52,20 @@ contains the following templates (in the installed package these are in
 - `pkgdown.yaml` for a GitHub Actions workflow to update the package
   website
 
-To use these files, put the `README.Rmd` file in the top-level folder of
-`<pkg>`. The `yaml` files should be put in `<pkg>\.github\workflows`
-(see the section `Automate checks` in the vignette [package
-setup](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html)
-and the section `Use GitHub Actions` in the vignette [package
-development](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-for details).
+To use these files, put the README.Rmd file in the top-level package
+folder. The ‘yaml’ files should be put in folder
+`<pkg>\.github\workflows` (see section [Automate
+checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
+from the vignette *Package setup* and section [Use GitHub
+Actions](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#use-github-actions)
+from the vignette *Package development* for details).
 
 ## Installation
 
-Visit the [develcoder
+Visit the [**develcoder**
 website](https://jessealderliesten.github.io/develcoder/) to explore the
-package, or install `develcoder` from
-[GitHub](https://github.com/JesseAlderliesten/develcoder) using the
+package, or install **develcoder** [from
+GitHub](https://github.com/JesseAlderliesten/develcoder) using the
 following R code:
 
 ``` r
@@ -74,9 +76,8 @@ remotes::install_github(repo = "JesseAlderliesten/develcoder",
                         upgrade = FALSE, build_vignettes = TRUE, lib = NULL)
 ```
 
-For more information about installing and configuring R and RStudio, see
-my package
-[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/).
+For more information about installing and configuring R, see my package
+[**checkrpkgs**](https://jessealderliesten.github.io/checkrpkgs/).
 
 ## License
 
@@ -88,7 +89,7 @@ License](LICENSE.md).
     To cite package 'develcoder' in publications use:
 
       Alderliesten J (2026). _develcoder: Code and Templates to Develop R
-      Packages_. R package version 0.15.0,
+      Packages_. R package version 0.16.0,
       <https://github.com/JesseAlderliesten/develcoder>.
 
     A BibTeX entry for LaTeX users is
@@ -97,7 +98,7 @@ License](LICENSE.md).
         title = {develcoder: Code and Templates to Develop R Packages},
         author = {Jesse Alderliesten},
         year = {2026},
-        note = {R package version 0.15.0},
+        note = {R package version 0.16.0},
         url = {https://github.com/JesseAlderliesten/develcoder},
       }
 
@@ -105,23 +106,24 @@ License](LICENSE.md).
 
 Please open a [GitHub
 issue](https://github.com/JesseAlderliesten/develcoder/issues) if you
-have suggestions for improvement of `develcoder`.
+have suggestions to improve **develcoder**.
 
 ## Similar resources
 
-- The book [`R packages`](https://r-pkgs.org/) by Wickham and Bryan
-- The chapter
-  [`Building R Packages`](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
-  of
-  [`Mastering Software Development in R`](https://bookdown.org/rdpeng/RProgDA/)
-  by Peng, Kross, and Anderson.
+- The book [R packages](https://r-pkgs.org/) by Wickham and Bryan
+- The chapter [Building R
+  Packages](https://bookdown.org/rdpeng/RProgDA/building-r-packages.html)
+  of [Mastering Software Development in
+  R](https://bookdown.org/rdpeng/RProgDA/) by Peng, Kross, and Anderson.
 - Slides from the workshop [Building tidy
   tools](https://rstudio-conf-2022.github.io/build-tidy-tools/) by Rand
   and Lyttle
-- Package [`packagepal`](https://CRAN.R-project.org/package=packagepal)
-  provides check lists on setting up a package and preparing for CRAN
-  release: `packagepal::checklist(type = "package")` and
+- Package
+  [**packagepal**](https://CRAN.R-project.org/package=packagepal)
+  provides check lists on setting up a package and preparing for
+  [CRAN](https://cran.r-project.org/) release:
+  `packagepal::checklist(type = "package")` and
   `packagepal::checklist(type = "CRAN")`
-- The section `Documentation and help` in the
-  [`package development`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html)
-  vignette contains further references.
+- The section [Documentation and
+  help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help)
+  from vignette *package development* contains further references.
