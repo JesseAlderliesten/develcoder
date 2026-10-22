@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_tests.R
 \name{check_tests}
 \alias{check_tests}
-\title{Check tests}
+\title{Check Tests}
 \usage{
 check_tests(
   path = getwd(),
@@ -22,8 +22,8 @@ infrastructure and test files. The default is the \link[=getwd]{working director
 \item{ignore_case}{\code{TRUE} or \code{FALSE}: ignore case when matching filenames to
 \code{pattern}?}
 
-\item{test_vignettes}{\code{TRUE} or \code{FALSE}: should \code{vignettes} have a
-corresponding \code{test} file?}
+\item{test_vignettes}{\code{TRUE} or \code{FALSE}: should vignettes have a
+corresponding test file?}
 }
 \value{
 If all is fine: \code{character(0)}. Otherwise, a list containing components
@@ -38,8 +38,8 @@ and if function files have a corresponding test file and vice versa.
 \details{
 This function looks for \R files starting with pattern \code{pattern} in folders
 \code{inst/tinytest} and \code{tests/testthat} in the directory indicated by \code{path},
-which is where \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
-and \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}} place their
+which is where \href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}}
+and \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}} place their
 test files, respectively.
 
 It is checked that testing infrastructure referring to the current package is
@@ -50,7 +50,7 @@ It is checked that all test files have a corresponding \code{.R} function file i
 folder \code{R} or an \code{.Rmd} vignette in folder \code{vignettes}. It is also checked
 that all function files and, if \code{test_vignettes} is \code{TRUE}, all vignettes,
 have a corresponding test file. Function files of re-exported functions are
-ignored when looking for corresponding test files because these functions
+ignored when looking for corresponding test files because those functions
 should be tested in the package from which they are re-exported.
 
 Warnings are issued if:
@@ -59,10 +59,10 @@ Warnings are issued if:
 \item none of the test directories contain test files
 \item test directories contain files that are ignored because their names do
 \strong{not} start with pattern \code{pattern}, are not \R files, or are template
-files created by \href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
-or \href{https://testthat.r-lib.org/}{\code{testthat}}
-\item test directories used by \code{tinytest} or \code{testthat} contain test files while
-their test architecture is not set up
+files created by \href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}}
+or \href{https://testthat.r-lib.org/}{\strong{testthat}}
+\item test directories used by \strong{tinytest} or \strong{testthat} contain test files
+while their test architecture is not set up
 \item test directories contain test files without corresponding function file in
 folder \code{R} or vignette in folder \code{vignettes}
 \item folder \code{R} contains function files without corresponding test files
@@ -73,7 +73,7 @@ folder \code{R} or vignette in folder \code{vignettes}
 while \code{test_vignettes} is \code{TRUE}
 \item files \verb{tests\\tinytest.R} or \verb{tests\\testthat.R} determining which test
 infrastructure is used are present but do \strong{not} refer to the current
-package, or the packages \code{tinytest} and \code{testthat} are missing from the
+package, or the packages \strong{tinytest} and \strong{testthat} are missing from the
 dependencies of the tested package
 \item file \verb{tests\\tinytest.R} nor \verb{tests\\testthat.R} is present
 \item file \verb{man\\reexports.Rd} is present but no re-exported functions are present
@@ -86,8 +86,10 @@ path_develcoder <- find.package("develcoder")
 check_tests(path = path_develcoder) # character(0)
 
 if(requireNamespace("withr", quietly = TRUE)) {
-# warnings: test infrastructure, directories, and function files not present
-tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
+# warnings: test infrastructure, directories,
+# and function files not present
+tempdir_example <- progutils::create_tempdir(
+  prefix = "check_tests")
 withr::with_dir(new = tempdir_example, {
   # Set up a package without testing infrastructure
   desc <- desc::description$new("!new")

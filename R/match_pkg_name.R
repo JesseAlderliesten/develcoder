@@ -1,4 +1,4 @@
-#' Match package name
+#' Match Package Name
 #'
 #' Match a package name to the content of files.
 #'
@@ -11,22 +11,27 @@
 #' [pkg_name_correct()], [usethis::use_news_md()], [usethis::use_pkgdown()]
 #'
 #' @examples
-#' match_pkg_name(pkg_name = "develcoder", warn_files_absent = FALSE)
-#' match_pkg_name(pkg_name = "develcoder", warn_files_absent = TRUE)
+#' match_pkg_name(pkg_name = "develcoder",
+#'                warn_files_absent = FALSE)
+#' match_pkg_name(pkg_name = "develcoder",
+#'                warn_files_absent = TRUE)
 #'
 #' @export
-match_pkg_name <- function(pkg_name, pkg_dir = ".",
-                           file_patterns = c("\\NEWS", "\\README", "\\_pkgdown"),
-                           warn_files_absent = FALSE) {
+match_pkg_name <- function(
+    pkg_name,
+    pkg_dir = ".",
+    file_patterns = c("\\NEWS", "\\README", "\\_pkgdown"),
+    warn_files_absent = FALSE) {
   stopifnot(
-    checkinput::is_character(pkg_name), checkinput::is_path(pkg_dir),
+    checkinput::is_character(pkg_name),
+    checkinput::is_path(pkg_dir),
     checkinput::all_characters(file_patterns, allow_zerolength = TRUE),
     checkinput::is_logical(warn_files_absent))
   pkg_dir <- fs::path_abs(pkg_dir)
 
-  # Not using list.files() because that also returns directories (even though
-  # 'include.dirs' is FALSE by default) because 'recursive' is also FALSE.
-  # Hidden files are not found.
+  # Not using list.files() because that also returns directories
+  # (even though 'include.dirs' is FALSE by default) because
+  # 'recursive' is also FALSE. Hidden files are not found.
   all_files <- as.character(fs::dir_ls(path = pkg_dir, type = "file", fail = FALSE))
 
   bool_match <- rep(FALSE, length(all_files))

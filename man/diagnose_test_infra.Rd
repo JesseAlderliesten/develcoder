@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnose_test_infra.R
 \name{diagnose_test_infra}
 \alias{diagnose_test_infra}
-\title{Diagnose test infrastructure}
+\title{Diagnose Test Infrastructure}
 \usage{
 diagnose_test_infra(path = fs::path_wd("tests", "tinytest.R"))
 }
@@ -31,17 +31,17 @@ Check if test infrastructure is present and refers to the current package.
 \details{
 The default \code{path} points to file \code{tinytest.R} in directory \code{tests} of the
 current \link[=getwd]{working directory}, to check the test infrastructure of
-\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}. Use
+\href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}}. Use
 \code{path = fs::path_wd("tests", "testthat.R")} to check the test infrastructure
-of \href{https://CRAN.R-project.org/package=testthat}{\code{testthat}}.
+of \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}}.
 
 A warning is issued if a file determining the used testing infrastructure
 (e.g., \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R}) exists but:
 \itemize{
 \item it does \strong{not} refer to the tested package
 \item the package that governs the determined testing infrastructure (e.g.,
-\code{tinytest} or \code{testthat}) is missing from the dependencies of the tested
-package
+\strong{tinytest} or \strong{testthat}) is missing from the dependencies of the
+tested package
 }
 
 \code{diagnose_test_infra()} does \strong{not} warn about problems detected with the
@@ -50,16 +50,19 @@ test infrastructure: that is deferred to \code{\link[=check_tests]{check_tests()
 \examples{
 path_develcoder <- find.package("develcoder")
 # test infrastructure is present
-diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
+diagnose_test_infra(
+  path = fs::path(path_develcoder, "tests", "tinytest.R"))
 
 if(requireNamespace("withr", quietly = TRUE)) {
 # test infrastructure is not present
-tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_infra")
+tempdir_example <- progutils::create_tempdir(
+  prefix = "diagnose_test_infra")
 withr::with_dir(new = tempdir_example, {
   # Set up a package without testing infrastructure
   desc <- desc::description$new("!new")
   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
-  diagnose_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
+  diagnose_test_infra(
+    path = fs::path(tempdir_example, "tests", "tinytest.R"))
 })
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)

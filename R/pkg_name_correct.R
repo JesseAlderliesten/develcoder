@@ -1,4 +1,4 @@
-#' Check consistent use of package name
+#' Check Consistent use of Package Name
 #'
 #' Check that the correct package name is used in various files in the package
 #' directory.
@@ -48,8 +48,10 @@
 #'
 #' @examples
 #' if(requireNamespace("withr", quietly = TRUE)) {
-#' # Create a temporary directory and temporarily set the working directory to it
-#' my_tempdir <- progutils::create_tempdir(prefix = "ex_pkg_name_correct")
+#' # Create a temporary directory and temporarily
+#' # set the working directory to it
+#' my_tempdir <- progutils::create_tempdir(
+#'   prefix = "ex_pkg_name_correct")
 #' pkg_name <- basename(my_tempdir)
 #' withr::local_dir(new = my_tempdir)
 #'
@@ -57,36 +59,50 @@
 #' desc <- desc::description$new("!new")
 #' path_desc <- fs::path(my_tempdir, "DESCRIPTION")
 #' desc$set("Package", "toypackage")
-#' desc$set("URL", "https://github.com/JesseAlderliesten/toypackage")
-#' desc$set("BugReports", "https://github.com/JesseAlderliesten/toypackage/issues")
+#' desc$set("URL",
+#'          "https://github.com/JesseAlderliesten/toypackage")
+#' desc$set("BugReports",
+#'          "https://github.com/JesseAlderliesten/toypackage/issues")
 #' desc$write(file = path_desc)
 #'
-#' pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
-#'                  description_fields = "Package", file_patterns = "DESC")
-#' # Error because field 'URL' in 'DESCRIPTION' does not give the package name
-#' try(pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
+#' pkg_name_correct(pkg_name = "toypackage",
+#'                  pkg_dir = my_tempdir,
+#'                  description_fields = "Package",
+#'                  file_patterns = "DESC")
+#' # Error because field 'URL' in 'DESCRIPTION'
+#' # does not give the package name
+#' try(pkg_name_correct(pkg_name = "toypackage",
+#'                      pkg_dir = my_tempdir,
 #'                      description_fields = c("Package", "URL"),
 #'                      file_patterns = "DESC"))
 #'
 #' # Warn no 'NEWS' file is found if 'warn_files_absent' is 'TRUE'
-#' pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
+#' pkg_name_correct(pkg_name = "toypackage",
+#'                  pkg_dir = my_tempdir,
 #'                  description_fields = "Package",
-#'                  citation_fields = character(0), file_patterns = "NEWS",
+#'                  citation_fields = character(0),
+#'                  file_patterns = "NEWS",
 #'                  warn_files_absent = TRUE)
-#' pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
+#' pkg_name_correct(pkg_name = "toypackage",
+#'                  pkg_dir = my_tempdir,
 #'                  description_fields = "Package",
-#'                  citation_fields = character(0), file_patterns = "NEWS",
+#'                  citation_fields = character(0),
+#'                  file_patterns = "NEWS",
 #'                  warn_files_absent = FALSE)
 #'
-#' # Error because field 'Package' in 'DESCRIPTION' gives other package name
-#' try(pkg_name_correct(pkg_name = "not_toypackage", pkg_dir = my_tempdir,
+#' # Error because field 'Package' in
+#' # 'DESCRIPTION' gives other package name
+#' try(pkg_name_correct(pkg_name = "not_toypackage",
+#'                      pkg_dir = my_tempdir,
 #'                      description_fields = "Package"))
 #'
-#' # Warn about missing field, not checking other files because 'file_patterns'
-#' # is 'character(0)'
-#' pkg_name_correct(pkg_name = "toypackage", pkg_dir = my_tempdir,
+#' # Warn about missing field, not checking other
+#' # files because 'file_patterns' is 'character(0)'
+#' pkg_name_correct(pkg_name = "toypackage",
+#'                  pkg_dir = my_tempdir,
 #'                  description_fields = "not_title",
-#'                  file_patterns = character(0), warn_fields_absent = TRUE)
+#'                  file_patterns = character(0),
+#'                  warn_fields_absent = TRUE)
 #'
 #' # return to normal working directory
 #' withr::deferred_run()
@@ -94,13 +110,16 @@
 #'
 #' @export
 pkg_name_correct <- function(
-    pkg_name, pkg_dir = ".",
+    pkg_name,
+    pkg_dir = ".",
     description_fields = c("Package", "URL", "BugReports"),
     citation_fields = c("title", "repository-code", "url"),
     file_patterns = c("\\NEWS", "\\README", "\\_pkgdown"),
-    warn_fields_absent = FALSE, warn_files_absent = FALSE) {
+    warn_fields_absent = FALSE,
+    warn_files_absent = FALSE) {
   stopifnot(
-    checkinput::is_character(pkg_name), checkinput::is_path(pkg_dir),
+    checkinput::is_character(pkg_name),
+    checkinput::is_path(pkg_dir),
     checkinput::all_characters(description_fields, allow_zerolength = TRUE),
     checkinput::all_characters(citation_fields, allow_zerolength = TRUE),
     checkinput::all_characters(file_patterns, allow_zerolength = TRUE),

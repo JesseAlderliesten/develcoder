@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnose_test_files.R
 \name{diagnose_test_files}
 \alias{diagnose_test_files}
-\title{Diagnose test files}
+\title{Diagnose Test Files}
 \usage{
 diagnose_test_files(
   path = fs::path_wd("inst", "tinytest"),
@@ -42,14 +42,14 @@ Get test files, with an overview of various diagnostics
 \details{
 The default \code{path} points to directory \code{inst/tinytest} of the current
 \link[=getwd]{working directory}, where
-\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}} stores tests when a
-package is in development.
+\href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}} stores tests when
+a package is in development.
 
 A warning is issued if:
 \itemize{
 \item \code{path} contains files that are ignored because their names do \strong{not} start
 with pattern \code{pattern}, are not \R files, or are template files created by
-\href{https://CRAN.R-project.org/package=tinytest}{\code{tinytest}}
+\href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}}
 }
 
 \code{diagnose_test_files()} does \strong{not} warn about other problems detected with
@@ -58,14 +58,17 @@ the test files: that is deferred to \code{\link[=check_tests]{check_tests()}}.
 \examples{
 path_develcoder <- find.package("develcoder")
 # test files are present
-diagnose_test_files(path = fs::path(path_develcoder, "inst", "tinytest"))
+diagnose_test_files(
+  path = fs::path(path_develcoder, "inst", "tinytest"))
 
 # test directory is missing
-diagnose_test_files(path = fs::path(path_develcoder, "inst", "othertest"))
+diagnose_test_files(
+  path = fs::path(path_develcoder, "inst", "othertest"))
 
 if(requireNamespace("withr", quietly = TRUE)) {
 # empty test directory
-tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_files")
+tempdir_example <- progutils::create_tempdir(
+  prefix = "diagnose_test_files")
 withr::with_dir(new = tempdir_example, {
   # Set up a package with testing infrastructure from tinytest
   desc <- desc::description$new("!new")
@@ -73,7 +76,8 @@ withr::with_dir(new = tempdir_example, {
   desc::desc_set(Package = "somepkg")
 
   fs::dir_create(fs::path(tempdir_example, "inst", "tinytest"))
-  diagnose_test_files(path = fs::path(tempdir_example, "inst", "tinytest"))
+  diagnose_test_files(
+    path = fs::path(tempdir_example, "inst", "tinytest"))
 })
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)

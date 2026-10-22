@@ -1,4 +1,4 @@
-#' Check tests
+#' Check Tests
 #'
 #' Check if testing infrastructure is present and refers to the current package,
 #' and if function files have a corresponding test file and vice versa.
@@ -7,14 +7,14 @@
 #' @param path [character string][checkinput::is_character()] containing a
 #' valid [path][checkinput::is_path()] to the package of which to check testing
 #' infrastructure and test files. The default is the [working directory][getwd()].
-#' @param test_vignettes `TRUE` or `FALSE`: should `vignettes` have a
-#' corresponding `test` file?
+#' @param test_vignettes `TRUE` or `FALSE`: should vignettes have a
+#' corresponding test file?
 #'
 #' @details
 #' This function looks for \R files starting with pattern `pattern` in folders
 #' `inst/tinytest` and `tests/testthat` in the directory indicated by `path`,
-#' which is where [`tinytest`](https://CRAN.R-project.org/package=tinytest)
-#' and [`testthat`](https://CRAN.R-project.org/package=testthat) place their
+#' which is where [**tinytest**](https://CRAN.R-project.org/package=tinytest)
+#' and [**testthat**](https://CRAN.R-project.org/package=testthat) place their
 #' test files, respectively.
 #'
 #' It is checked that testing infrastructure referring to the current package is
@@ -25,7 +25,7 @@
 #' folder `R` or an `.Rmd` vignette in folder `vignettes`. It is also checked
 #' that all function files and, if `test_vignettes` is `TRUE`, all vignettes,
 #' have a corresponding test file. Function files of re-exported functions are
-#' ignored when looking for corresponding test files because these functions
+#' ignored when looking for corresponding test files because those functions
 #' should be tested in the package from which they are re-exported.
 #'
 #' Warnings are issued if:
@@ -34,10 +34,10 @@
 #' - none of the test directories contain test files
 #' - test directories contain files that are ignored because their names do
 #'   **not** start with pattern `pattern`, are not \R files, or are template
-#'   files created by [`tinytest`](https://CRAN.R-project.org/package=tinytest)
-#'   or [`testthat`](https://testthat.r-lib.org/)
-#' - test directories used by `tinytest` or `testthat` contain test files while
-#'   their test architecture is not set up
+#'   files created by [**tinytest**](https://CRAN.R-project.org/package=tinytest)
+#'   or [**testthat**](https://testthat.r-lib.org/)
+#' - test directories used by **tinytest** or **testthat** contain test files
+#'   while their test architecture is not set up
 #' - test directories contain test files without corresponding function file in
 #'   folder `R` or vignette in folder `vignettes`
 #' - folder `R` contains function files without corresponding test files
@@ -48,7 +48,7 @@
 #'   while `test_vignettes` is `TRUE`
 #' - files `tests\tinytest.R` or `tests\testthat.R` determining which test
 #'   infrastructure is used are present but do **not** refer to the current
-#'   package, or the packages `tinytest` and `testthat` are missing from the
+#'   package, or the packages **tinytest** and **testthat** are missing from the
 #'   dependencies of the tested package
 #' - file `tests\tinytest.R` nor `tests\testthat.R` is present
 #' - file `man\reexports.Rd` is present but no re-exported functions are present
@@ -69,8 +69,10 @@
 #' check_tests(path = path_develcoder) # character(0)
 #'
 #' if(requireNamespace("withr", quietly = TRUE)) {
-#' # warnings: test infrastructure, directories, and function files not present
-#' tempdir_example <- progutils::create_tempdir(prefix = "check_tests")
+#' # warnings: test infrastructure, directories,
+#' # and function files not present
+#' tempdir_example <- progutils::create_tempdir(
+#'   prefix = "check_tests")
 #' withr::with_dir(new = tempdir_example, {
 #'   # Set up a package without testing infrastructure
 #'   desc <- desc::description$new("!new")
@@ -82,9 +84,12 @@
 #' }
 #'
 #' @export
-check_tests <- function(path = getwd(), pattern = "^test_|^test-",
-                        ignore_case = TRUE, test_vignettes = FALSE) {
-  stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
+check_tests <- function(path = getwd(),
+                        pattern = "^test_|^test-",
+                        ignore_case = TRUE,
+                        test_vignettes = FALSE) {
+  stopifnot(checkinput::is_path(path),
+            checkinput::is_character(pattern),
             checkinput::is_logical(ignore_case),
             checkinput::is_logical(test_vignettes))
 
@@ -173,8 +178,8 @@ check_tests <- function(path = getwd(), pattern = "^test_|^test-",
               " re-exported functions were found in folder 'R'!")
     } else {
       # Re-exported functions are ignored when looking for test files
-      # corresponding to function files because these functions should be tested
-      # in the package from which they are re-exported.
+      # corresponding to function files because these functions should
+      # be tested in the package from which they are re-exported.
       R_files <- progutils::not_in(R_files, paste0(reexported_funcs, ".R"))
     }
   }

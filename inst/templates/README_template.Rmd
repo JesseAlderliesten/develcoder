@@ -59,7 +59,7 @@ _Briefly describe the relation of each folder to the project or publication, ind
 
 _For archived files, indicate **why** they were archived._
 
-_The `data` folder can have its own `README` file to more fully describe what data is in each data file, to make sure the data can be re-used. To that end, list the column headings, row labels, data types (e.g., dichotomous, categorical, numeric, text), measurement units, valid data range (e.g., the categories for categorical data, can numeric values be negative), and data codes (e.g., `NA` for missing data). See the information about [Digital Project Organization and Documentation](https://ucdavisdatalab.github.io/workshop_how-to-data-documentation/) for details_
+_The `data` folder can have its own README file to more fully describe what data is in each data file, to make sure the data can be re-used. To that end, list the column headings, row labels, data types (e.g., dichotomous, categorical, numeric, text), measurement units, valid data range (e.g., the categories for categorical data, can numeric values be negative), and data codes (e.g., `NA` for missing data). See the information about [Digital Project Organization and Documentation](https://ucdavisdatalab.github.io/workshop_how-to-data-documentation/) for details_
 
 _If a package needs to do something special when it loads, the required actions are specified in functions `.onLoad()` and `.onAttach()` located in file `zzz.R` in the R-directory of the package (the name `zzz.R` is a convention, see the section [When you do need side-effect](https://r-pkgs.org/Code.html#when-you-do-need-side-effects))_
 
@@ -81,11 +81,11 @@ _In the script where packages are installed, point to correct version (i.e., `re
 
 To use this repository, download it as a `ZIP` file (use the green `<> Code`
 button and choose `Download ZIP`) and unzip the folder. The scripts require
-[R](https://www.r-project.org/) and were run with `R` x.y.z and
+[**R**](https://www.r-project.org/) and were run with R x.y.z and
 [RStudio](https://posit.co/download/rstudio-desktop/) YYYY.MM.BB on Windows 11
 Home version YYHX. See the vignette *Installing R, Rtools and RStudio* in
-package `checkrpkgs` (`vignette("install_r", package = "checkrpkgs")`) for
-details on installing R and RStudio.
+package **checkrpkgs** for details on installing R and RStudio:
+`vignette("install_r", package = "checkrpkgs")`.
 
 Run R as administrator and open the project using the *R Project (.Rproj)* file
 to automatically set the working directory to the directory the R Project file

@@ -1,4 +1,4 @@
-#' Diagnose test files
+#' Diagnose Test Files
 #'
 #' Get test files, with an overview of various diagnostics
 #'
@@ -12,13 +12,13 @@
 #' @details
 #' The default `path` points to directory `inst/tinytest` of the current
 #' [working directory][getwd()], where
-#' [`tinytest`](https://CRAN.R-project.org/package=tinytest) stores tests when a
-#' package is in development.
+#' [**tinytest**](https://CRAN.R-project.org/package=tinytest) stores tests when
+#' a package is in development.
 #'
 #' A warning is issued if:
 #' - `path` contains files that are ignored because their names do **not** start
 #'   with pattern `pattern`, are not \R files, or are template files created by
-#'   [`tinytest`](https://CRAN.R-project.org/package=tinytest)
+#'   [**tinytest**](https://CRAN.R-project.org/package=tinytest)
 #'
 #' `diagnose_test_files()` does **not** warn about other problems detected with
 #' the test files: that is deferred to [check_tests()].
@@ -43,14 +43,17 @@
 #' @examples
 #' path_develcoder <- find.package("develcoder")
 #' # test files are present
-#' diagnose_test_files(path = fs::path(path_develcoder, "inst", "tinytest"))
+#' diagnose_test_files(
+#'   path = fs::path(path_develcoder, "inst", "tinytest"))
 #'
 #' # test directory is missing
-#' diagnose_test_files(path = fs::path(path_develcoder, "inst", "othertest"))
+#' diagnose_test_files(
+#'   path = fs::path(path_develcoder, "inst", "othertest"))
 #'
 #' if(requireNamespace("withr", quietly = TRUE)) {
 #' # empty test directory
-#' tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_files")
+#' tempdir_example <- progutils::create_tempdir(
+#'   prefix = "diagnose_test_files")
 #' withr::with_dir(new = tempdir_example, {
 #'   # Set up a package with testing infrastructure from tinytest
 #'   desc <- desc::description$new("!new")
@@ -58,16 +61,20 @@
 #'   desc::desc_set(Package = "somepkg")
 #'
 #'   fs::dir_create(fs::path(tempdir_example, "inst", "tinytest"))
-#'   diagnose_test_files(path = fs::path(tempdir_example, "inst", "tinytest"))
+#'   diagnose_test_files(
+#'     path = fs::path(tempdir_example, "inst", "tinytest"))
 #' })
 #' # Remove temporary directory
 #' unlink(tempdir_example, recursive = TRUE)
 #' }
 #'
 #' @export
-diagnose_test_files <- function(path = fs::path_wd("inst", "tinytest"),
-                                pattern = "^test_|^test-", ignore_case = TRUE) {
-  stopifnot(checkinput::is_path(path), checkinput::is_character(pattern),
+diagnose_test_files <- function(
+    path = fs::path_wd("inst", "tinytest"),
+    pattern = "^test_|^test-",
+    ignore_case = TRUE) {
+  stopifnot(checkinput::is_path(path),
+            checkinput::is_character(pattern),
             checkinput::is_logical(ignore_case))
 
   path_desc <- fs::path(dirname(dirname(path)), "DESCRIPTION")

@@ -8,7 +8,8 @@ pattern_desc <- "No DESCRIPTION file found"
 pattern_ignored <- paste0("Ignoring files that are not R files, are template",
                           " files created by ")
 pattern_no_test_file <- "No test file found corresponding to function file\n"
-pattern_no_func_file <- "No function file or vignette found corresponding to test file\n"
+pattern_no_func_file <- paste0("No function file or vignette found",
+                               " corresponding to test file\n")
 error_path <- "'path' should be a non-empty, non-NA_character_ character string"
 error_path_sep <- "'path' should contain file separators"
 error_not_path <- "is_path(path) is not TRUE"
