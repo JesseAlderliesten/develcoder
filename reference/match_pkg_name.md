@@ -1,4 +1,4 @@
-# Match package name
+# Match Package Name
 
 Match a package name to the content of files.
 
@@ -63,8 +63,10 @@ The paths to the files that were checked, returned
 ## Examples
 
 ``` r
-match_pkg_name(pkg_name = "develcoder", warn_files_absent = FALSE)
-match_pkg_name(pkg_name = "develcoder", warn_files_absent = TRUE)
+match_pkg_name(pkg_name = "develcoder",
+               warn_files_absent = FALSE)
+match_pkg_name(pkg_name = "develcoder",
+               warn_files_absent = TRUE)
 #> Warning: No files found matching pattern '\NEWS'
 #> Warning: No files found matching pattern '\README'
 #> Warning: No files found matching pattern '\_pkgdown'

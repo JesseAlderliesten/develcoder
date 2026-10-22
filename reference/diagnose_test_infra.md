@@ -1,4 +1,4 @@
-# Diagnose test infrastructure
+# Diagnose Test Infrastructure
 
 Check if test infrastructure is present and refers to the current
 package.
@@ -40,10 +40,10 @@ A [list](https://rdrr.io/r/base/list.html) with three elements:
 The default `path` points to file `tinytest.R` in directory `tests` of
 the current [working directory](https://rdrr.io/r/base/getwd.html), to
 check the test infrastructure of
-[`tinytest`](https://CRAN.R-project.org/package=tinytest). Use
+[**tinytest**](https://CRAN.R-project.org/package=tinytest). Use
 `path = fs::path_wd("tests", "testthat.R")` to check the test
 infrastructure of
-[`testthat`](https://CRAN.R-project.org/package=testthat).
+[**testthat**](https://CRAN.R-project.org/package=testthat).
 
 A warning is issued if a file determining the used testing
 infrastructure (e.g., `<pkg>\tests\tinytest.R` or
@@ -52,7 +52,7 @@ infrastructure (e.g., `<pkg>\tests\tinytest.R` or
 - it does **not** refer to the tested package
 
 - the package that governs the determined testing infrastructure (e.g.,
-  `tinytest` or `testthat`) is missing from the dependencies of the
+  **tinytest** or **testthat**) is missing from the dependencies of the
   tested package
 
 `diagnose_test_infra()` does **not** warn about problems detected with
@@ -70,7 +70,8 @@ Other functions to check tests:
 ``` r
 path_develcoder <- find.package("develcoder")
 # test infrastructure is present
-diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
+diagnose_test_infra(
+  path = fs::path(path_develcoder, "tests", "tinytest.R"))
 #> $name
 #> [1] "tinytest"
 #> 
@@ -83,12 +84,14 @@ diagnose_test_infra(path = fs::path(path_develcoder, "tests", "tinytest.R"))
 
 if(requireNamespace("withr", quietly = TRUE)) {
 # test infrastructure is not present
-tempdir_example <- progutils::create_tempdir(prefix = "diagnose_test_infra")
+tempdir_example <- progutils::create_tempdir(
+  prefix = "diagnose_test_infra")
 withr::with_dir(new = tempdir_example, {
   # Set up a package without testing infrastructure
   desc <- desc::description$new("!new")
   desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
-  diagnose_test_infra(path = fs::path(tempdir_example, "tests", "tinytest.R"))
+  diagnose_test_infra(
+    path = fs::path(tempdir_example, "tests", "tinytest.R"))
 })
 # Remove temporary directory
 unlink(tempdir_example, recursive = TRUE)

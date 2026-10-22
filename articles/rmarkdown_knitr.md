@@ -2,35 +2,35 @@
 
 ### Introduction
 
-This vignette contains information about using
-[`R Markdown`](https://pkgs.rstudio.com/rmarkdown/) and
-[`knitr`](https://yihui.org/knitr/).
+This vignette contains information about using [R
+Markdown](https://pkgs.rstudio.com/rmarkdown/) and
+[**knitr**](https://yihui.org/knitr/).
 
 An R Markdown file (`.Rmd`) is a plain-text file with R code and markup.
 The markup is written in
 [markdown](https://daringfireball.net/projects/markdown/). The R package
-[`rmarkdown`](https://cran.r-project.org/package=rmarkdown) converts R
+[**rmarkdown**](https://cran.r-project.org/package=rmarkdown) converts R
 Markdown files to an output file containing the R code, output of the R
 code, and additional text.
 
 - Converting an R Markdown file to an HTML file requires either
-  [`Pandoc`](https://pandoc.org/) or
+  [Pandoc](https://pandoc.org/) or
   [RStudio](https://posit.co/products/open-source/rstudio) that already
   includes `Pandoc`.
 
 - Converting an R Markdown file to a PDF file requires a
-  [`LaTeX`](https://www.latex-project.org/get/) distribution, see the
-  `R markdown cookbook` and the `Definitive guide` (both mentioned at
-  [Documentation and help](#documentation-and-help)) for extensive help.
-  Two common choices are `MiKTex` and `TinyTeX`:
+  [LaTeX](https://www.latex-project.org/get/) distribution, see the ‘R
+  markdown cookbook’ and the ‘Definitive guide’, both mentioned at
+  [Documentation and help](#documentation-and-help), for extensive help.
+  Two common choices are ‘MiKTex’ and ‘TinyTeX’:
 
-  - [`MiKTex`](https://miktex.org/): when installing `MiKTex`, set
+  - [MiKTex](https://miktex.org/): when installing MiKTex, set
     `install for all users` and
     `always install missing packages on the fly` for all users, see
     [this Stack Exchange
     post](https://tex.stackexchange.com/questions/27138/).
-  - [`TinyTeX`](https://yihui.org/tinytex/): use the following code to
-    set it up and see [here](https://yihui.org/tinytex/r/) for details:
+  - [TinyTeX](https://yihui.org/tinytex/): use the following code to set
+    it up and see [here](https://yihui.org/tinytex/r/) for details:
 
 ``` r
 
@@ -51,9 +51,10 @@ package website.
 
 The option `echo = FALSE` hides code from the output. Use numeric values
 to include the code of particular chunks. To collect all code as an the
-appendix at the end of of a document, see the section
-[`Put together all code in the appendix`](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix)
-from the `rmarkdown cookbook`.
+appendix at the end of of a document, see the section [Put together all
+code in the
+appendix](https://pkg.yihui.org/rmarkdown-cookbook/code-appendix) from
+the ‘R markdown cookbook’.
 
 If the option `include = FALSE` is used, code and results are **not**
 included in the output but code **is** executed such that its results
@@ -69,7 +70,7 @@ during development of the script.
 
 ### Loading files
 
-Files that have to be used by the `R Markdown` script (e.g., `R` scripts
+Files that have to be used by the R Markdown script (e.g., `R` scripts
 that are sourced, data files that are read) should be placed in the same
 directory as the `R Markdown` file, because by default the working
 directory when evaluating `R` code chunks is the directory of the input
@@ -88,7 +89,7 @@ current environment. Although that is useful for inspection and
 debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
 before using it and final files should be created by knitting (e.g.,
-using the `Knit` button in `RStudio`), **not** by using
+using the `Knit` button in RStudio), **not** by using
 [`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
 (see [here](https://pkg.yihui.org/rmarkdown-book/compile.html#fnref2)).
 
@@ -301,22 +302,22 @@ For an overview of mathematical notation see
 
 ### Books and chapters
 
-- the [`R markdown cookbook`](https://pkg.yihui.org/rmarkdown-cookbook/)
+- the [R markdown cookbook](https://pkg.yihui.org/rmarkdown-cookbook/)
   by Xie, Dervieux, and Riederer
-- the [`Definitive guide`](https://pkg.yihui.org/rmarkdown-book/) by
-  Xie, Allaire, and Grolemund
-- the book [`RMarkdown for Scientists`](https://rmd4sci.njtierney.com/)
-  by Tierney
-- Chapters
-  [`Reports with R Markdown`](https://epirhandbook.com/en/new_pages/rmarkdown.html)
-  and
-  [`Organizing routine reports`](https://epirhandbook.com/en/new_pages/reportfactory.html)
-  from `The Epidemiologist R Handbook`
+- the [Definitive guide](https://pkg.yihui.org/rmarkdown-book/) by Xie,
+  Allaire, and Grolemund
+- the book [RMarkdown for Scientists](https://rmd4sci.njtierney.com/) by
+  Tierney
+- Chapters [Reports with R
+  Markdown](https://epirhandbook.com/en/new_pages/rmarkdown.html) and
+  [Organizing routine
+  reports](https://epirhandbook.com/en/new_pages/reportfactory.html)
+  from The Epidemiologist R Handbook
 
 ### Websites
 
-- the package website for [`knitr`](https://yihui.org/knitr/)
-- the [`Markdown guide`](https://www.markdownguide.org/), with a section
+- the package website for [**knitr**](https://yihui.org/knitr/)
+- the [Markdown guide](https://www.markdownguide.org/), with a section
   on [basic syntax](https://www.markdownguide.org/basic-syntax/)
 - a [website](https://rmarkdown.rstudio.com/) on R Markdown from
   [Posit](https://posit.co/)
@@ -324,7 +325,8 @@ For an overview of mathematical notation see
 ### Miscellaneous
 
 - a
-  [`cheatsheet`](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
+  [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
+  from [Posit](https://posit.co/)
 
 ## sessionInfo
 

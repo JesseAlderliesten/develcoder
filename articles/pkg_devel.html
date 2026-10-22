@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,10 +95,10 @@ setup</em>:
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>?<span class="sc">&lt;</span>func<span class="sc">&gt;</span>() <span class="co"># view help-page of the function</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
-<li>Manually update the <code>NEWS</code> file:<br><code>### Added functions</code><br><code>- `&lt;func&gt;()` to ...</code>
+<li>Manually update the NEWS file:<br><code>### Added functions</code><br><code>- `&lt;func&gt;()` to ...</code>
 </li>
 <li>If the added function relies on other packages, update the
-dependencies given in the <code>DESCRIPTION</code> file: see section <a href="#update-dependencies">Update dependencies</a>.</li>
+dependencies given in the DESCRIPTION file: see section <a href="#update-dependencies">Update dependencies</a>.</li>
 <li>When adding a new function argument to an existing function, place
 the new argument after existing arguments and use a default value that
 matches the old behaviour: then code written for the old version will
@@ -118,17 +118,21 @@ package website cannot be build.</li>
 <div class="section level3">
 <h3 id="add-documentation">Add documentation<a class="anchor" aria-label="anchor" href="#add-documentation"></a>
 </h3>
-<p>Function files can be annotated using the <code>roxygen</code>
-format. Then using <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code>, which itself calls
+<p>Function files can be annotated using the ‘roxygen’ format. Then
+using <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code>, which itself calls
 <code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenise()</a></code>, creates documentation files, with
 file extension <code>.Rd</code>.</p>
-<p>The vignettes of <a href="https://roxygen2.r-lib.org/" class="external-link">roxygen2</a>
+<p>The vignettes of <a href="https://roxygen2.r-lib.org/" class="external-link"><strong>roxygen2</strong></a>
 describe many aspects of package documentation, see
 <code>browseVignettes(package = "roxygen2")</code>, among others
 vignettes with a general <a href="https://roxygen2.r-lib.org/articles/roxygen2.html" class="external-link">introduction to
 roxygen2</a> and a general <a href="https://roxygen2.r-lib.org/articles/rd-functions.html" class="external-link">introduction
 to function documentation</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#' Title</span></span>
+<p>Section titles should be capitalized and not end in a period. It is
+best to avoid all markup in titles because they need to be automatically
+processed for various hypertext search systems (<a href="https://developer.r-project.org/Rds.html" class="external-link">Guidelines for Rd
+files</a>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#' Title (should be capitalized and not end in a period)</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#' Description</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#'</span></span>
@@ -173,7 +177,7 @@ to function documentation</a>.</p>
 </h4>
 <p>It is possible to inherit sections of the documentation from other
 functions, see the <a href="https://roxygen2.r-lib.org/articles/rd-functions.html" class="external-link">introduction
-to function documentation</a> from package <code>roxygen2</code>.
+to function documentation</a> from package <strong>roxygen2</strong>.
 Inherited sections are <strong>silently</strong> ignored if they are
 also defined in the file itself.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -186,10 +190,10 @@ also defined in the file itself.</p>
 <h4 id="inherit-parameters">Inherit parameters<a class="anchor" aria-label="anchor" href="#inherit-parameters"></a>
 </h4>
 <p>It is possible to inherit the description of parameters from other
-functions. Since <code>roxygen2</code> 8.0.0, it is possible to specify
-which arguments to inherit (i.e., to filter arguments). For arguments
-that share a single description this works from <code>roxygen2</code>
-8.1.1)</p>
+functions. Since <strong>roxygen2</strong> 8.0.0, it is possible to
+specify which arguments to inherit (i.e., to filter arguments). For
+arguments that share a single description this works from
+<strong>roxygen2</strong> 8.1.1)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># inherit the description for all arguments from a function in the current</span></span>
 <span><span class="co"># package (arguments that do not occur in the target function will be ignored)</span></span>
@@ -221,22 +225,21 @@ triple-colon operator (see <code><a href="https://rdrr.io/r/base/ns-dblcolon.htm
 <p>To run all examples in a package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/run_examples.html" class="external-link">run_examples</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Examples rendered on a website created with <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> will display
-the output underneath the code. However, help-files accessed through
-<code>help(&lt;func&gt;)</code> will not, such that it might be useful
-to include a short comment regarding what feature of the output is
-notable.</p>
+<p>Examples rendered on a website created with <a href="https://pkgdown.r-lib.org/" class="external-link"><strong>pkgdown</strong></a> will
+display the output underneath the code. However, help-files accessed
+through <code>help(&lt;func&gt;)</code> will not, such that it might be
+useful to include a short comment regarding what feature of the output
+is notable.</p>
 <p>To not run or not display code in examples, you can use the
 <code>dontrun</code> and <code>dontshow</code> tags, see
-<code><a href="https://rdrr.io/r/utils/example.html" class="external-link">help("example", package = "utils")</a></code>, the section <a href="https://cran.r-project.org/doc/manuals/R-exts.html#Documenting-functions" class="external-link"><code>Examples</code></a>
-from the <a href="https://cran.r-project.org/doc/manuals/R-exts.html" class="external-link"><code>Writing R Extensions manual</code></a>
-and the section about <a href="https://r-pkgs.org/man.html#sec-man-examples-errors" class="external-link"><code>Examples</code></a>
-in the book <code>R packages</code>.</p>
+<code><a href="https://rdrr.io/r/utils/example.html" class="external-link">help("example", package = "utils")</a></code>, the section <a href="https://cran.r-project.org/doc/manuals/R-exts.html#Documenting-functions" class="external-link">Examples</a>
+from the <a href="https://cran.r-project.org/doc/manuals/R-exts.html" class="external-link">Writing R
+Extensions manual</a> and the section about <a href="https://r-pkgs.org/man.html#sec-man-examples-errors" class="external-link">Examples</a>
+in the ‘R packages’ book.</p>
 <p>Examples that create output files should write them to a temporary
-directory that is cleaned up afterwards. See the section
-<code>Usage in practice</code> in
-<code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code> and section
-<a href="#add-tests">Add tests</a> below.</p>
+directory that is cleaned up afterwards. See the section ‘Usage in
+Practice’ in <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>
+and section <a href="#add-tests">Add tests</a> below.</p>
 </div>
 <div class="section level3">
 <h3 id="add-tests">Add tests<a class="anchor" aria-label="anchor" href="#add-tests"></a>
@@ -246,16 +249,17 @@ directory that is cleaned up afterwards. See the section
 </h4>
 <p>For background on testing:</p>
 <ul>
-<li>Chapter <a href="https://contributions.bioconductor.org/tests.html" class="external-link"><code>Unit tests</code></a>
-from the <a href="https://contributions.bioconductor.org/" class="external-link"><code>Bioconductor Packages</code></a>
-guide</li>
+<li>Chapter <a href="https://contributions.bioconductor.org/tests.html" class="external-link">Unit tests</a>
+from the <a href="https://contributions.bioconductor.org/" class="external-link">Bioconductor
+Packages</a> guide</li>
 <li>
-<a href="https://r-pkgs.org/testing-basics.html" class="external-link"><code>Testing basics</code></a>
-and subsequent chapters from the <code>R packages</code> book.</li>
+<a href="https://r-pkgs.org/testing-basics.html" class="external-link">Testing basics</a>
+and subsequent chapters from the ‘R packages’ book.</li>
 <li>
-<a href="https://book.the-turing-way.org/reproducible-research/testing/" class="external-link"><code>Code Testing</code></a>
-and subsequent chapters.</li>
-<li>Section <code>Packages tests</code> from the CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link"><code>Package Development and Maintenance</code></a>.</li>
+<a href="https://book.the-turing-way.org/reproducible-research/testing/" class="external-link">Code
+Testing</a> and subsequent chapters.</li>
+<li>Section ‘Packages tests’ from the CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link">Package
+Development and Maintenance</a>.</li>
 </ul>
 <p>The code below shows how to run tests.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -293,21 +297,19 @@ to specify which version to load, with
 was loaded through <code>devtools::load_all(&lt;pkg&gt;)</code>, and
 <code><a href="https://devtools.r-lib.org/reference/loaded_packages.html" class="external-link">devtools::loaded_packages()</a></code> shows loaded packages with the
 path from which they were loaded that can also be used to identify
-development packages. See the section
-<code>Loading and attaching packages</code> in the vignette <em>R
-packages</em> from package <code>checkrpkgs</code> for details on
-loading packages:
+development packages. See the section ‘Loading and attaching packages’
+in the vignette <em>R packages</em> from package
+<strong>checkrpkgs</strong> for details on loading packages:
 <code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p>
 </div>
 <div class="section level4">
 <h4 id="cleaning-up">Cleaning up<a class="anchor" aria-label="anchor" href="#cleaning-up"></a>
 </h4>
 <p>Tests that create output files should write them to a temporary
-directory that is cleaned up afterwards. See the section
-<code>Usage in practice</code> in
-<code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code> and the
-vignette <a href="https://testthat.r-lib.org/articles/test-fixtures.html" class="external-link"><code>test fixtures</code></a>
-from package <code>testthat</code> for more details. In addition,
+directory that is cleaned up afterwards. See the section ‘Usage in
+Practice’ in <code><a href="https://jessealderliesten.github.io/progutils/reference/create_tempdir.html" class="external-link">help("create_tempdir", package = "progutils")</a></code>
+and the vignette <a href="https://testthat.r-lib.org/articles/test-fixtures.html" class="external-link"><code>test fixtures</code></a>
+from package <strong>testthat</strong> for more details. In addition,
 changed options and graphical parameters should be restored to their
 original state to prevent influencing subsequent code. The following
 pattern shows how to do so for a single option or parameter, see <a href="https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory" class="external-link">this
@@ -326,9 +328,9 @@ option.</p>
 <div class="section level4">
 <h4 id="sorting-order">Sorting order<a class="anchor" aria-label="anchor" href="#sorting-order"></a>
 </h4>
-<p>Sorting order depends on the used locale (see <code>Details</code> in
-<code><a href="https://rdrr.io/r/base/sort.html" class="external-link">help("sort")</a></code>). For example, sorting using the
-<code>C</code> locale gives the order
+<p>Sorting order depends on the used locale, see ‘Details’ in
+<code><a href="https://rdrr.io/r/base/sort.html" class="external-link">help("sort")</a></code>. For example, sorting using the <code>C</code>
+locale gives the order
 <code>c("-", "!", "_", "|", "=", "1", "a", "A")</code>, whereas sorting
 using <code>UTF-8</code> gives
 <code>c("!", "-", "1", "=", "A", "_", "a", "|")</code>. Notably, the
@@ -338,9 +340,9 @@ characters, which also changes the sorting order from
 <code>c("-", "_")</code> to <code>c("_", "-")</code>.</p>
 <p>The used locale can be set through <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale()</a></code> but
 is also influenced by the used operating system and other settings in
-<code>R</code>, see <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">help("locales")</a></code>, section <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales" class="external-link"><code>Locales</code>
-in the <code>R Installation and Administration manual</code></a> and
-section <code>Details</code> of <code><a href="https://rdrr.io/r/base/Comparison.html" class="external-link">help("Comparison")</a></code>.</p>
+<code>R</code>, see <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">help("locales")</a></code>, section <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales" class="external-link">‘Locales’</a>
+in the ‘R Installation and Administration manual’ and section ‘Details’
+of <code><a href="https://rdrr.io/r/base/Comparison.html" class="external-link">help("Comparison")</a></code>.</p>
 </div>
 <div class="section level4">
 <h4 id="testing-file-paths">Testing file paths<a class="anchor" aria-label="anchor" href="#testing-file-paths"></a>
@@ -376,15 +378,14 @@ dependencies, making a project more stable over time.</p>
 <p>The standard way to use functions from other packages is to import
 the package: use
 <code>usethis::use_package("&lt;pkg&gt;", type = "Imports", min_version = "&lt;version&gt;")</code>
-to put the package in the <code>Imports:</code> field of the
-<code>DESCRIPTION</code> file, and in code use the package name followed
-by two colons and the function name, e.g.,
-<code><a href="https://jessealderliesten.github.io/checkinput/reference/all_names.html" class="external-link">checkinput::all_names()</a></code> if package <code>checkinput</code>
-was imported. If the package is only used in examples or vignettes, or
-is considered as an optional addition, you can use
-<code>type = "Suggests"</code> to place it in the <code>Suggests:</code>
-field of the <code>DESCRIPTION</code> file. Then you should guard usage
-of that code through
+to put the package in the <code>Imports:</code> field of the DESCRIPTION
+file, and in code use the package name followed by two colons and the
+function name, e.g., <code><a href="https://jessealderliesten.github.io/checkinput/reference/all_names.html" class="external-link">checkinput::all_names()</a></code> if package
+<strong>checkinput</strong> was imported. If the package is only used in
+examples or vignettes, or is considered as an optional addition, you can
+use <code>type = "Suggests"</code> to place it in the
+<code>Suggests:</code> field of the DESCRIPTION file. Then you should
+guard usage of that code through
 <code>if(requireNamespace(a, quietly = TRUE)) {&lt;code&gt;}</code>.</p>
 <p>It is possible to specify minimum package versions, see <a href="#specifying-minimum-versions">the next section</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -417,26 +418,25 @@ uses the currently installed package version but that probably is too
 strict because functions are likely also present in older package
 versions.</p>
 <p>To check in which version a used functions was introduced, you can
-search the <code>NEWS</code> file of the relevant package for the
-function name to find the <code>NEWS</code> item announcing its
-introduction. If that does not work, you can search for the function
-file on the GitHub-page of the package and look in its history to see
-when it was created, or use the <code>Blame</code> feature to get a
-fine-grained overview of when code in that file was changed to see when
-a function was introduced. Then click on the commit message to get an
-overview of the files that were changed in that commit and use the
-<code>Browse files</code> button to browse the repository as it was
-repository as it was at the time of the commit. Then click the
-<code>DESCRIPTION</code> file to see which version the package was in.
-Finally, you can also specify different minimum package versions in
-checks through <a href="#use-github-actions"><code>GitHub actions</code></a> and
+search the NEWS file of the relevant package for the function name to
+find the NEWS item announcing its introduction. If that does not work,
+you can search for the function file on the GitHub-page of the package
+and look in its history to see when it was created, or use the
+<code>Blame</code> feature to get a fine-grained overview of when code
+in that file was changed to see when a function was introduced. Then
+click on the commit message to get an overview of the files that were
+changed in that commit and use the <code>Browse files</code> button to
+browse the repository as it was repository as it was at the time of the
+commit. Then click the DESCRIPTION file to see which version the package
+was in. Finally, you can also specify different minimum package versions
+in checks through <a href="#use-github-actions">GitHub actions</a> and
 iteratively change them to find the minimum version that passes the
-check. Then specify that version as minimum version in your
-<code>DESCRIPTION</code> file.</p>
-<p>Since <code>R</code> 4.6.0, <code><a href="https://rdrr.io/r/base/dcf.html" class="external-link">read.dcf()</a></code> recognises lines
-starting with <code>#</code> as comment lines, making it possible to use
-comments in the <code>DESCRIPTION</code> file to indicate why a
-particular package version is needed.</p>
+check. Then specify that version as minimum version in your DESCRIPTION
+file.</p>
+<p>Since R 4.6.0, <code><a href="https://rdrr.io/r/base/dcf.html" class="external-link">read.dcf()</a></code> recognises lines starting with
+<code>#</code> as comment lines, making it possible to use comments in
+the DESCRIPTION file to indicate why a particular package version is
+needed.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Declare a minimum version for R itself</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span><span class="st">"R"</span>, type <span class="op">=</span> <span class="st">"Depends"</span>, min_version <span class="op">=</span> <span class="st">"4.0.0"</span><span class="op">)</span></span>
@@ -455,7 +455,7 @@ particular package version is needed.</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Do:</p>
 <ul>
-<li>Add the minimum declared <code>R</code> version to workflows for <a href="#use-github-actions"><code>GitHub Actions</code></a>.</li>
+<li>Add the minimum declared R version to workflows for <a href="#use-github-actions">GitHub Actions</a>.</li>
 </ul>
 </div>
 </div>
@@ -491,9 +491,9 @@ information about the vignettes that R finds.</p>
 <div class="section level3">
 <h3 id="styling">Styling<a class="anchor" aria-label="anchor" href="#styling"></a>
 </h3>
-<p>See the vignette <em>R Markdown and knitr</em>:
-<code><a href="../articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code>) on
-using R Markdown to style vignettes.</p>
+<p>See the vignette <em>R Markdown and knitr</em> on using R Markdown to
+style vignettes:
+<code><a href="../articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code>.</p>
 <p>Put the next lines in the header of vignettes to get a table of
 contents:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -525,10 +525,11 @@ a vignette, e.g., using <code><a href="https://rdrr.io/r/utils/sessionInfo.html"
 </ul>
 <p>There is <a href="https://r-pkgs.org/vignettes.html#links" class="external-link"><strong>no</strong></a>
 official way to link from vignettes to help-pages or vice versa.
-<code>pkgdown</code> recognises calls like <code>`&lt;func&gt;()`</code>
-and <code>`&lt;pkg&gt;::&lt;func&gt;()`</code>, such that relevant links
-for such calls will be created on a package website. However, calls in
-which arguments are supplied like
+<strong>pkgdown</strong> recognises calls like
+<code>`&lt;func&gt;()`</code> and
+<code>`&lt;pkg&gt;::&lt;func&gt;()`</code>, such that relevant links for
+such calls will be created on a package website. However, calls in which
+arguments are supplied like
 <code>`&lt;pkg&gt;::&lt;func&gt;(arg = x)`</code> will not be linked,
 see the <a href="https://pkgdown.r-lib.org/articles/linking.html" class="external-link">documentation</a>
 for details.</p>
@@ -591,7 +592,7 @@ packages.</p>
 <div class="section level4">
 <h4 id="checktor">checktor<a class="anchor" aria-label="anchor" href="#checktor"></a>
 </h4>
-<p><a href="https://r-pkg.thecoatlessprofessor.com/checktor/" class="external-link">checktor</a>
+<p><a href="https://r-pkg.thecoatlessprofessor.com/checktor/" class="external-link"><strong>checktor</strong></a>
 provides various checks supplementing <code>R CMD check</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">checktor</span><span class="fu">::</span><span class="fu"><a href="https://r-pkg.thecoatlessprofessor.com/checktor/reference/checktor.html" class="external-link">checktor</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -605,9 +606,8 @@ checking it. <a href="https://rcmdcheck.r-lib.org/reference/rcmdcheck.html" clas
 does not use that approach but is able to compare output from different
 checks.</p>
 <p>See the <a href="https://contributor.r-project.org/cran-cookbook/" class="external-link">CRAN
-cookbook</a> and the appendix <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD check</code></a>
-from the book <code>R packages</code> on how to proceed if checks
-fail.</p>
+cookbook</a> and the appendix <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R CMD check</a> from the R
+packages book on how to proceed if checks fail.</p>
 <p>The call to <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> used below is more strict
 than the default, following suggestions from the <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Suggested-packages" class="external-link">Writing
 R extensions manual</a> and from <a href="https://r-pkgs.org/release.html#double-r-cmd-checking" class="external-link">R
@@ -617,15 +617,13 @@ values</a>:</p>
 <li><p>Using <code>TRUE</code> for environment variable
 <code>_R_CHECK_SUGGESTS_ONLY_</code> to run code while only using
 dependencies listed in the <code>Depends</code>, <code>Imports</code>
-and <code>Suggests</code> fields of the <code>DESCRIPTION</code>
-file.</p></li>
+and <code>Suggests</code> fields of the DESCRIPTION file.</p></li>
 <li><p>Using <code>TRUE</code> for environment variable
 <code>_R_CHECK_DEPENDS_ONLY_</code> to run code while only using
 dependencies listed in the <code>Depends</code> and <code>Imports</code>
-fields of the <code>DESCRIPTION</code> file. This catches cases where a
-package that is listed in the <code>Suggests</code> field of the
-<code>DESCRIPTION</code> file is used in a vignette without being run
-conditionally through
+fields of the DESCRIPTION file. This catches cases where a package that
+is listed in the <code>Suggests</code> field of the DESCRIPTION file is
+used in a vignette without being run conditionally through
 <code>if(requireNamespace(&lt;pkg&gt;)) {&lt;code&gt;}</code>.</p></li>
 <li><p>Using <code>manual = TRUE</code> to build and check the
 manual.</p></li>
@@ -693,6 +691,7 @@ format).</li>
 <span><span class="co"># Show all checks in some groups: goodpractice::checks_by_group(c("cyclocomp", "lintr"))</span></span>
 <span><span class="co"># Run all check from some groups:</span></span>
 <span><span class="co"># goodpractice::goodpractice(checks = goodpractice::checks_by_group(c("cyclocomp", "lintr")))</span></span>
+<span><span class="co"># Run all checks: goodpractice::goodpractice(checks = goodpractice::all_checks())</span></span>
 <span><span class="va">goodpractice_all_checks</span> <span class="op">&lt;-</span> <span class="fu">goodpractice</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/goodpractice/reference/all_checks.html" class="external-link">all_checks</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">my_checks_goodpractice</span> <span class="op">&lt;-</span> <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/progutils/reference/not_in.html" class="external-link">not_in</a></span><span class="op">(</span></span>
 <span>  <span class="va">goodpractice_all_checks</span>,</span>
@@ -735,7 +734,7 @@ format).</li>
 <div class="section level4">
 <h4 id="bioccheck">BiocCheck<a class="anchor" aria-label="anchor" href="#bioccheck"></a>
 </h4>
-<p><code>BiocCheck</code> runs checks that supplement those of
+<p><strong>BiocCheck</strong> runs checks that supplement those of
 <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> to check adherence to the <a href="https://contributions.bioconductor.org/" class="external-link"><code>Bioconductor Packages</code></a>
 guide, which is required before submission to <a href="https://bioconductor.org/" class="external-link">BioConductor</a>. See the overview of
 checks in its <a href="https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html" class="external-link">vignette</a>.
@@ -765,14 +764,14 @@ yet).</p>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check_mac_release.html" class="external-link">check_mac_release</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>I do not use <a href="https://docs.ropensci.org/pkgcheck/reference/pkgcheck.html" class="external-link">pkgcheck::pkgcheck()</a>
 because their <a href="https://docs.ropensci.org/pkgcheck/articles/list-checks.html" class="external-link">‘own’
-checks</a> are largely covered by the checks from <code>devtools</code>
-used <a href="#devtools-local">above</a>, their checks from
-<code>goodpractice</code> are already covered <a href="#goodpractice">above</a> (see also <a href="https://docs.ropensci.org/pkgcheck/articles/autotest-pkgcheck-gp.html" class="external-link">this
-post</a> on the relation between <code>goodpractice</code> and
-<code>pkgcheck</code>), and their checks from <a href="https://docs.ropensci.org/pkgstats/reference/pkgstats.html" class="external-link">pkgstats</a>
+checks</a> are largely covered by the checks from
+<strong>devtools</strong> used <a href="#devtools-local">above</a>,
+their checks from <strong>goodpractice</strong> are already covered <a href="#goodpractice">above</a> (see also <a href="https://docs.ropensci.org/pkgcheck/articles/autotest-pkgcheck-gp.html" class="external-link">this
+post</a> on the relation between <strong>goodpractice</strong> and
+<code>pkgcheck</code>), and their checks from <a href="https://docs.ropensci.org/pkgstats/reference/pkgstats.html" class="external-link"><strong>pkgstats</strong></a>
 are not very useful and require system libraries
 <code>ctags-universal</code> and <code>GNU global</code>. However, the
-<code>pkgcheck</code> <a href="https://github.com/ropensci-review-tools/pkgcheck-action" class="external-link">GitHub
+<strong>pkgcheck</strong> <a href="https://github.com/ropensci-review-tools/pkgcheck-action" class="external-link">GitHub
 action</a> (see also <a href="https://github.com/r-universe-org/workflows" class="external-link">here</a>) might be
 useful.</p>
 </div>
@@ -791,35 +790,33 @@ useful.</p>
 <div class="section level4">
 <h4 id="description">DESCRIPTION<a class="anchor" aria-label="anchor" href="#description"></a>
 </h4>
-<p>Run <code><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc::desc_normalize()</a></code> to normalize the
-<code>DESCRIPTION</code> file:</p>
+<p>Run <code><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc::desc_normalize()</a></code> to normalize the DESCRIPTION
+file:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">desc</span><span class="fu">::</span><span class="fu"><a href="https://desc.r-lib.org/reference/desc_normalize.html" class="external-link">desc_normalize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>To show the <code>DESCRIPTION</code> file, use
-<code><a href="https://desc.r-lib.org/reference/desc.html" class="external-link">desc::desc()</a></code> or
+<p>To show the DESCRIPTION file, use <code><a href="https://desc.r-lib.org/reference/desc.html" class="external-link">desc::desc()</a></code> or
 <code>utils::packageDescription(pkg = basename(getwd()))</code>. To only
 show the dependencies, use <code><a href="https://desc.r-lib.org/reference/desc_get_deps.html" class="external-link">desc::desc_get_deps()</a></code> or
 <code>utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))</code>.</p>
-<p>Manually increment the package version in the
-<code>DESCRIPTION</code> file, or use
-<code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>. In the latter case, do
+<p>Manually increment the package version in the DESCRIPTION file, or
+use <code><a href="https://usethis.r-lib.org/reference/use_version.html" class="external-link">usethis::use_version()</a></code>. In the latter case, do
 <strong>not</strong> automatically <code>commit</code> the change, but
 do so manually to adjust the commit message to
 <code>Bump to version x.y.z</code>. Indicating the version number in the
 commit title makes it easier to find changes back later on (the pull
 request can have a description of the changes, i.e., the updated section
-of the <code>NEWS</code> file). See package <a href="https://CRAN.R-project.org/package=lifecycle" class="external-link"><code>lifecycle</code></a>
+of the NEWS file). See package <a href="https://CRAN.R-project.org/package=lifecycle" class="external-link"><strong>lifecycle</strong></a>
 on how to add badges to packages and functions to indicate their life
-cycle and its vignette <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><code>Lifecycle stages</code></a>,
-chapter <a href="https://r-pkgs.org/lifecycle.html" class="external-link"><code>Lifecycle</code></a> from
-the <code>R packages</code> book, and the <a href="https://semver.org/" class="external-link">Semantic Versioning Specification</a> on
-versioning.</p>
+cycle and its vignette <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link">Lifecycle
+stages</a>, chapter <a href="https://r-pkgs.org/lifecycle.html" class="external-link">Lifecycle</a> from the R
+packages book, and the <a href="https://semver.org/" class="external-link">Semantic Versioning
+Specification</a> on versioning.</p>
 </div>
 <div class="section level4">
 <h4 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h4>
 <p>Add a license if none is present, or update it to have the correct
-year in it. <code>usethis</code> provides utility functions to add
+year in it. <strong>usethis</strong> provides utility functions to add
 licenses (see <code>help("licenses", package = "usethis")</code>. For
 example, to add or update a <a href="https://choosealicense.com/licenses/mit/" class="external-link">MIT license</a>:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -828,9 +825,8 @@ example, to add or update a <a href="https://choosealicense.com/licenses/mit/" c
 <div class="section level4">
 <h4 id="citation">CITATION<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h4>
-<p>Use the <code>DESCRIPTION</code> file to create a
-<code>CITATION.cff</code> citation file, or update such file to reflect
-the new package version:</p>
+<p>Use the DESCRIPTION file to create a CITATION.cff citation file, or
+update such file to reflect the new package version:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Create or update a citation file</span></span></code></pre></div>
 </div>
@@ -840,24 +836,23 @@ the new package version:</p>
 <p>Install the development version of the package by running
 <code><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">devtools::install()</a></code> to ensure the updated version number
 without Git-commit ID will be included in the citation format in the
-<code>README</code>, using <code>quick = FALSE</code> and
+README, using <code>quick = FALSE</code> and
 <code>build_vignettes = TRUE</code> to ensure the year will be
 displayed:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>quick <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Then <code>Knit</code> the <code>README.Rmd</code> to produce a
-<code>README.md</code> file. The citation in the <code>README</code>
-should then display the updated version number.</p>
+<p>Then <code>Knit</code> the README.Rmd to produce a README.md file.
+The citation in the README should then display the updated version
+number.</p>
 <p>Notes:</p>
 <ul>
 <li>The version badge at the top will still display the old version
 number, but that will change to the updated number when pushed to
 GitHub.</li>
-<li>If the requirement that <code>README.Rmd</code> and
-<code>README.md</code> are staged at the same time was accidentally
-introduced, delete the the hidden file
+<li>If the requirement that README.Rmd and README.md are staged at the
+same time was accidentally introduced, delete the the hidden file
 <code>.git/hooks/pre-commit</code> from the R-project folder (see the
-section <code>Description</code> in
+section ‘DESCRIPTION’ in
 <code><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html" class="external-link">help("use_readme_rmd", package = "usethis")</a></code> to remove that
 requirement.</li>
 </ul>
@@ -865,7 +860,7 @@ requirement.</li>
 <div class="section level4">
 <h4 id="news">NEWS<a class="anchor" aria-label="anchor" href="#news"></a>
 </h4>
-<p>Restyle and publish the <code>NEWS</code> file.</p>
+<p>Restyle and publish the NEWS file.</p>
 </div>
 </div>
 <div class="section level3">
@@ -889,9 +884,9 @@ account.
 also takes packages from <a href="https://bioconductor.org/" class="external-link">BioConductor</a> into account. To take
 other non-CRAN packages into account, use <a href="https://revdepcheck.r-lib.org/reference/revdep_check.html" class="external-link"><code>revdepcheck::revdep_check()</code></a>
 or <a href="https://pkg.yihui.org/xfun/manual#sec:man-rev_check" class="external-link"><code>xfun::rev_check()</code></a>
-(which has a <a href="#use-github-actions">GitHub Action</a>: <a href="https://github.com/yihui/crandalf" class="external-link">crandalf</a>). If you find
-reverse dependencies that broke because of your changes, you can
-identify their maintainers using
+(which has a <a href="#use-github-actions">GitHub Action</a>: <a href="https://github.com/yihui/crandalf" class="external-link"><strong>crandalf</strong></a>).
+If you find reverse dependencies that broke because of your changes, you
+can identify their maintainers using
 <code>devtools::revdep_maintainers(pkg = &lt;your pkg&gt;)</code> to
 notify them.</p>
 </div>
@@ -918,9 +913,9 @@ notify them.</p>
 <div class="section level3">
 <h3 id="use-github-actions">Use GitHub Actions<a class="anchor" aria-label="anchor" href="#use-github-actions"></a>
 </h3>
-<p>Set up <code>workflow_dispatch</code> to manually trigger
-<code>GitHub Actions</code> (<code>GHA</code>), see the section
-<code>Automate checks</code> in the vignette <em>Package setup</em>:
+<p>Set up <code>workflow_dispatch</code> to manually trigger ‘GitHub
+Actions’ (‘GHA’), see the section ‘Automate checks’ in the vignette
+<em>Package setup</em>:
 <code><a href="../articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>.</p>
 <p>To check if a reverse dependency (i.e., a package that depends on a
 package you changed) <strong>that you created</strong> is still working
@@ -936,47 +931,44 @@ be able to trigger it manually on other branches.</p>
 <code>Re-run jobs</code>. If the <code>GitHub actions</code> page (e.g.,
 <a href="https://github.com/JesseAlderliesten/develcoder/actions" class="external-link uri">https://github.com/JesseAlderliesten/develcoder/actions</a>)
 indicates the package passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD check</code></a>
-whereas the badge on the <code>README</code> indicates it fails, make
-sure <code>R CMD check</code> considers the <code>main</code> branch
-(i.e., if the <code>devel</code> branch passes but the <code>main</code>
-branch fails, the badge will have <code>failing</code>): use the
+whereas the badge on the README indicates it fails, make sure
+<code>R CMD check</code> considers the <code>main</code> branch (i.e.,
+if the <code>devel</code> branch passes but the <code>main</code> branch
+fails, the badge will have <code>failing</code>): use the
 <code>Run workflow</code> button to run the <code>GitHub Action</code>
 on the <code>main</code> branch, see the previous paragraph.</p>
-<p>If the package declares a dependency on a minimum <code>R</code>
-version, it is useful to specify the minimum declared <code>R</code>
-version to run in addition to the ones that are by default used in the
-template: for example, add
+<p>If the package declares a dependency on a minimum R version, it is
+useful to specify the minimum declared R version to run in addition to
+the ones that are by default used in the template: for example, add
 <code>- {os: ubuntu-latest, r: '4.1.0'}</code> to section
-<code>matrix: config:</code> to also run the workflow with
-<code>R</code> 4.1.0 if your package declares <code>R</code> 4.1.0 as
-minimum version.</p>
+<code>matrix: config:</code> to also run the workflow with R 4.1.0 if
+your package declares R 4.1.0 as minimum version.</p>
 <div class="section level4">
 <h4 id="gha-documentation-and-help">GHA: documentation and help<a class="anchor" aria-label="anchor" href="#gha-documentation-and-help"></a>
 </h4>
-<p>For more background on <code>GitHub Actions</code>
-(<code>GHA</code>), including an explanation of the syntax used in
-<code>.yaml</code> files, see the section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link"><code>GitHub Actions</code></a>
-in the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a>,
-the GitHub <a href="https://docs.github.com/en/actions/reference/workflows-and-actions" class="external-link"><code>reference</code></a>
-and <a href="https://docs.github.com/en/actions/how-tos/manage-workflow-runs" class="external-link"><code>How-to</code></a>,
-and the section <code>Use GitHub Actions</code> in the vignette
-<em>Package development</em>:
+<p>For more background on ‘GitHub Actions’ (‘GHA’), including an
+explanation of the syntax used in <code>.yaml</code> files, see the
+section about <a href="https://r-pkgs.org/software-development-practices.html#sec-sw-dev-practices-gha" class="external-link">GitHub
+Actions</a> in the ‘R packages’ book, the GitHub <a href="https://docs.github.com/en/actions/reference/workflows-and-actions" class="external-link">reference</a>
+and <a href="https://docs.github.com/en/actions/how-tos/manage-workflow-runs" class="external-link">How-to</a>,
+and the section ‘Use GitHub Actions’ in the vignette <em>Package
+development</em>:
 <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>, and the
-overview of <code>GitHub Actions</code> and example
-<code>Workflows</code> in the documentation of the <a href="https://github.com/r-lib/actions" class="external-link"><code>actions</code></a>
+overview of GitHub Actions and example Workflows in the documentation of
+the <a href="https://github.com/r-lib/actions" class="external-link"><strong>actions</strong></a>
 package.</p>
-<p>For help debugging build failures, see the Appendix <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD check</code></a>
-in the book <code>R packages</code> and the section <a href="https://github.com/r-lib/actions#where-to-find-help" class="external-link">Where to find
-help</a> in the documentation of the <a href="https://github.com/r-lib/actions" class="external-link"><code>actions</code></a>
+<p>For help debugging build failures, see the Appendix <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link">R CMD check</a> in the R
+packages book and the section <a href="https://github.com/r-lib/actions#where-to-find-help" class="external-link">Where to find
+help</a> in the documentation of the <a href="https://github.com/r-lib/actions" class="external-link"><strong>actions</strong></a>
 package.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="pkgdown-website">pkgdown website<a class="anchor" aria-label="anchor" href="#pkgdown-website"></a>
 </h3>
-<p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and chapter
-<a href="https://r-pkgs.org/website.html" class="external-link"><code>Website</code></a> from
-the <code>R packages</code> book for further details.</p>
+<p>See the documentation about package <a href="https://pkgdown.r-lib.org/" class="external-link"><strong>pkgdown</strong></a> and
+chapter <a href="https://r-pkgs.org/website.html" class="external-link">Website</a> from the R
+packages book for further details.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># To manually update the website</span></span>
 <span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -992,24 +984,25 @@ run <code><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="
 <p>To create a thematic index instead of the default alphabetically
 ordered one, see the <a href="https://pkgdown.r-lib.org/reference/build_reference.html" class="external-link">documentation</a>
 and the <a href="https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml" class="external-link">example</a>.</p>
-<p>To customise the order in which <code>Articles</code> are listed,
-specify their order in the <code>_pkgdown.yml</code> file: run
+<p>To customise the order in which the articles are listed, specify
+their order in the <code>_pkgdown.yml</code> file: run
 <code>tools::pkgVignettes(package = "&lt;pkg&gt;")$names</code> to get
-their names. See the <a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link"><code>pkgdown</code>
+their names. See the <a href="https://pkgdown.r-lib.org/reference/build_articles.html" class="external-link"><strong>pkgdown</strong>
 documentation</a>, the <code>_pkgdown.yml</code> <a href="https://github.com/JesseAlderliesten/checkrpkgs/blob/main/.github/workflows/pkgdown.yaml" class="external-link">template</a>
-from <code>develcoder</code>, and the non-alphabetical order of the <a href="https://jessealderliesten.github.io/checkrpkgs/articles/" class="external-link">articles</a>
-in the <code>checkrpkgs</code> package for examples.</p>
+from <strong>develcoder</strong>, and the non-alphabetical order of the
+<a href="https://jessealderliesten.github.io/checkrpkgs/articles/" class="external-link">articles</a>
+in the <strong>checkrpkgs</strong> package for examples.</p>
 <p>To create a custom function index, include a section
 <code>reference:</code> in the <code>_pkgdown.yml</code> file with the
 desired headings and topics: see the <a href="https://pkgdown.r-lib.org/reference/build_reference.html" class="external-link">documentation</a>
 and an <a href="https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml" class="external-link">example</a>
-from <a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a> and
-<a href="https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml" class="external-link">the
-<code>_pkgdown.yml</code> file from the <code>progutils</code>
+from <a href="https://pkgdown.r-lib.org/" class="external-link"><strong>pkgdown</strong></a>
+and <a href="https://github.com/JesseAlderliesten/progutils/blob/main/_pkgdown.yml" class="external-link">the
+<code>_pkgdown.yml</code> file from the <strong>progutils</strong>
 package</a>. Then build the reference with
 <code><a href="https://pkgdown.r-lib.org/reference/build_reference.html" class="external-link">pkgdown::build_reference()</a></code> and view it locally by opening
 the file <code>"&lt;pkg&gt;\docs\index.html"</code> and browse to
-<code>Reference</code> to see the package index.</p>
+‘Reference’ to see the package index.</p>
 </div>
 </div>
 <div class="section level3">
@@ -1019,9 +1012,8 @@ the file <code>"&lt;pkg&gt;\docs\index.html"</code> and browse to
 to incorporate the changes you made to the <code>devel</code> branch in
 the <code>main</code> branch), go the the <code>devel</code> branch on
 GitHub. Then use <code>&lt;Contribute&gt;</code> &gt;
-<code>Open Pull Request</code>. Copy the updated <code>NEWS</code> in
-the <code>description</code> field and use the button
-<code>Create pull request</code>.</p>
+<code>Open Pull Request</code>. Copy the updated NEWS in the DESCRIPTION
+field and use the button <code>Create pull request</code>.</p>
 <p>If the message
 <code>No conflicts with base branch: Merging can be performed automatically</code>,
 is displayed, you can use the green <code>Merge pull request</code>
@@ -1084,12 +1076,13 @@ GitHub pages of the relevant packages.</p>
 <h2 id="cran-submission">CRAN submission<a class="anchor" aria-label="anchor" href="#cran-submission"></a>
 </h2>
 <p>See the policy documents mentioned in the <a href="#guidelines-on-package-development">Guidelines on package
-development</a> and the chapter <a href="https://r-pkgs.org/release.html" class="external-link"><code>Releasing to CRAN</code></a>
-from the <code>R packages</code> book.</p>
+development</a> and the chapter <a href="https://r-pkgs.org/release.html" class="external-link">Releasing to CRAN</a> from the R
+packages book.</p>
 <p><code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_results()</a></code>,
 <code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_details()</a></code> and
 <code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_check_issues()</a></code> give information about the
-current check status of CRAN packages. <a href="https://r-hub.github.io/cransays/index.html" class="external-link">cransays</a> (<a href="https://github.com/r-hub/cransays" class="external-link">source code</a>) gives
+current check status of CRAN packages. <a href="https://r-hub.github.io/cransays/index.html" class="external-link"><strong>cransays</strong></a>
+(<a href="https://github.com/r-hub/cransays" class="external-link">source code</a>) gives
 information about the status of packages during package submission to
 CRAN.</p>
 </div>
@@ -1120,16 +1113,16 @@ available knit-engines.</p>
 <code>Quitting from &lt;filename&gt;.Rmd:&lt;line numbers&gt; [&lt;chunk name&gt;]</code>,
 you probably forgot to use <code>library(&lt;pkg&gt;)</code> in a code
 chunck, used a package that is not declared as dependency in the
-<code>DESCRIPTION</code> file, or used a package that is declared as
-suggested dependency (i.e., is in the <code>Suggests</code> field of the
-<code>DESCRIPTION</code> file) without running that code conditionally
-on the presence of <code>&lt;pkg&gt;</code> through
+DESCRIPTION file, or used a package that is declared as suggested
+dependency (i.e., is in the <code>Suggests</code> field of the
+DESCRIPTION file) without running that code conditionally on the
+presence of <code>&lt;pkg&gt;</code> through
 <code>if(requireNamespace(&lt;pkg&gt;)) {&lt;code&gt;}</code>. The
 latter is catched by using argument
 <code>env_vars = c("_R_CHECK_DEPENDS_ONLY_" = TRUE)</code> when running
 <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>.</p></li>
-<li><p>If checks fail because of <code>LaTeX</code> errors when building
-the manual, you can use <code>manual = FALSE</code>.</p></li>
+<li><p>If checks fail because of LaTeX errors when building the manual,
+you can use <code>manual = FALSE</code>.</p></li>
 <li><p>If running <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> leads to the error
 <code>@section Could not resolve link to topic ":blank:" in the dependencies or base packages</code>,
 <code>regex</code>-classes in example code are being interpreted as
@@ -1138,9 +1131,9 @@ as code, or wrap consecutive lines in <code>\code{...}`</code>.</p></li>
 <li><p>Errors can arise if package development is not done from a clean
 R session. Use <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadedNamespaces()</a></code> to check which packages
 are loaded.</p></li>
-<li><p>See also section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting" class="external-link"><code>Troubleshooting</code></a>
+<li><p>See also section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting" class="external-link">Troubleshooting</a>
 in the vignette <em>R packages</em> from package
-<code>checkrpkgs</code>:<br><code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p></li>
+<strong>checkrpkgs</strong>:<br><code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -1150,22 +1143,22 @@ in the vignette <em>R packages</em> from package
 <h3 id="guidelines-on-package-development">Guidelines on package development<a class="anchor" aria-label="anchor" href="#guidelines-on-package-development"></a>
 </h3>
 <ul>
-<li>The <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html" class="external-link"><code>Writing R extensions</code></a>
-manual, which is the official guide on extending R</li>
-<li>The <a href="https://cran.r-project.org/web/packages/policies.html" class="external-link"><code>CRAN Repository policy</code></a>
-(with an overview of changes <a href="https://github.com/eddelbuettel/crp" class="external-link">here</a>) and <a href="https://contributions.bioconductor.org/" class="external-link"><code>BioConductor Packages</code></a>,
-which are the official guides for packages published on <a href="https://cran.r-project.org/" class="external-link">CRAN</a> and <a href="https://bioconductor.org/" class="external-link">BioConductor</a>, respectively.</li>
-<li>The <a href="https://epiverse-trace.github.io/blueprints/" class="external-link"><code>blueprints for software development</code></a>
-from <a href="https://epiverse-trace.github.io/" class="external-link">EpiverseTrace</a>
+<li>The <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html" class="external-link">Writing
+R extensions</a> manual, which is the official guide on extending R</li>
+<li>The <a href="https://cran.r-project.org/web/packages/policies.html" class="external-link">CRAN
+Repository policy</a> (with an overview of changes <a href="https://github.com/eddelbuettel/crp" class="external-link">here</a>) and <a href="https://contributions.bioconductor.org/" class="external-link">BioConductor
+Packages</a>, which are the official guides for packages published on <a href="https://cran.r-project.org/" class="external-link">CRAN</a> and <a href="https://bioconductor.org/" class="external-link">BioConductor</a>, respectively.</li>
+<li>The <a href="https://epiverse-trace.github.io/blueprints/" class="external-link">blueprints for
+software development</a> from <a href="https://epiverse-trace.github.io/" class="external-link">EpiverseTrace</a>
 </li>
-<li>The <a href="https://contributor.r-project.org/rdevguide/" class="external-link"><code>R development guide</code></a>
-from the <a href="https://contributor.r-project.org/" class="external-link">R Contribution
-Working Group</a>
+<li>The <a href="https://contributor.r-project.org/rdevguide/" class="external-link">R
+development guide</a> from the <a href="https://contributor.r-project.org/" class="external-link">R Contribution Working
+Group</a>
 </li>
-<li>The <a href="https://devguide.ropensci.org/" class="external-link"><code>package development guide</code></a>,
-the <a href="https://stats-devguide.ropensci.org/" class="external-link"><code>Statistical Software Peer Review</code></a>
-guide, and a section <a href="https://docs.r-universe.dev/publish.html" class="external-link"><code>Publish packages</code></a>
-in the <a href="https://docs.r-universe.dev/" class="external-link"><code>R universe documentation</code></a>
+<li>The <a href="https://devguide.ropensci.org/" class="external-link">package development
+guide</a>, the <a href="https://stats-devguide.ropensci.org/" class="external-link">Statistical Software Peer
+Review</a> guide, and a section <a href="https://docs.r-universe.dev/publish.html" class="external-link">Publish packages</a> in
+the <a href="https://docs.r-universe.dev/" class="external-link">R universe documentation</a>
 from <a href="https://ropensci.org/" class="external-link">rOpenSci</a>
 </li>
 </ul>
@@ -1177,11 +1170,12 @@ from <a href="https://ropensci.org/" class="external-link">rOpenSci</a>
 <h4 id="official-documentation">Official documentation<a class="anchor" aria-label="anchor" href="#official-documentation"></a>
 </h4>
 <ul>
-<li>The R <a href="https://CRAN.R-project.org/manuals.html" class="external-link"><code>manuals</code></a>
+<li>The R <a href="https://CRAN.R-project.org/manuals.html" class="external-link">manuals</a>
 </li>
-<li>The R <a href="https://developer.r-project.org/" class="external-link"><code>developer page</code></a>
+<li>The R <a href="https://developer.r-project.org/" class="external-link">developer
+page</a>
 </li>
-<li>The R <a href="https://cran.r-project.org/doc/manuals/r-release/NEWS.html" class="external-link"><code>NEWS</code></a>
+<li>The R <a href="https://cran.r-project.org/doc/manuals/r-release/NEWS.html" class="external-link">NEWS</a>
 for the development branch</li>
 </ul>
 </div>
@@ -1190,59 +1184,55 @@ for the development branch</li>
 </h4>
 <ul>
 <li>
-<a href="https://adv-r.hadley.nz/techniques.html" class="external-link"><code>Advanced R</code></a>
-by Wickham</li>
+<a href="https://adv-r.hadley.nz/techniques.html" class="external-link">Advanced R</a> by
+Wickham</li>
 <li>
-<a href="https://contributor.r-project.org/cran-cookbook/" class="external-link"><code>CRAN cookbook</code></a>
-by Daly and Altmann</li>
+<a href="https://contributor.r-project.org/cran-cookbook/" class="external-link">CRAN
+cookbook</a> by Daly and Altmann</li>
 <li>
-<a href="https://r-in-production.org/" class="external-link"><code>R in production</code></a> by
+<a href="https://r-in-production.org/" class="external-link">R in production</a> by
 Wickham and Masiello</li>
 <li>
-<a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> by Wickham
-and Bryan</li>
+<a href="https://r-pkgs.org/" class="external-link">R packages</a> by Wickham and
+Bryan</li>
 <li>
-<a href="https://rstats.wtf/" class="external-link"><code>What they forgot to teach you about R</code></a>
-by Bryan, Hester, Pileggi and Aja</li>
-<li>Chapter <a href="https://bookdown.org/rdpeng/RProgDA/building-r-packages.html" class="external-link"><code>Building R Packages</code></a>
-of <a href="https://bookdown.org/rdpeng/RProgDA/" class="external-link"><code>Mastering Software Development in R</code></a>
-by Peng, Kross, and Anderson</li>
+<a href="https://rstats.wtf/" class="external-link">What they forgot to teach you about
+R</a> by Bryan, Hester, Pileggi and Aja</li>
+<li>Chapter <a href="https://bookdown.org/rdpeng/RProgDA/building-r-packages.html" class="external-link">Building
+R Packages</a> of <a href="https://bookdown.org/rdpeng/RProgDA/" class="external-link">Mastering Software
+Development in R</a> by Peng, Kross, and Anderson</li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
 </h4>
 <ul>
-<li>The CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment" class="external-link"><code>Package Development and Maintenance</code></a>
-is an annotated thematic collection of R packages that assists in
-developing R packages</li>
+<li>The CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment" class="external-link">Package
+Development and Maintenance</a> is an annotated thematic collection of R
+packages that assists in developing R packages</li>
 <li>
-<a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><code>checkrpkgs</code></a>
+<a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><strong>checkrpkgs</strong></a>
 explains how to get information about to-be-installed and
 already-installed packages, and how to get the source code of R
 functions</li>
-<li><a href="https://devtools.r-lib.org/" class="external-link"><code>devtools</code></a></li>
-<li><a href="https://pkgdown.r-lib.org/" class="external-link"><code>pkgdown</code></a></li>
-<li><a href="https://roxygen2.r-lib.org/" class="external-link"><code>roxygen2</code></a></li>
-<li><a href="https://usethis.r-lib.org/" class="external-link"><code>usethis</code></a></li>
+<li><a href="https://devtools.r-lib.org/" class="external-link"><strong>devtools</strong></a></li>
+<li><a href="https://pkgdown.r-lib.org/" class="external-link"><strong>pkgdown</strong></a></li>
+<li><a href="https://roxygen2.r-lib.org/" class="external-link"><strong>roxygen2</strong></a></li>
+<li><a href="https://usethis.r-lib.org/" class="external-link"><strong>usethis</strong></a></li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="miscellaneous">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"></a>
 </h4>
 <ul>
-<li>The slides from the workshop <a href="https://rstudio-conf-2022.github.io/build-tidy-tools/" class="external-link"><code>Building tidy tools</code></a>
-by Rand and Lyttle</li>
-<li>The package development <a href="https://opensource.posit.co/resources/cheatsheets/package-development/" class="external-link"><code>cheatsheet</code></a>
+<li>The slides from the workshop <a href="https://rstudio-conf-2022.github.io/build-tidy-tools/" class="external-link">Building
+tidy tools</a> by Rand and Lyttle</li>
+<li>The package development <a href="https://opensource.posit.co/resources/cheatsheets/package-development/" class="external-link">cheatsheet</a>
 from <a href="https://posit.co/" class="external-link">Posit</a>
 </li>
-<li>The <a href="https://book.the-turing-way.org/reproducible-research/reproducible-research/" class="external-link"><code>Guide for Reproducible Research</code></a>
-from
-<code>The Turing Way handbook to reproducible, ethical and collaborative data science</code>
-</li>
-<li>
-<a href="https://book.the-turing-way.org/community-handbook/github-gardening/" class="external-link"><code>GitHub Gardening</code></a>
-from
+<li>The <a href="https://book.the-turing-way.org/reproducible-research/reproducible-research/" class="external-link">Guide
+for Reproducible Research</a> and <a href="https://book.the-turing-way.org/community-handbook/github-gardening/" class="external-link">GitHub
+Gardening</a> from
 <code>The Turing Way handbook to reproducible, ethical and collaborative data science</code>
 </li>
 </ul>

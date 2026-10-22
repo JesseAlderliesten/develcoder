@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,22 +45,37 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.0" id="develcoder-0160">develcoder 0.16.0<a class="anchor" aria-label="anchor" href="#develcoder-0160"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-16-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-16-0"></a></h4>
+<ul><li>
+<code><a href="../reference/check_tests.html">check_tests()</a></code>: also look in folder <code>&lt;pkg&gt;/vignettes</code> for vignettes corresponding to test functions. Add argument <code>test_vignettes</code> to look for test functions corresponding to vignettes.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="documentation-0-16-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-16-0"></a></h4>
+<ul><li>Make layout more uniform.</li>
+<li>Wrap lines in ‘Usage’ and ‘Example’ sections to 65 characters.</li>
+<li>Capitalize function titles.</li>
+<li>Avoid markup in section titles.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.15.0" id="develcoder-0150">develcoder 0.15.0<a class="anchor" aria-label="anchor" href="#develcoder-0150"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-15-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-15-0"></a></h4>
-<ul><li>Dependency <code>checkinput</code>: increase minimum version from <code>0.14.0</code> to <code>1.0.0</code> to depend on a stable version.</li>
-<li>Dependency <code>checkrpkgs</code>: increase minimum version from <code>1.1.0</code> to <code>1.3.0</code> that depends on a stable version of <code>checkinput</code>.</li>
+<ul><li>Dependency <strong>checkinput</strong>: increase minimum version from 0.14.0 to 1.0.0 to depend on a stable version.</li>
+<li>Dependency <strong>checkrpkgs</strong>: increase minimum version from 1.1.0 to 1.3.0 that depends on a stable version of <strong>checkinput</strong>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-15-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-15-0"></a></h4>
-<ul><li>Vignette <code>Package development</code>: add example code to update licenses. Note the requirements to show the year in the <code>README</code>. Only use <code>callr = TRUE</code> in <code><a href="https://rdrr.io/pkg/BiocCheck/man/BiocCheck.html" class="external-link">BiocCheck::BiocCheck()</a></code> to run it in an isolated R session if package <code>callr</code> is installed and functional.</li>
+<ul><li>Vignette <em>Package development</em>: add example code to update licenses. Note the requirements to show the year in the README. Only use <code>callr = TRUE</code> in <code><a href="https://rdrr.io/pkg/BiocCheck/man/BiocCheck.html" class="external-link">BiocCheck::BiocCheck()</a></code> to run it in an isolated R session if package <strong>callr</strong> is installed and functional.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.0" id="develcoder-0140">develcoder 0.14.0<a class="anchor" aria-label="anchor" href="#develcoder-0140"></a></h2>
 <div class="section level4">
 <h4 id="miscellaneous-0-14-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-14-0"></a></h4>
-<ul><li>Vignette <code>R markdown and knitr</code>: additions on formatting and escaping.</li>
+<ul><li>Vignette <em>R markdown and knitr</em>: additions on formatting and escaping.</li>
 <li>Other vignettes: many stylistic updates to language and layout, some additions.</li>
 </ul></div>
 </div>
@@ -68,20 +83,20 @@
 <h2 class="pkg-version" data-toc-text="0.13.0" id="develcoder-0130">develcoder 0.13.0<a class="anchor" aria-label="anchor" href="#develcoder-0130"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-13-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-13-0"></a></h4>
-<ul><li>Add dependency <code>BiocCheck</code> to <code>Suggests</code> because it is used in a vignette.</li>
+<ul><li>Add dependency <strong>BiocCheck</strong> to <code>Suggests</code> because it is used in a vignette.</li>
 <li>The value returned by <code><a href="../reference/check_tests.html">check_tests()</a></code> is now a list containing components <code>missing</code> and <code>extraneous</code> with unsorted character vectors. <code><a href="../reference/check_tests.html">check_tests()</a></code> now also handles non-exported functions correctly.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-13-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-13-0"></a></h4>
-<ul><li>Vignette <code>Package setup</code>: some clarifications and updates.</li>
-<li>Vignette <code>Package development</code>: many clarifications and updates. Add section <code>BiocCheck</code> showing how to run its checks. Add an introduction to section <code>Documentation</code> referring to the relevant <code>roxygen2</code> documentation and a subsection <code>Suppress documentation</code>. Add subsection <code>Sorting order</code> to section <code>Add tests</code> to point out some issues with getting reproducible sorted output. Change the order of sections to have a more logical order and have fast checks before slow checks.</li>
+<ul><li>Vignette <em>Package setup</em>: some clarifications and updates.</li>
+<li>Vignette <em>Package development</em>: many clarifications and updates. Add section ‘BiocCheck’ showing how to run its checks. Add an introduction to section ‘Documentation’ referring to the relevant <strong>roxygen2</strong> documentation and a subsection ‘Suppress documentation’. Add subsection ‘Sorting order’ to section ‘Add tests’ to point out some issues with getting reproducible sorted output. Change the order of sections to have a more logical order and have fast checks before slow checks.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.12.0" id="develcoder-0120">develcoder 0.12.0<a class="anchor" aria-label="anchor" href="#develcoder-0120"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-12-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-12-0"></a></h4>
-<ul><li>Dependency <code>cffr</code>: move from <code>Suggests</code> to <code>Imports</code> and increase minimum version from <code>0.2.0</code> to <code>0.5.0</code> to use <code>cff_read()</code> in <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>.</li>
+<ul><li>Dependency <strong>cffr</strong>: move from <code>Suggests</code> to <code>Imports</code> and increase minimum version from 0.2.0 to 0.5.0 to use <code>cff_read()</code> in <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="new-functions-0-12-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-12-0"></a></h4>
@@ -89,41 +104,40 @@
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-12-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-12-0"></a></h4>
-<ul><li>
-<code>README</code>: add contact/contribution info.</li>
-<li>Vignette <code>Package development</code>: add subsection <code>Check package name</code> using <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>. Additions on getting information about loaded or attached packages. Updated some links.</li>
+<ul><li>README: add contact/contribution info.</li>
+<li>Vignette <em>Package development</em>: add subsection ‘Check package name’ using <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>. Additions on getting information about loaded or attached packages. Updated some links.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.0" id="develcoder-0110">develcoder 0.11.0<a class="anchor" aria-label="anchor" href="#develcoder-0110"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-11-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-11-0"></a></h4>
-<ul><li>Added <code>checktor</code> as suggested dependency because it is used in a vignette.</li>
-<li>Dependency <code>checkinput</code>: increase minimum version from <code>1.3.0</code> to <code>1.4.0</code> to use stricter argument checking for <code>all_numbers()</code>, <code>is_number()</code> and related functions.</li>
-<li>Dependency <code>usethis</code>: increase minimum version from <code>2.0.1</code> to <code>2.2.0</code> to have more robust <code>use_r()</code> and <code>use_test()</code>.</li>
+<ul><li>Added <strong>checktor</strong> as suggested dependency because it is used in a vignette.</li>
+<li>Dependency <strong>checkinput</strong>: increase minimum version from 1.3.0 to 1.4.0 to use stricter argument checking for <code>all_numbers()</code>, <code>is_number()</code> and related functions.</li>
+<li>Dependency <strong>usethis</strong>: increase minimum version from 2.0.1 to 2.2.0 to have more robust <code>use_r()</code> and <code>use_test()</code>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-11-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-11-0"></a></h4>
-<ul><li>Vignette <code>Package setup</code>: add section <code>Check existing packages</code>.</li>
-<li>Vignette <code>Package development</code>: add subsection <code>Background</code> pointing to useful resources in section <code>Add tests</code>. Add checks by <code>checktor</code>. Add various references.</li>
-<li>Vignette <code>R Markdown and knitr</code>: link to relevant chapters from <code>The Epidemiologist R Handbook</code>.</li>
+<ul><li>Vignette <em>Package setup</em>: add section ‘Check existing packages’.</li>
+<li>Vignette <em>Package development</em>: add subsection ‘Background’ pointing to useful resources in section ‘Add tests’. Add checks by <strong>checktor</strong>. Add various references.</li>
+<li>Vignette <em>R Markdown and knitr</em>: link to relevant chapters from The Epidemiologist R Handbook.</li>
 <li>Added some more references.</li>
-<li>The used version of <code>roxygen2</code> increased from <code>8.0.0</code> to <code>8.1.0</code>.</li>
+<li>The used version of <strong>roxygen2</strong> increased from 8.0.0 to 8.1.0.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.10.0" id="develcoder-0100">develcoder 0.10.0<a class="anchor" aria-label="anchor" href="#develcoder-0100"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-10-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h4>
-<ul><li>Dependency <code>cffr</code>: require minimum version <code>0.2.0</code> to be able to use argument <code>dependencies</code> of <code>cff_create()</code> and <code>cff_write()</code>.</li>
-<li>Dependency <code>checkinput</code>: increase minimum version from <code>1.0.0</code> to <code>1.3.0</code> to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
-<li>Dependency <code>checkrpkgs</code>: increase minimum versions from <code>1.0.0</code> to <code>1.1.0</code> to have correct versions of suggested dependencies.</li>
-<li>Dependency <code>devtools</code>: require minimum version <code>2.0.0</code> because that is the major release after the conscious uncoupling.</li>
-<li>Dependency <code>fs</code>: require minimum version <code>1.3.0</code> to be able to use argument <code>recurse</code>.</li>
-<li>Dependency <code>progutils</code>: increase minimum version from <code>0.13.0</code> to <code>0.14.0</code> to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
-<li>Dependency <code>tinytest</code>: require minimum version <code>1.4.1</code> to be able to use argument <code>strict</code> in <code>expect_message()</code> and <code>expect_warning()</code>.</li>
-<li>Dependency <code>tools</code>: require minimum version <code>4.1.0</code> to be able to use <code>package_dependencies()</code> with different dependency types for direct and recursive dependencies.</li>
-<li>Dependency <code>usethis</code>: require minimum version <code>2.0.1</code> to be able to use <code>git_branch_rename()</code>, <code>git_branch_rediscover()</code>, and <code>use_pkgdown_github_pages()</code>.</li>
+<ul><li>Dependency <strong>cffr</strong>: require minimum version 0.2.0 to be able to use argument <code>dependencies</code> of <code>cff_create()</code> and <code>cff_write()</code>.</li>
+<li>Dependency <strong>checkinput</strong>: increase minimum version from 1.0.0 to 1.3.0 to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
+<li>Dependency <strong>checkrpkgs</strong>: increase minimum versions from 1.0.0 to 1.1.0 to have correct versions of suggested dependencies.</li>
+<li>Dependency <strong>devtools</strong>: require minimum version 2.0.0 because that is the major release after the conscious uncoupling.</li>
+<li>Dependency <strong>fs</strong>: require minimum version 1.3.0 to be able to use argument <code>recurse</code>.</li>
+<li>Dependency <strong>progutils</strong>: increase minimum version from 0.13.0 to 0.14.0 to be able to use argument <code>collapse</code> of <code>paste_quoted()</code>.</li>
+<li>Dependency <strong>tinytest</strong>: require minimum version 1.4.1 to be able to use argument <code>strict</code> in <code>expect_message()</code> and <code>expect_warning()</code>.</li>
+<li>Dependency <strong>tools</strong>: require minimum version 4.1.0 to be able to use <code>package_dependencies()</code> with different dependency types for direct and recursive dependencies.</li>
+<li>Dependency <strong>usethis</strong>: require minimum version 2.0.1 to be able to use <code>git_branch_rename()</code>, <code>git_branch_rediscover()</code>, and <code>use_pkgdown_github_pages()</code>.</li>
 <li>
 <code><a href="../reference/check_tests.html">check_tests()</a></code> and <code><a href="../reference/diagnose_test_files.html">diagnose_test_files()</a></code>: use argument <code>collapse</code> of <code>paste_quoted()</code> to separate the quoted file names by newlines instead of by commas.</li>
 </ul></div>
@@ -143,19 +157,19 @@
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-9-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-9-0"></a></h4>
-<ul><li>Vignette <code>pkg_devel</code>: URLs should use protocol <code>https://</code> instead of <code>http://</code>, not the other way around. Point out to install the package before knitting the <code>README</code>. Expand info on checking reverse dependencies. Some change in overall structure.</li>
+<ul><li>Vignette <em>Package development</em>: URLs should use protocol <code>https://</code> instead of <code>http://</code>, not the other way around. Point out to install the package before knitting the README. Expand info on checking reverse dependencies. Some change in overall structure.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="develcoder-080">develcoder 0.8.0<a class="anchor" aria-label="anchor" href="#develcoder-080"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-8-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-8-0"></a></h4>
-<ul><li>Dependency <code>desc</code>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code>check_test_infra()</code>.</li>
-<li>Dependency <code>fs</code>: require minimum version <code>1.2.4</code> to be able to use function <code>dir_ls()</code> with argument <code>fail</code> in a vignette.</li>
-<li>Suggested dependency <code>goodpractice</code>: require minimum version <code>1.1.0</code> which changed default argument <code>checks</code> in <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::goodpractice()</a></code>.</li>
-<li>Dependency <code>progutils</code>: increase minimum version from <code>0.9.0</code> to <code>0.13.0</code> to prevent spurious warnings from <code>wrap_text()</code>.</li>
-<li>Dependency <code>remotes</code>: require minimum version <code>2.2.0</code> to be able to use function <code>install_version()</code> with the specification of a minimum version in a vignette.</li>
-<li>Add suggested dependency <code>withr</code> to create temporary projects when testing.</li>
+<ul><li>Dependency <strong>desc</strong>: move from <code>Suggests</code> to <code>Imports</code> because it is used by <code>check_test_infra()</code>.</li>
+<li>Dependency <strong>fs</strong>: require minimum version 1.2.4 to be able to use function <code>dir_ls()</code> with argument <code>fail</code> in a vignette.</li>
+<li>Suggested dependency <strong>goodpractice</strong>: require minimum version 1.1.0 which changed default argument <code>checks</code> in <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::goodpractice()</a></code>.</li>
+<li>Dependency <strong>progutils</strong>: increase minimum version from 0.9.0 to 0.13.0 to prevent spurious warnings from <code>wrap_text()</code>.</li>
+<li>Dependency <strong>remotes</strong>: require minimum version 2.2.0 to be able to use function <code>install_version()</code> with the specification of a minimum version in a vignette.</li>
+<li>Add suggested dependency <strong>withr</strong> to create temporary projects when testing.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="added-functions-0-8-0">Added functions<a class="anchor" aria-label="anchor" href="#added-functions-0-8-0"></a></h4>
@@ -164,18 +178,18 @@
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-8-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-8-0"></a></h4>
-<ul><li>Vignette <code>pkg_setup</code>: expand section on licenses. Move documentation on GitHub Actions to vignette <code>pkg_devel</code>.</li>
-<li>Vignette <code>pkg_devel</code>: discuss choosing dependencies. Add section with documentation and help for GitHub Actions. Explain how to show the <code>DESCRIPTION</code> file when discussing how to normalise it. Various clarifications.</li>
-<li>Vignette <code>rmarkdown_knitr</code>: fuller discussion of R markdown file and package.</li>
+<ul><li>Vignette <em>Package setup</em>: expand section on licenses. Move documentation on GitHub Actions to vignette <em>Package development</em>.</li>
+<li>Vignette <em>Package development</em>: discuss choosing dependencies. Add section with documentation and help for GitHub Actions. Explain how to show the DESCRIPTION file when discussing how to normalise it. Various clarifications.</li>
+<li>Vignette <em>R Markdown and knitr</em>: fuller discussion of R markdown file and package.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="develcoder-070">develcoder 0.7.0<a class="anchor" aria-label="anchor" href="#develcoder-070"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-7-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-7-0"></a></h4>
-<ul><li>Dependencies <code>checkinput</code>, <code>fs</code>, and <code>progutils</code>: move from <code>Suggests</code> to <code>Imports</code> because they are used by <code>missing_test_files()</code>, increasing minimum version for <code>progutils</code> from <code>&gt;= 0.5.0</code> to <code>&gt;= 0.9.0</code> to use a safe version of <code>create_tempdir()</code>.</li>
-<li>Add dependency <code>testthat</code> to <code>Suggests</code> because it is mentioned in a vignette.</li>
-<li>Remove dependency <code>pkgcheck</code> because their checks are already covered by <code>goodpractice</code>.</li>
+<ul><li>Dependencies <strong>checkinput</strong>, <strong>fs</strong>, and <strong>progutils</strong>: move from <code>Suggests</code> to <code>Imports</code> because they are used by <code>missing_test_files()</code>, increasing minimum version of <strong>progutils</strong> from 0.5.0 to 0.9.0 to use a safe version of <code>create_tempdir()</code>.</li>
+<li>Add dependency <strong>testthat</strong> to <code>Suggests</code> because it is mentioned in a vignette.</li>
+<li>Remove dependency <strong>pkgcheck</strong> because their checks are already covered by <strong>goodpractice</strong>.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="added-functions-0-7-0">Added functions<a class="anchor" aria-label="anchor" href="#added-functions-0-7-0"></a></h4>
@@ -186,28 +200,28 @@
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-7-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-7-0"></a></h4>
-<ul><li>Vignette <code>pkg_setup</code>: explain how to use <code>testthat</code> instead of <code>tinytest</code>. Add a clearer introduction to <code>pkgdown</code>.</li>
-<li>Vignette <code>pkg_devel</code>: various additions: explain how to not run or not display code in examples. Elaborate explanation how to find when a feature was introduced. Elaborate section <code>Automated checks</code>. No longer suggest using <code>pkgcheck</code> which requires system libraries.</li>
-<li>Vignette <code>rmarkdown_knitr</code>: expand section with examples of formatting, showing both the code and the output.</li>
+<ul><li>Vignette <em>Package setup</em>: explain how to use <strong>testthat</strong> instead of <strong>tinytest</strong>. Add a clearer introduction to <strong>pkgdown</strong>.</li>
+<li>Vignette <em>Package development</em>: various additions: explain how to not run or not display code in examples. Elaborate explanation how to find when a feature was introduced. Elaborate section ‘Automated checks’. No longer suggest using <strong>pkgcheck</strong> which requires system libraries.</li>
+<li>Vignette <em>R Markdown and knitr</em>: expand section with examples of formatting, showing both the code and the output.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="develcoder-060">develcoder 0.6.0<a class="anchor" aria-label="anchor" href="#develcoder-060"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-6-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-6-0"></a></h4>
-<ul><li>Add dependency <code>desc</code> to <code>Suggests</code> because it is used in a vignette.</li>
-<li>Dependency <code>checkrpkgs</code>: require minimum version <code>1.0.0</code> to depend on a stable version.</li>
+<ul><li>Add dependency <strong>desc</strong> to <code>Suggests</code> because it is used in a vignette.</li>
+<li>Dependency <strong>checkrpkgs</strong>: require minimum version 1.0.0 to depend on a stable version.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="develcoder-050">develcoder 0.5.0<a class="anchor" aria-label="anchor" href="#develcoder-050"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-5-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-5-0"></a></h4>
-<ul><li>Dependency <code>checkinput</code>: require minimum version <code>1.0.0</code> to depend on a stable version.</li>
+<ul><li>Dependency <strong>checkinput</strong>: require minimum version 1.0.0 to depend on a stable version.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-5-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-5-0"></a></h4>
-<ul><li>Remove old <code>NEWS</code>.</li>
+<ul><li>Remove old NEWS.</li>
 <li>Section ‘Add package-wide documentation’: put code closer to remarks.</li>
 </ul></div>
 </div>
@@ -215,28 +229,28 @@
 <h2 class="pkg-version" data-toc-text="0.4.0" id="develcoder-040">develcoder 0.4.0<a class="anchor" aria-label="anchor" href="#develcoder-040"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-4-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-4-0"></a></h4>
-<ul><li>Dependency <code>progutils</code>: increase minimum version from <code>0.2.0</code> to <code>0.5.0</code> to prevent <code><a href="https://jessealderliesten.github.io/progutils/reference/create_dir.html" class="external-link">progutils::create_dir()</a></code> from unsafely returning the working directory if creating the directory fails.</li>
-<li>Dependencies <code>checkinput</code> and <code>checkrpkgs</code>: remove unnecessary requirements for a minimum version.</li>
+<ul><li>Dependency <strong>progutils</strong>: increase minimum version from 0.2.0 to 0.5.0 to prevent <code><a href="https://jessealderliesten.github.io/progutils/reference/create_dir.html" class="external-link">progutils::create_dir()</a></code> from unsafely returning the working directory if creating the directory fails.</li>
+<li>Dependencies <strong>checkinput</strong> and <strong>checkrpkgs</strong>: remove unnecessary requirements for a minimum version.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="develcoder-030">develcoder 0.3.0<a class="anchor" aria-label="anchor" href="#develcoder-030"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h4>
-<ul><li>Add dependencies <code>revdepcheck</code> and <code>xfun</code> to <code>Imports</code> because they are used in a vignette to check reverse dependencies.</li>
+<ul><li>Add dependencies <strong>revdepcheck</strong> and <strong>xfun</strong> to <code>Imports</code> because they are used in a vignette to check reverse dependencies.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-3-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-0"></a></h4>
-<ul><li>Vignette <code>Package setup</code>: remove section ‘Importing packages or functions’ because it duplicates section ‘Update dependencies’ from the vignette <code>Package development</code>.</li>
-<li>Vignette <code>Package development</code>: add section ‘Check reverse dependencies’.</li>
-<li>Remove the <code>NEWS</code> template: looking at real <code>NEWS</code> files is much more useful.</li>
+<ul><li>Vignette <em>Package setup</em>: remove section ‘Importing packages or functions’ because it duplicates section ‘Update dependencies’ from the vignette <em>Package development</em>.</li>
+<li>Vignette <em>Package development</em>: add section ‘Check reverse dependencies’.</li>
+<li>Remove the NEWS template: looking at real NEWS files is much more useful.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="develcoder-020">develcoder 0.2.0<a class="anchor" aria-label="anchor" href="#develcoder-020"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h4>
-<ul><li>Dependencies: increase minimum version of <code>checkinput</code> from <code>0.7.0</code> to <code>0.8.0</code>, of <code>progutils</code> from <code>0.0.9</code> to <code>0.2.0</code>, and of <code>checkrpkgs</code> to <code>&gt;= 0.9.0</code> to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
+<ul><li>Dependencies: increase minimum version of <strong>checkinput</strong> from 0.7.0 to 0.8.0, of <strong>progutils</strong> from 0.0.9 to 0.2.0, and of <strong>checkrpkgs</strong> to 0.9.0 to update argument name <code>allow_zero</code> to <code>allow_zero_length</code>.</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

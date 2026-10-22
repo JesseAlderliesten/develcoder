@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,26 +67,26 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>develcoder</code> is an <a href="https://www.r-project.org/" class="external-link">R</a> package containing code and templates to develop R packages. It is based on the book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> by Hadley Wickham and Jennifer Bryan, using R packages <a href="https://CRAN.R-project.org/package=devtools" class="external-link"><code>devtools</code></a> and <a href="https://CRAN.R-project.org/package=usethis" class="external-link"><code>usethis</code></a>. I use <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><code>tinytest</code></a> instead of <a href="https://cran.r-project.org/package=testthat" class="external-link"><code>testthat</code></a> for unit tests.</p>
+<p><strong>develcoder</strong> is an <a href="https://www.r-project.org/" class="external-link">R</a> package containing code and templates to develop R packages. It is based on the book <a href="https://r-pkgs.org/" class="external-link">R packages</a> by Wickham and Bryan and heavily uses the R <a href="https://cran.r-project.org/web/packages/" class="external-link">packages</a> <a href="https://CRAN.R-project.org/package=devtools" class="external-link"><strong>devtools</strong></a>, <a href="https://CRAN.R-project.org/package=usethis" class="external-link"><strong>usethis</strong></a>, and <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><strong>tinytest</strong></a>.</p>
 <div class="section level2">
 <h2 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
 </h2>
-<p>Folder <code>vignettes</code> contains the following vignettes:</p>
+<p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/vignettes" class="external-link">‘vignettes’</a> contains the following vignettes:</p>
 <ul>
 <li>
-<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html"><code>package setup</code></a> contains code that is needed only once to set up a package from scratch: <code><a href="articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a>, containing code that is needed only once to set up a package from scratch:<br><code><a href="articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>
 </li>
 <li>
-<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html"><code>package development</code></a> contains code that is useful during package development, including when preparing to release a new package version and setting up for a new version: <code><a href="articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a>, containing code that is useful during package development, including when preparing to release a new package version:<br><code><a href="articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>
 </li>
 <li>
-<a href="https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html"><code>R Markdown and knitr</code></a> contains information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link"><code>R Markdown</code></a> and <a href="https://yihui.org/knitr/" class="external-link"><code>knitr</code></a>: <code><a href="articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code>
+<a href="https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html">R Markdown and knitr</a>, containing information about using <a href="https://pkgs.rstudio.com/rmarkdown/" class="external-link">R Markdown</a> and <a href="https://yihui.org/knitr/" class="external-link"><strong>knitr</strong></a>:<br><code><a href="articles/rmarkdown_knitr.html">vignette("rmarkdown_knitr", package = "develcoder")</a></code>
 </li>
 </ul>
-<p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link"><code>inst/templates</code></a> contains the following templates (in the installed package these are in <code>develcoder/templates</code>):</p>
+<p>Folder <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">‘inst/templates’</a> contains the following templates (in the installed package these are in folder ‘develcoder/templates’):</p>
 <ul>
 <li>
-<code>README_template.Rmd</code> for a <code>README.Rmd</code> file.</li>
+<code>README_template.Rmd</code> for a README.Rmd file.</li>
 <li>
 <code>check-no-suggests.yaml</code> for a GitHub Actions workflow checking if the package code can be run if the suggested packages are <strong>not</strong> installed</li>
 <li>
@@ -94,19 +94,19 @@
 <li>
 <code>pkgdown.yaml</code> for a GitHub Actions workflow to update the package website</li>
 </ul>
-<p>To use these files, put the <code>README.Rmd</code> file in the top-level folder of <code>&lt;pkg&gt;</code>. The <code>yaml</code> files should be put in <code>&lt;pkg&gt;\.github\workflows</code> (see the section <code>Automate checks</code> in the vignette <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html">package setup</a> and the section <code>Use GitHub Actions</code> in the vignette <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html">package development</a> for details).</p>
+<p>To use these files, put the README.Rmd file in the top-level package folder. The ‘yaml’ files should be put in folder <code>&lt;pkg&gt;\.github\workflows</code> (see section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks">Automate checks</a> from the vignette <em>Package setup</em> and section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#use-github-actions">Use GitHub Actions</a> from the vignette <em>Package development</em> for details).</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Visit the <a href="https://jessealderliesten.github.io/develcoder/">develcoder website</a> to explore the package, or install <code>develcoder</code> from <a href="https://github.com/JesseAlderliesten/develcoder" class="external-link">GitHub</a> using the following R code:</p>
+<p>Visit the <a href="https://jessealderliesten.github.io/develcoder/"><strong>develcoder</strong> website</a> to explore the package, or install <strong>develcoder</strong> <a href="https://github.com/JesseAlderliesten/develcoder" class="external-link">from GitHub</a> using the following R code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"JesseAlderliesten/develcoder"</span>,</span>
 <span>                        upgrade <span class="op">=</span> <span class="cn">FALSE</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, lib <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
-<p>For more information about installing and configuring R and RStudio, see my package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><code>checkrpkgs</code></a>.</p>
+<p>For more information about installing and configuring R, see my package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><strong>checkrpkgs</strong></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -119,7 +119,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>To cite package <span class="st">'develcoder'</span> <span class="cf">in</span> publications use<span class="sc">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  Alderliesten <span class="fu">J</span> (<span class="dv">2026</span>). _develcoder<span class="sc">:</span> Code and Templates to Develop R</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  Packages_. R package version <span class="dv">0</span>.<span class="fl">15.0</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  Packages_. R package version <span class="dv">0</span>.<span class="fl">16.0</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>JesseAlderliesten<span class="sc">/</span>develcoder<span class="sc">&gt;</span>.</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
@@ -128,25 +128,25 @@
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    title <span class="ot">=</span> {develcoder<span class="sc">:</span> Code and Templates to Develop R Packages},</span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    author <span class="ot">=</span> {Jesse Alderliesten},</span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    year <span class="ot">=</span> {<span class="dv">2026</span>},</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">15.0</span>},</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">16.0</span>},</span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>JesseAlderliesten<span class="sc">/</span>develcoder},</span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  }</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
 </h2>
-<p>Please open a <a href="https://github.com/JesseAlderliesten/develcoder/issues" class="external-link">GitHub issue</a> if you have suggestions for improvement of <code>develcoder</code>.</p>
+<p>Please open a <a href="https://github.com/JesseAlderliesten/develcoder/issues" class="external-link">GitHub issue</a> if you have suggestions to improve <strong>develcoder</strong>.</p>
 </div>
 <div class="section level2">
 <h2 id="similar-resources">Similar resources<a class="anchor" aria-label="anchor" href="#similar-resources"></a>
 </h2>
 <ul>
-<li>The book <a href="https://r-pkgs.org/" class="external-link"><code>R packages</code></a> by Wickham and Bryan</li>
-<li>The chapter <a href="https://bookdown.org/rdpeng/RProgDA/building-r-packages.html" class="external-link"><code>Building R Packages</code></a> of <a href="https://bookdown.org/rdpeng/RProgDA/" class="external-link"><code>Mastering Software Development in R</code></a> by Peng, Kross, and Anderson.</li>
+<li>The book <a href="https://r-pkgs.org/" class="external-link">R packages</a> by Wickham and Bryan</li>
+<li>The chapter <a href="https://bookdown.org/rdpeng/RProgDA/building-r-packages.html" class="external-link">Building R Packages</a> of <a href="https://bookdown.org/rdpeng/RProgDA/" class="external-link">Mastering Software Development in R</a> by Peng, Kross, and Anderson.</li>
 <li>Slides from the workshop <a href="https://rstudio-conf-2022.github.io/build-tidy-tools/" class="external-link">Building tidy tools</a> by Rand and Lyttle</li>
-<li>Package <a href="https://CRAN.R-project.org/package=packagepal" class="external-link"><code>packagepal</code></a> provides check lists on setting up a package and preparing for CRAN release: <code>packagepal::checklist(type = "package")</code> and <code>packagepal::checklist(type = "CRAN")</code>
+<li>Package <a href="https://CRAN.R-project.org/package=packagepal" class="external-link"><strong>packagepal</strong></a> provides check lists on setting up a package and preparing for <a href="https://cran.r-project.org/" class="external-link">CRAN</a> release: <code>packagepal::checklist(type = "package")</code> and <code>packagepal::checklist(type = "CRAN")</code>
 </li>
-<li>The section <code>Documentation and help</code> in the <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html"><code>package development</code></a> vignette contains further references.</li>
+<li>The section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help">Documentation and help</a> from vignette <em>package development</em> contains further references.</li>
 </ul>
 </div>
 </div>

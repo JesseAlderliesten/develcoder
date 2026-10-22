@@ -178,7 +178,7 @@ usethis::use_news_md() # Create NEWS.md
 It is convenient to have a collection of tests for your functions (see
 the Chapter [‘Testing basics’](https://r-pkgs.org/testing-basics.html)).
 Various packages can be used to create and run such tests. To use
-package [tinytest](https://CRAN.R-project.org/package=tinytest) for
+package [**tinytest**](https://CRAN.R-project.org/package=tinytest) for
 testing, set up its infrastructure through:
 
 ``` r
@@ -187,8 +187,9 @@ tinytest::setup_tinytest(pkgdir = ".")
 devtools::document()
 ```
 
-To use package [testthat](https://cran.r-project.org/package=testthat)
-for testing, set up its infrastructure through:
+To use package
+[**testthat**](https://cran.r-project.org/package=testthat) for testing,
+set up its infrastructure through:
 
 ``` r
 
