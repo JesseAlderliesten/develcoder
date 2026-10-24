@@ -28,7 +28,6 @@ Suggests:
     pkgdepends,
     pkgdown,
     pkgstats (>= 0.2.1),
-    remotes (>= 2.2.0),
     revdepcheck,
     rmarkdown,
     testthat,
