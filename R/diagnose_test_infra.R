@@ -35,8 +35,7 @@
 #'   testing infrastructure (i.e., `name`) is present among the dependencies of
 #'   package `pkg`, otherwise `"missing"`
 #'
-#' @family
-#' functions to check tests
+#' @inherit check_tests seealso
 #'
 #' @examples
 #' path_develcoder <- find.package("develcoder")

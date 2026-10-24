@@ -37,8 +37,7 @@
 #' - `ignored_files`: character vector with the names of files in `path` that
 #'   are **not** test files. `character(0)` if no files are ignored.
 #'
-#' @family
-#' functions to check tests
+#' @inherit check_tests seealso
 #'
 #' @examples
 #' path_develcoder <- find.package("develcoder")

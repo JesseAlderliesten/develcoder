@@ -60,8 +60,17 @@
 #' function files for which no used test file is present, and the names of test
 #' files for which no function file is present, respectively.
 #'
-#' @family
-#' functions to check tests
+#' @seealso
+#' Section
+#' [Set up testing infrastructure](
+#' https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure)
+#' in vignette *Package setup* and section
+#' [Add tests](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests)
+#' in vignette *Package development*: `vignette("pkg_setup", package = "develcoder")`
+#' and `vignette("pkg_devel", package = "develcoder")`.
+#'
+#' Other functions to check tests:
+#' [check_tests()], [diagnose_test_files()], [diagnose_test_infra()]
 #'
 #' @examples
 #' path_develcoder <- find.package("develcoder")
