@@ -342,8 +342,8 @@ usethis::use_package("checkinput", type = "Imports", min_version = "1.0.0")
 
 If the package is only used in examples or vignettes, or is considered an
 optional addition, you can use `type = "Suggests"` to place it in the
-`Suggests:` field of the DESCRIPTION file. Then you should guard usage of that
-package in code through `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`,
+`Suggests:` field of the DESCRIPTION file. Code that uses that package should be
+guarded through `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`,
 such that the code is only executed if the package is installed.
 
 Besides putting the package in the DESCRIPTION file, the package name should be
@@ -456,7 +456,9 @@ e.g., using `utils::sessionInfo()` or `sessioninfo::session_info()`:
 ```` {r session info, eval = FALSE}
 ## sessionInfo
 ```{r sessionInfo, echo = FALSE}
-utils::sessionInfo()
+if(requireNamespace("utils", quietly = TRUE)) {
+  utils::sessionInfo()
+}
 ```
 ````
 
@@ -536,7 +538,6 @@ BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 codetools::checkUsagePackage(
   pack = basename(getwd()), all = TRUE, suppressParamAssigns = TRUE)
 checktor::checktor()
-
 ```
 
 ### devtools (local)

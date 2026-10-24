@@ -296,4 +296,6 @@ https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
 
 # sessionInfo
 ```{r sessionInfo, echo = FALSE}
-utils::sessionInfo()
+if(requireNamespace("utils", quietly = TRUE)) {
+  utils::sessionInfo()
+}
