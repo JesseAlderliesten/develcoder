@@ -70,10 +70,10 @@ during development of the script.
 
 ### Loading files
 
-Files that have to be used by the R Markdown script (e.g., `R` scripts
-that are sourced, data files that are read) should be placed in the same
-directory as the `R Markdown` file, because by default the working
-directory when evaluating `R` code chunks is the directory of the input
+Files that have to be used by the R Markdown script (e.g., R scripts
+that are sourced or data files that are read) should be placed in the
+same directory as the `R Markdown` file, because by default the working
+directory when evaluating R code chunks is the directory of the input
 document. The working directory can be changed using
 `opts_knit$set(root.dir = ...)` but should **not** be changed using
 [`setwd()`](https://rdrr.io/r/base/getwd.html), see the `Note` in
@@ -90,8 +90,8 @@ debugging, the potential use of local objects can lead to
 non-reproducibility issues, such that the environment should be cleared
 before using it and final files should be created by knitting (e.g.,
 using the `Knit` button in RStudio), **not** by using
-[`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html)
-(see [here](https://pkg.yihui.org/rmarkdown-book/compile.html#fnref2)).
+[`rmarkdown::render()`](https://pkgs.rstudio.com/rmarkdown/reference/render.html),
+see [here](https://pkg.yihui.org/rmarkdown-book/compile.html#fnref2).
 
 ``` r
 
@@ -107,8 +107,8 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
 ### Adding and collecting code chuncks
 
 Add a new chunk by either using the `Code` \> `Insert Chunk` button or
-typing the delimiters ```` ```{r} ```` above and ```` ``` ```` below the
-code chunk.
+typing the delimiters ```` ```{r} ```` above the code chunk and
+```` ``` ```` below it.
 
 To collect all chunks from a R Markdown document that contain R code
 into a conventional R script use
@@ -135,9 +135,10 @@ sections on the website are proper headings, you can refer to them by
 adding a hash followed by the heading, with spaces replaced by dashes
 (`-`).
 
-    This is a link to this section: [Formatting in R Markdown]. This is another link
-    to the same section, with alternative text as link:
-    [The same section][Formatting in R Markdown]. And a link to the same section in
+    This is a link to this section: [Formatting in R Markdown].
+    This is another link to the same section, with alternative text as link:
+    [The same section][Formatting in R Markdown].
+    And a link to the same section in
     [the online version of this vignette](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html#formatting-in-r-markdown).
 
 renders as:
@@ -324,6 +325,8 @@ For an overview of mathematical notation see
 
 ### Miscellaneous
 
+- a [vignette](https://roxygen2.r-lib.org/articles/rd-formatting.html)
+  from package **roxygen2** on using markdown and roxygen
 - a
   [cheatsheet](https://opensource.posit.co/resources/cheatsheets/rmarkdown/)
   from [Posit](https://posit.co/)

@@ -1,5 +1,22 @@
 # Changelog
 
+## develcoder 0.17.0
+
+#### Breaking changes
+
+- Add dependency `pkgstats` to `Suggests` to use
+  [`pkgstats::pkgstats()`](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
+  in vignette *Package development* to check which packages are used.
+- Remove unused suggested dependency `remotes`.
+- [`pkg_name_correct()`](https://jessealderliesten.github.io/develcoder/reference/pkg_name_correct.md)
+  and
+  [`match_pkg_name()`](https://jessealderliesten.github.io/develcoder/reference/match_pkg_name.md):
+  use `basename(getwd())` as default package name.
+
+#### Documentation
+
+- Prune the NEWS file.
+
 ## develcoder 0.16.0
 
 #### Breaking changes
@@ -11,10 +28,9 @@
 
 #### Documentation
 
-- Make layout more uniform.
-- Wrap lines in ‘Usage’ and ‘Example’ sections to 65 characters.
-- Capitalize function titles.
-- Avoid markup in section titles.
+- Make layout more uniform: wrap lines in ‘Usage’ and ‘Example’ sections
+  to 65 characters, capitalize function titles, and avoid markup in
+  section titles.
 
 ## develcoder 0.15.0
 
@@ -57,7 +73,6 @@
 
 #### Miscellaneous
 
-- Vignette *Package setup*: some clarifications and updates.
 - Vignette *Package development*: many clarifications and updates. Add
   section ‘BiocCheck’ showing how to run its checks. Add an introduction
   to section ‘Documentation’ referring to the relevant **roxygen2**
@@ -86,7 +101,6 @@
 
 #### Miscellaneous
 
-- README: add contact/contribution info.
 - Vignette *Package development*: add subsection ‘Check package name’
   using
   [`pkg_name_correct()`](https://jessealderliesten.github.io/develcoder/reference/pkg_name_correct.md).
@@ -113,7 +127,6 @@
   **checktor**. Add various references.
 - Vignette *R Markdown and knitr*: link to relevant chapters from The
   Epidemiologist R Handbook.
-- Added some more references.
 - The used version of **roxygen2** increased from 8.0.0 to 8.1.0.
 
 ## develcoder 0.10.0
@@ -146,10 +159,6 @@
   use argument `collapse` of `paste_quoted()` to separate the quoted
   file names by newlines instead of by commas.
 
-#### Miscellaneous
-
-- Update and add tests (work in progress).
-
 ## develcoder 0.9.0
 
 #### Breaking changes
@@ -170,10 +179,9 @@
 
 #### Documentation
 
-- Vignette *Package development*: URLs should use protocol `https://`
-  instead of `http://`, not the other way around. Point out to install
-  the package before knitting the README. Expand info on checking
-  reverse dependencies. Some change in overall structure.
+- Vignette *Package development*: Point out to install the package
+  before knitting the README. Expand info on checking reverse
+  dependencies. Some change in overall structure.
 
 ## develcoder 0.8.0
 
@@ -259,7 +267,6 @@
 #### Documentation
 
 - Remove old NEWS.
-- Section ‘Add package-wide documentation’: put code closer to remarks.
 
 ## develcoder 0.4.0
 

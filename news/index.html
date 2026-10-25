@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,20 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.17.0" id="develcoder-0170">develcoder 0.17.0<a class="anchor" aria-label="anchor" href="#develcoder-0170"></a></h2>
+<div class="section level4">
+<h4 id="breaking-changes-0-17-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-17-0"></a></h4>
+<ul><li>Add dependency <code>pkgstats</code> to <code>Suggests</code> to use <code><a href="https://docs.ropensci.org/pkgstats/reference/pkgstats.html" class="external-link">pkgstats::pkgstats()</a></code> in vignette <em>Package development</em> to check which packages are used.</li>
+<li>Remove unused suggested dependency <code>remotes</code>.</li>
+<li>
+<code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code> and <code><a href="../reference/match_pkg_name.html">match_pkg_name()</a></code>: use <code>basename(getwd())</code> as default package name.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="documentation-0-17-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-17-0"></a></h4>
+<ul><li>Prune the NEWS file.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.16.0" id="develcoder-0160">develcoder 0.16.0<a class="anchor" aria-label="anchor" href="#develcoder-0160"></a></h2>
 <div class="section level4">
 <h4 id="breaking-changes-0-16-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-16-0"></a></h4>
@@ -53,10 +67,7 @@
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-16-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-16-0"></a></h4>
-<ul><li>Make layout more uniform.</li>
-<li>Wrap lines in ‘Usage’ and ‘Example’ sections to 65 characters.</li>
-<li>Capitalize function titles.</li>
-<li>Avoid markup in section titles.</li>
+<ul><li>Make layout more uniform: wrap lines in ‘Usage’ and ‘Example’ sections to 65 characters, capitalize function titles, and avoid markup in section titles.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -88,8 +99,7 @@
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-13-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-13-0"></a></h4>
-<ul><li>Vignette <em>Package setup</em>: some clarifications and updates.</li>
-<li>Vignette <em>Package development</em>: many clarifications and updates. Add section ‘BiocCheck’ showing how to run its checks. Add an introduction to section ‘Documentation’ referring to the relevant <strong>roxygen2</strong> documentation and a subsection ‘Suppress documentation’. Add subsection ‘Sorting order’ to section ‘Add tests’ to point out some issues with getting reproducible sorted output. Change the order of sections to have a more logical order and have fast checks before slow checks.</li>
+<ul><li>Vignette <em>Package development</em>: many clarifications and updates. Add section ‘BiocCheck’ showing how to run its checks. Add an introduction to section ‘Documentation’ referring to the relevant <strong>roxygen2</strong> documentation and a subsection ‘Suppress documentation’. Add subsection ‘Sorting order’ to section ‘Add tests’ to point out some issues with getting reproducible sorted output. Change the order of sections to have a more logical order and have fast checks before slow checks.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -104,8 +114,7 @@
 </ul></div>
 <div class="section level4">
 <h4 id="miscellaneous-0-12-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-12-0"></a></h4>
-<ul><li>README: add contact/contribution info.</li>
-<li>Vignette <em>Package development</em>: add subsection ‘Check package name’ using <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>. Additions on getting information about loaded or attached packages. Updated some links.</li>
+<ul><li>Vignette <em>Package development</em>: add subsection ‘Check package name’ using <code><a href="../reference/pkg_name_correct.html">pkg_name_correct()</a></code>. Additions on getting information about loaded or attached packages. Updated some links.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -121,7 +130,6 @@
 <ul><li>Vignette <em>Package setup</em>: add section ‘Check existing packages’.</li>
 <li>Vignette <em>Package development</em>: add subsection ‘Background’ pointing to useful resources in section ‘Add tests’. Add checks by <strong>checktor</strong>. Add various references.</li>
 <li>Vignette <em>R Markdown and knitr</em>: link to relevant chapters from The Epidemiologist R Handbook.</li>
-<li>Added some more references.</li>
 <li>The used version of <strong>roxygen2</strong> increased from 8.0.0 to 8.1.0.</li>
 </ul></div>
 </div>
@@ -141,10 +149,6 @@
 <li>
 <code><a href="../reference/check_tests.html">check_tests()</a></code> and <code><a href="../reference/diagnose_test_files.html">diagnose_test_files()</a></code>: use argument <code>collapse</code> of <code>paste_quoted()</code> to separate the quoted file names by newlines instead of by commas.</li>
 </ul></div>
-<div class="section level4">
-<h4 id="miscellaneous-0-10-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-10-0"></a></h4>
-<ul><li>Update and add tests (work in progress).</li>
-</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.0" id="develcoder-090">develcoder 0.9.0<a class="anchor" aria-label="anchor" href="#develcoder-090"></a></h2>
@@ -157,7 +161,7 @@
 </ul></div>
 <div class="section level4">
 <h4 id="documentation-0-9-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-9-0"></a></h4>
-<ul><li>Vignette <em>Package development</em>: URLs should use protocol <code>https://</code> instead of <code>http://</code>, not the other way around. Point out to install the package before knitting the README. Expand info on checking reverse dependencies. Some change in overall structure.</li>
+<ul><li>Vignette <em>Package development</em>: Point out to install the package before knitting the README. Expand info on checking reverse dependencies. Some change in overall structure.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -222,7 +226,6 @@
 <div class="section level4">
 <h4 id="documentation-0-5-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-5-0"></a></h4>
 <ul><li>Remove old NEWS.</li>
-<li>Section ‘Add package-wide documentation’: put code closer to remarks.</li>
 </ul></div>
 </div>
     <div class="section level2">

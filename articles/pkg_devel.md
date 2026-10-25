@@ -44,11 +44,12 @@ Do:
 
 ### Add documentation
 
-Function files can be annotated using the ‘roxygen’ format. Then using
+Function files with file extension `.R` can be annotated using the
+‘roxygen’ format. Then use
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
 which itself calls
 [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html),
-creates documentation files, with file extension `.Rd`.
+to create documentation files with file extension `.Rd`.
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe
 many aspects of package documentation, see
@@ -58,10 +59,12 @@ roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html) and a
 general [introduction to function
 documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
 
-Section titles should be capitalized and not end in a period. It is best
-to avoid all markup in titles because they need to be automatically
-processed for various hypertext search systems ([Guidelines for Rd
-files](https://developer.r-project.org/Rds.html)).
+Section titles [should](https://developer.r-project.org/Rds.html) be
+capitalized and not end in a period. It is best to avoid all markup in
+titles because they need to be automatically processed for various
+hypertext search systems. It is possible to create
+[subheadings](https://roxygen2.r-lib.org/articles/rd-formatting.html#sections-and-subsections)
+in roxygen blocks using `##` and `###`, i.e., usual Markdown syntax.
 
 ``` r
 #' Title (should be capitalized and not end in a period)
@@ -114,6 +117,13 @@ documentation](https://roxygen2.r-lib.org/articles/rd-functions.html)
 from package **roxygen2**. Inherited sections are **silently** ignored
 if they are also defined in the file itself.
 
+Unfortunately, inheriting section `@seealso` does
+[**not**](https://github.com/r-lib/roxygen2/issues/679) work if
+`@family` is also used. Instead, hardcode the family members in the
+`@seealso` section of one function and inherit that section in other
+functions using  
+`#' @inherit fun seealso`.
+
 ``` r
 
 #' @inherit is_number return
@@ -127,7 +137,7 @@ if they are also defined in the file itself.
 It is possible to inherit the description of parameters from other
 functions. Since **roxygen2** 8.0.0, it is possible to specify which
 arguments to inherit (i.e., to filter arguments). For arguments that
-share a single description this works from **roxygen2** 8.1.1)
+share a single description, this works from **roxygen2** 8.1.1.
 
 ``` r
 
@@ -143,29 +153,26 @@ share a single description this works from **roxygen2** 8.1.1)
 #### Suppress documentation
 
 Use the tag `@keywords internal` instead of `@export` to create an `.Rd`
-file (and thus a manual page) while omitting the function from the
-function index. This is recommended for internal functions that are not
-supposed to be called by the user. Use the tag `@noRd` instead of
-`@export` to not generate an `.Rd` file at all (and thus omit the
-function from the index). In both cases, the function is **not**
-exported and thus should be called using the triple-colon operator (see
-[`help(":::")`](https://rdrr.io/r/base/ns-dblcolon.html)):
+file (and thus a help page) while omitting the function from the
+function index. This is
+[recommended](https://roxygen2.r-lib.org/articles/index-crossref.html#search)
+for internal functions that are not supposed to be called by the user.
+Use the tag `@noRd` instead of `@export` to not generate an `.Rd` file
+at all (and thus omit the function from the index). In both cases, the
+function is **not** exported and thus should be called using the
+triple-colon operator, see
+[`help(":::")`](https://rdrr.io/r/base/ns-dblcolon.html):
 `<pkg>:::<func>()`.
 
 ### Add examples
 
-Examples are meant to show users how to use a function.
-
-To run all examples in a package:
-
-``` r
-
-devtools::run_examples()
-```
+Examples are meant to show users how to use a function. Use
+[`devtools::run_examples()`](https://devtools.r-lib.org/reference/run_examples.html)
+to run all examples in a package.
 
 Examples rendered on a website created with
 [**pkgdown**](https://pkgdown.r-lib.org/) will display the output
-underneath the code. However, help-files accessed through `help(<func>)`
+underneath the code. However, help files accessed through `help(<func>)`
 will not, such that it might be useful to include a short comment
 regarding what feature of the output is notable.
 
@@ -181,8 +188,9 @@ section about
 ‘R packages’ book.
 
 Examples that create output files should write them to a temporary
-directory that is cleaned up afterwards. See the section ‘Usage in
-Practice’ in
+directory that is cleaned up afterwards. See the section [Usage in
+Practice](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html#usage-in-practice)
+in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html)
 and section [Add tests](#add-tests) below.
 
@@ -233,11 +241,14 @@ tinytest::expect_error(func_name(x = "a", arg = arg),
 
 #### Interactive testing
 
-To interactively run tests one needs to attach a package before running
-the tests: use `devtools::load_all(<pkg>)` (with
-`unloadNamespace("develcoder")` to detach it), or use
-`attach(loadNamespace("<pkg>", versionCheck = list(op = ">=", version = package_version("1.2.3"))))`
-to specify which version to load, with `detach("<pkg>")` to detach it.
+To interactively run tests, attach the package that you want to test
+before running the tests as explained in the previous paragraphs:
+
+- use `devtools::load_all(<pkg>)` (with `unloadNamespace("develcoder")`
+  to detach it)
+- or use
+  `attach(loadNamespace("<pkg>", versionCheck = list(op = ">=", version = package_version("1.2.3"))))`
+  to specify which version to load, with `detach("<pkg>")` to detach it.
 
 `devtools::is_dev_package(<pkg>)` shows if a package was loaded through
 `devtools::load_all(<pkg>)`, and
@@ -251,15 +262,18 @@ and attaching packages’ in the vignette *R packages* from package
 #### Cleaning up
 
 Tests that create output files should write them to a temporary
-directory that is cleaned up afterwards. See the section ‘Usage in
-Practice’ in
+directory that is cleaned up afterwards. See the section [Usage in
+Practice](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html#usage-in-practice)
+in
 [`help("create_tempdir", package = "progutils")`](https://jessealderliesten.github.io/progutils/reference/create_tempdir.html)
 and the vignette
 [`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html)
 from package **testthat** for more details. In addition, changed options
-and graphical parameters should be restored to their original state to
-prevent influencing subsequent code. The following pattern shows how to
-do so for a single option or parameter, see [this entry in the CRAN
+([`help("options", package = "base")`](https://rdrr.io/r/base/options.html))
+and graphical parameters (`help("par", package = "base")`) should be
+restored to their original state to prevent influencing subsequent code.
+The following pattern shows how to do so for a single option or
+parameter, see [this entry in the CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
 for details:
 
@@ -292,9 +306,12 @@ The used locale can be set through
 [`Sys.getlocale()`](https://rdrr.io/r/base/locales.html) but is also
 influenced by the used operating system and other settings in `R`, see
 [`help("locales")`](https://rdrr.io/r/base/locales.html), section
-[‘Locales’](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales)
+[Locales](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales)
 in the ‘R Installation and Administration manual’ and section ‘Details’
-of [`help("Comparison")`](https://rdrr.io/r/base/Comparison.html).
+of [`help("Comparison")`](https://rdrr.io/r/base/Comparison.html). See
+the ‘Programming Notes’ in
+[`checkinput::all_names()`](https://jessealderliesten.github.io/checkinput/reference/all_names.html)
+for more references.
 
 #### Testing file paths
 
@@ -321,34 +338,74 @@ possibly followed by a check like
 First, consider if you really need a new dependency and which package
 that should be. Some additional effort in choosing dependencies or in
 coding might allow using dependencies that themselves have fewer
-dependencies, making a project more stable over time.
+dependencies, making a project more stable over time. See the chapter
+[Dependencies: Mindset and
+Background](https://r-pkgs.org/dependencies-mindset-background.html)
+from the ‘R packages’ book for background, and its chapter
+[Dependencies: In
+Practice](https://r-pkgs.org/dependencies-in-practice.html) for
+practical advice.
+
+#### Check which packages are used
+
+Package
+[**pkgstats**](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
+can be used to check which packages, and which functions from those
+packages, are used in your package. This requires the system libraries
+[ctags-universal](https://ctags.io/) and [GNU
+global](https://www.gnu.org/software/global/), which should be
+automatically installed with **pkgstats** on Windows and MacOS. Use
+`pkgstats:::ctags_test(quiet = FALSE, noerror = TRUE)` to check if these
+are indeed installed and
+[`pkgstats::ctags_install()`](https://docs.ropensci.org/pkgstats/reference/ctags_install.html)
+to install them if not.
+
+``` r
+
+if(requireNamespace("pkgstats", quietly = TRUE)) {
+  overview_pkgstats <- pkgstats::pkgstats()
+  overview_pkgstats$external_calls
+}
+```
+
+Section [Which packages are
+used](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#which-packages-are-used)
+in vignette *R packages* from package **checkrpkgs** indicates how to
+manually look for packages that are mentioned in comments:
+[`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
+
+On **reverse** dependencies, see section [Check reverse
+dependencies](#check-reverse-dependencies).
 
 #### Importing packages or functions
 
 The standard way to use functions from other packages is to import the
 package: use
 `usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`
-to put the package in the `Imports:` field of the DESCRIPTION file, and
-in code use the package name followed by two colons and the function
-name, e.g.,
-[`checkinput::all_names()`](https://jessealderliesten.github.io/checkinput/reference/all_names.html)
-if package **checkinput** was imported. If the package is only used in
-examples or vignettes, or is considered as an optional addition, you can
-use `type = "Suggests"` to place it in the `Suggests:` field of the
-DESCRIPTION file. Then you should guard usage of that code through
-`if(requireNamespace(a, quietly = TRUE)) {<code>}`.
-
-It is possible to specify minimum package versions, see [the next
-section](#specifying-minimum-versions).
+to put the package in the `Imports:` field of the DESCRIPTION file. It
+is possible to specify minimum package versions through argument
+`min_version`, see [the next section](#specifying-minimum-versions).
 
 ``` r
 
 usethis::use_package("checkinput", type = "Imports", min_version = "1.0.0")
 ```
 
-Using two colons to specify the package is not possible if the function
-is an operator: then it is necessary to also list the **function** in
-the `NAMESPACE` file: use
+If the package is only used in examples or vignettes, or is considered
+an optional addition, you can use `type = "Suggests"` to place it in the
+`Suggests:` field of the DESCRIPTION file. Code that uses that package
+should be guarded through
+`if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`, such that the
+code is only executed if the package is installed.
+
+Besides putting the package in the DESCRIPTION file, the package name
+should be followed by two colons and the function name. For example, to
+use function `all_names()`, first import package **checkinput** as
+described above and then use
+[`checkinput::all_names()`](https://jessealderliesten.github.io/checkinput/reference/all_names.html)
+in code. Specifying the appropriate package through such notation is not
+possible if the function is an operator: then you need to also list the
+**function** in the `NAMESPACE` file: use
 `usethis::use_import_from(package = "<pkg>", fun = "<func>")` followed
 by
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
@@ -359,7 +416,7 @@ to add a line like `#' @importFrom utils ?` to the file
 does not have a `min_version` argument, so to specify one you have to
 use
 [`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
-as described in the previous paragraph.
+as described in the next paragraph.
 
 ``` r
 
@@ -372,12 +429,10 @@ devtools::document()
 #### Specifying minimum versions
 
 Specifying a minimum package version when importing packages ensures
-that used functions are actually present. Using argument
-`min_version = TRUE` in
-[`usethis::use_package()`](https://usethis.r-lib.org/reference/use_package.html)
-uses the currently installed package version but that probably is too
-strict because functions are likely also present in older package
-versions.
+that used functions are actually present. To use the currently installed
+package version, use `usethis::use_package(..., min_version = TRUE)`.
+However, that probably is too strict because functions are likely also
+present in older package versions.
 
 To check in which version a used functions was introduced, you can
 search the NEWS file of the relevant package for the function name to
@@ -440,10 +495,10 @@ browseVignettes(package = basename(getwd()))
 ```
 
 If no vignettes are visible after running
-`browseVignettes(package = basename(getwd()))`,
+`browseVignettes(package = basename(getwd()))`, probably
 [`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
-was probably run with the default argument `build_vignettes = FALSE`,
-use `build_vignettes = TRUE` instead:
+was run with the default argument `build_vignettes = FALSE`, use
+`build_vignettes = TRUE` instead:  
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`.
 Run `tools::pkgVignettes(package = "<pkg>")` for information about the
 vignettes that R finds.
@@ -478,7 +533,9 @@ vignette, e.g., using
 ```` r
 ## sessionInfo
 ```{r sessionInfo, echo = FALSE}
-utils::sessionInfo()
+if(requireNamespace("utils", quietly = TRUE)) {
+  utils::sessionInfo()
+}
 ```
 ````
 
@@ -529,8 +586,7 @@ instead of copying old packages to start new packages.
 ``` r
 
 devtools::document()
-develcoder::pkg_name_correct(pkg_name = basename(getwd()))
-# invisible character(0) if all is fine
+develcoder::pkg_name_correct()
 ```
 
 ### Check tests
@@ -540,8 +596,8 @@ all test files. Use
 [`devtools::test()`](https://devtools.r-lib.org/reference/test.html)
 instead of
 [`tinytest::test_all()`](https://rdrr.io/pkg/tinytest/man/run_test_dir.html)
-if you used package [testthat](https://testthat.r-lib.org/) to create
-tests.
+if you used package [**testthat**](https://testthat.r-lib.org/) to
+create tests.
 
 ``` r
 
@@ -555,36 +611,43 @@ tinytest::test_all() # or devtools::test() if testthat was used to create tests
 
 The next sections provide code to run checks from various packages.
 
-#### codetools
+#### BiocCheck, codetools and checktor
 
-Check R code for possible problems.
-
-``` r
-
-devtools::load_all()
-# Return is invisible and silent if all is well
-codetools::checkUsagePackage(pack = basename(getwd()),
-                             all = TRUE, suppressParamAssigns = TRUE)
-```
-
-#### checktor
+**BiocCheck** checks adherence to the
+[`Bioconductor Packages`](https://contributions.bioconductor.org/)
+guide, which is required before submission to
+[BioConductor](https://bioconductor.org/). See the overview of checks in
+its
+[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
+Several of the checks are probably too strict if you do not intend to
+submit the package to `BioConductor`.
 
 [**checktor**](https://r-pkg.thecoatlessprofessor.com/checktor/)
 provides various checks supplementing `R CMD check`.
 
 ``` r
 
+devtools::load_all()
+
+# This leaves a '<pkg>.BiocCheck' folder in the package repository:
+BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
+
+# Return is invisible and silent if all is well
+codetools::checkUsagePackage(
+  pack = basename(getwd()), all = TRUE, suppressParamAssigns = TRUE)
 checktor::checktor()
+checktor::lab_description_function_quotes()
+checktor::lab_format_names()
+checktor::lab_title_starts_with_article()
 ```
 
 #### devtools (local)
 
-[`devtools::check()`](https://devtools.r-lib.org/reference/check.html),
-which uses the preferred approach of first building the package before
+[`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
+uses the preferred approach of first building the package before
 checking it.
 [`rcmdcheck::rcmdcheck()`](https://rcmdcheck.r-lib.org/reference/rcmdcheck.html)
-does not use that approach but is able to compare output from different
-checks.
+does not use that approach but can compare output from different checks.
 
 See the [CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/) and the
@@ -692,7 +755,7 @@ my_checks_goodpractice <- progutils::not_in(
     "tidyverse_line_length_linter",
     "tidyverse_object_name_linter",
     "tidyverse_spaces_left_parentheses_linter",
-    # does not find test-files in inst/tinytest, use check_test_files() instead.
+    # does not find test files in inst/tinytest, use check_test_files() instead.
     "tidyverse_test_file_names",
     "tidyverse_whitespace_linter",
     # Checks similar to those from 'rcmdcheck' and 'urlchecker' are also used by
@@ -712,24 +775,6 @@ res_goodpractice_failed
 res_goodpractice
 ```
 
-#### BiocCheck
-
-**BiocCheck** runs checks that supplement those of
-[`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-to check adherence to the
-[`Bioconductor Packages`](https://contributions.bioconductor.org/)
-guide, which is required before submission to
-[BioConductor](https://bioconductor.org/). See the overview of checks in
-its
-[vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
-Several of the checks are probably too strict if you do not intend to
-submit the package to `BioConductor`.
-
-``` r
-
-BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
-```
-
 #### Other checks
 
 [`devtools::check_win_release()`](https://devtools.r-lib.org/reference/check_win.html)
@@ -745,31 +790,14 @@ flagged above by `devtools::check(manual = TRUE, remote = TRUE)` as
 `not in mainstream repositories`.
 
 These checks email with a link to the webpage showing the check results
-if the check is done (the webpage might display `504 Gateway Time-out`
-if the checks have not finished yet).
+if the check is done, the webpage might display `504 Gateway Time-out`
+if the checks have not finished yet.
 
 ``` r
 
 devtools::check_win_release()
 devtools::check_mac_release()
 ```
-
-I do not use
-[pkgcheck::pkgcheck()](https://docs.ropensci.org/pkgcheck/reference/pkgcheck.html)
-because their [‘own’
-checks](https://docs.ropensci.org/pkgcheck/articles/list-checks.html)
-are largely covered by the checks from **devtools** used
-[above](#devtools-local), their checks from **goodpractice** are already
-covered [above](#goodpractice) (see also [this
-post](https://docs.ropensci.org/pkgcheck/articles/autotest-pkgcheck-gp.html)
-on the relation between **goodpractice** and `pkgcheck`), and their
-checks from
-[**pkgstats**](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
-are not very useful and require system libraries `ctags-universal` and
-`GNU global`. However, the **pkgcheck** [GitHub
-action](https://github.com/ropensci-review-tools/pkgcheck-action) (see
-also [here](https://github.com/r-universe-org/workflows)) might be
-useful.
 
 #### utils
 
@@ -788,12 +816,7 @@ utils::aspell_package_vignettes(dir = getwd())
 
 Run
 [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
-to normalize the DESCRIPTION file:
-
-``` r
-
-desc::desc_normalize()
-```
+to normalize the DESCRIPTION file.
 
 To show the DESCRIPTION file, use
 [`desc::desc()`](https://desc.r-lib.org/reference/desc.html) or
@@ -814,39 +837,31 @@ the changes, i.e., the updated section of the NEWS file). See package
 add badges to packages and functions to indicate their life cycle and
 its vignette [Lifecycle
 stages](https://lifecycle.r-lib.org/articles/stages.html), chapter
-[Lifecycle](https://r-pkgs.org/lifecycle.html) from the R packages book,
-and the [Semantic Versioning Specification](https://semver.org/) on
-versioning.
+[Lifecycle](https://r-pkgs.org/lifecycle.html) from the ‘R packages’
+book, and the [Semantic Versioning Specification](https://semver.org/)
+on versioning.
 
-#### License
-
-Add a license if none is present, or update it to have the correct year
-in it. **usethis** provides utility functions to add licenses (see
-`help("licenses", package = "usethis")`. For example, to add or update a
-[MIT license](https://choosealicense.com/licenses/mit/):
-
-``` r
-
-usethis::use_mit_license()
-```
-
-#### CITATION
+#### CITATION and License
 
 Use the DESCRIPTION file to create a CITATION.cff citation file, or
-update such file to reflect the new package version:
+update such file to reflect the new package version. Add a license if
+none is present, or update it to have the correct year in it.
+**usethis** provides utility functions to add licenses, see
+`help("licenses", package = "usethis")`. The code below adds or updates
+a [MIT license](https://choosealicense.com/licenses/mit/) as an example.
 
 ``` r
 
 cffr::cff_write(dependencies = FALSE) # Create or update a citation file
+usethis::use_mit_license()
 ```
 
 #### README
 
-Install the development version of the package by running
-[`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
-to ensure the updated version number without Git-commit ID will be
-included in the citation format in the README, using `quick = FALSE` and
-`build_vignettes = TRUE` to ensure the year will be displayed:
+Install the development version of the package to ensure the updated
+version number without Git-commit ID will be included in the citation
+format in the README, using `quick = FALSE` and `build_vignettes = TRUE`
+to ensure the year will be displayed:
 
 ``` r
 
@@ -863,14 +878,14 @@ Notes:
   GitHub.
 - If the requirement that README.Rmd and README.md are staged at the
   same time was accidentally introduced, delete the the hidden file
-  `.git/hooks/pre-commit` from the R-project folder (see the section
-  ‘DESCRIPTION’ in
-  [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
-  to remove that requirement.
+  `.git/hooks/pre-commit` from the R-project folder to remove that
+  requirement, see the section ‘DESCRIPTION’ in
+  [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html).
 
 #### NEWS
 
-Restyle and publish the NEWS file.
+Restyle the NEWS file and replace the heading `# <pkg> devel` with the
+version number, e.g., `# develcoder 1.0.0`.
 
 ### Check reverse dependencies
 
@@ -894,18 +909,18 @@ to check them.
 [`tools::package_dependencies()`](https://rdrr.io/r/tools/package_dependencies.html)
 and the related
 [`tools::dependsOnPkgs()`](https://rdrr.io/r/tools/dependsOnPkgs.html)
-only take packages from CRAN into account.
-`devtools::revdep(pkg = <your pkg>, bioconductor = TRUE)` also takes
-packages from [BioConductor](https://bioconductor.org/) into account. To
-take other non-CRAN packages into account, use
+only take packages from [CRAN](https://cran.r-project.org/) into
+account. `devtools::revdep(pkg = <your pkg>, bioconductor = TRUE)` also
+takes packages from [BioConductor](https://bioconductor.org/) into
+account. To take other non-CRAN packages into account, use
 [`revdepcheck::revdep_check()`](https://revdepcheck.r-lib.org/reference/revdep_check.html)
 or
 [`xfun::rev_check()`](https://pkg.yihui.org/xfun/manual#sec:man-rev_check)
 (which has a [GitHub Action](#use-github-actions):
 [**crandalf**](https://github.com/yihui/crandalf)). If you find reverse
-dependencies that broke because of your changes, you can identify their
-maintainers using `devtools::revdep_maintainers(pkg = <your pkg>)` to
-notify them.
+dependencies that broke because of your changes, use
+`devtools::revdep_maintainers(pkg = <your pkg>)` to identify their
+maintainers and then manually notify them.
 
 ### Locally test update
 
@@ -977,7 +992,7 @@ documentation of the [**actions**](https://github.com/r-lib/actions)
 package.
 
 For help debugging build failures, see the Appendix [R CMD
-check](https://r-pkgs.org/R-CMD-check.html) in the R packages book and
+check](https://r-pkgs.org/R-CMD-check.html) in the ‘R packages’ book and
 the section [Where to find
 help](https://github.com/r-lib/actions#where-to-find-help) in the
 documentation of the [**actions**](https://github.com/r-lib/actions)
@@ -985,35 +1000,25 @@ package.
 
 ### pkgdown website
 
-See the documentation about package
-[**pkgdown**](https://pkgdown.r-lib.org/) and chapter
-[Website](https://r-pkgs.org/website.html) from the R packages book for
-further details.
-
-``` r
-
-# To manually update the website
-pkgdown::build_site()
-```
-
-Open `docs/index.html` in a web browser to preview the website, or look
-at the files that constitute your package’s website are in the local
-`docs` directory.
-
-Instead of manually updating the pkgdown website, one can use a [GitHub
+To automatically update the package website, one can use a [GitHub
 Action](#use-github-actions) workflow (e.g.,
 [`pkgdown.yaml`](https://github.com/JesseAlderliesten/develcoder/blob/main/.github/workflows/pkgdown.yaml))
 that updates the website after a pull request or push. To set this up,
 run
 [`usethis::use_pkgdown_github_pages()`](https://usethis.r-lib.org/reference/use_pkgdown.html).
 
-#### Styling
+To manually update the pkgdown website, use
+[`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html)
+and open the file `docs/index.html` in a web browser to preview the
+website, or look at the files that constitute your package’s website in
+the local `docs` directory.
 
-To create a thematic index instead of the default alphabetically ordered
-one, see the
-[documentation](https://pkgdown.r-lib.org/reference/build_reference.html)
-and the
-[example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml).
+See the documentation about package
+[**pkgdown**](https://pkgdown.r-lib.org/) and chapter
+[Website](https://r-pkgs.org/website.html) from the ‘R packages’ book
+for further details.
+
+#### Styling
 
 To customise the order in which the articles are listed, specify their
 order in the `_pkgdown.yml` file: run
@@ -1026,8 +1031,9 @@ from **develcoder**, and the non-alphabetical order of the
 [articles](https://jessealderliesten.github.io/checkrpkgs/articles/) in
 the **checkrpkgs** package for examples.
 
-To create a custom function index, include a section `reference:` in the
-`_pkgdown.yml` file with the desired headings and topics: see the
+To create a custom function index (e.g., a thematic index instead of the
+default alphabetically ordered one), include a section `reference:` in
+the `_pkgdown.yml` file with the desired headings and topics: see the
 [documentation](https://pkgdown.r-lib.org/reference/build_reference.html)
 and an
 [example](https://github.com/r-lib/pkgdown/blob/main/pkgdown/_pkgdown.yml)
@@ -1068,7 +1074,7 @@ In RStudio, open the relevant project to check there are no commits
 left. Then you can move to the `main` branch and `Pull` to get all
 updates you just committed to the `main` branch. Then click the
 `New branch` button in RStudio (besides the `Switch branch` icon
-indicating which branch (e.g., `main` or `devel`) you are using), use
+indicating which branch, e.g., `main` or `devel`, you are using), use
 `devel` as branch name and click `Create`. You will be notified that
 `devel` already exists and asked if you want to overwrite it. **If** you
 have just merged `devel` into `main`, you can choose to overwrite it to
@@ -1100,8 +1106,8 @@ relevant packages.
 
 See the policy documents mentioned in the [Guidelines on package
 development](#guidelines-on-package-development) and the chapter
-[Releasing to CRAN](https://r-pkgs.org/release.html) from the R packages
-book.
+[Releasing to CRAN](https://r-pkgs.org/release.html) from the ‘R
+packages’ book.
 
 [`tools::CRAN_check_results()`](https://rdrr.io/r/tools/CRANtools.html),
 [`tools::CRAN_check_details()`](https://rdrr.io/r/tools/CRANtools.html)
@@ -1131,13 +1137,15 @@ status of packages during package submission to CRAN.
       1 + 1
       ```
 
-  See `sort(names(knitr::knit_engines$get()))` for the available
-  knit-engines.
+  See the output of `sort(names(knitr::knit_engines$get()))` for the
+  available knit-engines.
 
 - If running checks lead to the error
-  `Failed with error: 'there is no package called '<pkg>''`
-  `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`, you
-  probably forgot to use `library(<pkg>)` in a code chunck, used a
+
+      `Failed with error: 'there is no package called '<pkg>''`
+      `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`
+
+  you probably forgot to use `library(<pkg>)` in a code chunck, used a
   package that is not declared as dependency in the DESCRIPTION file, or
   used a package that is declared as suggested dependency (i.e., is in
   the `Suggests` field of the DESCRIPTION file) without running that
@@ -1155,7 +1163,7 @@ status of packages during package submission to CRAN.
   `@section Could not resolve link to topic ":blank:" in the dependencies or base packages`,
   `regex`-classes in example code are being interpreted as links. To
   prevent this, use backticks (`` ` ``) to format a line as code, or
-  wrap consecutive lines in `` \code{...}` ``.
+  wrap consecutive lines in `\code{...}`.
 
 - Errors can arise if package development is not done from a clean R
   session. Use
@@ -1246,5 +1254,5 @@ status of packages during package submission to CRAN.
   Research](https://book.the-turing-way.org/reproducible-research/reproducible-research/)
   and [GitHub
   Gardening](https://book.the-turing-way.org/community-handbook/github-gardening/)
-  from
-  `The Turing Way handbook to reproducible, ethical and collaborative data science`
+  from ‘The Turing Way handbook to reproducible, ethical and
+  collaborative data science’

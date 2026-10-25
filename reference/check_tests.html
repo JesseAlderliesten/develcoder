@@ -9,7 +9,7 @@ and if function files have a corresponding test file and vice versa."></head><bo
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,8 +68,9 @@ and if function files have a corresponding test file and vice versa.</p>
 
 <dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p><a href="https://jessealderliesten.github.io/checkinput/reference/all_characters.html" class="external-link">character string</a> containing a
-valid <a href="https://jessealderliesten.github.io/checkinput/reference/is_path.html" class="external-link">path</a> to the package of which to check testing
-infrastructure and test files. The default is the <a href="https://rdrr.io/r/base/getwd.html" class="external-link">working directory</a>.</p></dd>
+valid <a href="https://jessealderliesten.github.io/checkinput/reference/is_path.html" class="external-link">path</a> to the folder with the package of which
+the testing infrastructure and test files should be checked. The default is
+the <a href="https://rdrr.io/r/base/getwd.html" class="external-link">working directory</a>.</p></dd>
 
 
 <dt id="arg-pattern">pattern<a class="anchor" aria-label="anchor" href="#arg-pattern"></a></dt>
@@ -136,9 +137,14 @@ in folder <code>R</code></p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other functions to check tests:
-<code><a href="diagnose_test_files.html">diagnose_test_files()</a></code>,
-<code><a href="diagnose_test_infra.html">diagnose_test_infra()</a></code></p></div>
+    <div class="dont-index"><p>Section
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure">Set up testing infrastructure</a>
+in vignette <em>Package setup</em> and section
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests">Add tests</a>
+in vignette <em>Package development</em>: <code><a href="../articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>
+and <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
+<p>Other functions to check tests:
+<code>check_tests()</code>, <code><a href="diagnose_test_files.html">diagnose_test_files()</a></code>, <code><a href="diagnose_test_infra.html">diagnose_test_infra()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -179,12 +185,12 @@ in folder <code>R</code></p></li>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tempdir_example</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No file determining the used testing infrastructure exists:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/tinytest.R',</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/testthat.R'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/tinytest.R',</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/testthat.R'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>None of the test directories exist:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpUfGSME/check_tests1d2c38306220/inst/tinytest'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/testthat'</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found in folder '/tmp/RtmpUfGSME/check_tests1d2c38306220/R'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/inst/tinytest'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/testthat'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No function files found in folder '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/R'.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

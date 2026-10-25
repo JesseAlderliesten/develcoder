@@ -7,7 +7,7 @@ package directory.
 
 ``` r
 pkg_name_correct(
-  pkg_name,
+  pkg_name = basename(getwd()),
   pkg_dir = ".",
   description_fields = c("Package", "URL", "BugReports"),
   citation_fields = c("title", "repository-code", "url"),
@@ -166,9 +166,9 @@ withr::deferred_run()
 #> Warning: No files found matching pattern 'NEWS'
 #> Error in .check_field_pkg_name(pkg_name = pkg_name, file_path = desc_path,  : 
 #>   The package name 'not_toypackage' is missing from field 'Package' of file
-#> '/tmp/RtmpUfGSME/ex_pkg_name_correct1d2cd160a04/DESCRIPTION' which is:
+#> '/tmp/RtmpwPeNot/ex_pkg_name_correct1c2d5b4e66c5/DESCRIPTION' which is:
 #> toypackage
 #> Warning: Field 'not_title' is missing from file
-#> '/tmp/RtmpUfGSME/ex_pkg_name_correct1d2cd160a04/DESCRIPTION'
+#> '/tmp/RtmpwPeNot/ex_pkg_name_correct1c2d5b4e66c5/DESCRIPTION'
 #> Ran 1/1 deferred expressions
 ```

@@ -23,8 +23,8 @@ check_tests(
   string](https://jessealderliesten.github.io/checkinput/reference/all_characters.html)
   containing a valid
   [path](https://jessealderliesten.github.io/checkinput/reference/is_path.html)
-  to the package of which to check testing infrastructure and test
-  files. The default is the [working
+  to the folder with the package of which the testing infrastructure and
+  test files should be checked. The default is the [working
   directory](https://rdrr.io/r/base/getwd.html).
 
 - pattern:
@@ -112,7 +112,16 @@ Warnings are issued if:
 
 ## See also
 
-Other functions to check tests:
+Section [Set up testing
+infrastructure](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure)
+in vignette *Package setup* and section [Add
+tests](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests)
+in vignette *Package development*:
+[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)
+and
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+
+Other functions to check tests: `check_tests()`,
 [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md),
 [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
 
@@ -155,10 +164,10 @@ withr::with_dir(new = tempdir_example, {
 unlink(tempdir_example, recursive = TRUE)
 }
 #> Warning: No file determining the used testing infrastructure exists:
-#> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/tinytest.R',
-#> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/testthat.R'
+#> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/tinytest.R',
+#> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/testthat.R'
 #> Warning: None of the test directories exist:
-#> '/tmp/RtmpUfGSME/check_tests1d2c38306220/inst/tinytest'
-#> '/tmp/RtmpUfGSME/check_tests1d2c38306220/tests/testthat'
-#> Warning: No function files found in folder '/tmp/RtmpUfGSME/check_tests1d2c38306220/R'.
+#> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/inst/tinytest'
+#> '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/tests/testthat'
+#> Warning: No function files found in folder '/tmp/RtmpwPeNot/check_tests1c2d46a7b41c/R'.
 ```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,8 @@ are <strong>not</strong> test files. <code>character(0)</code> if no files are i
     <p>The default <code>path</code> points to directory <code>inst/tinytest</code> of the current
 <a href="https://rdrr.io/r/base/getwd.html" class="external-link">working directory</a>, where
 <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><strong>tinytest</strong></a> stores tests when
-a package is in development.</p>
+a package is in development. Use <code>fs::path_wd("tests", "testthat")</code> to check
+tests from <a href="https://CRAN.R-project.org/package=testthat" class="external-link"><strong>testthat</strong></a>.</p>
 <p>A warning is issued if:</p><ul><li><p><code>path</code> contains files that are ignored because their names do <strong>not</strong> start
 with pattern <code>pattern</code>, are not <span style="R">R</span> files, or are template files created by
 <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><strong>tinytest</strong></a></p></li>
@@ -105,9 +106,14 @@ the test files: that is deferred to <code><a href="check_tests.html">check_tests
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other functions to check tests:
-<code><a href="check_tests.html">check_tests()</a></code>,
-<code><a href="diagnose_test_infra.html">diagnose_test_infra()</a></code></p></div>
+    <div class="dont-index"><p>Section
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure">Set up testing infrastructure</a>
+in vignette <em>Package setup</em> and section
+<a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests">Add tests</a>
+in vignette <em>Package development</em>: <code><a href="../articles/pkg_setup.html">vignette("pkg_setup", package = "develcoder")</a></code>
+and <code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
+<p>Other functions to check tests:
+<code><a href="check_tests.html">check_tests()</a></code>, <code>diagnose_test_files()</code>, <code><a href="diagnose_test_infra.html">diagnose_test_infra()</a></code></p></div>
     </div>
 
     <div class="section level2">

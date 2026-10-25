@@ -59,7 +59,9 @@ A [list](https://rdrr.io/r/base/list.html) with six elements:
 The default `path` points to directory `inst/tinytest` of the current
 [working directory](https://rdrr.io/r/base/getwd.html), where
 [**tinytest**](https://CRAN.R-project.org/package=tinytest) stores tests
-when a package is in development.
+when a package is in development. Use `fs::path_wd("tests", "testthat")`
+to check tests from
+[**testthat**](https://CRAN.R-project.org/package=testthat).
 
 A warning is issued if:
 
@@ -73,8 +75,18 @@ with the test files: that is deferred to
 
 ## See also
 
+Section [Set up testing
+infrastructure](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure)
+in vignette *Package setup* and section [Add
+tests](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests)
+in vignette *Package development*:
+[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)
+and
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+
 Other functions to check tests:
 [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md),
+`diagnose_test_files()`,
 [`diagnose_test_infra()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_infra.md)
 
 ## Examples

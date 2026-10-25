@@ -49,7 +49,7 @@ A warning is issued if a file determining the used testing
 infrastructure (e.g., `<pkg>\tests\tinytest.R` or
 `<pkg>\tests\testthat.R`) exists but:
 
-- it does **not** refer to the tested package
+- does **not** refer to the tested package
 
 - the package that governs the determined testing infrastructure (e.g.,
   **tinytest** or **testthat**) is missing from the dependencies of the
@@ -61,9 +61,19 @@ the test infrastructure: that is deferred to
 
 ## See also
 
+Section [Set up testing
+infrastructure](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure)
+in vignette *Package setup* and section [Add
+tests](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests)
+in vignette *Package development*:
+[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md)
+and
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+
 Other functions to check tests:
 [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md),
-[`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md)
+[`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md),
+`diagnose_test_infra()`
 
 ## Examples
 

@@ -6,7 +6,7 @@ Match a package name to the content of files.
 
 ``` r
 match_pkg_name(
-  pkg_name,
+  pkg_name = basename(getwd()),
   pkg_dir = ".",
   file_patterns = c("\\NEWS", "\\README", "\\_pkgdown"),
   warn_files_absent = FALSE

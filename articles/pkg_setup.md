@@ -15,11 +15,11 @@ Development](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-pac
 the [search page](https://r-universe.dev/) of R-universe which is also
 available with [AI-assisted extended search
 capabilities](https://rwarehouse.netlify.app/), packages
-[`pkgmatch`](https://CRAN.R-project.org/package=pkgmatch) and
-[`pkgsearch`](https://CRAN.R-project.org/package=pkgsearch). Section
-`R packages` in the vignette *R packages* from package
-[`checkrpkgs`](https://jessealderliesten.github.io/checkrpkgs/) gives an
-overview of repositories containing R packages:
+[**pkgmatch**](https://CRAN.R-project.org/package=pkgmatch) and
+[**pkgsearch**](https://CRAN.R-project.org/package=pkgsearch). Section
+‘R packages’ in the vignette *R packages* from package
+[**checkrpkgs**](https://jessealderliesten.github.io/checkrpkgs/) gives
+an overview of repositories containing R packages:
 ([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html)).
 
 ## Choose a name
@@ -43,9 +43,8 @@ utils::browseURL(url = paste0("https://github.com/search?q=", pkgname,
 
 The code below creates the package through
 [`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html).
-See the `usethis` vignette
-[`usethis setup`](https://usethis.r-lib.org/articles/usethis-setup.html)
-and
+See the **usethis** vignette [*usethis
+setup*](https://usethis.r-lib.org/articles/usethis-setup.html) and
 [`help("use_description", package = "usethis")`](https://usethis.r-lib.org/reference/use_description.html)
 for details.
 
@@ -54,7 +53,7 @@ uses information stored in `.Rprofile` files to fill in default
 information. Such files can exist in various locations, for example at
 `D:\Userdata\<username>\Documents\.Rprofile`: use
 [`usethis::edit_r_profile()`](https://usethis.r-lib.org/reference/edit.html)
-to open the `.Rprofile` file that `usethis` finds, see
+to open the `.Rprofile` file that **usethis** finds, see
 [`help("Startup")`](https://rdrr.io/r/base/Startup.html) for details.
 
 ``` r
@@ -67,8 +66,8 @@ desc::desc() # show contents of the DESCRIPTION file
 
 Do:
 
-- Update the `Title` field of the `DESCRIPTION` file
-- Update the `Description` field of the `DESCRIPTION` file
+- Update the `Title` field of the DESCRIPTION file
+- Update the `Description` field of the DESCRIPTION file
 - Check if the automatically filled in information is correct
 
 ## Add package-wide documentation
@@ -97,10 +96,10 @@ Source](https://opensource.guide/legal/).
 [allows](https://cran.r-project.org/web/packages/policies.html#Source-packages)
 packages with licences from [this
 list](https://svn.r-project.org/R/trunk/share/licenses/license.db). See
-the section `Licences` in
+the section ‘Licences’ in
 [`help("library")`](https://rdrr.io/r/base/library.html) on how to
 notify users that a package uses a license that is not-known-to-be-Free
-or Open Source Software. `usethis` provides utility functions to add
+or Open Source Software. **usethis** provides utility functions to add
 licenses (see `help("licenses", package = "usethis")`. For example, to
 add a [MIT license](https://choosealicense.com/licenses/mit/):
 
@@ -112,14 +111,14 @@ usethis::use_mit_license()
 ### Citation
 
 A citation file makes clear how your package should be cited. See the
-documentation in the `R` package
-[`cffr`](https://CRAN.R-project.org/package=cffr) and the GitHub page
+documentation in the R package
+[**cffr**](https://CRAN.R-project.org/package=cffr) and the GitHub page
 [`Citation file format`](https://citation-file-format.github.io/) for
 details on the format.
 
 ``` r
 
-cffr::cff_write(dependencies = FALSE) # Create a citation file
+cffr::cff_write(dependencies = FALSE)
 ```
 
 ### README
@@ -136,19 +135,19 @@ Do:
     in the `README.Rmd` file (the badge does **not** work if the GitHub
     repository is private):  
     `![](https://img.shields.io/github/r-package/v/<repository>/<pkg>?color=blue)`
-  - See
+  - See the file
     [`README_template.Rmd`](https://github.com/JesseAlderliesten/develcoder/blob/main/inst/templates/README_template.Rmd)
     in the folder `inst/templates` for pointers on useful content.
   - `Knit` the `README.Rmd` file to produce a `README.md` file.
 
 #### Troubleshooting
 
-The `usethis` practice of using
+The **usethis** practice of using
 [`devtools::build_readme()`](https://devtools.r-lib.org/reference/build_readme.html)
 to update `README.md` requires that `README.Rmd` and `README.md` are
 staged at the same time. To remove this requirement, delete the hidden
-file `.git/hooks/pre-commit` from the `R` project folder, see the
-section `Description` in
+file `.git/hooks/pre-commit` from the R project folder, see the section
+‘Description’ in
 [`help("use_readme_rmd", package = "usethis")`](https://usethis.r-lib.org/reference/use_readme_rmd.html)
 for details.
 
@@ -157,9 +156,9 @@ for details.
 A package overview through the file `R/<pkg>-package.R` makes that, if
 package `<pkg>` has been loaded (i.e., `library(<pkg>)` has been run),
 `help("<pkg>")` produces a relevant description of the package with
-links to GitHub and to the package website. It is also used by `usethis`
-to list imported functions, and can be configured to give an overview of
-the functions in the package.
+links to GitHub and to the package website. It is also used by
+**usethis** to list imported functions, and can be configured to give an
+overview of the functions in the package.
 
 ``` r
 
@@ -176,10 +175,11 @@ usethis::use_news_md() # Create NEWS.md
 ## Set up testing infrastructure
 
 It is convenient to have a collection of tests for your functions (see
-the Chapter [‘Testing basics’](https://r-pkgs.org/testing-basics.html)).
-Various packages can be used to create and run such tests. To use
-package [**tinytest**](https://CRAN.R-project.org/package=tinytest) for
-testing, set up its infrastructure through:
+the Chapter [‘Testing basics’](https://r-pkgs.org/testing-basics.html)
+from the ’R packages\` book). Various packages can be used to create and
+run such tests. To use package
+[**tinytest**](https://CRAN.R-project.org/package=tinytest) for testing,
+set up its infrastructure through:
 
 ``` r
 
@@ -273,29 +273,30 @@ on the GitHub repository):
   month (1 - 31), month (1 - 12), and day of the week (0 - 6). This
   timing is approximate and the actual time the check is run depends on
   how busy the servers are.
-- If the package declares a dependency on a minimum `R` version in its
-  `DESCRIPTION` file, it is useful to specify that minimum declared `R`
+- If the package declares a dependency on a minimum R version in its
+  DESCRIPTION file, it is useful to specify that minimum declared R
   version to run in addition to the default ones used in the template:
   for example,  
   add `- {os: ubuntu-latest, r: '4.1.0'}` to section `matrix: config:`
-  to also run the workflow with `R` version 4.1.0 if your package
-  declares `R` 4.1.0 as minimum version.
+  to also run the workflow with R version 4.1.0 if your package declares
+  R 4.1.0 as minimum version.
 
-For further documentation, see section `GHA: documentation and help` in
+For further documentation, see section ‘GHA: documentation and help’ in
 the vignette *Package development*:
 [`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Set up a package website
 
-Package websites automatically create
-[`hyperlinked cross-references`](https://r-pkgs.org/vignettes.html#links)
+Package websites make it possible for people to look at your package
+without installing it. The package website also automatically creates
+[hyperlinked cross-references](https://r-pkgs.org/vignettes.html#links)
 to functions and documentation you refer to.
 
 To set up a package website, you can use
 [`usethis::use_pkgdown()`](https://usethis.r-lib.org/reference/use_pkgdown.html),
 see the documentation about package
-[`pkgdown`](https://pkgdown.r-lib.org/) and the chapter
-[`Website`](https://r-pkgs.org/website.html) from the `R packages` book
+[**pkgdown**](https://pkgdown.r-lib.org/) and the chapter
+[Website](https://r-pkgs.org/website.html) from the `R packages` book
 for further details.
 
 To also set up a [GitHub action](#automate-checks) to automatically
@@ -314,7 +315,7 @@ After a few minutes, the website should be present. The URL has the
 structure `https://<username>.github.io/<repository>/`, e.g.,
 `https://jessealderliesten.github.io/develcoder/`.
 
-Refer from the `README` to the pkgdown website and add the line
+Refer from the README to the pkgdown website and add the line
 `light-switch: true` below the `template` heading in the `_pkgdown.YML`
 file to add a light-switch to the pkgdown-website, see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
