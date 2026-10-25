@@ -1,3 +1,16 @@
+# develcoder 0.17.0
+
+### Breaking changes
+- Add dependency `pkgstats` to `Suggests` to use `pkgstats::pkgstats()` in
+  vignette *Package development* to check which packages are used.
+- Remove unused suggested dependency `remotes`.
+- `pkg_name_correct()` and `match_pkg_name()`: use `basename(getwd())` as
+  default package name.
+
+### Documentation
+- Prune the NEWS file.
+
+
 # develcoder 0.16.0
 
 ### Breaking changes
