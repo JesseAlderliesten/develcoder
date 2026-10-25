@@ -538,6 +538,9 @@ BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 codetools::checkUsagePackage(
   pack = basename(getwd()), all = TRUE, suppressParamAssigns = TRUE)
 checktor::checktor()
+checktor::lab_description_function_quotes()
+checktor::lab_format_names()
+checktor::lab_title_starts_with_article()
 ```
 
 ### devtools (local)
@@ -699,28 +702,23 @@ the change, but do so manually to adjust the commit message to
 `Bump to version x.y.z`. Indicating the version number in the commit title makes
 it easier to find changes back later on (the pull request can have a description
 of the changes, i.e., the updated section of the NEWS file). See package
-[**lifecycle**](https://CRAN.R-project.org/package=lifecycle) on how to add badges
-to packages and functions to indicate their life cycle and its vignette
+[**lifecycle**](https://CRAN.R-project.org/package=lifecycle) on how to add
+badges to packages and functions to indicate their life cycle and its vignette
 [Lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html), chapter
 [Lifecycle](https://r-pkgs.org/lifecycle.html) from the 'R packages' book, and
 the [Semantic Versioning Specification](https://semver.org/) on versioning.
 
-### License
-Add a license if none is present, or update it to have the correct year in it.
-**usethis** provides utility functions to add licenses, see
-`help("licenses", package = "usethis")`. For example, to add or update a
-[MIT license](https://choosealicense.com/licenses/mit/):
-
-```{r license, eval = FALSE}
-usethis::use_mit_license()
-```
-
-### CITATION
+### CITATION and License
 Use the DESCRIPTION file to create a CITATION.cff citation file, or update
-such file to reflect the new package version:
+such file to reflect the new package version. Add a license if none is present,
+or update it to have the correct year in it. **usethis** provides utility
+functions to add licenses, see `help("licenses", package = "usethis")`. The code
+below adds or updates a [MIT license](https://choosealicense.com/licenses/mit/)
+as an example.
 
-```{r citation, eval = FALSE}
+```{r citation_license, eval = FALSE}
 cffr::cff_write(dependencies = FALSE) # Create or update a citation file
+usethis::use_mit_license()
 ```
 
 ### README
