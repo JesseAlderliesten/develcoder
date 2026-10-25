@@ -38,7 +38,7 @@ of \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}}.
 A warning is issued if a file determining the used testing infrastructure
 (e.g., \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R}) exists but:
 \itemize{
-\item it does \strong{not} refer to the tested package
+\item does \strong{not} refer to the tested package
 \item the package that governs the determined testing infrastructure (e.g.,
 \strong{tinytest} or \strong{testthat}) is missing from the dependencies of the
 tested package
@@ -70,8 +70,13 @@ unlink(tempdir_example, recursive = TRUE)
 
 }
 \seealso{
+Section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure}{Set up testing infrastructure}
+in vignette \emph{Package setup} and section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests}{Add tests}
+in vignette \emph{Package development}: \code{vignette("pkg_setup", package = "develcoder")}
+and \code{vignette("pkg_devel", package = "develcoder")}.
+
 Other functions to check tests:
-\code{\link[=check_tests]{check_tests()}},
-\code{\link[=diagnose_test_files]{diagnose_test_files()}}
+\code{\link[=check_tests]{check_tests()}}, \code{\link[=diagnose_test_files]{diagnose_test_files()}}, \code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
 }
-\concept{functions to check tests}

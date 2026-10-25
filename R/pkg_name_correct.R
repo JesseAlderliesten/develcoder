@@ -110,7 +110,7 @@
 #'
 #' @export
 pkg_name_correct <- function(
-    pkg_name,
+    pkg_name = basename(getwd()),
     pkg_dir = ".",
     description_fields = c("Package", "URL", "BugReports"),
     citation_fields = c("title", "repository-code", "url"),

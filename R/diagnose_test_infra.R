@@ -15,7 +15,7 @@
 #'
 #' A warning is issued if a file determining the used testing infrastructure
 #' (e.g., `<pkg>\tests\tinytest.R` or `<pkg>\tests\testthat.R`) exists but:
-#' - it does **not** refer to the tested package
+#' - does **not** refer to the tested package
 #' - the package that governs the determined testing infrastructure (e.g.,
 #'   **tinytest** or **testthat**) is missing from the dependencies of the
 #'   tested package
@@ -35,8 +35,7 @@
 #'   testing infrastructure (i.e., `name`) is present among the dependencies of
 #'   package `pkg`, otherwise `"missing"`
 #'
-#' @family
-#' functions to check tests
+#' @inherit check_tests seealso
 #'
 #' @examples
 #' path_develcoder <- find.package("develcoder")

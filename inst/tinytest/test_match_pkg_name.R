@@ -71,8 +71,8 @@ expect_error(
   pattern = "The package name 'DEVELcoder' is missing from file.+NEWS'$")
 
 ##### Arguments that should result in an error #####
-expect_error(match_pkg_name(),
-             pattern = "argument \"pkg_name\" is missing", fixed = TRUE)
+expect_error(match_pkg_name(""),
+             pattern = "checkinput::is_character(pkg_name) is not TRUE", fixed = TRUE)
 expect_error(match_pkg_name(pkg_name = 3),
              pattern = "checkinput::is_character(pkg_name) is not TRUE", fixed = TRUE)
 expect_warning(

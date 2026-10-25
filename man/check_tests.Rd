@@ -13,8 +13,9 @@ check_tests(
 }
 \arguments{
 \item{path}{\link[checkinput:is_character]{character string} containing a
-valid \link[checkinput:is_path]{path} to the package of which to check testing
-infrastructure and test files. The default is the \link[=getwd]{working directory}.}
+valid \link[checkinput:is_path]{path} to the folder with the package of which
+the testing infrastructure and test files should be checked. The default is
+the \link[=getwd]{working directory}.}
 
 \item{pattern}{\link[checkinput:is_character]{character string} containing a
 \link[=regex]{regular expression} used to select test files.}
@@ -102,8 +103,13 @@ unlink(tempdir_example, recursive = TRUE)
 
 }
 \seealso{
+Section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure}{Set up testing infrastructure}
+in vignette \emph{Package setup} and section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests}{Add tests}
+in vignette \emph{Package development}: \code{vignette("pkg_setup", package = "develcoder")}
+and \code{vignette("pkg_devel", package = "develcoder")}.
+
 Other functions to check tests:
-\code{\link[=diagnose_test_files]{diagnose_test_files()}},
-\code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
+\code{\link[=check_tests]{check_tests()}}, \code{\link[=diagnose_test_files]{diagnose_test_files()}}, \code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
 }
-\concept{functions to check tests}

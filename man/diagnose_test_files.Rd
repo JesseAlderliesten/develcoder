@@ -43,7 +43,8 @@ Get test files, with an overview of various diagnostics
 The default \code{path} points to directory \code{inst/tinytest} of the current
 \link[=getwd]{working directory}, where
 \href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}} stores tests when
-a package is in development.
+a package is in development. Use \code{fs::path_wd("tests", "testthat")} to check
+tests from \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}}.
 
 A warning is issued if:
 \itemize{
@@ -85,8 +86,13 @@ unlink(tempdir_example, recursive = TRUE)
 
 }
 \seealso{
+Section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#set-up-testing-infrastructure}{Set up testing infrastructure}
+in vignette \emph{Package setup} and section
+\href{https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests}{Add tests}
+in vignette \emph{Package development}: \code{vignette("pkg_setup", package = "develcoder")}
+and \code{vignette("pkg_devel", package = "develcoder")}.
+
 Other functions to check tests:
-\code{\link[=check_tests]{check_tests()}},
-\code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
+\code{\link[=check_tests]{check_tests()}}, \code{\link[=diagnose_test_files]{diagnose_test_files()}}, \code{\link[=diagnose_test_infra]{diagnose_test_infra()}}
 }
-\concept{functions to check tests}

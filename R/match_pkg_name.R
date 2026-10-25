@@ -18,7 +18,7 @@
 #'
 #' @export
 match_pkg_name <- function(
-    pkg_name,
+    pkg_name = basename(getwd()),
     pkg_dir = ".",
     file_patterns = c("\\NEWS", "\\README", "\\_pkgdown"),
     warn_files_absent = FALSE) {
@@ -32,11 +32,14 @@ match_pkg_name <- function(
   # Not using list.files() because that also returns directories
   # (even though 'include.dirs' is FALSE by default) because
   # 'recursive' is also FALSE. Hidden files are not found.
-  all_files <- as.character(fs::dir_ls(path = pkg_dir, type = "file", fail = FALSE))
+  all_files <- as.character(
+    fs::dir_ls(path = pkg_dir, type = "file", fail = FALSE))
 
   bool_match <- rep(FALSE, length(all_files))
   for(pattern in file_patterns) {
-    bool_match_temp <- grepl(pattern = pattern, x = basename(all_files), ignore.case = TRUE)
+    bool_match_temp <- grepl(pattern = pattern,
+                             x = basename(all_files),
+                             ignore.case = TRUE)
     if(warn_files_absent && !any(bool_match_temp)) {
       warning("No files found matching pattern ",
               progutils::paste_quoted(pattern))
