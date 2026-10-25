@@ -13,8 +13,9 @@ check_tests(
 }
 \arguments{
 \item{path}{\link[checkinput:is_character]{character string} containing a
-valid \link[checkinput:is_path]{path} to the package of which to check testing
-infrastructure and test files. The default is the \link[=getwd]{working directory}.}
+valid \link[checkinput:is_path]{path} to the folder with the package of which
+the testing infrastructure and test files should be checked. The default is
+the \link[=getwd]{working directory}.}
 
 \item{pattern}{\link[checkinput:is_character]{character string} containing a
 \link[=regex]{regular expression} used to select test files.}

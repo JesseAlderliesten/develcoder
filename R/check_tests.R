@@ -5,8 +5,9 @@
 #'
 #' @inheritParams diagnose_test_files
 #' @param path [character string][checkinput::is_character()] containing a
-#' valid [path][checkinput::is_path()] to the package of which to check testing
-#' infrastructure and test files. The default is the [working directory][getwd()].
+#' valid [path][checkinput::is_path()] to the folder with the package of which
+#' the testing infrastructure and test files should be checked. The default is
+#' the [working directory][getwd()].
 #' @param test_vignettes `TRUE` or `FALSE`: should vignettes have a
 #' corresponding test file?
 #'
