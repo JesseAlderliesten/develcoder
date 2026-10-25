@@ -745,7 +745,8 @@ Notes:
   `help("use_readme_rmd", package = "usethis")`.
 
 ### NEWS
-Restyle and publish the NEWS file.
+Restyle the NEWS file and replace the heading `# <pkg> devel` with the version
+number, e.g., `# develcoder 1.0.0`.
 
 ## Check reverse dependencies
 **Acknowledgement**
