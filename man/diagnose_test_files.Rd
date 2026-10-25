@@ -43,7 +43,8 @@ Get test files, with an overview of various diagnostics
 The default \code{path} points to directory \code{inst/tinytest} of the current
 \link[=getwd]{working directory}, where
 \href{https://CRAN.R-project.org/package=tinytest}{\strong{tinytest}} stores tests when
-a package is in development.
+a package is in development. Use \code{fs::path_wd("tests", "testthat")} to check
+tests from \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}}.
 
 A warning is issued if:
 \itemize{
