@@ -38,7 +38,7 @@ of \href{https://CRAN.R-project.org/package=testthat}{\strong{testthat}}.
 A warning is issued if a file determining the used testing infrastructure
 (e.g., \verb{<pkg>\\tests\\tinytest.R} or \verb{<pkg>\\tests\\testthat.R}) exists but:
 \itemize{
-\item it does \strong{not} refer to the tested package
+\item does \strong{not} refer to the tested package
 \item the package that governs the determined testing infrastructure (e.g.,
 \strong{tinytest} or \strong{testthat}) is missing from the dependencies of the
 tested package

@@ -13,7 +13,8 @@
 #' The default `path` points to directory `inst/tinytest` of the current
 #' [working directory][getwd()], where
 #' [**tinytest**](https://CRAN.R-project.org/package=tinytest) stores tests when
-#' a package is in development.
+#' a package is in development. Use `fs::path_wd("tests", "testthat")` to check
+#' tests from [**testthat**](https://CRAN.R-project.org/package=testthat).
 #'
 #' A warning is issued if:
 #' - `path` contains files that are ignored because their names do **not** start
