@@ -516,7 +516,7 @@ tinytest::test_all() # or devtools::test() if testthat was used to create tests
 ## Automated checks
 The next sections provide code to run checks from various packages.
 
-### BiocCheck, codetools and checktor
+### Various packages
 **BiocCheck** checks adherence to the
 [`Bioconductor Packages`](https://contributions.bioconductor.org/) guide, which
 is required before submission to [BioConductor](https://bioconductor.org/).
@@ -541,6 +541,12 @@ checktor::checktor()
 checktor::lab_description_function_quotes()
 checktor::lab_format_names()
 checktor::lab_title_starts_with_article()
+
+# R cmd check also includes this check but it is faster to perform it beforehand
+if(requireNamespace("tools", quietly = TRUE) &&
+   utils::packageVersion("tools") >= "4.5.0") {
+    tools::check_package_urls(dir = getwd(), verbose = TRUE)
+}
 ```
 
 ### devtools (local)
