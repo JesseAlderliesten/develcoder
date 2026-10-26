@@ -14,7 +14,7 @@ vignette: >
 This vignette contains code and annotations to create a package. This code is
 needed only once to set up a package from scratch. Further package development
 is described in the vignette *Package development*:
-`vignette("pkg_devel", package = "develcoder")`.
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html).
 
 # Check existing packages
 To search for functionality in existing packages, see the pointers given at the
@@ -24,10 +24,11 @@ the [search page](https://r-universe.dev/) of R-universe which is also available
 with [AI-assisted extended search capabilities](https://rwarehouse.netlify.app/),
 packages [**pkgmatch**](https://CRAN.R-project.org/package=pkgmatch) and
 [**pkgsearch**](https://CRAN.R-project.org/package=pkgsearch). Section
-'R packages' in the vignette *R packages* from package
+[R packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#r-packages)
+in the vignette *R packages* from package
 [**checkrpkgs**](https://jessealderliesten.github.io/checkrpkgs/) gives an
 overview of repositories containing R packages:
-(`vignette("r_pkgs", package = "checkrpkgs")`).
+`vignette("r_pkgs", package = "checkrpkgs")`.
 
 # Choose a name
 ```{r name, eval = FALSE}
@@ -177,7 +178,8 @@ devtools::document()
 
 # Set up a GitHub repository
 For more information about setting up and using GitHub and Git, see the vignette
-*Using Git and GitHub*: `vignette("git_github", package = "checkrpkgs")`.
+*Using Git and GitHub* from package **checkrpkgs**:
+[`vignette("git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
 
 ```{r GitHub, eval = FALSE}
 usethis::use_git(message = "Initial commit")
@@ -231,8 +233,9 @@ on the GitHub repository):
   fine:  
   add `workflow_dispatch:` to section `on:` in the `.yaml` file of the reverse
   dependency to be able to manually trigger `GitHub Actions`. See section
-  `Use GitHub Actions` in the vignette *Package development*
-  (`vignette("pkg_devel", package = "develcoder")`) how to use it.
+  [Use GitHub Actions](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#use-github-actions)
+  in the vignette *Package development* how to use it:
+  `vignette("pkg_devel", package = "develcoder")`.
 - someone else made changes to packages your package depends on:  
   add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every Saturday on
   04:23 UTC. The [cron specification](https://en.wikipedia.org/wiki/Cron)
@@ -247,7 +250,9 @@ on the GitHub repository):
   run the workflow with R version 4.1.0 if your package declares R 4.1.0 as
   minimum version.
 
-For further documentation, see section 'GHA: documentation and help' in the
+For further documentation, see the section
+[GHA: documentation and help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#gha-documentation-and-help)
+in the
 vignette *Package development*: `vignette("pkg_devel", package = "develcoder")`.
 
 # Set up a package website
@@ -290,6 +295,7 @@ website if you push changes to your package to GitHub.
 
 # Documentation and further development
 Further package development is described in the vignette *Package development*:
-`vignette("pkg_devel", package = "develcoder")`. Section
+[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html).
+Section
 [Documentation and help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help)
 from that vignette contains further references.

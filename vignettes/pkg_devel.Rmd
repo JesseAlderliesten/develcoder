@@ -14,7 +14,7 @@ vignette: >
 This vignette contains code and annotations to develop a package, to prepare for
 package release, and to set up for a new version. It assumes the package has
 been set up as described in the vignette *Package setup*:
-`vignette("pkg_setup", package = "develcoder")`.
+[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html).
 
 # Adding functions
 ## Set up
@@ -229,7 +229,8 @@ running the tests as explained in the previous paragraphs:
 `devtools::is_dev_package(<pkg>)` shows if a package was loaded through
 `devtools::load_all(<pkg>)`, and `devtools::loaded_packages()` shows loaded
 packages with the path from which they were loaded that can also be used to
-identify development packages. See the section 'Loading and attaching packages'
+identify development packages. See the section
+[Loading and attaching packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages)
 in the vignette *R packages* from package **checkrpkgs** for details on loading
 packages: `vignette("r_pkgs", package = "checkrpkgs")`.
 
@@ -447,7 +448,7 @@ to render a vignette in the `help` pane of RStudio, and
 
 ## Styling
 See the vignette *R Markdown and knitr* on using R Markdown to style vignettes:
-`vignette("rmarkdown_knitr", package = "develcoder")`.
+[`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html).
 
 Put the next lines in the header of vignettes to get a table of contents:
 ``` {r vignette style, eval = FALSE}
@@ -809,7 +810,9 @@ browseVignettes(package = basename(getwd()))
 
 ## Use GitHub Actions
 Set up `workflow_dispatch` to manually trigger 'GitHub Actions' ('GHA'), see the
-section 'Automate checks' in the vignette *Package setup*:
+section
+[Automate checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
+in the vignette *Package setup*:
 `vignette("pkg_setup", package = "develcoder")`.
 
 To check if a reverse dependency (i.e., a package that depends on a package you
@@ -842,8 +845,10 @@ syntax used in `.yaml` files, see the section about
 in the 'R packages' book, the GitHub
 [reference](https://docs.github.com/en/actions/reference/workflows-and-actions)
 and [How-to](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
-and the section 'Use GitHub Actions' in the vignette *Package development*:
-`vignette("pkg_devel", package = "develcoder")`, and the overview of
+and the section
+[Automate checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
+in the vignette *Package setup*:
+`vignette("pkg_setup", package = "develcoder")`, and the overview of
 GitHub Actions and example Workflows in the documentation of the
 [**actions**](https://github.com/r-lib/actions) package.
 
