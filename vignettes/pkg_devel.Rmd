@@ -344,7 +344,14 @@ If the package is only used in examples or vignettes, or is considered an
 optional addition, you can use `type = "Suggests"` to place it in the
 `Suggests:` field of the DESCRIPTION file. Code that uses that package should be
 guarded through `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`,
-such that the code is only executed if the package is installed.
+such that the code is only executed if the package is installed. This is not
+necessary for the
+['base' R packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
+that are always installed with R but **is** necessary for the
+['recommended' packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
+that are only automatically installed in binary installations and for all other
+packages. From R 4.4.0, the names of the 'base' R packages and the 'recommended'
+packages are available through `tools::standard_package_names()$base`.
 
 Besides putting the package in the DESCRIPTION file, the package name should be
 followed by two colons and the function name. For example, to use function
