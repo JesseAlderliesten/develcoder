@@ -183,11 +183,21 @@ For more information about setting up and using GitHub and Git, see the vignette
 
 ```{r GitHub, eval = FALSE}
 usethis::use_git(message = "Initial commit")
-# If you get the error message 'You are not the current owner of the
-# GitHub repository', restart R as administrator and try again.
+# Notes:
+# - If you get the error message 'You are not the current owner of the
+#   GitHub repository', restart R as administrator and try again.
+# - You might need to refresh the browser after the GitHub repository is created.
 usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
-# See also https://forum.posit.co/t/renaming-the-default-branch/119149
+```
+
+The code below can be used to change the name of the default branch of the
+current repository from `master` to `main`, see the
+[blogpost from Posit](https://tidyverse.org/blog/2021/10/renaming-default-branch/)
+for details.
+
+```{r GitHub-rename, eval = FALSE}
+usethis::git_default_branch() # show default branch for the current repository
 usethis::git_default_branch_rename(from = "master", to = "main")
 # Sometimes this takes a while before it works
 usethis::git_default_branch_rediscover()
