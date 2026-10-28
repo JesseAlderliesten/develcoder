@@ -6,7 +6,7 @@ This vignette contains code and annotations to develop a package, to
 prepare for package release, and to set up for a new version. It assumes
 the package has been set up as described in the vignette *Package
 setup*:
-[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
+[`utils::vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html).
 
 ## Adding functions
 
@@ -53,8 +53,8 @@ to create documentation files with file extension `.Rd`.
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe
 many aspects of package documentation, see
-`browseVignettes(package = "roxygen2")`, among others vignettes with a
-general [introduction to
+`utils::browseVignettes(package = "roxygen2")`, among others vignettes
+with a general [introduction to
 roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html) and a
 general [introduction to function
 documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
@@ -231,11 +231,11 @@ warnings are emitted, **not** that no messages are emitted.
 
 ``` r
 
-tinytest::expect_silent(expect_true(func_name(x = x, arg = arg)))
-tinytest::expect_warning(
+expect_silent(expect_true(func_name(x = x, arg = arg)))
+expect_warning(
   expect_equal(func_name(x = "a", arg = arg), 3),
   pattern = "...", strict = TRUE, fixed = TRUE)
-tinytest::expect_error(func_name(x = "a", arg = arg),
+expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
@@ -250,14 +250,16 @@ before running the tests as explained in the previous paragraphs:
   `attach(loadNamespace("<pkg>", versionCheck = list(op = ">=", version = package_version("1.2.3"))))`
   to specify which version to load, with `detach("<pkg>")` to detach it.
 
-`devtools::is_dev_package(<pkg>)` shows if a package was loaded through
+`pkgload::is_dev_package(<pkg>)` shows if a package was loaded through
 `devtools::load_all(<pkg>)`, and
 [`devtools::loaded_packages()`](https://devtools.r-lib.org/reference/loaded_packages.html)
 shows loaded packages with the path from which they were loaded that can
-also be used to identify development packages. See the section ‘Loading
-and attaching packages’ in the vignette *R packages* from package
-**checkrpkgs** for details on loading packages:
-[`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
+also be used to identify development packages. See the section [Loading
+and attaching
+packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages)
+in the vignette *R packages* from package **checkrpkgs** for details on
+loading packages:
+[`utils::vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 #### Cleaning up
 
@@ -270,16 +272,17 @@ and the vignette
 [`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html)
 from package **testthat** for more details. In addition, changed options
 ([`help("options", package = "base")`](https://rdrr.io/r/base/options.html))
-and graphical parameters (`help("par", package = "base")`) should be
-restored to their original state to prevent influencing subsequent code.
-The following pattern shows how to do so for a single option or
-parameter, see [this entry in the CRAN
+and graphical parameters
+([`help("par", package = "graphics")`](https://rdrr.io/r/graphics/par.html))
+should be restored to their original state to prevent influencing
+subsequent code. The following pattern shows how to do so for a single
+option or parameter, see [this entry in the CRAN
 cookbook](https://contributor.r-project.org/cran-cookbook/code_issues.html#change-of-options-graphical-parameters-and-working-directory)
 for details:
 
 ``` r
 orig_opt <- options(<option> = <value>)
-orig_par <- par(<parameter> = <value>)
+orig_par <- graphics::par(<parameter> = <value>)
 <code>
 par(orig_par)
 options(<option> = orig_opt)
@@ -355,7 +358,7 @@ packages, are used in your package. This requires the system libraries
 [ctags-universal](https://ctags.io/) and [GNU
 global](https://www.gnu.org/software/global/), which should be
 automatically installed with **pkgstats** on Windows and MacOS. Use
-`pkgstats:::ctags_test(quiet = FALSE, noerror = TRUE)` to check if these
+`pkgstats::ctags_test(quiet = FALSE, noerror = TRUE)` to check if these
 are indeed installed and
 [`pkgstats::ctags_install()`](https://docs.ropensci.org/pkgstats/reference/ctags_install.html)
 to install them if not.
@@ -372,7 +375,7 @@ Section [Which packages are
 used](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#which-packages-are-used)
 in vignette *R packages* from package **checkrpkgs** indicates how to
 manually look for packages that are mentioned in comments:
-[`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
+[`utils::vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 On **reverse** dependencies, see section [Check reverse
 dependencies](#check-reverse-dependencies).
@@ -381,14 +384,14 @@ dependencies](#check-reverse-dependencies).
 
 The standard way to use functions from other packages is to import the
 package: use
-`usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`
+`usethis::use_package(package = "<pkg>", type = "Imports", min_version = "<version>")`
 to put the package in the `Imports:` field of the DESCRIPTION file. It
 is possible to specify minimum package versions through argument
 `min_version`, see [the next section](#specifying-minimum-versions).
 
 ``` r
 
-usethis::use_package("checkinput", type = "Imports", min_version = "1.0.0")
+usethis::use_package(package = "checkinput", type = "Imports", min_version = "1.0.0")
 ```
 
 If the package is only used in examples or vignettes, or is considered
@@ -396,7 +399,17 @@ an optional addition, you can use `type = "Suggests"` to place it in the
 `Suggests:` field of the DESCRIPTION file. Code that uses that package
 should be guarded through
 `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`, such that the
-code is only executed if the package is installed.
+code is only executed if the package is installed. This is not necessary
+for the [‘base’ R
+packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
+that are always installed with R but **is** necessary for the
+[‘recommended’
+packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
+that are only automatically installed in binary installations and for
+all other packages. From R 4.4.0, the names of the ‘base’ R packages and
+the ‘recommended’ packages are available through
+`tools::standard_package_names()$base` and
+`tools::standard_package_names()$recommended`, respectively.
 
 Besides putting the package in the DESCRIPTION file, the package name
 should be followed by two colons and the function name. For example, to
@@ -421,7 +434,7 @@ as described in the next paragraph.
 ``` r
 
 # The first line is used to specify a minimum version
-usethis::use_package("utils", type = "Imports", min_version = "4.0.0")
+usethis::use_package(package = "utils", type = "Imports", min_version = "4.0.0")
 usethis::use_import_from(package = "utils", fun = "?")
 devtools::document()
 ```
@@ -430,7 +443,8 @@ devtools::document()
 
 Specifying a minimum package version when importing packages ensures
 that used functions are actually present. To use the currently installed
-package version, use `usethis::use_package(..., min_version = TRUE)`.
+package version, use
+`usethis::use_package(package = <pkg>, <...>, min_version = TRUE)`.
 However, that probably is too strict because functions are likely also
 present in older package versions.
 
@@ -457,8 +471,11 @@ package version is needed.
 
 ``` r
 
+# Show the currently used R version
+getRversion() # or: utils::packageVersion(pkg = "base")
+
 # Declare a minimum version for R itself
-usethis::use_package("R", type = "Depends", min_version = "4.0.0")
+usethis::use_package(package = "R", type = "Depends", min_version = "4.0.0")
 
 # Declare a dependency on a package: 'use_package()' to declare a minimum
 # version and 'use_dev_package()' to specify the remote repository to download
@@ -491,11 +508,11 @@ usethis::use_package(package = "knitr", type = "Suggests")
 usethis::use_package(package = "rmarkdown", type = "Suggests")
 devtools::document()
 pkgdown::build_article()
-browseVignettes(package = basename(getwd()))
+utils::browseVignettes(package = basename(getwd()))
 ```
 
 If no vignettes are visible after running
-`browseVignettes(package = basename(getwd()))`, probably
+`utils::browseVignettes(package = basename(getwd()))`, probably
 [`devtools::install()`](https://devtools.r-lib.org/reference/install.html)
 was run with the default argument `build_vignettes = FALSE`, use
 `build_vignettes = TRUE` instead:  
@@ -512,7 +529,7 @@ to render a vignette in the `help` pane of RStudio, and
 
 See the vignette *R Markdown and knitr* on using R Markdown to style
 vignettes:
-[`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.md).
+[`utils::vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html).
 
 Put the next lines in the header of vignettes to get a table of
 contents:
@@ -527,12 +544,14 @@ toc_depth: 3
 
 It is good practice to give the session information at the bottom of a
 vignette, e.g., using
-[`utils::sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html) or
-[`sessioninfo::session_info()`](https://sessioninfo.r-lib.org/reference/session_info.html):
+[`utils::sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html),
+[`sessioninfo::session_info()`](https://sessioninfo.r-lib.org/reference/session_info.html),
+or
+[`sessioncheck::sessionstate()`](https://sessioncheck.djnavarro.net/reference/sessionstate.html):
 
 ```` r
 ## sessionInfo
-```{r sessionInfo, echo = FALSE}
+```{r session info, echo = FALSE}
 if(requireNamespace("utils", quietly = TRUE)) {
   utils::sessionInfo()
 }
@@ -547,7 +566,7 @@ if(requireNamespace("utils", quietly = TRUE)) {
   `help("<func>", package = "<pkg>")` (unfortunately,
   `help("<pkg>::<func>")` does **not** work).
 - Link from a help-page to a vignette:  
-  `` The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")` ``
+  `` The vignette *<vignette title>*: `utils::vignette("<vignette>", package = "<pkg>")` ``
 - Link to another vignette in the same package:  
   `[<link text>](<vignette_filename>.html)`
 
@@ -611,7 +630,7 @@ tinytest::test_all() # or devtools::test() if testthat was used to create tests
 
 The next sections provide code to run checks from various packages.
 
-#### BiocCheck, codetools and checktor
+#### Various packages
 
 **BiocCheck** checks adherence to the
 [`Bioconductor Packages`](https://contributions.bioconductor.org/)
@@ -639,6 +658,12 @@ checktor::checktor()
 checktor::lab_description_function_quotes()
 checktor::lab_format_names()
 checktor::lab_title_starts_with_article()
+
+# R cmd check also includes this check but it is faster to perform it beforehand
+if(requireNamespace("tools", quietly = TRUE) &&
+   utils::packageVersion("tools") >= "4.5.0") {
+    tools::check_package_urls(dir = getwd(), verbose = TRUE)
+}
 ```
 
 #### devtools (local)
@@ -725,54 +750,57 @@ devtools::check(manual = TRUE, remote = TRUE,
 
 #### goodpractice
 
-Runs checks of its own and checks from various other packages.
+Runs checks of its own and checks from various other packages. I exclude
+checks that I do not find useful and checks that duplicate earlier
+checks. Use
+[`goodpractice::all_check_groups()`](https://docs.ropensci.org/goodpractice/reference/all_check_groups.html)
+to see all groups and `goodpractice::checks_by_group(<groups>)` to show
+all checks in groups.
 
 ``` r
 
-# Select checks
-# Show groups of checks: goodpractice::all_check_groups()
-# Show all checks in some groups: goodpractice::checks_by_group(c("cyclocomp", "lintr"))
-# Run all check from some groups:
-# goodpractice::goodpractice(checks = goodpractice::checks_by_group(c("cyclocomp", "lintr")))
-# Run all checks: goodpractice::goodpractice(checks = goodpractice::all_checks())
 goodpractice_all_checks <- goodpractice::all_checks()
-my_checks_goodpractice <- progutils::not_in(
-  goodpractice_all_checks,
-  c("covr", # time-consuming and wants 100% coverage
-    "complexity_function_length", "cyclocomp", # I write complex functions
-    # The lintr issue `Use == instead of %in% for scalar comparison` should be
-    # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
-    # removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
-    # 'NA == y' return 'NA'.
-    "lintr_scalar_in_linter",
-    "lintr_line_length_linter",
-    "lintr_outer_negation_linter", # changes handling of NAs
-    # flags data.frame() even if 'strings_as_factors' is not explicitly set
-    "lintr_strings_as_factors_linter",
-    "tidyverse_brace_linter",
-    "tidyverse_function_left_parentheses_linter",
-    "tidyverse_indentation_linter",
-    "tidyverse_line_length_linter",
-    "tidyverse_object_name_linter",
-    "tidyverse_spaces_left_parentheses_linter",
-    # does not find test files in inst/tinytest, use check_test_files() instead.
-    "tidyverse_test_file_names",
-    "tidyverse_whitespace_linter",
-    # Checks similar to those from 'rcmdcheck' and 'urlchecker' are also used by
-    # devtools::check() that already has been run above
-    goodpractice_all_checks[
-      grepl(pattern = "^rcmdcheck_|^urlchecker_", x = goodpractice_all_checks)]
-  )
+checks_to_exclude <- c(
+  "complexity_function_length", # I write complex functions
+  "covr", # time-consuming and wants 100% coverage
+  "cyclocomp", # I write complex functions
+  "lintr_if_not_else_linter", # I use the shortest branch first
+  "lintr_line_length_linter",
+  # The lintr issue `Use == instead of %in% for scalar comparison` should be
+  # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
+  # removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
+  # 'NA == y' return 'NA'.
+  "lintr_outer_negation_linter", # changes handling of NAs
+  "lintr_scalar_in_linter",
+  "tidyverse_brace_linter",
+  "tidyverse_function_left_parentheses_linter",
+  "tidyverse_indentation_linter",
+  "tidyverse_line_length_linter",
+  "tidyverse_object_name_linter",
+  "tidyverse_spaces_left_parentheses_linter",
+  # does not find test files in inst/tinytest,
+  # use develcoder::check_test_files() instead
+  "tidyverse_test_file_names",
+  "tidyverse_whitespace_linter",
+  # Checks similar to those from 'rcmdcheck' and 'urlchecker' are
+  # also used by devtools::check() that already has been run above
+  goodpractice::checks_by_group(c("rcmdcheck", "urlchecker"))
 )
 
-res_goodpractice <- goodpractice::goodpractice(
-  path = ".", checks = my_checks_goodpractice)
-res_goodpractice_failed <- goodpractice::failed_checks(res_goodpractice)
-res_goodpractice_failed
+# Select checks
+goodpractice_my_checks <- progutils::not_in(
+  goodpractice_all_checks,
+  checks_to_exclude
+)
+
+goodpractice_res <- goodpractice::goodpractice(
+  path = ".", checks = goodpractice_my_checks)
+goodpractice_res_failed <- goodpractice::failed_checks(goodpractice_res)
+goodpractice_res_failed
 
 # Can also show output of selected checks through
-# res_goodpractice$checks$<check_name>
-res_goodpractice
+# goodpractice_res$checks$<check_name>
+goodpractice_res
 ```
 
 #### Other checks
@@ -829,10 +857,11 @@ or
 Manually increment the package version in the DESCRIPTION file, or use
 [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
 In the latter case, do **not** automatically `commit` the change, but do
-so manually to adjust the commit message to `Bump to version x.y.z`.
-Indicating the version number in the commit title makes it easier to
-find changes back later on (the pull request can have a description of
-the changes, i.e., the updated section of the NEWS file). See package
+so manually later on (i.e., choose a negative option when presented with
+the question `Is it ok to commit them?`) to also commit the updated
+CITATION, License, README and NEWS files.
+
+See package
 [**lifecycle**](https://CRAN.R-project.org/package=lifecycle) on how to
 add badges to packages and functions to indicate their life cycle and
 its vignette [Lifecycle
@@ -840,6 +869,13 @@ stages](https://lifecycle.r-lib.org/articles/stages.html), chapter
 [Lifecycle](https://r-pkgs.org/lifecycle.html) from the ‘R packages’
 book, and the [Semantic Versioning Specification](https://semver.org/)
 on versioning.
+
+``` r
+
+desc::desc_normalize()
+# 'which' can be NULL, "major", "minor", "patch", or "dev"
+usethis::use_version(which = NULL, push = FALSE)
+```
 
 #### CITATION and License
 
@@ -935,7 +971,7 @@ devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
-browseVignettes(package = basename(getwd()))
+utils::browseVignettes(package = basename(getwd()))
 ?progutils::reorder_levels
 ```
 
@@ -944,8 +980,10 @@ browseVignettes(package = basename(getwd()))
 ### Use GitHub Actions
 
 Set up `workflow_dispatch` to manually trigger ‘GitHub Actions’ (‘GHA’),
-see the section ‘Automate checks’ in the vignette *Package setup*:
-[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
+see the section [Automate
+checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
+in the vignette *Package setup*:
+[`utils::vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md).
 
 To check if a reverse dependency (i.e., a package that depends on a
 package you changed) **that you created** is still working fine: go to
@@ -984,9 +1022,10 @@ in the ‘R packages’ book, the GitHub
 [reference](https://docs.github.com/en/actions/reference/workflows-and-actions)
 and
 [How-to](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
-and the section ‘Use GitHub Actions’ in the vignette *Package
-development*:
-[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md),
+and the section [Automate
+checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
+in the vignette *Package setup*:
+[`utils::vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.md),
 and the overview of GitHub Actions and example Workflows in the
 documentation of the [**actions**](https://github.com/r-lib/actions)
 package.
@@ -1045,13 +1084,21 @@ Then build the reference with
 and view it locally by opening the file `"<pkg>\docs\index.html"` and
 browse to ‘Reference’ to see the package index.
 
+### Committing
+
+Commit the changes to the CITATION, License, README and NEWS files with
+the commit message `Bump to version x.y.z`, to make it easier to find
+changes back later on. `Pull` and `Push`.
+
 ### Merge devel-branch with main
 
 To merge the `devel` branch with `main` (i.e., to incorporate the
 changes you made to the `devel` branch in the `main` branch), go the the
-`devel` branch on GitHub. Then use `<Contribute>` \>
-`Open Pull Request`. Copy the updated NEWS in the DESCRIPTION field and
-use the button `Create pull request`.
+`devel` branch on the GitHub website of the package. Then use
+`<Contribute>` \> `Open Pull Request` to do a pull request. Copy the
+updated section of the NEWS file in the DESCRIPTION field to describe
+the changes, and put the package name with the updated version number in
+the title of the pull request. Use the button `Create pull request`.
 
 If the message
 `No conflicts with base branch: Merging can be performed automatically`,
@@ -1145,7 +1192,7 @@ status of packages during package submission to CRAN.
       `Failed with error: 'there is no package called '<pkg>''`
       `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`
 
-  you probably forgot to use `library(<pkg>)` in a code chunck, used a
+  you probably forgot to use `library(<pkg>)` in a code chunk, used a
   package that is not declared as dependency in the DESCRIPTION file, or
   used a package that is declared as suggested dependency (i.e., is in
   the `Suggests` field of the DESCRIPTION file) without running that
@@ -1168,12 +1215,17 @@ status of packages during package submission to CRAN.
 - Errors can arise if package development is not done from a clean R
   session. Use
   [`loadedNamespaces()`](https://rdrr.io/r/base/ns-load.html) to check
-  which packages are loaded.
+  which packages are loaded, or use
+  [`utils::sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html),
+  [`sessioninfo::session_info()`](https://sessioninfo.r-lib.org/reference/session_info.html),
+  or
+  [`sessioncheck::sessionstate()`](https://sessioncheck.djnavarro.net/reference/sessionstate.html)
+  for more information about loaded packages.
 
 - See also section
   [Troubleshooting](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
   in the vignette *R packages* from package **checkrpkgs**:  
-  [`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
+  [`utils::vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 ## Documentation and help
 

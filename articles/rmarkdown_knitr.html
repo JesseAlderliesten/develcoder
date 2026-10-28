@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,11 +114,14 @@ code to set it up and see <a href="https://yihui.org/tinytex/r/" class="external
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>tinytex.verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="global-settings-for-knitr-used-by-r-markdown">Global Settings for knitr used by R Markdown<a class="anchor" aria-label="anchor" href="#global-settings-for-knitr-used-by-r-markdown"></a>
+<h3 id="options-for-knitr-used-by-r-markdown">Options for knitr used by R Markdown<a class="anchor" aria-label="anchor" href="#options-for-knitr-used-by-r-markdown"></a>
 </h3>
-<p>For a list of available options, see
-<code>str(knitr::opts_chunk$get())</code> and the overviews of <a href="https://yihui.org/knitr/options/" class="external-link">options</a> and <a href="https://yihui.org/knitr/objects/" class="external-link">objects storing options</a> at
-the package website.</p>
+<p>Options for <strong>knitr</strong> can be set globally, i.e., for an
+entire document, or for specific chunks. For overviews of available
+options, see <code>str(knitr::opts_knit$get())</code>,
+<code>str(knitr::opts_chunk$get())</code>, and the <a href="https://yihui.org/knitr/options" class="external-link">discussion of these options</a>
+and of <a href="https://yihui.org/knitr/objects/" class="external-link">objects storing
+options</a> at the package website.</p>
 <p>The option <code>echo = FALSE</code> hides code from the output. Use
 numeric values to include the code of particular chunks. To collect all
 code as an the appendix at the end of of a document, see the section <a href="https://pkg.yihui.org/rmarkdown-cookbook/code-appendix" class="external-link">Put
@@ -145,7 +148,7 @@ that are sourced or data files that are read) should be placed in the
 same directory as the <code>R Markdown</code> file, because by default
 the working directory when evaluating R code chunks is the directory of
 the input document. The working directory can be changed using
-<code>opts_knit$set(root.dir = ...)</code> but should
+<code>knitr::opts_knit$set(root.dir = ...)</code> but should
 <strong>not</strong> be changed using <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code>, see the
 <code>Note</code> in <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">help("knit", package = "knitr")</a></code>.</p>
 </div>
@@ -172,7 +175,7 @@ using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" c
 <span>                  output_dir <span class="op">=</span> <span class="st">"./knitteddocs"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="adding-and-collecting-code-chuncks">Adding and collecting code chuncks<a class="anchor" aria-label="anchor" href="#adding-and-collecting-code-chuncks"></a>
+<h3 id="adding-and-collecting-code-chunks">Adding and collecting code chunks<a class="anchor" aria-label="anchor" href="#adding-and-collecting-code-chunks"></a>
 </h3>
 <p>Add a new chunk by either using the <code>Code</code> &gt;
 <code>Insert Chunk</code> button or typing the delimiters
@@ -350,7 +353,7 @@ code which escapes chunk headings), use</p>
 </h4>
 <p>Newlines can be forced using <code>\cr</code> or by ending a line
 with two spaces followed by a newline.</p>
-<p>Qoutes can be formatting by putting <code>&gt;</code> in front of a
+<p>Quotes can be formatting by putting <code>&gt;</code> in front of a
 line.</p>
 <p>For an overview of mathematical notation see <a href="https://rpruim.github.io/s341/S19/from-class/MathinRmd.html" class="external-link uri">https://rpruim.github.io/s341/S19/from-class/MathinRmd.html</a></p>
 </div>

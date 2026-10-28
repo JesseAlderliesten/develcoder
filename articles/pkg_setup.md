@@ -5,7 +5,7 @@
 This vignette contains code and annotations to create a package. This
 code is needed only once to set up a package from scratch. Further
 package development is described in the vignette *Package development*:
-[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+[`utils::vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html).
 
 ## Check existing packages
 
@@ -17,10 +17,12 @@ available with [AI-assisted extended search
 capabilities](https://rwarehouse.netlify.app/), packages
 [**pkgmatch**](https://CRAN.R-project.org/package=pkgmatch) and
 [**pkgsearch**](https://CRAN.R-project.org/package=pkgsearch). Section
-‘R packages’ in the vignette *R packages* from package
+[R
+packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#r-packages)
+in the vignette *R packages* from package
 [**checkrpkgs**](https://jessealderliesten.github.io/checkrpkgs/) gives
 an overview of repositories containing R packages:
-([`vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html)).
+[`utils::vignette("r_pkgs", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html).
 
 ## Choose a name
 
@@ -200,17 +202,28 @@ devtools::document()
 ## Set up a GitHub repository
 
 For more information about setting up and using GitHub and Git, see the
-vignette *Using Git and GitHub*:
-[`vignette("git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
+vignette *Using Git and GitHub* from package **checkrpkgs**:
+[`utils::vignette("git_github", package = "checkrpkgs")`](https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html).
 
 ``` r
 
 usethis::use_git(message = "Initial commit")
-# If you get the error message 'You are not the current owner of the
-# GitHub repository', restart R as administrator and try again.
+# Notes:
+# - If you get the error message 'You are not the current owner of the
+#   GitHub repository', restart R as administrator and try again.
+# - You might need to refresh the browser after the GitHub repository is created.
 usethis::use_github(private = TRUE)
 usethis::git_vaccinate()
-# See also https://forum.posit.co/t/renaming-the-default-branch/119149
+```
+
+The code below can be used to change the name of the default branch of
+the current repository from `master` to `main`, see the [blogpost from
+Posit](https://tidyverse.org/blog/2021/10/renaming-default-branch/) for
+details.
+
+``` r
+
+usethis::git_default_branch() # show default branch for the current repository
 usethis::git_default_branch_rename(from = "master", to = "main")
 # Sometimes this takes a while before it works
 usethis::git_default_branch_rediscover()
@@ -262,9 +275,10 @@ on the GitHub repository):
   is still working fine:  
   add `workflow_dispatch:` to section `on:` in the `.yaml` file of the
   reverse dependency to be able to manually trigger `GitHub Actions`.
-  See section `Use GitHub Actions` in the vignette *Package development*
-  ([`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md))
-  how to use it.
+  See section [Use GitHub
+  Actions](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#use-github-actions)
+  in the vignette *Package development* how to use it:
+  [`utils::vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 - someone else made changes to packages your package depends on:  
   add `schedule: - cron: "23 4 * * 6"` to section `on:` to run every
   Saturday on 04:23 UTC. The [cron
@@ -281,9 +295,10 @@ on the GitHub repository):
   to also run the workflow with R version 4.1.0 if your package declares
   R 4.1.0 as minimum version.
 
-For further documentation, see section ‘GHA: documentation and help’ in
-the vignette *Package development*:
-[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+For further documentation, see the section [GHA: documentation and
+help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#gha-documentation-and-help)
+in the vignette *Package development*:
+[`utils::vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
 
 ## Set up a package website
 
@@ -332,7 +347,7 @@ to GitHub.
 
 Further package development is described in the vignette *Package
 development*:
-[`vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.md).
+[`utils::vignette("pkg_devel", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html).
 Section [Documentation and
 help](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help)
 from that vignette contains further references.

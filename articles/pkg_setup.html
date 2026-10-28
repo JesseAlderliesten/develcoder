@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">develcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,8 +81,7 @@
 <p>This vignette contains code and annotations to create a package. This
 code is needed only once to set up a package from scratch. Further
 package development is described in the vignette <em>Package
-development</em>:
-<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
+development</em>: <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html"><code>utils::vignette("pkg_devel", package = "develcoder")</code></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="check-existing-packages">Check existing packages<a class="anchor" aria-label="anchor" href="#check-existing-packages"></a>
@@ -93,9 +92,10 @@ Development</a>, the <a href="https://r-universe.dev/" class="external-link">sea
 of R-universe which is also available with <a href="https://rwarehouse.netlify.app/" class="external-link">AI-assisted extended search
 capabilities</a>, packages <a href="https://CRAN.R-project.org/package=pkgmatch" class="external-link"><strong>pkgmatch</strong></a>
 and <a href="https://CRAN.R-project.org/package=pkgsearch" class="external-link"><strong>pkgsearch</strong></a>.
-Section ‘R packages’ in the vignette <em>R packages</em> from package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><strong>checkrpkgs</strong></a>
+Section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#r-packages" class="external-link">R
+packages</a> in the vignette <em>R packages</em> from package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><strong>checkrpkgs</strong></a>
 gives an overview of repositories containing R packages:
-(<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">vignette("r_pkgs", package = "checkrpkgs")</a></code>).</p>
+<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">utils::vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="choose-a-name">Choose a name<a class="anchor" aria-label="anchor" href="#choose-a-name"></a>
@@ -266,15 +266,22 @@ for testing, set up its infrastructure through:</p>
 <h2 id="set-up-a-github-repository">Set up a GitHub repository<a class="anchor" aria-label="anchor" href="#set-up-a-github-repository"></a>
 </h2>
 <p>For more information about setting up and using GitHub and Git, see
-the vignette <em>Using Git and GitHub</em>:
-<code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link">vignette("git_github", package = "checkrpkgs")</a></code>.</p>
+the vignette <em>Using Git and GitHub</em> from package
+<strong>checkrpkgs</strong>: <a href="https://jessealderliesten.github.io/checkrpkgs/articles/git_github.html" class="external-link"><code>utils::vignette("git_github", package = "checkrpkgs")</code></a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_git.html" class="external-link">use_git</a></span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Initial commit"</span><span class="op">)</span></span>
-<span><span class="co"># If you get the error message 'You are not the current owner of the</span></span>
-<span><span class="co"># GitHub repository', restart R as administrator and try again.</span></span>
+<span><span class="co"># Notes:</span></span>
+<span><span class="co"># - If you get the error message 'You are not the current owner of the</span></span>
+<span><span class="co">#   GitHub repository', restart R as administrator and try again.</span></span>
+<span><span class="co"># - You might need to refresh the browser after the GitHub repository is created.</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github.html" class="external-link">use_github</a></span><span class="op">(</span>private <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_vaccinate.html" class="external-link">git_vaccinate</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># See also https://forum.posit.co/t/renaming-the-default-branch/119149</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_vaccinate.html" class="external-link">git_vaccinate</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The code below can be used to change the name of the default branch
+of the current repository from <code>master</code> to <code>main</code>,
+see the <a href="https://tidyverse.org/blog/2021/10/renaming-default-branch/" class="external-link">blogpost
+from Posit</a> for details.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git-default-branch.html" class="external-link">git_default_branch</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># show default branch for the current repository</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git-default-branch.html" class="external-link">git_default_branch_rename</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"master"</span>, to <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></span>
 <span><span class="co"># Sometimes this takes a while before it works</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git-default-branch.html" class="external-link">git_default_branch_rediscover</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -293,7 +300,7 @@ for the latest version of R on Linux, MacOS and Windows, as well as the
 previous and development version of R on Linux. The workflow <a href="https://github.com/r-lib/actions/blob/v2-branch/examples/check-no-suggests.yaml" class="external-link"><code>check-no-suggests.yaml</code></a>
 checks that the code passes <a href="https://r-pkgs.org/R-CMD-check.html" class="external-link"><code>R CMD check</code></a>
 even if dependencies in <code>Suggests</code> are not installed.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-standard"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_github_action.html" class="external-link">use_github_action</a></span><span class="op">(</span><span class="st">"check-no-suggests"</span><span class="op">)</span></span></code></pre></div>
 <p>After setting up these workflows, adjust the created
@@ -318,11 +325,10 @@ dependency (i.e., a package that depends on the package you changed) is
 still working fine:<br>
 add <code>workflow_dispatch:</code> to section <code>on:</code> in the
 <code>.yaml</code> file of the reverse dependency to be able to manually
-trigger <code>GitHub Actions</code>. See section
-<code>Use GitHub Actions</code> in the vignette <em>Package
-development</em>
-(<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>) how to use
-it.</li>
+trigger <code>GitHub Actions</code>. See section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#use-github-actions">Use
+GitHub Actions</a> in the vignette <em>Package development</em> how to
+use it:
+<code><a href="../articles/pkg_devel.html">utils::vignette("pkg_devel", package = "develcoder")</a></code>.</li>
 <li>someone else made changes to packages your package depends on:<br>
 add <code>schedule: - cron: "23 4 * * 6"</code> to section
 <code>on:</code> to run every Saturday on 04:23 UTC. The <a href="https://en.wikipedia.org/wiki/Cron" class="external-link">cron specification</a>
@@ -338,9 +344,9 @@ add <code>- {os: ubuntu-latest, r: '4.1.0'}</code> to section
 <code>matrix: config:</code> to also run the workflow with R version
 4.1.0 if your package declares R 4.1.0 as minimum version.</li>
 </ul>
-<p>For further documentation, see section ‘GHA: documentation and help’
-in the vignette <em>Package development</em>:
-<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>.</p>
+<p>For further documentation, see the section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#gha-documentation-and-help">GHA:
+documentation and help</a> in the vignette <em>Package development</em>:
+<code><a href="../articles/pkg_devel.html">utils::vignette("pkg_devel", package = "develcoder")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="set-up-a-package-website">Set up a package website<a class="anchor" aria-label="anchor" href="#set-up-a-package-website"></a>
@@ -358,7 +364,7 @@ automatically build and update the package website if you push changes
 to your package to GitHub (defined in the file
 <code>&lt;pkg&gt;\.github\workflows\pkgdown.yaml</code>), run the
 following code:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># calls usethis::use_pkgdown() and creates '&lt;pkg&gt;\.github\workflows\pkgdown.yaml'</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html" class="external-link">use_pkgdown_github_pages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">document</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># To update package-wide documentation</span></span></code></pre></div>
@@ -384,8 +390,8 @@ GitHub.</p>
 <h2 id="documentation-and-further-development">Documentation and further development<a class="anchor" aria-label="anchor" href="#documentation-and-further-development"></a>
 </h2>
 <p>Further package development is described in the vignette <em>Package
-development</em>:
-<code><a href="../articles/pkg_devel.html">vignette("pkg_devel", package = "develcoder")</a></code>. Section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help">Documentation
+development</em>: <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html"><code>utils::vignette("pkg_devel", package = "develcoder")</code></a>.
+Section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#documentation-and-help">Documentation
 and help</a> from that vignette contains further references.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
