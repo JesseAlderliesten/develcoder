@@ -12,34 +12,65 @@ expect_true(all(
     ls(getNamespace("base"), all.names = TRUE)
 ))
 
-expect_true(all(c("fixed", "pattern", "x") %in% names(formals(base::grepl))))
-expect_true("versionCheck" %in% names(formals(base::loadNamespace)))
-expect_true("quietly" %in% names(formals(base::requireNamespace)))
+expect_true(all(
+  c("fixed", "pattern", "x") %in%
+    names(formals(base::grepl)))
+)
+expect_true(
+  "versionCheck" %in%
+    names(formals(base::loadNamespace))
+)
+expect_true(
+  "quietly" %in%
+    names(formals(base::requireNamespace))
+)
 
 hdb_base <- utils::hsearch_db(package = "base", types = "help")
-expect_true(":::" %in% hdb_base$Aliases[, "Alias"])
-expect_true(all(c("Comparison", "locales") %in% hdb_base$Base[, "Name"]))
+expect_true(
+  ":::" %in%
+    hdb_base$Aliases[, "Alias"]
+)
+expect_true(all(
+  c("Comparison", "locales") %in%
+    hdb_base$Base[, "Name"])
+)
 
-expect_true("file.sep" %in% names(.Platform))
+expect_true(
+  "file.sep" %in%
+    names(.Platform)
+)
 
 #### BiocCheck ####
 if(requireNamespace("BiocCheck", quietly = TRUE)) {
   expect_true(all(
-    c("callr", "package") %in% names(formals(BiocCheck::BiocCheck))
+    c("callr", "package") %in%
+      names(formals(BiocCheck::BiocCheck))
   ))
 }
 
 #### cffr ####
 if(requireNamespace("cffr", quietly = TRUE)) {
-  expect_true("dependencies" %in% names(formals(cffr::cff_write)))
+  expect_true(
+    "dependencies" %in%
+      names(formals(cffr::cff_write))
+  )
 }
 
 #### checkinput ####
 if(requireNamespace("checkinput", quietly = TRUE)) {
-  expect_true("all_names" %in% ls(getNamespace("checkinput"), all.names = TRUE))
+  expect_true(
+    "all_names" %in%
+      ls(getNamespace("checkinput"), all.names = TRUE)
+  )
 
-  expect_true("x" %in% names(formals(checkinput::all_names)))
-  expect_true("allow_NA" %in% names(formals(checkinput::is_logical)))
+  expect_true(
+    "x" %in%
+      names(formals(checkinput::all_names))
+  )
+  expect_true(
+    "allow_NA" %in%
+      names(formals(checkinput::is_logical))
+  )
 }
 
 #### checktor ####
@@ -91,7 +122,9 @@ if(requireNamespace("devtools", quietly = TRUE)) {
   ))
 
   if(utils::packageVersion("devtools") >= "2.5.0") {
-    expect_true("check_doc_fields" %in% ns_devtools)
+    expect_true(
+      "check_doc_fields" %in%
+        ns_devtools)
   }
 
   expect_true(all(
@@ -102,17 +135,23 @@ if(requireNamespace("devtools", quietly = TRUE)) {
   expect_true(all(
     c("build_vignettes", "quick", "upgrade") %in%
       names(formals(devtools::install))
-    ))
+  ))
 
   expect_true(all(
     c("pkg", "bioconductor") %in% names(formals(devtools::revdep))
-    ))
-  expect_true("pkg" %in% names(formals(devtools::revdep_maintainers)))
+  ))
+  expect_true(
+    "pkg" %in%
+      names(formals(devtools::revdep_maintainers))
+  )
 }
 
 #### fs ####
 if(requireNamespace("fs", quietly = TRUE)) {
-  expect_true("dir_exists" %in% ls(getNamespace("fs"), all.names = TRUE))
+  expect_true(
+    "dir_exists" %in%
+      ls(getNamespace("fs"), all.names = TRUE)
+  )
 }
 
 #### goodpractice ####
@@ -122,7 +161,8 @@ if(requireNamespace("goodpractice", quietly = TRUE)) {
       ls(getNamespace("goodpractice"), all.names = TRUE)
   ))
   expect_true(all(
-    c("checks", "path") %in% names(formals(goodpractice::goodpractice))
+    c("checks", "path") %in%
+      names(formals(goodpractice::goodpractice))
   ))
 
   goodpractice_all_checks <- goodpractice::all_checks()
@@ -134,17 +174,20 @@ if(requireNamespace("goodpractice", quietly = TRUE)) {
       "tidyverse_indentation_linter", "tidyverse_line_length_linter",
       "tidyverse_object_name_linter",
       "tidyverse_spaces_left_parentheses_linter", "tidyverse_test_file_names",
-      "tidyverse_whitespace_linter"
-    ) %in% goodpractice_all_checks
+      "tidyverse_whitespace_linter") %in%
+      goodpractice_all_checks
   ))
-  expect_true(
-    all(c("rcmdcheck", "urlchecker") %in% goodpractice::all_check_groups())
+  expect_true(all(
+    c("rcmdcheck", "urlchecker") %in%
+      goodpractice::all_check_groups()
+  )
   )
 }
 
 #### graphics ####
 expect_true(
-  "no.readonly" %in% names(formals(graphics::par))
+  "no.readonly" %in%
+    names(formals(graphics::par))
 )
 
 #### knitr ####
@@ -153,7 +196,10 @@ if(requireNamespace("knitr", quietly = TRUE)) {
     c("get_engine", "knit_engines") %in%
       ls(getNamespace("knitr"), all.names = TRUE)
   ))
-  expect_true(all(c("get", "set") %in% names(knitr::knit_engines)))
+  expect_true(all(
+    c("get", "set") %in%
+      names(knitr::knit_engines))
+  )
 }
 
 #### pkgdown ####
@@ -167,17 +213,22 @@ if(requireNamespace("pkgdown", quietly = TRUE)) {
 
 #### pkgload ####
 if(requireNamespace("pkgload", quietly = TRUE)) {
-  expect_true("is_dev_package" %in% ls(getNamespace("pkgload"), all.names = TRUE))
+  expect_true(
+    "is_dev_package" %in%
+      ls(getNamespace("pkgload"), all.names = TRUE)
+  )
 }
 
 #### pkgstats ####
 if(requireNamespace("pkgstats", quietly = TRUE)) {
   expect_true(all(
-    c("ctags_install", "pkgstats") %in% ls(getNamespace("pkgstats"), all.names = TRUE)
+    c("ctags_install", "pkgstats") %in%
+      ls(getNamespace("pkgstats"), all.names = TRUE)
   ))
 
   expect_true(all(
-    c("noerror", "quiet") %in% names(formals(pkgstats::ctags_test))
+    c("noerror", "quiet") %in%
+      names(formals(pkgstats::ctags_test))
   ))
 }
 
@@ -193,36 +244,45 @@ if(requireNamespace("progutils", quietly = TRUE)) {
 #### sessioncheck ####
 if(requireNamespace("sessioncheck", quietly = TRUE)) {
   expect_true(all(
-    c("sessioncheck", "sessionstate") %in% ls(getNamespace("sessioncheck"), all.names = TRUE)
+    c("sessioncheck", "sessionstate") %in%
+      ls(getNamespace("sessioncheck"), all.names = TRUE)
   ))
 }
 
 #### roxygen2 ####
 if(requireNamespace("roxygen2", quietly = TRUE)) {
-  expect_true("roxygenise" %in% ls(getNamespace("roxygen2"), all.names = TRUE))
+  expect_true(
+    "roxygenise" %in%
+      ls(getNamespace("roxygen2"), all.names = TRUE)
+  )
 }
 
 #### sessioninfo ####
 if(requireNamespace("sessioninfo", quietly = TRUE)) {
-  expect_true("session_info" %in% ls(getNamespace("sessioninfo"), all.names = TRUE))
+  expect_true(
+    "session_info" %in%
+      ls(getNamespace("sessioninfo"), all.names = TRUE)
+  )
 }
 
 #### tinytest ####
 if(requireNamespace("tinytest", quietly = TRUE)) {
   expect_true(all(
-    c("expect_equal", "expect_silent", "expect_true", "run_test_file", "test_all") %in%
+    c("expect_equal", "expect_silent", "expect_true", "run_test_file",
+      "test_all") %in%
       ls(getNamespace("tinytest"), all.names = TRUE)
   ))
 
   expect_true(all(
-    c("...", "pattern") %in% names(formals(tinytest::expect_error))
+    c("...", "pattern") %in%
+      names(formals(tinytest::expect_error))
   ))
 
   expect_true(all(
-    c("...", "pattern", "strict") %in% names(formals(tinytest::expect_warning))
+    c("...", "pattern", "strict") %in%
+      names(formals(tinytest::expect_warning))
   ))
 }
-
 
 #### tools ####
 expect_true(all(
@@ -231,17 +291,27 @@ expect_true(all(
     ls(getNamespace("tools"), all.names = TRUE)
 ))
 
-expect_true(all(c("dir", "verbose") %in% names(formals(tools::check_package_urls))))
+expect_true(all(
+  c("dir", "verbose") %in%
+    names(formals(tools::check_package_urls))
+))
 
-expect_true(all(c("recursive", "reverse", "which") %in% names(formals(tools::package_dependencies))))
-expect_true("package" %in% names(formals(tools::pkgVignettes)))
+expect_true(all(
+  c("recursive", "reverse", "which") %in%
+    names(formals(tools::package_dependencies))
+))
+expect_true(
+  "package" %in% names(formals(tools::pkgVignettes))
+)
 
 if(utils::packageVersion("tools") >= "4.4.0") {
   expect_true(
-    "standard_package_names" %in% ls(getNamespace("tools"), all.names = TRUE)
+    "standard_package_names" %in%
+      ls(getNamespace("tools"), all.names = TRUE)
   )
   expect_identical(
-    c("base", "recommended"), names(tools::standard_package_names())
+    c("base", "recommended"),
+    names(tools::standard_package_names())
   )
 }
 
@@ -254,33 +324,76 @@ if(requireNamespace("usethis", quietly = TRUE)) {
   ))
 
   expect_true(all(
-    c("package", "remote", "type") %in% names(formals(usethis::use_dev_package))
+    c("package", "remote", "type") %in%
+      names(formals(usethis::use_dev_package))
   ))
 
   hdb_usethis <- utils::hsearch_db(package = "usethis", types = "help")
-  expect_true("licenses" %in% hdb_usethis$Base[, "Name"])
+  expect_true(
+    "licenses" %in%
+      hdb_usethis$Base[, "Name"]
+  )
 
-  expect_true(all(c("fun", "package") %in% names(formals(usethis::use_import_from))))
-  expect_false("min_version" %in% names(formals(usethis::use_import_from)))
-  expect_true(all(c("package", "type", "min_version") %in% names(formals(usethis::use_package))))
-  expect_true(all(c("push", "which") %in% names(formals(usethis::use_version))))
-  expect_true("title" %in% names(formals(usethis::use_vignette)))
+  expect_true(
+    all(c("fun", "package") %in%
+          names(formals(usethis::use_import_from)))
+  )
+
+  expect_false(
+    "min_version" %in%
+      names(formals(usethis::use_import_from))
+  )
+  expect_true(all(
+    c("package", "type", "min_version") %in%
+      names(formals(usethis::use_package))
+  ))
+  expect_true(all(
+    c("push", "which") %in%
+      names(formals(usethis::use_version))
+  ))
+  expect_true(
+    "title" %in%
+      names(formals(usethis::use_vignette))
+  )
 }
 
 #### utils ####
 expect_true(all(
-  c("download.packages", "example", "packageVersion", "sessionInfo", "vignette") %in%
+  c("download.packages", "example", "packageVersion", "sessionInfo",
+    "vignette") %in%
     ls(getNamespace("utils"), all.names = TRUE)
 ))
-expect_true("dir" %in% names(formals(utils::aspell_package_Rd_files)))
-expect_true("dir" %in% names(formals(utils::aspell_package_vignettes)))
-expect_true("package" %in% names(formals(utils::browseVignettes)))
-expect_true("fields" %in% names(formals(utils::installed.packages)))
-expect_true(all(c("fields", "pkg") %in% names(formals(utils::packageDescription))))
-expect_true("pkg" %in% names(formals(utils::packageVersion)))
-expect_true("package" %in% names(formals(utils::vignette)))
+expect_true(
+  "dir" %in%
+    names(formals(utils::aspell_package_Rd_files))
+)
+expect_true(
+  "dir" %in%
+    names(formals(utils::aspell_package_vignettes))
+)
+expect_true(
+  "package" %in%
+    names(formals(utils::browseVignettes))
+)
+expect_true(
+  "fields" %in%
+    names(formals(utils::installed.packages))
+)
+expect_true(all(
+  c("fields", "pkg") %in%
+    names(formals(utils::packageDescription))
+))
+expect_true(
+  "pkg" %in%
+    names(formals(utils::packageVersion))
+)
+expect_true(
+  "package" %in%
+    names(formals(utils::vignette))
+)
 
 expect_true(
-  all.equal(getRversion(), utils::packageVersion(pkg = "base"),
+  all.equal(getRversion(),
+            utils::packageVersion(pkg = "base"),
             check.attributes = FALSE)
 )

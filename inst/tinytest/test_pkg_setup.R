@@ -9,16 +9,25 @@ expect_true(all(
 ))
 
 hdb_base <- utils::hsearch_db(package = "base", types = "help")
-expect_true("Startup" %in% hdb_base$Base[, "Name"])
+expect_true(
+  "Startup" %in%
+    hdb_base$Base[, "Name"]
+)
 
 ##### cffr #####
 if(requireNamespace("cffr", quietly = TRUE)) {
-  expect_true("dependencies" %in% names(formals(cffr::cff_write)))
+  expect_true(
+    "dependencies" %in%
+      names(formals(cffr::cff_write))
+  )
 }
 
 ##### desc #####
 if(requireNamespace("desc", quietly = TRUE)) {
-  expect_true("desc" %in% ls(getNamespace("desc"), all.names = TRUE))
+  expect_true(
+    "desc" %in%
+      ls(getNamespace("desc"), all.names = TRUE)
+  )
 }
 
 ##### devtools #####
@@ -30,17 +39,23 @@ if(requireNamespace("devtools", quietly = TRUE)) {
 }
 
 ##### pkgdepends #####
-# To do:
-# - Possible addition: check that output of
-#   'pkgdepends::pkg_name_check(name = pkgname)' has an element 'basics'
 if(requireNamespace("pkgdepends", quietly = TRUE)) {
-  expect_true("nm" %in% names(formals(pkgdepends::is_valid_package_name)))
-  expect_true("name" %in% names(formals(pkgdepends::pkg_name_check)))
+  expect_true(
+    "nm" %in%
+      names(formals(pkgdepends::is_valid_package_name))
+  )
+  expect_true(
+    "name" %in%
+      names(formals(pkgdepends::pkg_name_check))
+  )
 }
 
 ##### tinytest #####
 if(requireNamespace("tinytest", quietly = TRUE)) {
-  expect_true("pkgdir" %in% names(formals(tinytest::setup_tinytest)))
+  expect_true(
+    "pkgdir" %in%
+      names(formals(tinytest::setup_tinytest))
+  )
 }
 
 ##### usethis #####
@@ -53,12 +68,19 @@ if(requireNamespace("usethis", quietly = TRUE)) {
       ls(getNamespace("usethis"), all.names = TRUE)
   ))
 
-  expect_true("path" %in% names(formals(usethis::create_package)))
+  expect_true(
+    "path" %in%
+      names(formals(usethis::create_package)))
   expect_true(all(
-    c("from", "to") %in% names(formals(usethis::git_default_branch_rename))
+    c("from", "to") %in%
+      names(formals(usethis::git_default_branch_rename))
   ))
-  expect_true("message" %in% names(formals(usethis::use_git)))
-  expect_true("private" %in% names(formals(usethis::use_github)))
+  expect_true(
+    "message" %in%
+      names(formals(usethis::use_git)))
+  expect_true(
+    "private" %in%
+      names(formals(usethis::use_github)))
 
   expect_true(
     "licenses" %in%
@@ -67,4 +89,7 @@ if(requireNamespace("usethis", quietly = TRUE)) {
 }
 
 ##### utils #####
-expect_true("url" %in% names(formals(utils::browseURL)))
+expect_true(
+  "url" %in%
+    names(formals(utils::browseURL))
+)
