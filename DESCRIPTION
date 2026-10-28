@@ -23,6 +23,7 @@ Suggests:
     checktor,
     codetools,
     devtools (>= 2.0.0),
+    graphics,
     goodpractice (>= 1.1.0),
     knitr,
     pkgdepends,
