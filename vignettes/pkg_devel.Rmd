@@ -51,7 +51,6 @@ format. Then use `devtools::document()`, which itself calls
 `.Rd`.
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe many
-aspects of package documentation, see `browseVignettes(package = "roxygen2")`,
 aspects of package documentation, see
 `utils::browseVignettes(package = "roxygen2")`,
 among others vignettes with a general
@@ -209,12 +208,12 @@ tinytest::run_test_file(fs::path(getwd(), "inst", "tinytest", "test_funcname.R")
 Note that `tinytest::expect_silent(...)` tests that no errors or warnings are
 emitted, **not** that no messages are emitted.
 
-``` {r example-tests, eval = FALSE}
-tinytest::expect_silent(expect_true(func_name(x = x, arg = arg)))
-tinytest::expect_warning(
+``` {r example-tests-tinytest, eval = FALSE}
+expect_silent(expect_true(func_name(x = x, arg = arg)))
+expect_warning(
   expect_equal(func_name(x = "a", arg = arg), 3),
   pattern = "...", strict = TRUE, fixed = TRUE)
-tinytest::expect_error(func_name(x = "a", arg = arg),
+expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
@@ -228,7 +227,7 @@ running the tests as explained in the previous paragraphs:
   `attach(loadNamespace("<pkg>", versionCheck = list(op = ">=", version = package_version("1.2.3"))))`
   to specify which version to load, with `detach("<pkg>")` to detach it.
 
-`devtools::is_dev_package(<pkg>)` shows if a package was loaded through
+`pkgload::is_dev_package(<pkg>)` shows if a package was loaded through
 `devtools::load_all(<pkg>)`, and `devtools::loaded_packages()` shows loaded
 packages with the path from which they were loaded that can also be used to
 identify development packages. See the section
@@ -244,7 +243,7 @@ in `help("create_tempdir", package = "progutils")` and the
 vignette [`test fixtures`](https://testthat.r-lib.org/articles/test-fixtures.html)
 from package **testthat** for more details. In addition, changed options
 (`help("options", package = "base")`) and graphical parameters
-(`help("par", package = "base")`) should be restored to their original state to
+(`help("par", package = "graphics")`) should be restored to their original state to
 prevent
 influencing subsequent code. The following pattern shows how to do so for a
 single option or parameter, see
@@ -253,7 +252,7 @@ for details:
 
 ```{r options, eval = FALSE}
 orig_opt <- options(<option> = <value>)
-orig_par <- par(<parameter> = <value>)
+orig_par <- graphics::par(<parameter> = <value>)
 <code>
 par(orig_par)
 options(<option> = orig_opt)
@@ -314,7 +313,7 @@ are used in your package. This requires the system libraries
 [ctags-universal](https://ctags.io/) and
 [GNU global](https://www.gnu.org/software/global/), which should be
 automatically installed with **pkgstats** on Windows and MacOS. Use
-`pkgstats:::ctags_test(quiet = FALSE, noerror = TRUE)` to check if these are
+`pkgstats::ctags_test(quiet = FALSE, noerror = TRUE)` to check if these are
 indeed installed and `pkgstats::ctags_install()` to install them if not.
 
 ``` {r pkgstats, eval = FALSE}
@@ -816,7 +815,7 @@ Set up `workflow_dispatch` to manually trigger 'GitHub Actions' ('GHA'), see the
 section
 [Automate checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
 in the vignette *Package setup*:
-`vignette("pkg_setup", package = "develcoder")`.
+`utils::vignette("pkg_setup", package = "develcoder")`.
 
 To check if a reverse dependency (i.e., a package that depends on a package you
 changed) **that you created** is still working fine: go to the `Actions` tab of
