@@ -99,7 +99,7 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
                   output_dir = "./knitteddocs")
 ```
 
-## Adding and collecting code chuncks
+## Adding and collecting code chunks
 Add a new chunk by either using the `Code` > `Insert Chunk` button or typing the
 delimiters ```` ```{r} ```` above the code chunk and ```` ``` ```` below it.
 
