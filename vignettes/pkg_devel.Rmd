@@ -643,6 +643,7 @@ checks_to_exclude <- c(
   "complexity_function_length", # I write complex functions
   "covr", # time-consuming and wants 100% coverage
   "cyclocomp", # I write complex functions
+  "lintr_if_not_else_linter", # I use the shortest branch first
   "lintr_line_length_linter",
   # The lintr issue `Use == instead of %in% for scalar comparison` should be
   # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
