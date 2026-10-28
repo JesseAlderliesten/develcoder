@@ -14,7 +14,7 @@ vignette: >
 This vignette contains code and annotations to develop a package, to prepare for
 package release, and to set up for a new version. It assumes the package has
 been set up as described in the vignette *Package setup*:
-[`vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html).
+[`utils::vignette("pkg_setup", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html).
 
 # Adding functions
 ## Set up
@@ -52,6 +52,8 @@ format. Then use `devtools::document()`, which itself calls
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe many
 aspects of package documentation, see `browseVignettes(package = "roxygen2")`,
+aspects of package documentation, see
+`utils::browseVignettes(package = "roxygen2")`,
 among others vignettes with a general
 [introduction to roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html)
 and a general
@@ -232,7 +234,7 @@ packages with the path from which they were loaded that can also be used to
 identify development packages. See the section
 [Loading and attaching packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages)
 in the vignette *R packages* from package **checkrpkgs** for details on loading
-packages: `vignette("r_pkgs", package = "checkrpkgs")`.
+packages: `utils::vignette("r_pkgs", package = "checkrpkgs")`.
 
 ### Cleaning up
 Tests that create output files should write them to a temporary directory
@@ -326,7 +328,7 @@ Section
 [Which packages are used](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#which-packages-are-used)
 in vignette *R packages* from package **checkrpkgs** indicates how to manually
 look for packages that are mentioned in comments:
-`vignette("r_pkgs", package = "checkrpkgs")`.
+`utils::vignette("r_pkgs", package = "checkrpkgs")`.
 
 On **reverse** dependencies, see section [Check reverse dependencies].
 
@@ -431,11 +433,12 @@ usethis::use_package(package = "knitr", type = "Suggests")
 usethis::use_package(package = "rmarkdown", type = "Suggests")
 devtools::document()
 pkgdown::build_article()
-browseVignettes(package = basename(getwd()))
+utils::browseVignettes(package = basename(getwd()))
 ```
 
 If no vignettes are visible after running
-`browseVignettes(package = basename(getwd()))`, probably `devtools::install()`
+`utils::browseVignettes(package = basename(getwd()))`,
+probably `devtools::install()`
 was run with the default argument `build_vignettes = FALSE`, use
 `build_vignettes = TRUE` instead:  
 `devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)`. Run
@@ -448,7 +451,7 @@ to render a vignette in the `help` pane of RStudio, and
 
 ## Styling
 See the vignette *R Markdown and knitr* on using R Markdown to style vignettes:
-[`vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html).
+[`utils::vignette("rmarkdown_knitr", package = "develcoder")`](https://jessealderliesten.github.io/develcoder/articles/rmarkdown_knitr.html).
 
 Put the next lines in the header of vignettes to get a table of contents:
 ``` {r vignette style, eval = FALSE}
@@ -477,7 +480,7 @@ if(requireNamespace("utils", quietly = TRUE)) {
   `help("<func>", package = "<pkg>")` (unfortunately, `help("<pkg>::<func>")`
   does **not** work).
 - Link from a help-page to a vignette:  
-  ``The vignette *<vignette title>*: `vignette("<vignette>", package = "<pkg>")` ``
+  ``The vignette *<vignette title>*: `utils::vignette("<vignette>", package = "<pkg>")` ``
 - Link to another vignette in the same package:  
   `[<link text>](<vignette_filename>.html)`
 
@@ -802,7 +805,7 @@ devtools::install(quick = FALSE, upgrade = FALSE, build_vignettes = TRUE)
 
 # Load the package and view the help files as usual outside devtools:
 library(basename(getwd()), character.only = TRUE)
-browseVignettes(package = basename(getwd()))
+utils::browseVignettes(package = basename(getwd()))
 ?progutils::reorder_levels
 ```
 
@@ -848,7 +851,7 @@ and [How-to](https://docs.github.com/en/actions/how-tos/manage-workflow-runs),
 and the section
 [Automate checks](https://jessealderliesten.github.io/develcoder/articles/pkg_setup.html#automate-checks)
 in the vignette *Package setup*:
-`vignette("pkg_setup", package = "develcoder")`, and the overview of
+`utils::vignette("pkg_setup", package = "develcoder")`, and the overview of
 GitHub Actions and example Workflows in the documentation of the
 [**actions**](https://github.com/r-lib/actions) package.
 
@@ -998,7 +1001,7 @@ status of packages during package submission to CRAN.
 - See also section
   [Troubleshooting](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
   in the vignette *R packages* from package **checkrpkgs**:  
-  `vignette("r_pkgs", package = "checkrpkgs")`.
+  `utils::vignette("r_pkgs", package = "checkrpkgs")`.
   
 # Documentation and help
 
