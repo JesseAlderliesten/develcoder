@@ -24,7 +24,7 @@ Suggests:
     codetools,
     devtools (>= 2.0.0),
     graphics,
-    goodpractice (>= 1.1.0),
+    goodpractice (>= 1.2.0),
     knitr,
     pkgdepends,
     pkgdown,
