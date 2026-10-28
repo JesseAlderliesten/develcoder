@@ -333,13 +333,13 @@ On **reverse** dependencies, see section [Check reverse dependencies].
 
 ### Importing packages or functions
 The standard way to use functions from other packages is to import the package:
-use `usethis::use_package("<pkg>", type = "Imports", min_version = "<version>")`
+use `usethis::use_package(package = "<pkg>", type = "Imports", min_version = "<version>")`
 to put the package in the `Imports:` field of the DESCRIPTION file. It is
 possible to specify minimum package versions through argument `min_version`,
 see [the next section][Specifying minimum versions].
 
 ``` {r imports-p1, eval = FALSE}
-usethis::use_package("checkinput", type = "Imports", min_version = "1.0.0")
+usethis::use_package(package = "checkinput", type = "Imports", min_version = "1.0.0")
 ```
 
 If the package is only used in examples or vignettes, or is considered an
@@ -370,7 +370,7 @@ next paragraph.
 
 ``` {r imports-p2, eval = FALSE}
 # The first line is used to specify a minimum version
-usethis::use_package("utils", type = "Imports", min_version = "4.0.0")
+usethis::use_package(package = "utils", type = "Imports", min_version = "4.0.0")
 usethis::use_import_from(package = "utils", fun = "?")
 devtools::document()
 ```
@@ -378,7 +378,8 @@ devtools::document()
 ### Specifying minimum versions
 Specifying a minimum package version when importing packages ensures that used
 functions are actually present. To use the currently installed package version,
-use `usethis::use_package(..., min_version = TRUE)`. However, that probably is
+use `usethis::use_package(package = <pkg>, <...>, min_version = TRUE)`. However,
+that probably is
 too strict because functions are likely also present in older package versions.
 
 To check in which version a used functions was introduced, you can search the
@@ -402,7 +403,7 @@ particular package version is needed.
 
 ``` {r dependencies, eval = FALSE}
 # Declare a minimum version for R itself
-usethis::use_package("R", type = "Depends", min_version = "4.0.0")
+usethis::use_package(package = "R", type = "Depends", min_version = "4.0.0")
 
 # Declare a dependency on a package: 'use_package()' to declare a minimum
 # version and 'use_dev_package()' to specify the remote repository to download
