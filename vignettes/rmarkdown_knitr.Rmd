@@ -47,9 +47,11 @@ tinytex::pdflatex('test.tex')
 options(tinytex.verbose = FALSE)
 ```
 
-## Global Settings for knitr used by R Markdown
-For a list of available options, see `str(knitr::opts_chunk$get())` and the
-overviews of [options](https://yihui.org/knitr/options/) and
+## Options for knitr used by R Markdown
+Options for **knitr** can be set globally, i.e., for an entire document, or for
+specific chunks. For overviews of available options, see
+`str(knitr::opts_knit$get())`, `str(knitr::opts_chunk$get())`, and the
+[discussion of these options](https://yihui.org/knitr/options) and of 
 [objects storing options](https://yihui.org/knitr/objects/) at the package
 website.
 
@@ -75,8 +77,8 @@ Files that have to be used by the R Markdown script (e.g., R scripts that are
 sourced or data files that are read) should be placed in the same directory as
 the `R Markdown` file, because by default the working directory when evaluating
 R code chunks is the directory of the input document. The working directory can
-be changed using `opts_knit$set(root.dir = ...)` but should **not** be changed
-using `setwd()`, see the `Note` in `help("knit", package = "knitr")`.
+be changed using `knitr::opts_knit$set(root.dir = ...)` but should **not** be
+changed using `setwd()`, see the `Note` in `help("knit", package = "knitr")`.
 
 ## Knitting documents to HTML and PDF
 The following lines can be used to `Knit` documents (i.e., generate output in
@@ -99,7 +101,7 @@ rmarkdown::render("FilenameRMarkdownFile.Rmd", output_format = "pdf_document",
                   output_dir = "./knitteddocs")
 ```
 
-## Adding and collecting code chuncks
+## Adding and collecting code chunks
 Add a new chunk by either using the `Code` > `Insert Chunk` button or typing the
 delimiters ```` ```{r} ```` above the code chunk and ```` ``` ```` below it.
 
@@ -261,7 +263,7 @@ to show how to create a code chunk like
 Newlines can be forced using `\cr` or by ending a line with two spaces followed
 by a newline.
 
-Qoutes can be formatting by putting `>` in front of a line.
+Quotes can be formatting by putting `>` in front of a line.
 
 For an overview of mathematical notation see
 https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
