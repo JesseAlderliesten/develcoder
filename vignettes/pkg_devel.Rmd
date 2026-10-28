@@ -471,7 +471,7 @@ e.g., using `utils::sessionInfo()`, `sessioninfo::session_info()`, or
 
 ```` {r session info, eval = FALSE}
 ## sessionInfo
-```{r sessionInfo, echo = FALSE}
+```{r session info, echo = FALSE}
 if(requireNamespace("utils", quietly = TRUE)) {
   utils::sessionInfo()
 }
@@ -632,53 +632,52 @@ devtools::check(manual = TRUE, remote = TRUE,
 ```
 
 ### goodpractice
-Runs checks of its own and checks from various other packages.
+Runs checks of its own and checks from various other packages. I exclude checks
+that I do not find useful and checks that duplicate earlier checks. Use
+`goodpractice::all_check_groups()` to see all groups and
+`goodpractice::checks_by_group(<groups>)` to show all checks in groups.
 
 ``` {r checks-goodpractice, eval = FALSE}
-# Select checks
-# Show groups of checks: goodpractice::all_check_groups()
-# Show all checks in some groups: goodpractice::checks_by_group(c("cyclocomp", "lintr"))
-# Run all check from some groups:
-# goodpractice::goodpractice(checks = goodpractice::checks_by_group(c("cyclocomp", "lintr")))
-# Run all checks: goodpractice::goodpractice(checks = goodpractice::all_checks())
 goodpractice_all_checks <- goodpractice::all_checks()
-my_checks_goodpractice <- progutils::not_in(
-  goodpractice_all_checks,
-  c("covr", # time-consuming and wants 100% coverage
-    "complexity_function_length", "cyclocomp", # I write complex functions
-    # The lintr issue `Use == instead of %in% for scalar comparison` should be
-    # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
-    # removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
-    # 'NA == y' return 'NA'.
-    "lintr_scalar_in_linter",
-    "lintr_line_length_linter",
-    "lintr_outer_negation_linter", # changes handling of NAs
-    # flags data.frame() even if 'strings_as_factors' is not explicitly set
-    "lintr_strings_as_factors_linter",
-    "tidyverse_brace_linter",
-    "tidyverse_function_left_parentheses_linter",
-    "tidyverse_indentation_linter",
-    "tidyverse_line_length_linter",
-    "tidyverse_object_name_linter",
-    "tidyverse_spaces_left_parentheses_linter",
-    # does not find test files in inst/tinytest, use check_test_files() instead.
-    "tidyverse_test_file_names",
-    "tidyverse_whitespace_linter",
-    # Checks similar to those from 'rcmdcheck' and 'urlchecker' are also used by
-    # devtools::check() that already has been run above
-    goodpractice_all_checks[
-      grepl(pattern = "^rcmdcheck_|^urlchecker_", x = goodpractice_all_checks)]
-  )
+checks_to_exclude <- c(
+  "covr", # time-consuming and wants 100% coverage
+  "complexity_function_length", "cyclocomp", # I write complex functions
+  # The lintr issue `Use == instead of %in% for scalar comparison` should be
+  # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
+  # removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
+  # 'NA == y' return 'NA'.
+  "lintr_scalar_in_linter",
+  "lintr_line_length_linter",
+  "lintr_outer_negation_linter", # changes handling of NAs
+  "tidyverse_brace_linter",
+  "tidyverse_function_left_parentheses_linter",
+  "tidyverse_indentation_linter",
+  "tidyverse_line_length_linter",
+  "tidyverse_object_name_linter",
+  "tidyverse_spaces_left_parentheses_linter",
+  # does not find test files in inst/tinytest,
+  # use develcoder::check_test_files() instead
+  "tidyverse_test_file_names",
+  "tidyverse_whitespace_linter",
+  # Checks similar to those from 'rcmdcheck' and 'urlchecker' are
+  # also used by devtools::check() that already has been run above
+  goodpractice::checks_by_group(c("rcmdcheck", "urlchecker"))
 )
 
-res_goodpractice <- goodpractice::goodpractice(
-  path = ".", checks = my_checks_goodpractice)
-res_goodpractice_failed <- goodpractice::failed_checks(res_goodpractice)
-res_goodpractice_failed
+# Select checks
+goodpractice_my_checks <- progutils::not_in(
+  goodpractice_all_checks,
+  checks_to_exclude
+)
+
+goodpractice_res <- goodpractice::goodpractice(
+  path = ".", checks = goodpractice_my_checks)
+goodpractice_res_failed <- goodpractice::failed_checks(goodpractice_res)
+goodpractice_res_failed
 
 # Can also show output of selected checks through
-# res_goodpractice$checks$<check_name>
-res_goodpractice
+# goodpractice_res$checks$<check_name>
+goodpractice_res
 ```
 
 ### Other checks
@@ -1002,7 +1001,7 @@ status of packages during package submission to CRAN.
   `Quitting from <filename>.Rmd:<line numbers> [<chunk name>]`
   ```
   you probably
-  forgot to use `library(<pkg>)` in a code chunck, used a package that is not
+  forgot to use `library(<pkg>)` in a code chunk, used a package that is not
   declared as dependency in the DESCRIPTION file, or used a package that is
   declared as suggested dependency (i.e., is in the `Suggests` field of the
   DESCRIPTION file) without running that code conditionally on the presence
