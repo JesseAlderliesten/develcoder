@@ -720,15 +720,22 @@ dependencies, use `desc::desc_get_deps()` or
 
 Manually increment the package version in the DESCRIPTION file, or use
 `usethis::use_version()`. In the latter case, do **not** automatically `commit`
-the change, but do so manually to adjust the commit message to
-`Bump to version x.y.z`. Indicating the version number in the commit title makes
-it easier to find changes back later on (the pull request can have a description
-of the changes, i.e., the updated section of the NEWS file). See package
+the change, but do so manually later on (i.e., choose a negative option when
+presented with the question `Is it ok to commit them?`) to also commit the
+updated CITATION, License, README and NEWS files.
+
+See package
 [**lifecycle**](https://CRAN.R-project.org/package=lifecycle) on how to add
 badges to packages and functions to indicate their life cycle and its vignette
 [Lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html), chapter
 [Lifecycle](https://r-pkgs.org/lifecycle.html) from the 'R packages' book, and
 the [Semantic Versioning Specification](https://semver.org/) on versioning.
+
+```{r description, eval = FALSE}
+desc::desc_normalize()
+# 'which' can be NULL, "major", "minor", "patch", or "dev"
+usethis::use_version(which = NULL, push = FALSE)
+```
 
 ### CITATION and License
 Use the DESCRIPTION file to create a CITATION.cff citation file, or update
@@ -903,11 +910,19 @@ Then build the reference with `pkgdown::build_reference()` and view it locally
 by opening the file `"<pkg>\docs\index.html"` and browse to 'Reference' to see
 the package index.
 
+## Committing
+Commit the changes to the CITATION, License, README and NEWS files with the
+commit message `Bump to version x.y.z`, to make it easier to find changes back
+later on. `Pull` and `Push`.
+
 ## Merge devel-branch with main
 To merge the `devel` branch with `main` (i.e., to incorporate the changes you
 made to the `devel` branch in the `main` branch), go the the `devel` branch on
-GitHub. Then use `<Contribute>` > `Open Pull Request`. Copy the updated NEWS
-in the DESCRIPTION field and use the button `Create pull request`.
+the GitHub website of the package. Then use `<Contribute>` > `Open Pull Request`
+to do a pull request. Copy the updated section of the NEWS file in the
+DESCRIPTION field to describe the changes, and put the package name with the
+updated version number in the title of the pull request. Use the button
+`Create pull request`.
 
 If the message
 `No conflicts with base branch: Merging can be performed automatically`, is
