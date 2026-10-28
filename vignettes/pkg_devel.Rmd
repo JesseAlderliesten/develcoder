@@ -353,7 +353,8 @@ that are always installed with R but **is** necessary for the
 ['recommended' packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
 that are only automatically installed in binary installations and for all other
 packages. From R 4.4.0, the names of the 'base' R packages and the 'recommended'
-packages are available through `tools::standard_package_names()$base`.
+packages are available through `tools::standard_package_names()$base` and
+`tools::standard_package_names()$recommended`, respectively.
 
 Besides putting the package in the DESCRIPTION file, the package name should be
 followed by two colons and the function name. For example, to use function
@@ -402,6 +403,9 @@ making it possible to use comments in the DESCRIPTION file to indicate why a
 particular package version is needed.
 
 ``` {r dependencies, eval = FALSE}
+# Show the currently used R version
+getRversion() # or: utils::packageVersion(pkg = "base")
+
 # Declare a minimum version for R itself
 usethis::use_package(package = "R", type = "Depends", min_version = "4.0.0")
 
@@ -462,7 +466,8 @@ toc_depth: 3
 ```
 
 It is good practice to give the session information at the bottom of a vignette,
-e.g., using `utils::sessionInfo()` or `sessioninfo::session_info()`:
+e.g., using `utils::sessionInfo()`, `sessioninfo::session_info()`, or
+`sessioncheck::sessionstate()`:
 
 ```` {r session info, eval = FALSE}
 ## sessionInfo
@@ -997,7 +1002,9 @@ status of packages during package submission to CRAN.
   this, use backticks (`` ` ``) to format a line as code, or wrap consecutive
   lines in `\code{...}`.
 - Errors can arise if package development is not done from a clean R session.
-  Use `loadedNamespaces()` to check which packages are loaded.
+  Use `loadedNamespaces()` to check which packages are loaded, or use
+  `utils::sessionInfo()`, `sessioninfo::session_info()`, or
+  `sessioncheck::sessionstate()` for more information about loaded packages.
 - See also section
   [Troubleshooting](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#troubleshooting)
   in the vignette *R packages* from package **checkrpkgs**:  
