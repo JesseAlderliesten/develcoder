@@ -640,15 +640,16 @@ that I do not find useful and checks that duplicate earlier checks. Use
 ``` {r checks-goodpractice, eval = FALSE}
 goodpractice_all_checks <- goodpractice::all_checks()
 checks_to_exclude <- c(
+  "complexity_function_length", # I write complex functions
   "covr", # time-consuming and wants 100% coverage
-  "complexity_function_length", "cyclocomp", # I write complex functions
+  "cyclocomp", # I write complex functions
+  "lintr_line_length_linter",
   # The lintr issue `Use == instead of %in% for scalar comparison` should be
   # ignored for 'x %in% y' if 'x' or 'y' might contain 'NA' that should be
   # removed: 'x %in% NA' and 'NA %in% y' return 'FALSE', whereas 'x == NA' and
   # 'NA == y' return 'NA'.
-  "lintr_scalar_in_linter",
-  "lintr_line_length_linter",
   "lintr_outer_negation_linter", # changes handling of NAs
+  "lintr_scalar_in_linter",
   "tidyverse_brace_linter",
   "tidyverse_function_left_parentheses_linter",
   "tidyverse_indentation_linter",
