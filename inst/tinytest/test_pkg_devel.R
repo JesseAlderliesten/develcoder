@@ -292,11 +292,6 @@ expect_true(all(
 ))
 
 expect_true(all(
-  c("dir", "verbose") %in%
-    names(formals(tools::check_package_urls))
-))
-
-expect_true(all(
   c("recursive", "reverse", "which") %in%
     names(formals(tools::package_dependencies))
 ))
@@ -313,6 +308,13 @@ if(utils::packageVersion("tools") >= "4.4.0") {
     c("base", "recommended"),
     names(tools::standard_package_names())
   )
+}
+
+if(utils::packageVersion("tools") >= "4.5.0") {
+  expect_true(all(
+    c("dir", "verbose") %in%
+      names(formals(tools::check_package_urls))
+  ))
 }
 
 #### usethis ####
