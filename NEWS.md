@@ -1,3 +1,17 @@
+# develcoder 0.18.0
+
+### Breaking changes
+- Add dependency `graphics` to `Suggests` to use `graphics::par()` in
+  vignette *Package development* to set graphical options.
+- Add dependency `pkgload` to `Suggests` to use `pkgload::is_dev_package()` in
+  vignette *Package development*.
+- Add dependency `sessioncheck` to `Suggests` to use
+  `sessioncheck::sessioncheck()` and `sessioncheck::sessionstate()` in
+  vignette *Package development*.
+- Increase minimum version of **goodpractice** from 1.1.0 to 1.2.0 to remove the
+  erroneous `lintr_strings_as_factors_linter` linter.
+
+
 # develcoder 0.17.0
 
 ### Breaking changes
