@@ -28,6 +28,7 @@ Suggests:
     knitr,
     pkgdepends,
     pkgdown,
+    pkgload,
     pkgstats (>= 0.2.1),
     revdepcheck,
     rmarkdown,
