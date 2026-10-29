@@ -148,10 +148,10 @@ if(requireNamespace("devtools", quietly = TRUE)) {
 
 #### fs ####
 if(requireNamespace("fs", quietly = TRUE)) {
-  expect_true(
-    "dir_exists" %in%
+  expect_true(all(
+    c("dir_exists", "path_wd") %in%
       ls(getNamespace("fs"), all.names = TRUE)
-  )
+  ))
 }
 
 #### goodpractice ####
@@ -265,6 +265,14 @@ if(requireNamespace("sessioninfo", quietly = TRUE)) {
   )
 }
 
+#### testthat ####
+if(requireNamespace("testthat", quietly = TRUE)) {
+  expect_true(
+    "test_file" %in%
+      ls(getNamespace("testthat"), all.names = TRUE)
+  )
+}
+
 #### tinytest ####
 if(requireNamespace("tinytest", quietly = TRUE)) {
   expect_true(all(
@@ -287,7 +295,7 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
 #### tools ####
 expect_true(all(
   c("check_packages_in_dir", "CRAN_check_details", "CRAN_check_issues",
-    "CRAN_check_results", "dependsOnPkgs", "Rd2txt") %in%
+    "CRAN_check_results", "dependsOnPkgs", "Rd2txt", "toTitleCase") %in%
     ls(getNamespace("tools"), all.names = TRUE)
 ))
 

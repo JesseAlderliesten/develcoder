@@ -59,14 +59,15 @@ and a general
 [introduction to function documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
 
 Section titles [should](https://developer.r-project.org/Rds.html) be capitalized
-and not end in a period. It is best to avoid all markup in titles because they
+and not end in a period, use `tools::toTitleCase()`. It is best to avoid all
+markup in titles because they
 need to be automatically processed for various hypertext search systems. It is
 possible to create
 [subheadings](https://roxygen2.r-lib.org/articles/rd-formatting.html#sections-and-subsections)
 in roxygen blocks using `##` and `###`, i.e., usual Markdown syntax.
 
 ```{r documentation, eval = FALSE}
-#' Title (should be capitalized and not end in a period)
+#' Title (Should be Capitalized and not End in a Period)
 #'
 #' Description
 #'
@@ -189,19 +190,21 @@ For background on testing:
 - [Testing basics](https://r-pkgs.org/testing-basics.html) and subsequent
   chapters from the 'R packages' book.
 - [Code Testing](https://book.the-turing-way.org/reproducible-research/testing/)
-  and subsequent chapters.
-- Section 'Packages tests' from the CRAN Task View
-  [Package Development and Maintenance](https://cran.r-project.org/view=PackageDevelopment#packages-tests).
+  and subsequent chapters from 'The Turing Way handbook to reproducible, ethical
+  and collaborative data science'.
+- Section
+  [Packages tests](https://cran.r-project.org/view=PackageDevelopment#packages-tests)
+  from the CRAN Task View `Package Development and Maintenance`.
 
-The code below shows how to run tests.
+The code below shows how to run tests with **tinytest** and **testthat**.
 
 ``` {r run-tests, eval = FALSE}
-# Run all tests of a package. Use 'devtools::test()' instead of
-# 'tinytest::test_all()' if you used package 'testthat' to create tests.
-tinytest::test_all()
+tinytest::test_all() # Test all tests from tinytest
+devtools::test() # Test all tests from testthat
 
 # Run a specific test file, selecting the file by name
-tinytest::run_test_file(fs::path(getwd(), "inst", "tinytest", "test_funcname.R"))
+tinytest::run_test_file(fs::path_wd("inst", "tinytest", "test_funcname.R"))
+testthat::test_file(fs::path_wd("tests", "testthat", "test-funcname.R"))
 ```
 
 ### Expectations
