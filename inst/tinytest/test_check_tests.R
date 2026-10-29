@@ -1,13 +1,15 @@
 #### To do ####
 # - Include tests that are only headings
-
+# - Include tests on missing vignettes with 'test_vignette = TRUE' and with
+#   'test_vignette = FALSE'
 
 #### Create objects to use in tests ####
 pattern_desc <- "No DESCRIPTION file found"
 pattern_ignored <- paste0("Ignoring files that are not R files, are template",
                           " files created by ")
-pattern_no_test_file <- paste0("No test file found corresponding to function",
-                               " file or vignette\n")
+pattern_no_test_file_R <- "No test file found corresponding to function file\n"
+pattern_no_test_file_vignette <- paste0("No test file found corresponding to",
+                                        " vignette\n")
 pattern_no_func_file <- paste0("No function file or vignette found",
                                " corresponding to test file\n")
 error_path <- "'path' should be a non-empty, non-NA_character_ character string"
@@ -169,7 +171,7 @@ expect_warning(
     list(missing = c(ignored_testthat, ignored_tinytest),
          extraneous = character(0))
   ),
-  pattern = paste0(pattern_no_test_file,
+  pattern = paste0(pattern_no_test_file_R,
                    progutils::paste_quoted(c(ignored_testthat, ignored_tinytest),
                                            collapse = ",\n")),
   strict = TRUE)
@@ -229,7 +231,7 @@ expect_warning(
   expect_identical(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
-  ), pattern = paste0(pattern_no_test_file, "'file2.R'"),
+  ), pattern = paste0(pattern_no_test_file_R, "'file2.R'"),
   strict = TRUE, fixed = TRUE
 )
 
@@ -276,7 +278,7 @@ expect_warning(
     check_tests(path = my_tempdir, pattern = "^test_|^test-"),
     list(missing = "file2.R", extraneous = "file3.R")
   ),
-  pattern = paste0(pattern_no_test_file, "'file2.R'"),
+  pattern = paste0(pattern_no_test_file_R, "'file2.R'"),
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
@@ -295,7 +297,7 @@ expect_warning(
     list(missing = c("file2.R", "other_func_tinytest.R", "some_func_tinytest.R"),
          extraneous = "file3.R")
   ),
-  pattern = paste0(pattern_no_test_file, "'file2.R'"),
+  pattern = paste0(pattern_no_test_file_R, "'file2.R'"),
   strict = TRUE, fixed = TRUE)
 
 expect_warning(
@@ -305,10 +307,11 @@ expect_warning(
 
 expect_warning(
   check_tests(path = my_tempdir, pattern = "^test_|^test-"),
-  pattern = paste0("Test files will be ignored because test infrastructure for",
-                   " tinytest is missing\nor does not refer to the current package",
-                   " .run 'tinytest::setup_tinytest.)' to\ncreate the test",
-                   " infrastructure.:\n'test-other_func_tinytest.R'\n'test_some_func_tinytest.R'"),
+  pattern = paste0(
+    "Test files will be ignored because test infrastructure for tinytest is",
+    " missing\nor does not refer to the current package .run",
+    " 'tinytest::setup_tinytest.)' to\ncreate the test infrastructure.:",
+    "\n'test-other_func_tinytest.R'\n'test_some_func_tinytest.R'"),
   strict = TRUE)
 
 expect_silent(
@@ -339,6 +342,12 @@ expect_silent(
 
 ##### R dir missing #####
 
+##### Test files with corresponding vignette #####
+
+##### Vignettes with and without test files, test_vignettes = FALSE  #####
+
+##### Vignettes with and without test files, test_vignettes = TRUE  #####
+
 #### Fine ####
 
 ##### 'pattern' is respected #####
@@ -364,7 +373,7 @@ expect_warning(
 expect_warning(
   check_tests(path = my_tempdir, pattern = "^test-"),
   pattern = paste0(
-    pattern_no_test_file,
+    pattern_no_test_file_R,
     progutils::paste_quoted(c(old_func[-2], some_func), collapse = ",\n")),
   strict = TRUE)
 
@@ -440,7 +449,7 @@ expect_warning(
 
 expect_warning(
   check_tests(path = my_tempdir, pattern = "^TEst_|^TEst-", ignore_case = FALSE),
-  pattern = paste0(pattern_no_test_file,
+  pattern = paste0(pattern_no_test_file_R,
                    progutils::paste_quoted(some_func, collapse = ",\n")),
   strict = TRUE)
 
@@ -516,5 +525,6 @@ rm(desc, error_not_path, ignored_general, ignored_testthat, ignored_tinytest,
    other_funcs, path_desc, path_ignored_R_testthat, path_ignored_R_tinytest,
    path_ignored_testthat, path_ignored_tinytest, path_misc, path_other_funcs,
    path_R, path_testthat, path_tinytest, pattern_desc, pattern_ignored,
-   pattern_no_test_file, pkg_name, some_func, testfile_testthat, test_funcs,
+   pattern_no_test_file_R, pattern_no_test_file_vignette, pkg_name, some_func,
+   testfile_testthat, test_funcs,
    testthat_funcs, tinytest_funcs, error_path, error_path_sep)
