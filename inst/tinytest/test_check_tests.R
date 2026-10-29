@@ -1,7 +1,7 @@
 #### To do ####
 # - Include tests that are only headings
-# - Include tests on missing vignettes with 'test_vignette = TRUE' and with
-#   'test_vignette = FALSE'
+# - Include tests on missing vignettes with 'test_vignette = TRUE' and
+#   with 'test_vignette = FALSE'
 
 #### Create objects to use in tests ####
 pattern_desc <- "No DESCRIPTION file found"

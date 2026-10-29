@@ -298,7 +298,7 @@ devtools::document() # To update package-wide documentation
 
 After a few minutes, the website should be present. The URL has the structure
 `https://<username>.github.io/<repository>/`, e.g.,
-[`https://jessealderliesten.github.io/develcoder/`](`https://jessealderliesten.github.io/develcoder/`).
+[`https://jessealderliesten.github.io/develcoder/`](https://jessealderliesten.github.io/develcoder/).
 
 Refer from the README to the pkgdown website.
 
