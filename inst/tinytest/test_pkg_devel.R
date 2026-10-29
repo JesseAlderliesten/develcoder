@@ -267,7 +267,7 @@ if(requireNamespace("sessioninfo", quietly = TRUE)) {
 
 #### testthat ####
 if(requireNamespace("testthat", quietly = TRUE)) {
-  tinytest::expect_true(all(
+  expect_true(all(
     c("expect_silent", "test_file") %in%
       ls(getNamespace("testthat"), all.names = TRUE)
   ))
@@ -305,8 +305,10 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
     x
   }
 
-  tinytest::expect_message(
-    tinytest::expect_true(
+  expect_message(
+    expect_true(
+      # Need to use namespace declaration to differentiate between
+      # tinytest::expect_silent() and testthat::expect_silent()
       tinytest::expect_silent(fun_message())
     )
   )
