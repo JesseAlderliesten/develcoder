@@ -267,9 +267,18 @@ if(requireNamespace("sessioninfo", quietly = TRUE)) {
 
 #### testthat ####
 if(requireNamespace("testthat", quietly = TRUE)) {
-  expect_true(
-    "test_file" %in%
+  tinytest::expect_true(all(
+    c("expect_silent", "test_file") %in%
       ls(getNamespace("testthat"), all.names = TRUE)
+  ))
+
+  fun_message <- function(x = 0) {
+    message("A message")
+    x
+  }
+
+  testthat::show_failure(
+    testthat::expect_silent(fun_message())
   )
 }
 
@@ -290,6 +299,17 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
     c("...", "pattern", "strict") %in%
       names(formals(tinytest::expect_warning))
   ))
+
+  fun_message <- function(x = 0) {
+    message("A message")
+    x
+  }
+
+  tinytest::expect_message(
+    tinytest::expect_true(
+      tinytest::expect_silent(fun_message())
+    )
+  )
 }
 
 #### tools ####
@@ -312,10 +332,25 @@ if(utils::packageVersion("tools") >= "4.4.0") {
     "standard_package_names" %in%
       ls(getNamespace("tools"), all.names = TRUE)
   )
+  std_pkg_names <- tools::standard_package_names()
   expect_identical(
     c("base", "recommended"),
-    names(tools::standard_package_names())
+    names(std_pkg_names)
   )
+
+  expect_true(base::setequal(
+    c("base", "compiler", "datasets", "graphics", "grDevices", "grid",
+      "methods", "parallel", "splines", "stats", "stats4", "tcltk", "tools",
+      "utils"),
+    tools::standard_package_names()$base
+  ))
+
+  expect_true(base::setequal(
+    c("boot", "class", "cluster", "codetools", "foreign", "KernSmooth",
+      "lattice", "MASS", "Matrix", "mgcv", "nlme", "nnet", "rpart", "spatial",
+      "survival"),
+    tools::standard_package_names()$recommended
+  ))
 }
 
 if(utils::packageVersion("tools") >= "4.5.0") {

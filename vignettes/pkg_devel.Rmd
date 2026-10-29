@@ -46,17 +46,15 @@ Do:
 
 ## Add documentation
 Function files with file extension `.R` can be annotated using the 'roxygen'
-format. Then use `devtools::document()`, which itself calls
-`roxygen2::roxygenise()`, to create documentation files with file extension
-`.Rd`.
+format. Then using `devtools::document()`, which itself calls
+`roxygen2::roxygenise()`, creates documentation files with file extension `.Rd`.
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe many
-aspects of package documentation, see
-`utils::browseVignettes(package = "roxygen2")`,
-among others vignettes with a general
+aspects of package documentation, among others vignettes with a general
 [introduction to roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html)
 and a general
-[introduction to function documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
+[introduction to function documentation](https://roxygen2.r-lib.org/articles/rd-functions.html),
+see `utils::browseVignettes(package = "roxygen2")`.
 
 Section titles [should](https://developer.r-project.org/Rds.html) be capitalized
 and not end in a period, use `tools::toTitleCase()`. It is best to avoid all
@@ -132,12 +130,12 @@ function and inherit that section in other functions using
 ### Inherit parameters
 It is possible to inherit the description of parameters from other functions.
 Since **roxygen2** 8.0.0, it is possible to specify which arguments to inherit
-(i.e., to filter arguments). For arguments that share a single description, this
-works from **roxygen2** 8.1.1.
+(i.e., to filter arguments). For arguments that share a single description,
+filtering arguments works since **roxygen2** 8.1.1.
 
 ``` {r inherit parameters, eval = FALSE}
 # inherit the description for all arguments from a function in the current
-# package (arguments that do not occur in the target function will be ignored)
+# package, ignoring arguments that do not occur in the target function
 #' @inheritParams diagnose_test_files pattern
 
 # inherit the description for argument 'fields' from function
@@ -208,8 +206,9 @@ testthat::test_file(fs::path_wd("tests", "testthat", "test-funcname.R"))
 ```
 
 ### Expectations
-Note that `tinytest::expect_silent(...)` tests that no errors or warnings are
-emitted, **not** that no messages are emitted.
+`tinytest::expect_silent(...)` allows messages to be emitted (and thus tests
+that no errors or warnings are emitted), whereas `testthat::expect_silent()`
+does **not** allow messages to be emitted.
 
 ``` {r example-tests-tinytest, eval = FALSE}
 expect_silent(expect_true(func_name(x = x, arg = arg)))
@@ -222,7 +221,7 @@ expect_error(func_name(x = "a", arg = arg),
 
 ### Interactive testing
 To interactively run tests, attach the package that you want to test before
-running the tests as explained in the previous paragraphs:
+running the tests:
 
 - use `devtools::load_all(<pkg>)` (with `unloadNamespace("develcoder")` to
   detach it)
@@ -231,9 +230,9 @@ running the tests as explained in the previous paragraphs:
   to specify which version to load, with `detach("<pkg>")` to detach it.
 
 `pkgload::is_dev_package(<pkg>)` shows if a package was loaded through
-`devtools::load_all(<pkg>)`, and `devtools::loaded_packages()` shows loaded
-packages with the path from which they were loaded that can also be used to
-identify development packages. See the section
+`devtools::load_all(<pkg>)` and `devtools::loaded_packages()` shows the path
+from which packages were loaded, which can also be used to identify development
+packages. See the section
 [Loading and attaching packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages)
 in the vignette *R packages* from package **checkrpkgs** for details on loading
 packages: `utils::vignette("r_pkgs", package = "checkrpkgs")`.
@@ -262,8 +261,8 @@ options(<option> = orig_opt)
 ```
 
 To reset all parameters at once, use `orig_par <- par(no.readonly = TRUE)`. To
-restore options that are changed inside a function, add `on.exit(par(orig_par))`
-immediately after changing the option.
+restore options that are changed inside a function, add
+`on.exit(par(orig_par), add = TRUE)` immediately after changing the option.
 
 ### Sorting order
 Sorting order depends on the used locale, see 'Details' in `help("sort")`. For
@@ -275,12 +274,10 @@ some symbols between the uppercase and lowercase characters, which also changes
 the sorting order from `c("-", "_")` to `c("_", "-")`.
 
 The used locale can be set through `Sys.getlocale()` but is also influenced by
-the used operating system and other settings in `R`, see `help("locales")`,
-section
-[Locales](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales)
-in the 'R Installation and Administration manual' and section 'Details' of
-`help("Comparison")`. See the 'Programming Notes' in `checkinput::all_names()`
-for more references.
+the used operating system and other settings in `R`, see `help("locales")` and
+the
+[Programming Note about locales](https://jessealderliesten.github.io/checkinput/reference/all_names.html#locales)
+in `checkinput::all_names()` for more references.
 
 ### Testing file paths
 Testing file paths requires some thought because the file separator depends on
@@ -301,13 +298,12 @@ like `tinytest::expect_true(fs::dir_exists(string))`.
 
 ## Update dependencies
 First, consider if you really need a new dependency and which package that
-should be. Some additional effort in choosing dependencies or in coding might
+should be. Some additional effort in coding or in choosing dependencies might
 allow using dependencies that themselves have fewer dependencies, making a
-project more stable over time. See the chapter
+project more stable over time. See the chapters 
 [Dependencies: Mindset and Background](https://r-pkgs.org/dependencies-mindset-background.html)
-from the 'R packages' book for background, and its chapter
-[Dependencies: In Practice](https://r-pkgs.org/dependencies-in-practice.html)
-for practical advice.
+and [Dependencies: In Practice](https://r-pkgs.org/dependencies-in-practice.html)
+from the 'R packages' book for background and practical advice.
 
 ### Check which packages are used
 Package [**pkgstats**](https://docs.ropensci.org/pkgstats/reference/pkgstats.html)
@@ -337,7 +333,7 @@ On **reverse** dependencies, see section [Check reverse dependencies].
 ### Importing packages or functions
 The standard way to use functions from other packages is to import the package:
 use `usethis::use_package(package = "<pkg>", type = "Imports", min_version = "<version>")`
-to put the package in the `Imports:` field of the DESCRIPTION file. It is
+to put the package in the `Imports` field of the DESCRIPTION file. It is
 possible to specify minimum package versions through argument `min_version`,
 see [the next section][Specifying minimum versions].
 
@@ -346,18 +342,25 @@ usethis::use_package(package = "checkinput", type = "Imports", min_version = "1.
 ```
 
 If the package is only used in examples or vignettes, or is considered an
-optional addition, you can use `type = "Suggests"` to place it in the
-`Suggests:` field of the DESCRIPTION file. Code that uses that package should be
-guarded through `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`,
-such that the code is only executed if the package is installed. This is not
-necessary for the
-['base' R packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
-that are always installed with R but **is** necessary for the
-['recommended' packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
-that are only automatically installed in binary installations and for all other
-packages. From R 4.4.0, the names of the 'base' R packages and the 'recommended'
-packages are available through `tools::standard_package_names()$base` and
-`tools::standard_package_names()$recommended`, respectively.
+optional addition, you can use `type = "Suggests"` to place it in the `Suggests`
+field of the DESCRIPTION file. Code that uses that package should be guarded
+through `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`, such that the
+code is only executed if the package is installed. This is not necessary for the
+[base R packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
+that are always installed with R but **is** necessary for
+the [recommended packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
+that are only automatically installed in binary installations, **and** for all
+other packages.
+
+- The 'base' R packages are **base**, **compiler**, **datasets**, **graphics**,
+  **grDevices**, **grid**, **methods**, **parallel**, **splines**, **stats**,
+  **stats4**, **tcltk**, **tools**, **utils**. Since R 4.4.0, these names are
+  available through `tools::standard_package_names()$base`
+- The 'recommended' R packages are **boot**, **class**, **cluster**,
+  **codetools**, **foreign**, **KernSmooth**, **lattice**, **MASS**, **Matrix**,
+  **mgcv**, **nlme**, **nnet**, **rpart**, **spatial**, **survival**. Since R
+  4.4.0, these names are available through
+  `tools::standard_package_names()$recommended`.
 
 Besides putting the package in the DESCRIPTION file, the package name should be
 followed by two colons and the function name. For example, to use function
@@ -380,26 +383,28 @@ devtools::document()
 ```
 
 ### Specifying minimum versions
-Specifying a minimum package version when importing packages ensures that used
-functions are actually present. To use the currently installed package version,
-use `usethis::use_package(package = <pkg>, <...>, min_version = TRUE)`. However,
-that probably is
-too strict because functions are likely also present in older package versions.
+Specifying a minimum package version in your DESCRIPTION file when importing
+packages ensures that used functions are actually present. To use the currently
+installed package version, use
+`usethis::use_package(package = <pkg>, <...>, min_version = TRUE)`. However,
+that probably is too strict because functions are likely also present in older
+package versions.
 
-To check in which version a used functions was introduced, you can search the
-NEWS file of the relevant package for the function name to find the NEWS
-item announcing its introduction. If that does not work, you can search for the
-function file on the GitHub-page of the package and look in its history to see
-when it was created, or use the `Blame` feature to get a fine-grained overview
-of when code in that file was changed to see when a function was introduced. Then
-click on the commit message to get an overview of the files that were changed in
-that commit and use the `Browse files` button to browse the repository as it was
-repository as it was at the time of the commit. Then click the DESCRIPTION
-file to see which version the package was in.
-Finally, you can also specify different minimum package versions in checks
-through [GitHub actions][Use GitHub Actions] and iteratively change them to
-find the minimum version that passes the check. Then specify that version as
-minimum version in your DESCRIPTION file.
+To check in which version a used functions was introduced, you can
+
+- search the NEWS file of the relevant package for the function name to find the
+  NEWS item announcing its introduction.
+- search for the function file on the GitHub-page of the package and look in its
+  history to see when it was created, or use the `Blame` feature to get a
+  fine-grained overview of when code in that file was changed to see when a
+  function was introduced. Then click on the commit message to get an overview
+  of the files that were changed in that commit and use the `Browse files`
+  button to browse the repository as it was repository as it was at the time of
+  the commit. Then click the DESCRIPTION file to see which version the package
+  was in.
+- specify different minimum package versions in checks through
+  [GitHub actions][Use GitHub Actions] and iteratively change them to find the
+  minimum version that passes the check.
 
 Since R 4.6.0, `read.dcf()` recognises lines starting with `#` as comment lines,
 making it possible to use comments in the DESCRIPTION file to indicate why a
@@ -412,9 +417,9 @@ getRversion() # or: utils::packageVersion(pkg = "base")
 # Declare a minimum version for R itself
 usethis::use_package(package = "R", type = "Depends", min_version = "4.0.0")
 
-# Declare a dependency on a package: 'use_package()' to declare a minimum
-# version and 'use_dev_package()' to specify the remote repository to download
-# the package from.
+# Declare a dependency on a package: 'use_package()' to declare
+# a minimum version and 'use_dev_package()' to specify the
+# remote repository to download the package from.
 utils::packageVersion("checkinput")
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
@@ -473,7 +478,7 @@ e.g., using `utils::sessionInfo()`, `sessioninfo::session_info()`, or
 `sessioncheck::sessionstate()`:
 
 ```` {r session info, eval = FALSE}
-## sessionInfo
+## session info
 ```{r session info, echo = FALSE}
 if(requireNamespace("utils", quietly = TRUE)) {
   utils::sessionInfo()
