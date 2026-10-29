@@ -542,7 +542,7 @@ The next sections provide code to run checks from various packages.
 
 ### Various packages
 **BiocCheck** checks adherence to the
-[`Bioconductor Packages`](https://contributions.bioconductor.org/) guide, which
+[Bioconductor Packages guide](https://contributions.bioconductor.org/), which
 is required before submission to [BioConductor](https://bioconductor.org/).
 See the overview of checks in its
 [vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
@@ -552,7 +552,7 @@ package to `BioConductor`.
 [**checktor**](https://r-pkg.thecoatlessprofessor.com/checktor/) provides
 various checks supplementing `R CMD check`.
 
-``` {r checks-codetools, eval = FALSE}
+``` {r checks-various, eval = FALSE}
 devtools::load_all()
 
 # This leaves a '<pkg>.BiocCheck' folder in the package repository:
@@ -597,7 +597,8 @@ set arguments and
   while only using dependencies listed in the `Depends` and `Imports` fields of
   the DESCRIPTION file. This catches cases where a package that is listed in
   the `Suggests` field of the DESCRIPTION file is used in a vignette without
-  being run conditionally through `if(requireNamespace(<pkg>)) {<code>}`.
+  being [run conditionally][Importing packages or functions] through
+  `if(requireNamespace(<pkg>)) {<code>}`.
 - Using `manual = TRUE` to build and check the manual.
 - Using `remote = TRUE` (and thus `incoming = TRUE`) to run additional checks
   that are used by CRAN for new package submissions.
@@ -610,8 +611,9 @@ set arguments and
   
   These checks also identify problems with URLs that are used in the
   documentation. URLs:
-  - should be accessible (e.g., point to public GitHub repositories, not to
-    private repositories)
+  - should be accessible (e.g., point to
+    [public GitHub repositories](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility),
+    not to private repositories)
   - should be direct links, not redirects
   - should use the protocol `https://` instead of `http://`
   - should use the canonical forms expected by CRAN, not the 'simple' forms
@@ -641,8 +643,8 @@ devtools::check(manual = TRUE, remote = TRUE,
 
 ### goodpractice
 Runs checks of its own and checks from various other packages. I exclude checks
-that I do not find useful and checks that duplicate earlier checks. Use
-`goodpractice::all_check_groups()` to see all groups and
+that I do not find useful and checks that duplicate checks that already have
+been run above. Use `goodpractice::all_check_groups()` to see all groups and
 `goodpractice::checks_by_group(<groups>)` to show all checks in groups.
 
 ``` {r checks-goodpractice, eval = FALSE}
