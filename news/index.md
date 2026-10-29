@@ -18,6 +18,11 @@
 - Increase minimum version of **goodpractice** from 1.1.0 to 1.2.0 to
   remove the erroneous `lintr_strings_as_factors_linter` linter.
 
+#### Bugfixes
+
+- [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md)
+  matches test files against `.Rmd` files in folder `vignettes`.
+
 ## develcoder 0.17.0
 
 #### Breaking changes
