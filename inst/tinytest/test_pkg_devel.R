@@ -148,10 +148,10 @@ if(requireNamespace("devtools", quietly = TRUE)) {
 
 #### fs ####
 if(requireNamespace("fs", quietly = TRUE)) {
-  expect_true(
-    "dir_exists" %in%
+  expect_true(all(
+    c("dir_exists", "path_wd") %in%
       ls(getNamespace("fs"), all.names = TRUE)
-  )
+  ))
 }
 
 #### goodpractice ####
@@ -265,6 +265,23 @@ if(requireNamespace("sessioninfo", quietly = TRUE)) {
   )
 }
 
+#### testthat ####
+if(requireNamespace("testthat", quietly = TRUE)) {
+  expect_true(all(
+    c("expect_silent", "test_file") %in%
+      ls(getNamespace("testthat"), all.names = TRUE)
+  ))
+
+  fun_message <- function(x = 0) {
+    message("A message")
+    x
+  }
+
+  testthat::show_failure(
+    testthat::expect_silent(fun_message())
+  )
+}
+
 #### tinytest ####
 if(requireNamespace("tinytest", quietly = TRUE)) {
   expect_true(all(
@@ -282,12 +299,25 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
     c("...", "pattern", "strict") %in%
       names(formals(tinytest::expect_warning))
   ))
+
+  fun_message <- function(x = 0) {
+    message("A message")
+    x
+  }
+
+  expect_message(
+    expect_true(
+      # Need to use namespace declaration to differentiate between
+      # tinytest::expect_silent() and testthat::expect_silent()
+      tinytest::expect_silent(fun_message())
+    )
+  )
 }
 
 #### tools ####
 expect_true(all(
   c("check_packages_in_dir", "CRAN_check_details", "CRAN_check_issues",
-    "CRAN_check_results", "dependsOnPkgs", "Rd2txt") %in%
+    "CRAN_check_results", "dependsOnPkgs", "Rd2txt", "toTitleCase") %in%
     ls(getNamespace("tools"), all.names = TRUE)
 ))
 
@@ -304,10 +334,25 @@ if(utils::packageVersion("tools") >= "4.4.0") {
     "standard_package_names" %in%
       ls(getNamespace("tools"), all.names = TRUE)
   )
+  std_pkg_names <- tools::standard_package_names()
   expect_identical(
     c("base", "recommended"),
-    names(tools::standard_package_names())
+    names(std_pkg_names)
   )
+
+  expect_true(base::setequal(
+    c("base", "compiler", "datasets", "graphics", "grDevices", "grid",
+      "methods", "parallel", "splines", "stats", "stats4", "tcltk", "tools",
+      "utils"),
+    tools::standard_package_names()$base
+  ))
+
+  expect_true(base::setequal(
+    c("boot", "class", "cluster", "codetools", "foreign", "KernSmooth",
+      "lattice", "MASS", "Matrix", "mgcv", "nlme", "nnet", "rpart", "spatial",
+      "survival"),
+    tools::standard_package_names()$recommended
+  ))
 }
 
 if(utils::packageVersion("tools") >= "4.5.0") {

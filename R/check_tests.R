@@ -147,7 +147,7 @@ check_tests <- function(path = getwd(),
     files_testthat$test_files <- character(0)
   }
 
-  test_files_present <- c(files_tinytest$test_files, files_testthat$test_files)
+  tests_present <- c(files_tinytest$test_files, files_testthat$test_files)
   bool_dir_missing <- c(files_tinytest$status_testdir,
                         files_testthat$status_testdir) == "missing"
   all_paths <- c(path_tinytest, path_testthat)
@@ -156,7 +156,7 @@ check_tests <- function(path = getwd(),
     warning("None of the test directories exist:\n",
             progutils::paste_quoted(all_paths, collapse = "\n"))
   } else {
-    if(length(test_files_present) == 0L) {
+    if(length(tests_present) == 0L) {
       warning("None of the test directories contain used test files:\n",
               progutils::paste_quoted(all_paths, collapse = ",\n"))
     }
@@ -194,58 +194,70 @@ check_tests <- function(path = getwd(),
     }
   }
 
-  expected_test_files <- character(0)
-  if(length(R_files) > 0L) {
-    expected_test_files <- c(expected_test_files, R_files)
-  } else {
+  expected_tests_R <- character(0L)
+  missing_tests_R <- character(0L)
+  if(length(R_files) == 0L) {
     warning("No function files found in folder '", path_R, "'.")
+  } else {
+    expected_tests_R <- R_files
+    missing_tests_R <- progutils::not_in(
+      expected_tests_R,
+      sub(pattern = pattern, replacement = "", x = tests_present,
+          ignore.case = ignore_case))
+    if(length(missing_tests_R) > 0L) {
+      warning("No test file found corresponding to function file\n",
+              progutils::paste_quoted(missing_tests_R, collapse = ",\n")
+      )
+    }
   }
 
   path_vignettes <- fs::path(path, "vignettes")
-  vignettes_files <- character(0L)
+  vignette_files <- character(0L)
+  expected_tests_vignettes <- character(0L)
+  missing_tests_vignettes <- character(0L)
   if(fs::dir_exists(path_vignettes)) {
-    vignettes_files <- basename(
+    vignette_files <- basename(
       fs::dir_ls(path = path_vignettes, type = "file", fail = FALSE))
-    bool_not_Rmd <- !endsWith(x = vignettes_files, suffix = ".Rmd")
+    bool_not_Rmd <- !endsWith(x = vignette_files, suffix = ".Rmd")
     if(any(bool_not_Rmd)) {
       warning("Ignoring non-Rmd files in folder '", path_vignettes, "':\n",
-              progutils::paste_quoted(vignettes_files[bool_not_Rmd],
+              progutils::paste_quoted(vignette_files[bool_not_Rmd],
                                       collapse = ",\n"))
-      vignettes_files <- sub(pattern = "[.]Rmd$", replacement = ".R",
-                             x = vignettes_files[!bool_not_Rmd],
-                             ignore.case = FALSE)
+      vignette_files <- vignette_files[!bool_not_Rmd]
     }
-    if(length(vignettes_files) == 0L) {
+    if(length(vignette_files) == 0L) {
       warning("No vignettes found in folder '", path_vignettes, "'.")
     } else {
+      expected_tests_vignettes <- sub(
+        pattern = "[.]Rmd", replacement = ".R", x = vignette_files,
+        fixed = TRUE)
       if(test_vignettes) {
-        expected_test_files <- c(expected_test_files, vignettes_files)
+        bool_missing_tests_vignettes <- progutils::not_in(
+          expected_tests_vignettes,
+          sub(pattern = pattern, replacement = "", x = tests_present,
+              ignore.case = ignore_case),
+          value = FALSE)
+        missing_tests_vignettes <- vignette_files[bool_missing_tests_vignettes]
+        if(length(missing_tests_vignettes) > 0L) {
+          warning("No test file found corresponding to vignette\n",
+                  progutils::paste_quoted(missing_tests_vignettes,
+                                          collapse = ",\n")
+          )
+        }
       }
     }
   }
 
-  tests_missing <- progutils::not_in(
-    expected_test_files,
-    gsub(pattern = pattern, replacement = "", x = test_files_present,
-         ignore.case = ignore_case))
-  tests_extraneous <- progutils::not_in(
-    gsub(pattern = pattern, replacement = "", x = test_files_present,
-         ignore.case = ignore_case),
-    gsub(pattern = "[.]Rmd$", replacement = ".R",
-         x = c(expected_test_files, vignettes_files), ignore.case = FALSE))
-  if(length(tests_missing) > 0L) {
-    warning("No test file found corresponding to function file or vignette\n",
-            progutils::paste_quoted(
-              gsub(pattern = pattern, replacement = "", x = tests_missing),
-              collapse = ",\n"
-            )
-    )
-  }
-
-  if(length(tests_extraneous) > 0L) {
+  extraneous_tests <- progutils::not_in(
+    sub(pattern = pattern, replacement = "", x = tests_present,
+        ignore.case = ignore_case),
+    c(expected_tests_R, expected_tests_vignettes)
+  )
+  if(length(extraneous_tests) > 0L) {
     warning("No function file or vignette found corresponding to test file\n",
-            progutils::paste_quoted(tests_extraneous, collapse = ",\n"))
+            progutils::paste_quoted(extraneous_tests, collapse = ",\n"))
   }
 
-  list(missing = tests_missing, extraneous = tests_extraneous)
+  list(missing = c(missing_tests_R, missing_tests_vignettes),
+       extraneous = extraneous_tests)
 }
