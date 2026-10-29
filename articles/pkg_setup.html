@@ -90,7 +90,7 @@ development</em>: <a href="https://jessealderliesten.github.io/develcoder/articl
 given at the CRAN task view <a href="https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape" class="external-link">Package
 Development</a>, the <a href="https://r-universe.dev/" class="external-link">search page</a>
 of R-universe which is also available with <a href="https://rwarehouse.netlify.app/" class="external-link">AI-assisted extended search
-capabilities</a>, packages <a href="https://CRAN.R-project.org/package=pkgmatch" class="external-link"><strong>pkgmatch</strong></a>
+capabilities</a>, and packages <a href="https://CRAN.R-project.org/package=pkgmatch" class="external-link"><strong>pkgmatch</strong></a>
 and <a href="https://CRAN.R-project.org/package=pkgsearch" class="external-link"><strong>pkgsearch</strong></a>.
 Section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#r-packages" class="external-link">R
 packages</a> in the vignette <em>R packages</em> from package <a href="https://jessealderliesten.github.io/checkrpkgs/" class="external-link"><strong>checkrpkgs</strong></a>
@@ -101,10 +101,14 @@ gives an overview of repositories containing R packages:
 <h2 id="choose-a-name">Choose a name<a class="anchor" aria-label="anchor" href="#choose-a-name"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pkgname</span> <span class="op">&lt;-</span> <span class="st">"develcoder"</span></span>
+<code class="sourceCode R"><span><span class="va">pkgname</span> <span class="op">&lt;-</span> <span class="st">"mypkgname"</span></span>
 <span></span>
 <span><span class="co"># Is the intended name valid?</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu">pkgdepends</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/pkgdepends/reference/is_valid_package_name.html" class="external-link">is_valid_package_name</a></span><span class="op">(</span>nm <span class="op">=</span> <span class="va">pkgname</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pkgname_valid</span> <span class="op">&lt;-</span> <span class="fu">pkgdepends</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/pkgdepends/reference/is_valid_package_name.html" class="external-link">is_valid_package_name</a></span><span class="op">(</span>nm <span class="op">=</span> <span class="va">pkgname</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="va">pkgname_valid</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"Package name "</span>, <span class="fu">progutils</span><span class="fu">::</span><span class="fu"><a href="https://jessealderliesten.github.io/checkinput/reference/paste_quoted.html" class="external-link">paste_quoted</a></span><span class="op">(</span><span class="va">pkgname</span><span class="op">)</span>, <span class="st">" is not valid: "</span>,</span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">pkgname_valid</span>, which <span class="op">=</span> <span class="st">"reason"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># Is the intended name available?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu">pkgdepends</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/pkgdepends/reference/pkg_name_check.html" class="external-link">pkg_name_check</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">pkgname</span><span class="op">)</span><span class="op">$</span><span class="va">basics</span><span class="op">)</span></span>
@@ -171,10 +175,10 @@ Source</a>.</p>
 packages with licences from <a href="https://svn.r-project.org/R/trunk/share/licenses/license.db" class="external-link">this
 list</a>. See the section ‘Licences’ in <code><a href="https://rdrr.io/r/base/library.html" class="external-link">help("library")</a></code> on
 how to notify users that a package uses a license that is
-not-known-to-be-Free or Open Source Software. <strong>usethis</strong>
-provides utility functions to add licenses (see
-<code>help("licenses", package = "usethis")</code>. For example, to add
-a <a href="https://choosealicense.com/licenses/mit/" class="external-link">MIT
+not-known-to-be-Free or Open Source Software.</p>
+<p><strong>usethis</strong> provides utility functions to add licenses
+(see <code>help("licenses", package = "usethis")</code>. For example, to
+add a <a href="https://choosealicense.com/licenses/mit/" class="external-link">MIT
 license</a>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/licenses.html" class="external-link">use_mit_license</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -185,7 +189,9 @@ license</a>:</p>
 <p>A citation file makes clear how your package should be cited. See the
 documentation in the R package <a href="https://CRAN.R-project.org/package=cffr" class="external-link"><strong>cffr</strong></a>
 and the GitHub page <a href="https://citation-file-format.github.io/" class="external-link"><code>Citation file format</code></a>
-for details on the format.</p>
+for details on the ‘Citation File Format’ used here, and
+<code><a href="https://rdrr.io/r/utils/citation.html" class="external-link">help("citation", package = "utils")</a></code> on the base R citation
+style.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cffr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/cffr/reference/cff_write.html" class="external-link">cff_write</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -232,9 +238,10 @@ details.</p>
 <code>&lt;pkg&gt;</code> has been loaded (i.e.,
 <code>library(&lt;pkg&gt;)</code> has been run),
 <code>help("&lt;pkg&gt;")</code> produces a relevant description of the
-package with links to GitHub and to the package website. It is also used
-by <strong>usethis</strong> to list imported functions, and can be
-configured to give an overview of the functions in the package.</p>
+package with links to <a href="https://github.com/" class="external-link">GitHub</a> and to
+the package website. It is also used by <strong>usethis</strong> to list
+imported functions, and can be configured to give an overview of the
+functions in the package.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package_doc.html" class="external-link">use_package_doc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Create R/&lt;pkg&gt;-package.R</span></span></code></pre></div>
 </div>
@@ -249,9 +256,13 @@ configured to give an overview of the functions in the package.</p>
 <h2 id="set-up-testing-infrastructure">Set up testing infrastructure<a class="anchor" aria-label="anchor" href="#set-up-testing-infrastructure"></a>
 </h2>
 <p>It is convenient to have a collection of tests for your functions
-(see the Chapter <a href="https://r-pkgs.org/testing-basics.html" class="external-link">‘Testing basics’</a> from
-the ’R packages` book). Various packages can be used to create and run
-such tests. To use package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><strong>tinytest</strong></a>
+(see section <a href="https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests">Add
+tests</a> in vignette <em>Package development</em> for background.
+Various packages can be used to create and run such tests, see section
+<a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link">Packages
+tests</a> from the CRAN Task View
+<code>Package Development and Maintenance</code> for an overview. To use
+package <a href="https://CRAN.R-project.org/package=tinytest" class="external-link"><strong>tinytest</strong></a>
 for testing, set up its infrastructure through:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/setup_tinytest.html" class="external-link">setup_tinytest</a></span><span class="op">(</span>pkgdir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
@@ -309,17 +320,17 @@ even if dependencies in <code>Suggests</code> are not installed.</p>
 <code>&lt;pkg&gt;\.github\workflows\check-no-suggests.yaml</code>) to
 include some other useful triggers for <code>GitHub Actions</code> (see
 the template files <code>check-standard.yaml</code> and
-<code>check-no-suggests.yaml</code> in the folder <code>templates</code>
-in the local package folder or in <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">inst/templates</a>
+<code>check-no-suggests.yaml</code> in folder <code>templates</code> in
+the local package folder or in <a href="https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates" class="external-link">inst/templates</a>
 on the GitHub repository):</p>
 <ul>
 <li>you made changes, or someone else proposed changes to code in the
 current repository:<br>
 add <code>pull_request:</code> to section <code>on:</code> to run
-<code>GitHub Actions</code> on pull requests.<br>
-You can remove <code>push</code> from section <code>on:</code>: it
-should be sufficient to run <code>R CMD check</code> locally before
-pushing and run <code>GitHub Actions</code> on pull requests.</li>
+<code>GitHub Actions</code> on pull requests. You can remove
+<code>push</code> from section <code>on:</code>: it should be sufficient
+to run <code>R CMD check</code> locally before pushing and run
+<code>GitHub Actions</code> on pull requests.</li>
 <li>you made changes to a repository and want to check if a reverse
 dependency (i.e., a package that depends on the package you changed) is
 still working fine:<br>
@@ -371,11 +382,10 @@ following code:</p>
 <p>After a few minutes, the website should be present. The URL has the
 structure
 <code>https://&lt;username&gt;.github.io/&lt;repository&gt;/</code>,
-e.g., <code>https://jessealderliesten.github.io/develcoder/</code>.</p>
-<p>Refer from the README to the pkgdown website and add the line
-<code>light-switch: true</code> below the <code>template</code> heading
-in the <code>_pkgdown.YML</code> file to add a light-switch to the
-pkgdown-website, see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
+e.g., <a href="https://jessealderliesten.github.io/develcoder/"><code>https://jessealderliesten.github.io/develcoder/</code></a>.</p>
+<p>Refer from the README to the pkgdown website.</p>
+<p>To add a light-switch to the pkgdown-website, add the line<br><code>light-switch: true</code> below the <code>template</code> heading
+in the <code>_pkgdown.YML</code> file, see the <a href="https://pkgdown.r-lib.org/articles/customise.html#light-switch" class="external-link">documentation</a>
 and the <a href="https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml" class="external-link">example
 code</a> for this repository. The <code>_pkgdown.YML</code> file is
 located in the top-level package folder or in folder

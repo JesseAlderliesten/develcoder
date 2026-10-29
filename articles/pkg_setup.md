@@ -14,7 +14,7 @@ at the CRAN task view [Package
 Development](https://CRAN.R-project.org/view=PackageDevelopment#checking-the-package-landscape),
 the [search page](https://r-universe.dev/) of R-universe which is also
 available with [AI-assisted extended search
-capabilities](https://rwarehouse.netlify.app/), packages
+capabilities](https://rwarehouse.netlify.app/), and packages
 [**pkgmatch**](https://CRAN.R-project.org/package=pkgmatch) and
 [**pkgsearch**](https://CRAN.R-project.org/package=pkgsearch). Section
 [R
@@ -28,10 +28,14 @@ an overview of repositories containing R packages:
 
 ``` r
 
-pkgname <- "develcoder"
+pkgname <- "mypkgname"
 
 # Is the intended name valid?
-stopifnot(pkgdepends::is_valid_package_name(nm = pkgname))
+pkgname_valid <- pkgdepends::is_valid_package_name(nm = pkgname)
+if(!pkgname_valid) {
+  stop("Package name ", progutils::paste_quoted(pkgname), " is not valid: ",
+       attr(pkgname_valid, which = "reason"))
+}
 
 # Is the intended name available?
 unlist(pkgdepends::pkg_name_check(name = pkgname)$basics)
@@ -101,9 +105,11 @@ list](https://svn.r-project.org/R/trunk/share/licenses/license.db). See
 the section ‘Licences’ in
 [`help("library")`](https://rdrr.io/r/base/library.html) on how to
 notify users that a package uses a license that is not-known-to-be-Free
-or Open Source Software. **usethis** provides utility functions to add
-licenses (see `help("licenses", package = "usethis")`. For example, to
-add a [MIT license](https://choosealicense.com/licenses/mit/):
+or Open Source Software.
+
+**usethis** provides utility functions to add licenses (see
+`help("licenses", package = "usethis")`. For example, to add a [MIT
+license](https://choosealicense.com/licenses/mit/):
 
 ``` r
 
@@ -116,7 +122,9 @@ A citation file makes clear how your package should be cited. See the
 documentation in the R package
 [**cffr**](https://CRAN.R-project.org/package=cffr) and the GitHub page
 [`Citation file format`](https://citation-file-format.github.io/) for
-details on the format.
+details on the ‘Citation File Format’ used here, and
+[`help("citation", package = "utils")`](https://rdrr.io/r/utils/citation.html)
+on the base R citation style.
 
 ``` r
 
@@ -158,9 +166,9 @@ for details.
 A package overview through the file `R/<pkg>-package.R` makes that, if
 package `<pkg>` has been loaded (i.e., `library(<pkg>)` has been run),
 `help("<pkg>")` produces a relevant description of the package with
-links to GitHub and to the package website. It is also used by
-**usethis** to list imported functions, and can be configured to give an
-overview of the functions in the package.
+links to [GitHub](https://github.com/) and to the package website. It is
+also used by **usethis** to list imported functions, and can be
+configured to give an overview of the functions in the package.
 
 ``` r
 
@@ -177,9 +185,13 @@ usethis::use_news_md() # Create NEWS.md
 ## Set up testing infrastructure
 
 It is convenient to have a collection of tests for your functions (see
-the Chapter [‘Testing basics’](https://r-pkgs.org/testing-basics.html)
-from the ’R packages\` book). Various packages can be used to create and
-run such tests. To use package
+section [Add
+tests](https://jessealderliesten.github.io/develcoder/articles/pkg_devel.html#add-tests)
+in vignette *Package development* for background. Various packages can
+be used to create and run such tests, see section [Packages
+tests](https://cran.r-project.org/view=PackageDevelopment#packages-tests)
+from the CRAN Task View `Package Development and Maintenance` for an
+overview. To use package
 [**tinytest**](https://CRAN.R-project.org/package=tinytest) for testing,
 set up its infrastructure through:
 
@@ -258,18 +270,17 @@ After setting up these workflows, adjust the created `.yaml` files
 (i.e., `<pkg>\.github\workflows\check-standard.yaml` and
 `<pkg>\.github\workflows\check-no-suggests.yaml`) to include some other
 useful triggers for `GitHub Actions` (see the template files
-`check-standard.yaml` and `check-no-suggests.yaml` in the folder
-`templates` in the local package folder or in
+`check-standard.yaml` and `check-no-suggests.yaml` in folder `templates`
+in the local package folder or in
 [inst/templates](https://github.com/JesseAlderliesten/develcoder/tree/main/inst/templates)
 on the GitHub repository):
 
 - you made changes, or someone else proposed changes to code in the
   current repository:  
   add `pull_request:` to section `on:` to run `GitHub Actions` on pull
-  requests.  
-  You can remove `push` from section `on:`: it should be sufficient to
-  run `R CMD check` locally before pushing and run `GitHub Actions` on
-  pull requests.
+  requests. You can remove `push` from section `on:`: it should be
+  sufficient to run `R CMD check` locally before pushing and run
+  `GitHub Actions` on pull requests.
 - you made changes to a repository and want to check if a reverse
   dependency (i.e., a package that depends on the package you changed)
   is still working fine:  
@@ -328,11 +339,13 @@ devtools::document() # To update package-wide documentation
 
 After a few minutes, the website should be present. The URL has the
 structure `https://<username>.github.io/<repository>/`, e.g.,
-`https://jessealderliesten.github.io/develcoder/`.
+[`https://jessealderliesten.github.io/develcoder/`](https://jessealderliesten.github.io/develcoder/).
 
-Refer from the README to the pkgdown website and add the line
+Refer from the README to the pkgdown website.
+
+To add a light-switch to the pkgdown-website, add the line  
 `light-switch: true` below the `template` heading in the `_pkgdown.YML`
-file to add a light-switch to the pkgdown-website, see the
+file, see the
 [documentation](https://pkgdown.r-lib.org/articles/customise.html#light-switch)
 and the [example
 code](https://github.com/JesseAlderliesten/develcoder/blob/main/_pkgdown.yml)

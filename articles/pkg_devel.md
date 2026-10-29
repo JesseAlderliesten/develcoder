@@ -45,29 +45,31 @@ Do:
 ### Add documentation
 
 Function files with file extension `.R` can be annotated using the
-‘roxygen’ format. Then use
+‘roxygen’ format. Then using
 [`devtools::document()`](https://devtools.r-lib.org/reference/document.html),
 which itself calls
 [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html),
-to create documentation files with file extension `.Rd`.
+creates documentation files with file extension `.Rd`.
 
 The vignettes of [**roxygen2**](https://roxygen2.r-lib.org/) describe
-many aspects of package documentation, see
-`utils::browseVignettes(package = "roxygen2")`, among others vignettes
-with a general [introduction to
+many aspects of package documentation, among others vignettes with a
+general [introduction to
 roxygen2](https://roxygen2.r-lib.org/articles/roxygen2.html) and a
 general [introduction to function
-documentation](https://roxygen2.r-lib.org/articles/rd-functions.html).
+documentation](https://roxygen2.r-lib.org/articles/rd-functions.html),
+see `utils::browseVignettes(package = "roxygen2")`.
 
 Section titles [should](https://developer.r-project.org/Rds.html) be
-capitalized and not end in a period. It is best to avoid all markup in
-titles because they need to be automatically processed for various
-hypertext search systems. It is possible to create
+capitalized and not end in a period, use
+[`tools::toTitleCase()`](https://rdrr.io/r/tools/toTitleCase.html). It
+is best to avoid all markup in titles because they need to be
+automatically processed for various hypertext search systems. It is
+possible to create
 [subheadings](https://roxygen2.r-lib.org/articles/rd-formatting.html#sections-and-subsections)
 in roxygen blocks using `##` and `###`, i.e., usual Markdown syntax.
 
 ``` r
-#' Title (should be capitalized and not end in a period)
+#' Title (Should be Capitalized and not End in a Period)
 #'
 #' Description
 #'
@@ -137,12 +139,13 @@ functions using
 It is possible to inherit the description of parameters from other
 functions. Since **roxygen2** 8.0.0, it is possible to specify which
 arguments to inherit (i.e., to filter arguments). For arguments that
-share a single description, this works from **roxygen2** 8.1.1.
+share a single description, filtering arguments works since **roxygen2**
+8.1.1.
 
 ``` r
 
 # inherit the description for all arguments from a function in the current
-# package (arguments that do not occur in the target function will be ignored)
+# package, ignoring arguments that do not occur in the target function
 #' @inheritParams diagnose_test_files pattern
 
 # inherit the description for argument 'fields' from function
@@ -207,27 +210,31 @@ For background on testing:
   subsequent chapters from the ‘R packages’ book.
 - [Code
   Testing](https://book.the-turing-way.org/reproducible-research/testing/)
-  and subsequent chapters.
-- Section ‘Packages tests’ from the CRAN Task View [Package Development
-  and
-  Maintenance](https://cran.r-project.org/view=PackageDevelopment#packages-tests).
+  and subsequent chapters from ‘The Turing Way handbook to reproducible,
+  ethical and collaborative data science’.
+- Section [Packages
+  tests](https://cran.r-project.org/view=PackageDevelopment#packages-tests)
+  from the CRAN Task View `Package Development and Maintenance`.
 
-The code below shows how to run tests.
+The code below shows how to run tests with **tinytest** and
+**testthat**.
 
 ``` r
 
-# Run all tests of a package. Use 'devtools::test()' instead of
-# 'tinytest::test_all()' if you used package 'testthat' to create tests.
-tinytest::test_all()
+tinytest::test_all() # Test all tests from tinytest
+devtools::test() # Test all tests from testthat
 
 # Run a specific test file, selecting the file by name
-tinytest::run_test_file(fs::path(getwd(), "inst", "tinytest", "test_funcname.R"))
+tinytest::run_test_file(fs::path_wd("inst", "tinytest", "test_funcname.R"))
+testthat::test_file(fs::path_wd("tests", "testthat", "test-funcname.R"))
 ```
 
 #### Expectations
 
-Note that `tinytest::expect_silent(...)` tests that no errors or
-warnings are emitted, **not** that no messages are emitted.
+`tinytest::expect_silent(...)` allows messages to be emitted (and thus
+tests that no errors or warnings are emitted), whereas
+[`testthat::expect_silent()`](https://testthat.r-lib.org/reference/expect_silent.html)
+does **not** allow messages to be emitted.
 
 ``` r
 
@@ -242,7 +249,7 @@ expect_error(func_name(x = "a", arg = arg),
 #### Interactive testing
 
 To interactively run tests, attach the package that you want to test
-before running the tests as explained in the previous paragraphs:
+before running the tests:
 
 - use `devtools::load_all(<pkg>)` (with `unloadNamespace("develcoder")`
   to detach it)
@@ -251,11 +258,10 @@ before running the tests as explained in the previous paragraphs:
   to specify which version to load, with `detach("<pkg>")` to detach it.
 
 `pkgload::is_dev_package(<pkg>)` shows if a package was loaded through
-`devtools::load_all(<pkg>)`, and
+`devtools::load_all(<pkg>)` and
 [`devtools::loaded_packages()`](https://devtools.r-lib.org/reference/loaded_packages.html)
-shows loaded packages with the path from which they were loaded that can
-also be used to identify development packages. See the section [Loading
-and attaching
+shows the path from which packages were loaded, which can also be used
+to identify development packages. See the section [Loading and attaching
 packages](https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages)
 in the vignette *R packages* from package **checkrpkgs** for details on
 loading packages:
@@ -290,8 +296,8 @@ options(<option> = orig_opt)
 
 To reset all parameters at once, use
 `orig_par <- par(no.readonly = TRUE)`. To restore options that are
-changed inside a function, add `on.exit(par(orig_par))` immediately
-after changing the option.
+changed inside a function, add `on.exit(par(orig_par), add = TRUE)`
+immediately after changing the option.
 
 #### Sorting order
 
@@ -308,11 +314,10 @@ characters, which also changes the sorting order from `c("-", "_")` to
 The used locale can be set through
 [`Sys.getlocale()`](https://rdrr.io/r/base/locales.html) but is also
 influenced by the used operating system and other settings in `R`, see
-[`help("locales")`](https://rdrr.io/r/base/locales.html), section
-[Locales](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales)
-in the ‘R Installation and Administration manual’ and section ‘Details’
-of [`help("Comparison")`](https://rdrr.io/r/base/Comparison.html). See
-the ‘Programming Notes’ in
+[`help("locales")`](https://rdrr.io/r/base/locales.html) and the
+[Programming Note about
+locales](https://jessealderliesten.github.io/checkinput/reference/all_names.html#locales)
+in
 [`checkinput::all_names()`](https://jessealderliesten.github.io/checkinput/reference/all_names.html)
 for more references.
 
@@ -339,15 +344,14 @@ possibly followed by a check like
 ### Update dependencies
 
 First, consider if you really need a new dependency and which package
-that should be. Some additional effort in choosing dependencies or in
-coding might allow using dependencies that themselves have fewer
-dependencies, making a project more stable over time. See the chapter
+that should be. Some additional effort in coding or in choosing
+dependencies might allow using dependencies that themselves have fewer
+dependencies, making a project more stable over time. See the chapters
 [Dependencies: Mindset and
-Background](https://r-pkgs.org/dependencies-mindset-background.html)
-from the ‘R packages’ book for background, and its chapter
+Background](https://r-pkgs.org/dependencies-mindset-background.html) and
 [Dependencies: In
-Practice](https://r-pkgs.org/dependencies-in-practice.html) for
-practical advice.
+Practice](https://r-pkgs.org/dependencies-in-practice.html) from the ‘R
+packages’ book for background and practical advice.
 
 #### Check which packages are used
 
@@ -385,8 +389,8 @@ dependencies](#check-reverse-dependencies).
 The standard way to use functions from other packages is to import the
 package: use
 `usethis::use_package(package = "<pkg>", type = "Imports", min_version = "<version>")`
-to put the package in the `Imports:` field of the DESCRIPTION file. It
-is possible to specify minimum package versions through argument
+to put the package in the `Imports` field of the DESCRIPTION file. It is
+possible to specify minimum package versions through argument
 `min_version`, see [the next section](#specifying-minimum-versions).
 
 ``` r
@@ -396,20 +400,28 @@ usethis::use_package(package = "checkinput", type = "Imports", min_version = "1.
 
 If the package is only used in examples or vignettes, or is considered
 an optional addition, you can use `type = "Suggests"` to place it in the
-`Suggests:` field of the DESCRIPTION file. Code that uses that package
+`Suggests` field of the DESCRIPTION file. Code that uses that package
 should be guarded through
 `if(requireNamespace(<pkg>, quietly = TRUE)) {<code>}`, such that the
 code is only executed if the package is installed. This is not necessary
-for the [‘base’ R
+for the [base R
 packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
 that are always installed with R but **is** necessary for the
-[‘recommended’
+[recommended
 packages](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
-that are only automatically installed in binary installations and for
-all other packages. From R 4.4.0, the names of the ‘base’ R packages and
-the ‘recommended’ packages are available through
-`tools::standard_package_names()$base` and
-`tools::standard_package_names()$recommended`, respectively.
+that are only automatically installed in binary installations, **and**
+for all other packages.
+
+- The ‘base’ R packages are **base**, **compiler**, **datasets**,
+  **graphics**, **grDevices**, **grid**, **methods**, **parallel**,
+  **splines**, **stats**, **stats4**, **tcltk**, **tools**, **utils**.
+  Since R 4.4.0, these names are available through
+  `tools::standard_package_names()$base`
+- The ‘recommended’ R packages are **boot**, **class**, **cluster**,
+  **codetools**, **foreign**, **KernSmooth**, **lattice**, **MASS**,
+  **Matrix**, **mgcv**, **nlme**, **nnet**, **rpart**, **spatial**,
+  **survival**. Since R 4.4.0, these names are available through
+  `tools::standard_package_names()$recommended`.
 
 Besides putting the package in the DESCRIPTION file, the package name
 should be followed by two colons and the function name. For example, to
@@ -441,28 +453,28 @@ devtools::document()
 
 #### Specifying minimum versions
 
-Specifying a minimum package version when importing packages ensures
-that used functions are actually present. To use the currently installed
-package version, use
+Specifying a minimum package version in your DESCRIPTION file when
+importing packages ensures that used functions are actually present. To
+use the currently installed package version, use
 `usethis::use_package(package = <pkg>, <...>, min_version = TRUE)`.
 However, that probably is too strict because functions are likely also
 present in older package versions.
 
 To check in which version a used functions was introduced, you can
-search the NEWS file of the relevant package for the function name to
-find the NEWS item announcing its introduction. If that does not work,
-you can search for the function file on the GitHub-page of the package
-and look in its history to see when it was created, or use the `Blame`
-feature to get a fine-grained overview of when code in that file was
-changed to see when a function was introduced. Then click on the commit
-message to get an overview of the files that were changed in that commit
-and use the `Browse files` button to browse the repository as it was
-repository as it was at the time of the commit. Then click the
-DESCRIPTION file to see which version the package was in. Finally, you
-can also specify different minimum package versions in checks through
-[GitHub actions](#use-github-actions) and iteratively change them to
-find the minimum version that passes the check. Then specify that
-version as minimum version in your DESCRIPTION file.
+
+- search the NEWS file of the relevant package for the function name to
+  find the NEWS item announcing its introduction.
+- search for the function file on the GitHub-page of the package and
+  look in its history to see when it was created, or use the `Blame`
+  feature to get a fine-grained overview of when code in that file was
+  changed to see when a function was introduced. Then click on the
+  commit message to get an overview of the files that were changed in
+  that commit and use the `Browse files` button to browse the repository
+  as it was repository as it was at the time of the commit. Then click
+  the DESCRIPTION file to see which version the package was in.
+- specify different minimum package versions in checks through [GitHub
+  actions](#use-github-actions) and iteratively change them to find the
+  minimum version that passes the check.
 
 Since R 4.6.0, [`read.dcf()`](https://rdrr.io/r/base/dcf.html)
 recognises lines starting with `#` as comment lines, making it possible
@@ -477,9 +489,9 @@ getRversion() # or: utils::packageVersion(pkg = "base")
 # Declare a minimum version for R itself
 usethis::use_package(package = "R", type = "Depends", min_version = "4.0.0")
 
-# Declare a dependency on a package: 'use_package()' to declare a minimum
-# version and 'use_dev_package()' to specify the remote repository to download
-# the package from.
+# Declare a dependency on a package: 'use_package()' to declare
+# a minimum version and 'use_dev_package()' to specify the
+# remote repository to download the package from.
 utils::packageVersion("checkinput")
 usethis::use_package(package = "checkinput", type = "Imports", min_version = TRUE)
 usethis::use_dev_package(package = "checkinput", type = "Imports",
@@ -550,7 +562,7 @@ or
 [`sessioncheck::sessionstate()`](https://sessioncheck.djnavarro.net/reference/sessionstate.html):
 
 ```` r
-## sessionInfo
+## session info
 ```{r session info, echo = FALSE}
 if(requireNamespace("utils", quietly = TRUE)) {
   utils::sessionInfo()
@@ -632,11 +644,10 @@ The next sections provide code to run checks from various packages.
 
 #### Various packages
 
-**BiocCheck** checks adherence to the
-[`Bioconductor Packages`](https://contributions.bioconductor.org/)
-guide, which is required before submission to
-[BioConductor](https://bioconductor.org/). See the overview of checks in
-its
+**BiocCheck** checks adherence to the [Bioconductor Packages
+guide](https://contributions.bioconductor.org/), which is required
+before submission to [BioConductor](https://bioconductor.org/). See the
+overview of checks in its
 [vignette](https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html).
 Several of the checks are probably too strict if you do not intend to
 submit the package to `BioConductor`.
@@ -697,7 +708,8 @@ values](https://cran.r-project.org/doc/manuals/r-release/R-ints.html):
   code while only using dependencies listed in the `Depends` and
   `Imports` fields of the DESCRIPTION file. This catches cases where a
   package that is listed in the `Suggests` field of the DESCRIPTION file
-  is used in a vignette without being run conditionally through
+  is used in a vignette without being [run
+  conditionally](#importing-packages-or-functions) through
   `if(requireNamespace(<pkg>)) {<code>}`.
 
 - Using `manual = TRUE` to build and check the manual.
@@ -716,8 +728,9 @@ values](https://cran.r-project.org/doc/manuals/r-release/R-ints.html):
   These checks also identify problems with URLs that are used in the
   documentation. URLs:
 
-  - should be accessible (e.g., point to public GitHub repositories, not
-    to private repositories)
+  - should be accessible (e.g., point to [public GitHub
+    repositories](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility),
+    not to private repositories)
   - should be direct links, not redirects
   - should use the protocol `https://` instead of `http://`
   - should use the canonical forms expected by CRAN, not the ‘simple’
@@ -751,8 +764,8 @@ devtools::check(manual = TRUE, remote = TRUE,
 #### goodpractice
 
 Runs checks of its own and checks from various other packages. I exclude
-checks that I do not find useful and checks that duplicate earlier
-checks. Use
+checks that I do not find useful and checks that duplicate checks that
+already have been run above. Use
 [`goodpractice::all_check_groups()`](https://docs.ropensci.org/goodpractice/reference/all_check_groups.html)
 to see all groups and `goodpractice::checks_by_group(<groups>)` to show
 all checks in groups.

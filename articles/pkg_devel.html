@@ -118,22 +118,24 @@ package website cannot be build.</li>
 <h3 id="add-documentation">Add documentation<a class="anchor" aria-label="anchor" href="#add-documentation"></a>
 </h3>
 <p>Function files with file extension <code>.R</code> can be annotated
-using the ‘roxygen’ format. Then use <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code>,
-which itself calls <code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenise()</a></code>, to create
-documentation files with file extension <code>.Rd</code>.</p>
+using the ‘roxygen’ format. Then using
+<code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code>, which itself calls
+<code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenise()</a></code>, creates documentation files with
+file extension <code>.Rd</code>.</p>
 <p>The vignettes of <a href="https://roxygen2.r-lib.org/" class="external-link"><strong>roxygen2</strong></a>
-describe many aspects of package documentation, see
-<code>utils::browseVignettes(package = "roxygen2")</code>, among others
-vignettes with a general <a href="https://roxygen2.r-lib.org/articles/roxygen2.html" class="external-link">introduction to
+describe many aspects of package documentation, among others vignettes
+with a general <a href="https://roxygen2.r-lib.org/articles/roxygen2.html" class="external-link">introduction to
 roxygen2</a> and a general <a href="https://roxygen2.r-lib.org/articles/rd-functions.html" class="external-link">introduction
-to function documentation</a>.</p>
+to function documentation</a>, see
+<code>utils::browseVignettes(package = "roxygen2")</code>.</p>
 <p>Section titles <a href="https://developer.r-project.org/Rds.html" class="external-link">should</a> be
-capitalized and not end in a period. It is best to avoid all markup in
+capitalized and not end in a period, use
+<code><a href="https://rdrr.io/r/tools/toTitleCase.html" class="external-link">tools::toTitleCase()</a></code>. It is best to avoid all markup in
 titles because they need to be automatically processed for various
 hypertext search systems. It is possible to create <a href="https://roxygen2.r-lib.org/articles/rd-formatting.html#sections-and-subsections" class="external-link">subheadings</a>
 in roxygen blocks using <code>##</code> and <code>###</code>, i.e.,
 usual Markdown syntax.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#' Title (should be capitalized and not end in a period)</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#' Title (Should be Capitalized and not End in a Period)</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#' Description</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#'</span></span>
@@ -197,11 +199,11 @@ that section in other functions using<br><code>#' @inherit fun seealso</code>.</
 <p>It is possible to inherit the description of parameters from other
 functions. Since <strong>roxygen2</strong> 8.0.0, it is possible to
 specify which arguments to inherit (i.e., to filter arguments). For
-arguments that share a single description, this works from
-<strong>roxygen2</strong> 8.1.1.</p>
+arguments that share a single description, filtering arguments works
+since <strong>roxygen2</strong> 8.1.1.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># inherit the description for all arguments from a function in the current</span></span>
-<span><span class="co"># package (arguments that do not occur in the target function will be ignored)</span></span>
+<span><span class="co"># package, ignoring arguments that do not occur in the target function</span></span>
 <span><span class="co">#' @inheritParams diagnose_test_files pattern</span></span>
 <span></span>
 <span><span class="co"># inherit the description for argument 'fields' from function</span></span>
@@ -261,25 +263,29 @@ Packages</a> guide</li>
 and subsequent chapters from the ‘R packages’ book.</li>
 <li>
 <a href="https://book.the-turing-way.org/reproducible-research/testing/" class="external-link">Code
-Testing</a> and subsequent chapters.</li>
-<li>Section ‘Packages tests’ from the CRAN Task View <a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link">Package
-Development and Maintenance</a>.</li>
+Testing</a> and subsequent chapters from ‘The Turing Way handbook to
+reproducible, ethical and collaborative data science’.</li>
+<li>Section <a href="https://cran.r-project.org/view=PackageDevelopment#packages-tests" class="external-link">Packages
+tests</a> from the CRAN Task View
+<code>Package Development and Maintenance</code>.</li>
 </ul>
-<p>The code below shows how to run tests.</p>
+<p>The code below shows how to run tests with <strong>tinytest</strong>
+and <strong>testthat</strong>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Run all tests of a package. Use 'devtools::test()' instead of</span></span>
-<span><span class="co"># 'tinytest::test_all()' if you used package 'testthat' to create tests.</span></span>
-<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_dir.html" class="external-link">test_all</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Test all tests from tinytest</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">test</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Test all tests from testthat</span></span>
 <span></span>
 <span><span class="co"># Run a specific test file, selecting the file by name</span></span>
-<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_file.html" class="external-link">run_test_file</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"tinytest"</span>, <span class="st">"test_funcname.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">tinytest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytest/man/run_test_file.html" class="external-link">run_test_file</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path_wd</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"tinytest"</span>, <span class="st">"test_funcname.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_file.html" class="external-link">test_file</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path_wd</a></span><span class="op">(</span><span class="st">"tests"</span>, <span class="st">"testthat"</span>, <span class="st">"test-funcname.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="expectations">Expectations<a class="anchor" aria-label="anchor" href="#expectations"></a>
 </h4>
-<p>Note that <code>tinytest::expect_silent(...)</code> tests that no
-errors or warnings are emitted, <strong>not</strong> that no messages
-are emitted.</p>
+<p><code>tinytest::expect_silent(...)</code> allows messages to be
+emitted (and thus tests that no errors or warnings are emitted), whereas
+<code><a href="https://testthat.r-lib.org/reference/expect_silent.html" class="external-link">testthat::expect_silent()</a></code> does <strong>not</strong> allow
+messages to be emitted.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">expect_silent</span><span class="op">(</span><span class="fu">expect_true</span><span class="op">(</span><span class="fu">func_name</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, arg <span class="op">=</span> <span class="va">arg</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">expect_warning</span><span class="op">(</span></span>
@@ -292,7 +298,7 @@ are emitted.</p>
 <h4 id="interactive-testing">Interactive testing<a class="anchor" aria-label="anchor" href="#interactive-testing"></a>
 </h4>
 <p>To interactively run tests, attach the package that you want to test
-before running the tests as explained in the previous paragraphs:</p>
+before running the tests:</p>
 <ul>
 <li>use <code>devtools::load_all(&lt;pkg&gt;)</code> (with
 <code>unloadNamespace("develcoder")</code> to detach it)</li>
@@ -302,10 +308,10 @@ to specify which version to load, with
 <code>detach("&lt;pkg&gt;")</code> to detach it.</li>
 </ul>
 <p><code>pkgload::is_dev_package(&lt;pkg&gt;)</code> shows if a package
-was loaded through <code>devtools::load_all(&lt;pkg&gt;)</code>, and
-<code><a href="https://devtools.r-lib.org/reference/loaded_packages.html" class="external-link">devtools::loaded_packages()</a></code> shows loaded packages with the
-path from which they were loaded that can also be used to identify
-development packages. See the section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages" class="external-link">Loading
+was loaded through <code>devtools::load_all(&lt;pkg&gt;)</code> and
+<code><a href="https://devtools.r-lib.org/reference/loaded_packages.html" class="external-link">devtools::loaded_packages()</a></code> shows the path from which
+packages were loaded, which can also be used to identify development
+packages. See the section <a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html#loading-and-attaching-packages" class="external-link">Loading
 and attaching packages</a> in the vignette <em>R packages</em> from
 package <strong>checkrpkgs</strong> for details on loading packages:
 <code><a href="https://jessealderliesten.github.io/checkrpkgs/articles/r_pkgs.html" class="external-link">utils::vignette("r_pkgs", package = "checkrpkgs")</a></code>.</p>
@@ -333,8 +339,8 @@ entry in the CRAN cookbook</a> for details:</p>
 <p>To reset all parameters at once, use
 <code>orig_par &lt;- par(no.readonly = TRUE)</code>. To restore options
 that are changed inside a function, add
-<code>on.exit(par(orig_par))</code> immediately after changing the
-option.</p>
+<code>on.exit(par(orig_par), add = TRUE)</code> immediately after
+changing the option.</p>
 </div>
 <div class="section level4">
 <h4 id="sorting-order">Sorting order<a class="anchor" aria-label="anchor" href="#sorting-order"></a>
@@ -351,10 +357,9 @@ characters, which also changes the sorting order from
 <code>c("-", "_")</code> to <code>c("_", "-")</code>.</p>
 <p>The used locale can be set through <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale()</a></code> but
 is also influenced by the used operating system and other settings in
-<code>R</code>, see <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">help("locales")</a></code>, section <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Locales" class="external-link">Locales</a>
-in the ‘R Installation and Administration manual’ and section ‘Details’
-of <code><a href="https://rdrr.io/r/base/Comparison.html" class="external-link">help("Comparison")</a></code>. See the ‘Programming Notes’ in
-<code><a href="https://jessealderliesten.github.io/checkinput/reference/all_names.html" class="external-link">checkinput::all_names()</a></code> for more references.</p>
+<code>R</code>, see <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">help("locales")</a></code> and the <a href="https://jessealderliesten.github.io/checkinput/reference/all_names.html#locales" class="external-link">Programming
+Note about locales</a> in <code><a href="https://jessealderliesten.github.io/checkinput/reference/all_names.html" class="external-link">checkinput::all_names()</a></code> for more
+references.</p>
 </div>
 <div class="section level4">
 <h4 id="testing-file-paths">Testing file paths<a class="anchor" aria-label="anchor" href="#testing-file-paths"></a>
@@ -381,12 +386,13 @@ check only for fixed parts of the message (e.g.,
 <h3 id="update-dependencies">Update dependencies<a class="anchor" aria-label="anchor" href="#update-dependencies"></a>
 </h3>
 <p>First, consider if you really need a new dependency and which package
-that should be. Some additional effort in choosing dependencies or in
-coding might allow using dependencies that themselves have fewer
-dependencies, making a project more stable over time. See the chapter <a href="https://r-pkgs.org/dependencies-mindset-background.html" class="external-link">Dependencies:
-Mindset and Background</a> from the ‘R packages’ book for background,
-and its chapter <a href="https://r-pkgs.org/dependencies-in-practice.html" class="external-link">Dependencies: In
-Practice</a> for practical advice.</p>
+that should be. Some additional effort in coding or in choosing
+dependencies might allow using dependencies that themselves have fewer
+dependencies, making a project more stable over time. See the chapters
+<a href="https://r-pkgs.org/dependencies-mindset-background.html" class="external-link">Dependencies:
+Mindset and Background</a> and <a href="https://r-pkgs.org/dependencies-in-practice.html" class="external-link">Dependencies: In
+Practice</a> from the ‘R packages’ book for background and practical
+advice.</p>
 <div class="section level4">
 <h4 id="check-which-packages-are-used">Check which packages are used<a class="anchor" aria-label="anchor" href="#check-which-packages-are-used"></a>
 </h4>
@@ -417,27 +423,44 @@ that are mentioned in comments:
 <p>The standard way to use functions from other packages is to import
 the package: use
 <code>usethis::use_package(package = "&lt;pkg&gt;", type = "Imports", min_version = "&lt;version&gt;")</code>
-to put the package in the <code>Imports:</code> field of the DESCRIPTION
+to put the package in the <code>Imports</code> field of the DESCRIPTION
 file. It is possible to specify minimum package versions through
 argument <code>min_version</code>, see <a href="#specifying-minimum-versions">the next section</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"checkinput"</span>, type <span class="op">=</span> <span class="st">"Imports"</span>, min_version <span class="op">=</span> <span class="st">"1.0.0"</span><span class="op">)</span></span></code></pre></div>
 <p>If the package is only used in examples or vignettes, or is
 considered an optional addition, you can use
-<code>type = "Suggests"</code> to place it in the <code>Suggests:</code>
+<code>type = "Suggests"</code> to place it in the <code>Suggests</code>
 field of the DESCRIPTION file. Code that uses that package should be
 guarded through
 <code>if(requireNamespace(&lt;pkg&gt;, quietly = TRUE)) {&lt;code&gt;}</code>,
 such that the code is only executed if the package is installed. This is
-not necessary for the <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R" class="external-link">‘base’
+not necessary for the <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R" class="external-link">base
 R packages</a> that are always installed with R but <strong>is</strong>
-necessary for the <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN" class="external-link">‘recommended’
+necessary for the <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN" class="external-link">recommended
 packages</a> that are only automatically installed in binary
-installations and for all other packages. From R 4.4.0, the names of the
-‘base’ R packages and the ‘recommended’ packages are available through
-<code>tools::standard_package_names()$base</code> and
-<code>tools::standard_package_names()$recommended</code>,
-respectively.</p>
+installations, <strong>and</strong> for all other packages.</p>
+<ul>
+<li>The ‘base’ R packages are <strong>base</strong>,
+<strong>compiler</strong>, <strong>datasets</strong>,
+<strong>graphics</strong>, <strong>grDevices</strong>,
+<strong>grid</strong>, <strong>methods</strong>,
+<strong>parallel</strong>, <strong>splines</strong>,
+<strong>stats</strong>, <strong>stats4</strong>, <strong>tcltk</strong>,
+<strong>tools</strong>, <strong>utils</strong>. Since R 4.4.0, these
+names are available through
+<code>tools::standard_package_names()$base</code>
+</li>
+<li>The ‘recommended’ R packages are <strong>boot</strong>,
+<strong>class</strong>, <strong>cluster</strong>,
+<strong>codetools</strong>, <strong>foreign</strong>,
+<strong>KernSmooth</strong>, <strong>lattice</strong>,
+<strong>MASS</strong>, <strong>Matrix</strong>, <strong>mgcv</strong>,
+<strong>nlme</strong>, <strong>nnet</strong>, <strong>rpart</strong>,
+<strong>spatial</strong>, <strong>survival</strong>. Since R 4.4.0,
+these names are available through
+<code>tools::standard_package_names()$recommended</code>.</li>
+</ul>
 <p>Besides putting the package in the DESCRIPTION file, the package name
 should be followed by two colons and the function name. For example, to
 use function <code>all_names()</code>, first import package
@@ -464,28 +487,29 @@ paragraph.</p>
 <div class="section level4">
 <h4 id="specifying-minimum-versions">Specifying minimum versions<a class="anchor" aria-label="anchor" href="#specifying-minimum-versions"></a>
 </h4>
-<p>Specifying a minimum package version when importing packages ensures
-that used functions are actually present. To use the currently installed
-package version, use
+<p>Specifying a minimum package version in your DESCRIPTION file when
+importing packages ensures that used functions are actually present. To
+use the currently installed package version, use
 <code>usethis::use_package(package = &lt;pkg&gt;, &lt;...&gt;, min_version = TRUE)</code>.
 However, that probably is too strict because functions are likely also
 present in older package versions.</p>
-<p>To check in which version a used functions was introduced, you can
-search the NEWS file of the relevant package for the function name to
-find the NEWS item announcing its introduction. If that does not work,
-you can search for the function file on the GitHub-page of the package
-and look in its history to see when it was created, or use the
+<p>To check in which version a used functions was introduced, you
+can</p>
+<ul>
+<li>search the NEWS file of the relevant package for the function name
+to find the NEWS item announcing its introduction.</li>
+<li>search for the function file on the GitHub-page of the package and
+look in its history to see when it was created, or use the
 <code>Blame</code> feature to get a fine-grained overview of when code
 in that file was changed to see when a function was introduced. Then
 click on the commit message to get an overview of the files that were
 changed in that commit and use the <code>Browse files</code> button to
 browse the repository as it was repository as it was at the time of the
 commit. Then click the DESCRIPTION file to see which version the package
-was in. Finally, you can also specify different minimum package versions
-in checks through <a href="#use-github-actions">GitHub actions</a> and
-iteratively change them to find the minimum version that passes the
-check. Then specify that version as minimum version in your DESCRIPTION
-file.</p>
+was in.</li>
+<li>specify different minimum package versions in checks through <a href="#use-github-actions">GitHub actions</a> and iteratively change
+them to find the minimum version that passes the check.</li>
+</ul>
 <p>Since R 4.6.0, <code><a href="https://rdrr.io/r/base/dcf.html" class="external-link">read.dcf()</a></code> recognises lines starting with
 <code>#</code> as comment lines, making it possible to use comments in
 the DESCRIPTION file to indicate why a particular package version is
@@ -497,9 +521,9 @@ needed.</p>
 <span><span class="co"># Declare a minimum version for R itself</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"R"</span>, type <span class="op">=</span> <span class="st">"Depends"</span>, min_version <span class="op">=</span> <span class="st">"4.0.0"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Declare a dependency on a package: 'use_package()' to declare a minimum</span></span>
-<span><span class="co"># version and 'use_dev_package()' to specify the remote repository to download</span></span>
-<span><span class="co"># the package from.</span></span>
+<span><span class="co"># Declare a dependency on a package: 'use_package()' to declare</span></span>
+<span><span class="co"># a minimum version and 'use_dev_package()' to specify the</span></span>
+<span><span class="co"># remote repository to download the package from.</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"checkinput"</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"checkinput"</span>, type <span class="op">=</span> <span class="st">"Imports"</span>, min_version <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html" class="external-link">use_dev_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"checkinput"</span>, type <span class="op">=</span> <span class="st">"Imports"</span>,</span>
@@ -559,7 +583,7 @@ contents:</p>
 a vignette, e.g., using <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">utils::sessionInfo()</a></code>,
 <code><a href="https://sessioninfo.r-lib.org/reference/session_info.html" class="external-link">sessioninfo::session_info()</a></code>, or
 <code><a href="https://sessioncheck.djnavarro.net/reference/sessionstate.html" class="external-link">sessioncheck::sessionstate()</a></code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">## sessionInfo</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">## session info</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="st">```</span><span class="at">{r session info, echo = FALSE}</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="at">if(requireNamespace("utils", quietly = TRUE)) {</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="at">  utils::sessionInfo()</span></span>
@@ -639,8 +663,8 @@ packages.</p>
 <div class="section level4">
 <h4 id="various-packages">Various packages<a class="anchor" aria-label="anchor" href="#various-packages"></a>
 </h4>
-<p><strong>BiocCheck</strong> checks adherence to the <a href="https://contributions.bioconductor.org/" class="external-link"><code>Bioconductor Packages</code></a>
-guide, which is required before submission to <a href="https://bioconductor.org/" class="external-link">BioConductor</a>. See the overview of
+<p><strong>BiocCheck</strong> checks adherence to the <a href="https://contributions.bioconductor.org/" class="external-link">Bioconductor Packages
+guide</a>, which is required before submission to <a href="https://bioconductor.org/" class="external-link">BioConductor</a>. See the overview of
 checks in its <a href="https://bioconductor.org/packages/3.23/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html" class="external-link">vignette</a>.
 Several of the checks are probably too strict if you do not intend to
 submit the package to <code>BioConductor</code>.</p>
@@ -692,7 +716,7 @@ and <code>Suggests</code> fields of the DESCRIPTION file.</p></li>
 dependencies listed in the <code>Depends</code> and <code>Imports</code>
 fields of the DESCRIPTION file. This catches cases where a package that
 is listed in the <code>Suggests</code> field of the DESCRIPTION file is
-used in a vignette without being run conditionally through
+used in a vignette without being <a href="#importing-packages-or-functions">run conditionally</a> through
 <code>if(requireNamespace(&lt;pkg&gt;)) {&lt;code&gt;}</code>.</p></li>
 <li><p>Using <code>manual = TRUE</code> to build and check the
 manual.</p></li>
@@ -708,8 +732,8 @@ intend to submit to CRAN.</p>
 <p>These checks also identify problems with URLs that are used in the
 documentation. URLs:</p>
 <ul>
-<li>should be accessible (e.g., point to public GitHub repositories, not
-to private repositories)</li>
+<li>should be accessible (e.g., point to <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility" class="external-link">public
+GitHub repositories</a>, not to private repositories)</li>
 <li>should be direct links, not redirects</li>
 <li>should use the protocol <code>https://</code> instead of
 <code>http://</code>
@@ -755,8 +779,8 @@ format).</li>
 </h4>
 <p>Runs checks of its own and checks from various other packages. I
 exclude checks that I do not find useful and checks that duplicate
-earlier checks. Use <code><a href="https://docs.ropensci.org/goodpractice/reference/all_check_groups.html" class="external-link">goodpractice::all_check_groups()</a></code> to see
-all groups and
+checks that already have been run above. Use
+<code><a href="https://docs.ropensci.org/goodpractice/reference/all_check_groups.html" class="external-link">goodpractice::all_check_groups()</a></code> to see all groups and
 <code>goodpractice::checks_by_group(&lt;groups&gt;)</code> to show all
 checks in groups.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
