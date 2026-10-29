@@ -211,9 +211,9 @@ check_tests <- function(path = getwd(),
       warning("Ignoring non-Rmd files in folder '", path_vignettes, "':\n",
               progutils::paste_quoted(vignettes_files[bool_not_Rmd],
                                       collapse = ",\n"))
-      vignettes_files <- sub(pattern = ".Rmd$", replacement = ".R",
+      vignettes_files <- sub(pattern = "[.]Rmd$", replacement = ".R",
                              x = vignettes_files[!bool_not_Rmd],
-                             ignore.case = TRUE)
+                             ignore.case = FALSE)
     }
     if(length(vignettes_files) == 0L) {
       warning("No vignettes found in folder '", path_vignettes, "'.")
@@ -231,9 +231,10 @@ check_tests <- function(path = getwd(),
   tests_extraneous <- progutils::not_in(
     gsub(pattern = pattern, replacement = "", x = test_files_present,
          ignore.case = ignore_case),
-    c(expected_test_files, vignettes_files))
+    gsub(pattern = "[.]Rmd$", replacement = ".R",
+         x = c(expected_test_files, vignettes_files), ignore.case = FALSE))
   if(length(tests_missing) > 0L) {
-    warning("No test file found corresponding to function file\n",
+    warning("No test file found corresponding to function file or vignette\n",
             progutils::paste_quoted(
               gsub(pattern = pattern, replacement = "", x = tests_missing),
               collapse = ",\n"
