@@ -230,7 +230,7 @@ check_tests <- function(path = getwd(),
     } else {
       expected_tests_vignettes <- sub(
         pattern = "[.]Rmd", replacement = ".R", x = vignette_files,
-        ignore.case = FALSE)
+        fixed = TRUE)
       if(test_vignettes) {
         bool_missing_tests_vignettes <- progutils::not_in(
           expected_tests_vignettes,
