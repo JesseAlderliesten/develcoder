@@ -744,7 +744,9 @@ the [Semantic Versioning Specification](https://semver.org/) on versioning.
 
 ```{r description, eval = FALSE}
 desc::desc_normalize()
-# 'which' can be NULL, "major", "minor", "patch", or "dev"
+# Argument 'which' specifies the level to increment. It can be NULL to choose
+# interactively, or one of the character strings "major", "minor", "patch",
+# according to the format major.minor.patch.
 usethis::use_version(which = NULL, push = FALSE)
 ```
 
