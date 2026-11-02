@@ -229,7 +229,7 @@ check_tests <- function(path = getwd(),
       warning("No vignettes found in folder '", path_vignettes, "'.")
     } else {
       expected_tests_vignettes <- sub(
-        pattern = "[.]Rmd", replacement = ".R", x = vignette_files,
+        pattern = ".Rmd", replacement = ".R", x = vignette_files,
         fixed = TRUE)
       if(test_vignettes) {
         bool_missing_tests_vignettes <- progutils::not_in(
