@@ -1,3 +1,9 @@
+# develcoder 0.18.1
+
+### Bugfixes
+- `check_tests()` matches test files against `.Rmd` files in folder `vignettes`.
+
+
 # develcoder 0.18.0
 
 ### Breaking changes
