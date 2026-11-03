@@ -1,5 +1,12 @@
 # Changelog
 
+## develcoder 0.18.1
+
+#### Bugfixes
+
+- [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md)
+  matches test files against `.Rmd` files in folder `vignettes`.
+
 ## develcoder 0.18.0
 
 #### Breaking changes

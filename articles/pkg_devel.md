@@ -867,12 +867,13 @@ dependencies, use
 or
 `utils::packageDescription(pkg = basename(getwd()), fields = c("Depends", "Imports", "Suggests", "Enhances"))`.
 
-Manually increment the package version in the DESCRIPTION file, or use
-[`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html).
-In the latter case, do **not** automatically `commit` the change, but do
-so manually later on (i.e., choose a negative option when presented with
-the question `Is it ok to commit them?`) to also commit the updated
-CITATION, License, README and NEWS files.
+Use `usethis::use_version(which = NULL, push = FALSE)` to increment the
+package version in the DESCRIPTION file and create a new `NEWS` header,
+interactively choosing which level of the package version to increment,
+**without** automatically committing the change (i.e., choose a negative
+option when presented with the question `Is it ok to commit them?`), to
+do so manually later on to simultaneously commit the updated CITATION,
+License, README and NEWS files.
 
 See package
 [**lifecycle**](https://CRAN.R-project.org/package=lifecycle) on how to
@@ -886,7 +887,6 @@ on versioning.
 ``` r
 
 desc::desc_normalize()
-# 'which' can be NULL, "major", "minor", "patch", or "dev"
 usethis::use_version(which = NULL, push = FALSE)
 ```
 

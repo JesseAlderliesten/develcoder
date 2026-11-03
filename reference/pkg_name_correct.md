@@ -166,9 +166,9 @@ withr::deferred_run()
 #> Warning: No files found matching pattern 'NEWS'
 #> Error in .check_field_pkg_name(pkg_name = pkg_name, file_path = desc_path,  : 
 #>   The package name 'not_toypackage' is missing from field 'Package' of file
-#> '/tmp/RtmpXsw3rO/ex_pkg_name_correct1a23358cf622/DESCRIPTION' which is:
+#> '/tmp/Rtmp5R1vke/ex_pkg_name_correct1a24485b451c/DESCRIPTION' which is:
 #> toypackage
 #> Warning: Field 'not_title' is missing from file
-#> '/tmp/RtmpXsw3rO/ex_pkg_name_correct1a23358cf622/DESCRIPTION'
+#> '/tmp/Rtmp5R1vke/ex_pkg_name_correct1a24485b451c/DESCRIPTION'
 #> Ran 1/1 deferred expressions
 ```
