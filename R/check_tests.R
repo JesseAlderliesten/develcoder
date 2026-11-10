@@ -156,7 +156,7 @@ check_tests <- function(path = getwd(),
     warning("None of the test directories exist:\n",
             progutils::paste_quoted(all_paths, collapse = "\n"))
   } else {
-    if(length(tests_present) == 0L) {
+    if(checkinput::is_zerolength(tests_present)) {
       warning("None of the test directories contain used test files:\n",
               progutils::paste_quoted(all_paths, collapse = ",\n"))
     }
@@ -183,7 +183,7 @@ check_tests <- function(path = getwd(),
     # Based on https://stackoverflow.com/a/74487073/32365738
     reexported_funcs <- progutils::not_in(getNamespaceExports(pkg),
                                           ls(envir = asNamespace(pkg)))
-    if(length(reexported_funcs) == 0L) {
+    if(checkinput::is_zerolength(reexported_funcs)) {
       warning("File 'reexports.Rd' is present in folder 'man' but no",
               " re-exported functions were found in folder 'R'!")
     } else {
@@ -196,7 +196,7 @@ check_tests <- function(path = getwd(),
 
   expected_tests_R <- character(0L)
   missing_tests_R <- character(0L)
-  if(length(R_files) == 0L) {
+  if(checkinput::is_zerolength(R_files)) {
     warning("No function files found in folder '", path_R, "'.")
   } else {
     expected_tests_R <- R_files
@@ -225,7 +225,7 @@ check_tests <- function(path = getwd(),
                                       collapse = ",\n"))
       vignette_files <- vignette_files[!bool_not_Rmd]
     }
-    if(length(vignette_files) == 0L) {
+    if(checkinput::is_zerolength(vignette_files)) {
       warning("No vignettes found in folder '", path_vignettes, "'.")
     } else {
       expected_tests_vignettes <- sub(
