@@ -214,7 +214,7 @@ usethis::git_default_branch_rediscover()
 ```
 
 # Automate checks
-[`GitHub Actions`](https://docs.github.com/en/actions) (`GHA`) is a continuous
+[`GitHub Actions`](https://github.com/actions) (`GHA`) is a continuous
 integration service to automatically run code upon certain triggers. These
 triggers are defined in `workflows`, see the
 [reference](https://docs.github.com/en/actions/reference/workflows-and-actions)
