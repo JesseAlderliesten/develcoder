@@ -306,9 +306,8 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
   }
 
   expect_message(
-    expect_true(
-      # Need to use namespace declaration to differentiate between
-      # tinytest::expect_silent() and testthat::expect_silent()
+    expect_false(
+      # Is TRUE in interactive use
       tinytest::expect_silent(fun_message())
     )
   )
