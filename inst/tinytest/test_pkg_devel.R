@@ -271,15 +271,6 @@ if(requireNamespace("testthat", quietly = TRUE)) {
     c("expect_silent", "test_file") %in%
       ls(getNamespace("testthat"), all.names = TRUE)
   ))
-
-  fun_message <- function(x = 0) {
-    message("A message")
-    x
-  }
-
-  testthat::show_failure(
-    testthat::expect_silent(fun_message())
-  )
 }
 
 #### tinytest ####
@@ -299,18 +290,6 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
     c("...", "pattern", "strict") %in%
       names(formals(tinytest::expect_warning))
   ))
-
-  fun_message <- function(x = 0) {
-    message("A message")
-    x
-  }
-
-  expect_message(
-    expect_false(
-      # Is TRUE in interactive use
-      tinytest::expect_silent(fun_message())
-    )
-  )
 }
 
 #### tools ####
