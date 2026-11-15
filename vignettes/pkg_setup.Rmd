@@ -83,7 +83,6 @@ licenses are available at various websites:
 - [Blue oak council](https://blueoakcouncil.org/list)
 - [choosealicense](https://choosealicense.com/appendix/)
 - [CreativeCommons](https://creativecommons.org/chooser/)
-- [ELRA License Wizard](http://wizard.elda.org/)
 - [GNU.org](https://www.gnu.org/licenses/license-list.html)
 - [Licensing Assistant](https://interoperable-europe.ec.europa.eu/collection/eupl/solution/licensing-assistant)
 - [Open Source Initiative](https://opensource.org/licenses)
