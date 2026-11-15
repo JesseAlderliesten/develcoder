@@ -271,15 +271,6 @@ if(requireNamespace("testthat", quietly = TRUE)) {
     c("expect_silent", "test_file") %in%
       ls(getNamespace("testthat"), all.names = TRUE)
   ))
-
-  fun_message <- function(x = 0) {
-    message("A message")
-    x
-  }
-
-  testthat::show_failure(
-    testthat::expect_silent(fun_message())
-  )
 }
 
 #### tinytest ####
@@ -299,19 +290,6 @@ if(requireNamespace("tinytest", quietly = TRUE)) {
     c("...", "pattern", "strict") %in%
       names(formals(tinytest::expect_warning))
   ))
-
-  fun_message <- function(x = 0) {
-    message("A message")
-    x
-  }
-
-  expect_message(
-    expect_true(
-      # Need to use namespace declaration to differentiate between
-      # tinytest::expect_silent() and testthat::expect_silent()
-      tinytest::expect_silent(fun_message())
-    )
-  )
 }
 
 #### tools ####

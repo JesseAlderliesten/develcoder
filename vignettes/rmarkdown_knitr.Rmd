@@ -265,8 +265,6 @@ by a newline.
 
 Quotes can be formatting by putting `>` in front of a line.
 
-For an overview of mathematical notation see
-https://rpruim.github.io/s341/S19/from-class/MathinRmd.html
 
 # Documentation and help
 

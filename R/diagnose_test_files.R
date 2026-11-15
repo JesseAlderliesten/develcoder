@@ -113,7 +113,7 @@ diagnose_test_files <- function(
           "):\n", progutils::paste_quoted(overview_test_files$ignored_files,
                                           collapse = "\n")
         )
-        if(length(testfiles) == 0L) {
+        if(checkinput::is_zerolength(testfiles)) {
           overview_test_files$status_test_files <- "missing"
         }
       } else {
