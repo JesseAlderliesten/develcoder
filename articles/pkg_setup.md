@@ -86,7 +86,6 @@ Overviews of licenses are available at various websites:
 - [Blue oak council](https://blueoakcouncil.org/list)
 - [choosealicense](https://choosealicense.com/appendix/)
 - [CreativeCommons](https://creativecommons.org/chooser/)
-- [ELRA License Wizard](http://wizard.elda.org/)
 - [GNU.org](https://www.gnu.org/licenses/license-list.html)
 - [Licensing
   Assistant](https://interoperable-europe.ec.europa.eu/collection/eupl/solution/licensing-assistant)
@@ -243,9 +242,9 @@ usethis::git_default_branch_rediscover()
 
 ## Automate checks
 
-[`GitHub Actions`](https://docs.github.com/en/actions) (`GHA`) is a
-continuous integration service to automatically run code upon certain
-triggers. These triggers are defined in `workflows`, see the
+[`GitHub Actions`](https://github.com/actions) (`GHA`) is a continuous
+integration service to automatically run code upon certain triggers.
+These triggers are defined in `workflows`, see the
 [reference](https://docs.github.com/en/actions/reference/workflows-and-actions)
 and the
 [How-to](https://docs.github.com/en/actions/how-tos/manage-workflow-runs).

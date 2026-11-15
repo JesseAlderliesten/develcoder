@@ -232,17 +232,27 @@ testthat::test_file(fs::path_wd("tests", "testthat", "test-funcname.R"))
 #### Expectations
 
 `tinytest::expect_silent(...)` allows messages to be emitted (and thus
-tests that no errors or warnings are emitted), whereas
-[`testthat::expect_silent()`](https://testthat.r-lib.org/reference/expect_silent.html)
-does **not** allow messages to be emitted.
+tests that no errors or warnings are emitted) in interactive use. In
+non-interactive use, i.e., when calling
+[`tinytest::test_all()`](https://rdrr.io/pkg/tinytest/man/run_test_dir.html),
+`tinytest::expect_silent(...)` does **not** allow messages to be
+emitted, similar to the behaviour of
+[`testthat::expect_silent()`](https://testthat.r-lib.org/reference/expect_silent.html).
 
 ``` r
 
-expect_silent(expect_true(func_name(x = x, arg = arg)))
-expect_warning(
+fun_message <- function(x = 0) {
+  message("A message")
+  x
+}
+
+tinytest::expect_silent(func_name(x = x, arg = arg))
+# passes during interactive use but not during non-interactive use:
+tinytest::expect_silent(fun_message())
+tinytest::expect_warning(
   expect_equal(func_name(x = "a", arg = arg), 3),
   pattern = "...", strict = TRUE, fixed = TRUE)
-expect_error(func_name(x = "a", arg = arg),
+tinytest::expect_error(func_name(x = "a", arg = arg),
              pattern = "is_number(x) is not TRUE", fixed = TRUE)
 ```
 
@@ -659,7 +669,7 @@ provides various checks supplementing `R CMD check`.
 
 devtools::load_all()
 
-# This leaves a '<pkg>.BiocCheck' folder in the package repository:
+# This leaves folder '<pkg>.BiocCheck' in the parent folder of the package
 BiocCheck::BiocCheck(package = getwd(), callr = requireNamespace("callr"))
 
 # Return is invisible and silent if all is well

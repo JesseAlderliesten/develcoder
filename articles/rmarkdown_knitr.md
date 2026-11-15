@@ -298,9 +298,6 @@ followed by a newline.
 
 Quotes can be formatting by putting `>` in front of a line.
 
-For an overview of mathematical notation see
-<https://rpruim.github.io/s341/S19/from-class/MathinRmd.html>
-
 ## Documentation and help
 
 ### Books and chapters
@@ -361,5 +358,5 @@ For an overview of mathematical notation see
     ##  [9] rmarkdown_2.32    lifecycle_1.0.5   cli_3.6.6         sass_0.4.10      
     ## [13] pkgdown_2.2.1     textshaping_1.0.5 jquerylib_0.1.4   systemfonts_1.3.2
     ## [17] compiler_4.6.2    tools_4.6.2       ragg_1.5.2        bslib_0.12.0     
-    ## [21] evaluate_1.0.5    yaml_2.3.12       otel_0.2.0        jsonlite_2.0.0   
+    ## [21] evaluate_1.0.5    yaml_2.3.12       otel_0.3.0        jsonlite_2.0.0   
     ## [25] rlang_1.3.0       fs_2.1.0          htmlwidgets_1.6.4

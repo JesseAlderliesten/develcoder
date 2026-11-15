@@ -1,5 +1,14 @@
 # Changelog
 
+## develcoder 0.19
+
+#### Breaking changes
+
+- Dependencies: increase minimum version of **checkinput** from 1.4.0 to
+  1.6.0, of **progutils** from 1.0.0 to 1.1.0, and of **checkrpkgs**
+  from 1.3.0 to 1.4.0: check functions no longer require `x` to be
+  atomic.
+
 ## develcoder 0.18.1
 
 #### Bugfixes
