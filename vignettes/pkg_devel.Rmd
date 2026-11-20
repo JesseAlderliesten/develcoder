@@ -842,6 +842,12 @@ utils::browseVignettes(package = basename(getwd()))
 ?progutils::reorder_levels
 ```
 
+After locally installing the updated package through `devtools::install(<pkg>)`,
+you can also check how a change in the updated package would affect a package
+that depends on it: open the project of the package that depends on it and check
+if its tests still pass through `devtools::document()` followed by
+`tinytest::test_all()`.
+
 # Updating
 
 ## Use GitHub Actions
