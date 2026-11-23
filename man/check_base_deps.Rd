@@ -13,60 +13,110 @@ the \link[desc:description]{DESCRIPTION} file should be checked. The default is
 the \link[=getwd]{working directory}.}
 }
 \value{
-The \link[desc:desc_get_deps]{dependencies} found in the DESCRIPTION file,
-returned \link[=invisible]{invisibly}.
+A \link[=data.frame]{data frame} with the \link[desc:desc_get_deps]{dependencies}
+on \R, base packages and recommended packages as listed in the DESCRIPTION
+file, returned \link[=invisible]{invisibly}. A zero-row data frame is returned if
+such dependencies are not present.
+
+The data frame has the following columns:
+\itemize{
+\item \code{type} giving the type of dependency, e.g., \code{Imports}, \code{Depends}, \code{Suggests}
+\item \code{package} with \code{"R"} or the package name
+\item \code{version} giving the version specification, e.g., \code{">= 4.0.0"}, with \code{"*"}
+if no version is declared
+}
 }
 \description{
 Check base dependencies
 }
 \details{
-If \code{"R"} is present in the DESCRIPTION file to indicate a minimum version
-dependency on \R, it should be in field \code{"Depends"}, occur only once, and
-declare a minimum version number, otherwise an \link[=stop]{error} is thrown.
-
 Package \code{\link{base}} should \strong{not} be listed in the DESCRIPTION file: it is
-always loaded. An error is thrown if it is present. If you want to indicate
-a minimum version dependency on \R, list \code{"R"} in field \code{"Depends"} to do so,
-e.g., through
+always loaded. See the \code{Examples} how to list a dependency on \R using
+\code{\link[usethis:use_package]{usethis::use_package()}}.
 
-\code{usethis::use_package("R", type = "Depends", min_version = "4.0.0")} or
-\code{desc::desc_set_dep("R", type = "Depends", version = ">= 4.0.0")}.
+Each package should be listed in only one of the types of dependencies (e.g.,
+\code{Imports}, \code{Depends}, \code{Suggests}), otherwise an error is thrown. A package
+can occur more than once within a single type of dependency to indicate a
+range, e.g., \verb{<pkg A> (>= 3.6.0)} and \verb{<pkg A> (<= 4.4.0)}.
 
-The
+If version numbers are declared for the
 \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R}{base}
-and
+or
 \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN}{recommended}
-packages do \strong{not} have to declare a minimum version number, but if they
-declare minimum versions, \link[=warning]{warnings} are issued if they declare
-different minimum versions, or declare minimum versions that differ from the
-declared minimum version of \R if that is present.
+packages (it is \strong{not} required to do so), \link[=warning]{warnings} are issued if
+they declare different minimum versions, or if they declare minimum versions
+that differ from the declared earliest version of \R if that is present.
+
+If \code{"R"} is listed in the DESCRIPTION file, it should:
+\itemize{
+\item be in field \code{"Depends"}
+\item declare at least one minimum version number
+\item \strong{not} declare a version earlier than any declared minimum versions of the
+base or recommended packages
+\item use \code{0} as patch level (e.g., as third digit in the version number:
+\verb{R (<= 4.4.0)} instead of \verb{R (<= 4.4.1)}) or omit the patch level
+altogether, otherwise a warning is issued.
+}
 }
 \examples{
 if(requireNamespace("withr", quietly = TRUE)) {
-  tempdir_example <- progutils::create_tempdir(prefix = "check_base_deps")
+  tempdir_example <- progutils::create_tempdir(
+    prefix = "check_base_deps")
 
   withr::with_dir(new = tempdir_example, {
-  # Set up a package
-  desc <- desc::description$new("!new")
-  desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+    # Create a DESCRIPTION file
+    desc <- desc::description$new("!new")
+    desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
 
-  # R without minimum version in 'Depends'
-  desc <- desc::desc_set_dep(
-    package = "R", type = "Depends")
-  try(check_base_deps(tempdir_example))
+    # Use package 'usethis' to add R with
+    # a minimum version in 'Depends'
+    usethis::use_package(
+      "R", type = "Depends", min_version = "4.0.0")
+    (check_base_deps(tempdir_example))
 
-  # R with minimum version in 'Depends'
-  desc <- desc::desc_set_dep(
-    package = "R", type = "Depends", version = ">= 4.0.0")
-  (check_base_deps(tempdir_example))
+    # Create a new DESCRIPTION file
+    desc <- desc::description$new("!new")
+    desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
 
-  # Add package 'tools' (a 'base' package)
-  # with a different minimum version
-  desc <- desc::desc_set_dep(
-    package = "tools", type = "Depends", version = ">= 4.1.0")
-  # A warning that versions differ:
-  (check_base_deps(tempdir_example))
+    # Use package 'desc' to add R with
+    # a minimum version in 'Depends'
+    desc <- desc::desc_set_dep(
+      "R", type = "Depends", version = ">= 4.0.0")
+    (check_base_deps(tempdir_example))
+
+    # Add package 'checkinput'
+    desc <- desc::desc_set_dep("checkinput", type = "Depends")
+    # 'checkinput' is not among the returned packages
+    # because it is not a 'base' or 'recommended' package.
+    (check_base_deps(tempdir_example))
+
+    # Add package 'tools' (a 'base' package)
+    # with an earlier minimum version than 'R'
+    desc <- desc::desc_set_dep(
+      "tools", type = "Depends", version = ">= 3.6.0")
+    (check_base_deps(tempdir_example)) # silent
+
+    # Add package 'utils' (a 'base' package)
+    # with a later minimum version than 'R'
+    desc <- desc::desc_set_dep(
+      "utils", type = "Depends", version = ">= 4.1.0")
+    # An error that the declared minimum version of R is
+    # earlier than the declared minimum version of 'utils':
+    try(check_base_deps(tempdir_example))
+
+    # A new DESCRIPTION file without dependencies
+    desc <- desc::description$new("!new")
+    desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+    # Silently returns a zero-row data frame
+    (check_base_deps(tempdir_example))
+
+    # R without minimum version in 'Depends'
+    desc <- desc::description$new("!new")
+    desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
+    desc <- desc::desc_set_dep("R", type = "Depends")
+    try(check_base_deps(tempdir_example))
   })
+
   # Remove temporary directory
   unlink(tempdir_example, recursive = TRUE)
 }
