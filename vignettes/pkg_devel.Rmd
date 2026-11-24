@@ -731,7 +731,9 @@ utils::aspell_package_vignettes(dir = getwd())
 ## Update package-wide documentation
 
 ### DESCRIPTION
-Run `desc::desc_normalize()` to normalize the DESCRIPTION file.
+Run `develcoder::check_base_deps()` to check that base R packages are listed
+correctly in the DESCRIPTION file and run `desc::desc_normalize()` to normalize
+the DESCRIPTION file.
 
 To show the DESCRIPTION file, use `desc::desc()` or
 `utils::packageDescription(pkg = basename(getwd()))`. To only show the
@@ -754,6 +756,7 @@ badges to packages and functions to indicate their life cycle and its vignette
 the [Semantic Versioning Specification](https://semver.org/) on versioning.
 
 ```{r description, eval = FALSE}
+develcoder::check_base_deps()
 desc::desc_normalize()
 usethis::use_version(which = NULL, push = FALSE)
 ```
