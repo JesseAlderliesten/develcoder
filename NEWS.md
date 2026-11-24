@@ -1,4 +1,23 @@
-# develcoder 0.19
+# develcoder 0.20.0
+
+### Breaking changes
+- Dependence **desc**: require minimum version 1.2.0 to let `check_base_deps()`
+  return a zero-row data frame if no relevant dependencies are present.
+- Dependence **progutils**: increase minimum version of **progutils** from 1.1.0
+  to 1.3.0 to let `check_base_deps()` use `vect_to_char()` on lists.
+
+### New functions ###
+- Add function `check_base_deps()` to check that dependencies on **R** are
+  correctly specified and warn if versions differ between R, base or recommended
+  packages.
+
+### Miscellaneous
+- Vignette *Package development*: run `check_base_deps()` when updating a
+  package. Note that a local installation of an updated package can be used to
+  check if a package that depends on it still works correctly.
+
+
+# develcoder 0.19.0
 
 ### Breaking changes
 - Dependencies: increase minimum version of **checkinput** from 1.4.0 to 1.6.0,
