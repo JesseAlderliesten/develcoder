@@ -11,8 +11,9 @@ error_R_early <- paste0("The DESCRIPTION file lists a declared minimum version",
 error_R_type <- paste0("Dependency 'R' should be in field 'Depends' of the",
                        " DESCRIPTION file, not in field")
 error_R_version <- paste0("Indicate a minimum version number for 'R' if you",
-                          " list it in the\nDESCRIPTION file, e.g., 'R (>=",
-                          " 4.6)'. Currently listed are version:\n")
+                          " list it in the DESCRIPTION\nfile, e.g., 'R (>=",
+                          " 4.6)'. Currently the following versions are",
+                          " indicated:\n")
 warn_pkg_version <- paste0("Base or recommended packages in the DESCRIPTION",
                            "\nfile declare different minimum versions:\n")
 warn_R_patch <- paste0("It is good practice to only use '0' as patch level for",
@@ -158,6 +159,17 @@ expect_error(
   check_base_deps(path = my_tempdir),
   pattern = paste0(error_R_type, " 'Suggests'"), fixed = TRUE)
 
+##### R in Depends, no minor level #####
+desc <- desc::description$new("!new")
+desc$write(file = path_desc)
+desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
+desc <- suppressWarnings(desc::desc_set_dep(
+  "R", type = "Depends", version = ">= 3", file = path_desc))
+expect_error(
+  check_base_deps(path = my_tempdir),
+  pattern = paste0("Include at least a major and minor level in version",
+                   " numbers for R, e.g., '4.0':\n'>= 3'"), fixed = TRUE)
+
 ##### R in Depends, non-versioned #####
 desc <- desc::description$new("!new")
 desc$write(file = path_desc)
@@ -178,6 +190,16 @@ expect_warning(
     check_base_deps(path = my_tempdir),
     df_R_patch
   ), pattern = paste0(warn_R_patch, ">= 4.0.1"), strict = TRUE, fixed = TRUE)
+
+##### R Depends, versioned, patchlevel omitted #####
+desc <- desc::description$new("!new")
+desc$write(file = path_desc)
+desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
+desc <- desc::desc_set_dep(
+  "R", type = "Depends", version = ">= 4.0", file = path_desc)
+expect_silent(expect_identical(
+  check_base_deps(path = my_tempdir),
+  data.frame(type = "Depends", package = "R", version = ">= 4.0")))
 
 ##### R Depends, versioned, patchlevel zero #####
 desc <- desc::description$new("!new")
@@ -204,7 +226,7 @@ expect_warning(
     rbind(df_R, df_tools_versioned,
           data.frame(type = "Depends", package = "R", version = "<= 5.0.0"))
   ), pattern = paste0("Dependency 'R' occurs 2 times in the DESCRIPTION file,",
-                      " with versions:\n'>= 4.0.0', '<= 5.0.0'"),
+                      " with the following versions:\n'>= 4.0.0', '<= 5.0.0'"),
   strict = TRUE, fixed = TRUE)
 
 desc <- desc::description$new("!new")
@@ -216,7 +238,8 @@ expect_warning(
     check_base_deps(path = my_tempdir),
     rbind(df_R, df_R_patch, df_R_late_patch)
   ), pattern = paste0("Dependency 'R' occurs 3 times in the DESCRIPTION file,",
-                      " with versions:\n'>= 4.0.0', '>= 4.0.1', '<= 4.1.1'"),
+                      " with the following versions:\n'>= 4.0.0', '>= 4.0.1',",
+                      " '<= 4.1.1'"),
   strict = TRUE, fixed = TRUE)
 expect_warning(
   expect_identical(
@@ -379,7 +402,7 @@ expect_warning(
                      "R >= 4.0.0, <= 4.1.0 with utils: >= 4.1.0; tools: >= 4.1.0"),
     fixed = TRUE),
   pattern = paste0("Dependency 'R' occurs 2 times in the DESCRIPTION file,",
-                   " with versions:\n'>= 4.0.0', '<= 4.1.0'"),
+                   " with the following versions:\n'>= 4.0.0', '<= 4.1.0'"),
   strict = TRUE, fixed = TRUE)
 
 ##### multiple recommended, different versions, some later than R #####
@@ -413,15 +436,15 @@ desc <- desc::desc_set_dep(
   "tools", type = "Depends", version = ">= 4.0.0", file = path_desc)
 desc <- suppressWarnings(
   desc::desc_set_dep(
-    "stats", type = "Depends", version = ">= 4", file = path_desc))
+    "stats", type = "Depends", version = ">= 4.0", file = path_desc))
 expect_warning(
   expect_identical(
     check_base_deps(path = my_tempdir),
     rbind(df_R_late,
-          data.frame(type = "Depends", package = "stats", version = ">= 4"),
+          data.frame(type = "Depends", package = "stats", version = ">= 4.0"),
           df_tools_versioned, df_utils_versioned_early)),
   pattern = paste0(warn_pkg_version,
-                   "stats: >= 4; tools: >= 4.0.0; utils: >= 3.6.0"),
+                   "stats: >= 4.0; tools: >= 4.0.0; utils: >= 3.6.0"),
   strict = TRUE, fixed = TRUE)
 
 ##### utils in two different types #####

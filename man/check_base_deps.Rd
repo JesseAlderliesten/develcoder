@@ -21,7 +21,7 @@ such dependencies are not present.
 The data frame has the following columns:
 \itemize{
 \item \code{type} giving the type of dependency, e.g., \code{Imports}, \code{Depends}, \code{Suggests}
-\item \code{package} with \code{"R"} or the package name
+\item \code{package} giving the package name or \code{"R"}
 \item \code{version} giving the version specification, e.g., \code{">= 4.0.0"}, with \code{*}
 if no version is declared
 }
@@ -34,17 +34,19 @@ Package \code{\link{base}} should \strong{not} be listed in the DESCRIPTION file
 always loaded. See the \code{Examples} how to list a dependency on \R using
 \code{\link[usethis:use_package]{usethis::use_package()}}.
 
-Each package should be listed in only one of the types of dependencies (e.g.,
-\code{Imports}, \code{Depends}, \code{Suggests}), otherwise an error is thrown. A package
-can occur more than once within a single type of dependency to indicate a
-range, e.g., \verb{<pkg A> (>= 3.6.0)} and \verb{<pkg A> (<= 4.4.0)}.
+A package can occur more than once within a single type of dependency (e.g.,
+\code{Imports}, \code{Depends}, \code{Suggests}) to indicate a range, e.g.,
+\verb{<pkg A> (>= 3.6.0)} and \verb{<pkg A> (<= 4.4.0)}. However, each package should
+be listed in only one of the types of dependencies, otherwise an error is
+thrown.
 
-If version numbers are declared for the
+It is \strong{not} required to declare version numbers for the
 \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R}{base}
 or
 \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN}{recommended}
-packages (it is \strong{not} required to do so), \link[=warning]{warnings} are issued if
-they declare different minimum versions, or if they declare minimum versions
+packages. If version numbers are declared, they should contain at least a
+major and minor level. \link[=warning]{Warnings} are issued if different minimum
+versions are declared for those packages, or if they declare minimum versions
 that differ from the declared earliest version of \R if that is present.
 
 If \code{"R"} is listed in the DESCRIPTION file, it should:
@@ -53,9 +55,10 @@ If \code{"R"} is listed in the DESCRIPTION file, it should:
 \item declare at least one minimum version number
 \item \strong{not} declare a version earlier than any declared minimum versions of the
 base or recommended packages
-\item use \code{0} as patch level (e.g., as third digit in the version number:
-\verb{R (<= 4.4.0)} instead of \verb{R (<= 4.4.1)}) or omit the patch level
-altogether, otherwise a warning is issued.
+\item contain at least a major and minor level, e.g., \verb{R (>= 4.0)} or \verb{R (>= 4.1)}
+\item use \code{0} as patch level (i.e., as third digit in the version number) if it
+is present: \verb{R (>= 4.4.0)} or \verb{R (>= 4.4)} instead of \verb{R (>= 4.4.1)},
+otherwise a warning is issued.
 }
 }
 \examples{
@@ -70,9 +73,11 @@ if(requireNamespace("withr", quietly = TRUE)) {
 
     # Use package 'usethis' to add R with
     # a minimum version in 'Depends'
-    usethis::use_package(
-      "R", type = "Depends", min_version = "4.0.0")
-    (check_base_deps(tempdir_example))
+    if(requireNamespace("usethis", quietly = TRUE)) {
+      usethis::use_package(
+        "R", type = "Depends", min_version = "4.0.0")
+      (check_base_deps(tempdir_example))
+    }
 
     # Create a new DESCRIPTION file
     desc <- desc::description$new("!new")
@@ -114,7 +119,7 @@ if(requireNamespace("withr", quietly = TRUE)) {
     desc <- desc::description$new("!new")
     desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
     desc <- desc::desc_set_dep("R", type = "Depends")
-    try(check_base_deps(tempdir_example))
+    try(check_base_deps(tempdir_example)) # Error
   })
 
   # Remove temporary directory

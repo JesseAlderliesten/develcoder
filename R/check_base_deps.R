@@ -10,17 +10,19 @@
 #' always loaded. See the `Examples` how to list a dependency on \R using
 #' [usethis::use_package()].
 #'
-#' Each package should be listed in only one of the types of dependencies (e.g.,
-#' `Imports`, `Depends`, `Suggests`), otherwise an error is thrown. A package
-#' can occur more than once within a single type of dependency to indicate a
-#' range, e.g., `<pkg A> (>= 3.6.0)` and `<pkg A> (<= 4.4.0)`.
+#' A package can occur more than once within a single type of dependency (e.g.,
+#' `Imports`, `Depends`, `Suggests`) to indicate a range, e.g.,
+#' `<pkg A> (>= 3.6.0)` and `<pkg A> (<= 4.4.0)`. However, each package should
+#' be listed in only one of the types of dependencies, otherwise an error is
+#' thrown.
 #'
-#' If version numbers are declared for the
+#' It is **not** required to declare version numbers for the
 #' [base](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-in-R)
 #' or
 #' [recommended](https://cran.r-project.org/doc/FAQ/R-FAQ.html#Add_002don-packages-from-CRAN)
-#' packages (it is **not** required to do so), [warnings][warning] are issued if
-#' they declare different minimum versions, or if they declare minimum versions
+#' packages. If version numbers are declared, they should contain at least a
+#' major and minor level. [Warnings][warning] are issued if different minimum
+#' versions are declared for those packages, or if they declare minimum versions
 #' that differ from the declared earliest version of \R if that is present.
 #'
 #' If `"R"` is listed in the DESCRIPTION file, it should:
@@ -29,9 +31,10 @@
 #' - declare at least one minimum version number
 #' - **not** declare a version earlier than any declared minimum versions of the
 #'   base or recommended packages
-#' - use `0` as patch level (e.g., as third digit in the version number:
-#'   `R (<= 4.4.0)` instead of `R (<= 4.4.1)`) or omit the patch level
-#'   altogether, otherwise a warning is issued.
+#' - contain at least a major and minor level, e.g., `R (>= 4.0)` or `R (>= 4.1)`
+#' - use `0` as patch level (i.e., as third digit in the version number) if it
+#'   is present: `R (>= 4.4.0)` or `R (>= 4.4)` instead of `R (>= 4.4.1)`,
+#'   otherwise a warning is issued.
 #'
 #' @returns
 #' A [data frame][data.frame()] with the [dependencies][desc::desc_get_deps()]
@@ -42,7 +45,7 @@
 #' The data frame has the following columns:
 #'
 #' - `type` giving the type of dependency, e.g., `Imports`, `Depends`, `Suggests`
-#' - `package` with `"R"` or the package name
+#' - `package` giving the package name or `"R"`
 #' - `version` giving the version specification, e.g., `">= 4.0.0"`, with `*`
 #'   if no version is declared
 #'
@@ -58,9 +61,11 @@
 #'
 #'     # Use package 'usethis' to add R with
 #'     # a minimum version in 'Depends'
-#'     usethis::use_package(
-#'       "R", type = "Depends", min_version = "4.0.0")
-#'     (check_base_deps(tempdir_example))
+#'     if(requireNamespace("usethis", quietly = TRUE)) {
+#'       usethis::use_package(
+#'         "R", type = "Depends", min_version = "4.0.0")
+#'       (check_base_deps(tempdir_example))
+#'     }
 #'
 #'     # Create a new DESCRIPTION file
 #'     desc <- desc::description$new("!new")
@@ -102,7 +107,7 @@
 #'     desc <- desc::description$new("!new")
 #'     desc$write(file = fs::path(tempdir_example, "DESCRIPTION"))
 #'     desc <- desc::desc_set_dep("R", type = "Depends")
-#'     try(check_base_deps(tempdir_example))
+#'     try(check_base_deps(tempdir_example)) # Error
 #'   })
 #'
 #'   # Remove temporary directory
@@ -140,7 +145,6 @@ check_base_deps <- function(path = ".") {
                           FUN = function(x) {unique(x[, "type"])})
   bool_pkg_types <- lengths(types_per_pkg) > 1L
   if(any(bool_pkg_types)) {
-    offending_deps <- types_per_pkg[bool_pkg_types]
     stop("Each package should be listed in only one of the types of",
          "\ndependencies. The following packages are listed in multiple types:\n",
          progutils::vect_to_char(types_per_pkg)
@@ -159,14 +163,14 @@ check_base_deps <- function(path = ".") {
 
     if(!any(grepl(pattern = ">=", x = deps[bool_dep_R, "version"], fixed = TRUE))) {
       stop("Indicate a minimum version number for 'R' if you list",
-           " it in the\nDESCRIPTION file, e.g., 'R (>= 4.6)'. Currently listed",
-           " are version:\n",
+           " it in the DESCRIPTION\nfile, e.g., 'R (>= 4.6)'. Currently the",
+           " following versions are indicated:\n",
            progutils::paste_quoted(deps[bool_dep_R, "version"]))
     }
 
     if(n_dep_R > 1L) {
       warning("Dependency 'R' occurs ", progutils::vect_to_char(n_dep_R),
-              " times in the DESCRIPTION file, with versions:\n",
+              " times in the DESCRIPTION file, with the following versions:\n",
               progutils::paste_quoted(deps[bool_dep_R, "version"]))
     }
 
@@ -174,14 +178,23 @@ check_base_deps <- function(path = ".") {
     # from 'tools' (but see https://bugs.r-project.org/show_bug.cgi?id=18639)
     base_version_no_ops <- gsub("[[:space:]]|<|=|>", replacement = "",
                                 x = deps[bool_dep_R, "version"])
-    min_base_version <- min(as.numeric_version(base_version_no_ops))
-    bool_patch_nonzero <- package_version(base_version_no_ops)$patch != 0L
+    bool_minor_missing <- is.na(
+      package_version(base_version_no_ops, strict = FALSE)$minor)
+    if(any(bool_minor_missing)) {
+      stop("Include at least a major and minor level in version numbers for R,",
+           " e.g., '4.0':\n",
+           progutils::paste_quoted(dep_R[bool_minor_missing, "version"]))
+    }
+
+    patch_value <- package_version(base_version_no_ops, strict = FALSE)$patch
+    bool_patch_nonzero <- !is.na(patch_value) & patch_value != 0L
     if(any(bool_patch_nonzero)) {
       warning("It is good practice to only use '0' as patch level for",
               " dependencies\non R. You might want to adjust the following",
               " versions:\n",
               progutils::vect_to_char(dep_R[bool_patch_nonzero, "version"]))
     }
+    min_base_version <- min(as.numeric_version(base_version_no_ops))
   }
 
   if(any(bool_deps_std)) {
@@ -202,10 +215,20 @@ check_base_deps <- function(path = ".") {
       if(!is.null(min_base_version)) {
         # '.split_dependencies()' and '.split_op_version()' are not yet exported
         # from 'tools' (but see https://bugs.r-project.org/show_bug.cgi?id=18639)
-        std_deps_versioned_no_ops <- as.numeric_version(
-          gsub("[[:space:]]|<|=|>", replacement = "", x = std_deps_versioned[, "version"]))
+        std_deps_versioned_no_ops <- gsub("[[:space:]]|<|=|>", replacement = "",
+                                          x = std_deps_versioned[, "version"])
 
-        bool_R_early <- std_deps_versioned_no_ops > min_base_version
+        bool_minor_missing_std <- is.na(
+          package_version(std_deps_versioned_no_ops, strict = FALSE)$minor)
+        if(any(bool_minor_missing_std)) {
+          stop("Include at least a major and minor level in version numbers",
+               " for base or recommended packages, e.g., '4.0':\n",
+               progutils::paste_quoted(
+                 std_deps_versioned[bool_minor_missing_std, "version"]))
+        }
+
+        bool_R_early <- package_version(
+          std_deps_versioned_no_ops, strict = FALSE) > min_base_version
         if(any(bool_R_early)) {
           std_deps_late <- std_deps_versioned[bool_R_early, "version"]
           names(std_deps_late) <- std_deps_versioned[bool_R_early, "package"]
