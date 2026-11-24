@@ -124,7 +124,9 @@ check_base_deps <- function(path = ".") {
          progutils::paste_quoted(path_desc))
   }
 
-  if(utils::packageVersion("tools") >= "4.4.0") {
+  if(requireNamespace("tools",
+                      versionCheck = list(op = ">=", version = "4.4.0"),
+                      quietly = TRUE)) {
     names_std <- unlist(tools::standard_package_names(), use.names = FALSE)
   } else {
     names_std <- c(
