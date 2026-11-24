@@ -1,17 +1,20 @@
 #### Preparations ####
 
 ##### Create objects to use in tests #####
-error_base <- "Do not list 'base' as dependency in the DESCRIPTION file"
+error_base <- "Do not list package 'base' as dependency in the DESCRIPTION file"
 error_pkg_types <- paste0("Each package should be listed in only one of the",
-                          " types of dependencies.")
+                          " types of\ndependencies. The following packages are",
+                          " listed in multiple types:\n")
 error_R_early <- paste0("The DESCRIPTION file lists a declared minimum version",
-                        " of 'R' that is\nearlier than declared minimum",
-                        " versions of base or recommended packages:")
+                        " of 'R' that\nis earlier than declared minimum",
+                        " versions of base or recommended packages:\n")
 error_R_type <- paste0("Dependency 'R' should be in field 'Depends' of the",
                        " DESCRIPTION file, not in field")
-error_R_version <- "Indicate a minimum version number for 'R'"
-warn_pkg_version <- paste0("The DESCRIPTION file lists base or recommended",
-                           " packages with different declared minimum versions:\n")
+error_R_version <- paste0("Indicate a minimum version number for 'R' if you",
+                          " list it in the\nDESCRIPTION file, e.g., 'R (>=",
+                          " 4.6)'. Currently listed are version:\n")
+warn_pkg_version <- paste0("Base or recommended packages in the DESCRIPTION",
+                           "\nfile declare different minimum versions:\n")
 warn_R_patch <- paste0("It is good practice to only use '0' as patch level for",
                        " dependencies\non R. You might want to adjust the",
                        " following versions:\n")
@@ -78,12 +81,25 @@ expect_silent(expect_identical(
 ))
 
 ##### non-recommended dependency as multiple types #####
+desc <- desc::description$new("!new")
+desc$write(file = path_desc)
 desc <- desc::desc_set_dep("progutils", type = "Imports", file = path_desc)
 desc <- suppressWarnings(
   desc::desc_set_dep("progutils", type = "Depends", file = path_desc))
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = error_pkg_types, fixed = TRUE)
+  pattern = paste0(error_pkg_types, "progutils = Imports, Depends"),
+  fixed = TRUE)
+
+##### multiple non-recommended dependencies as multiple types #####
+desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
+desc <- suppressWarnings(
+  desc::desc_set_dep("checkinput", type = "Enhances", file = path_desc))
+expect_error(
+  check_base_deps(path = my_tempdir),
+  pattern = paste0(error_pkg_types,
+                   "checkinput = Imports, Enhances; progutils = Imports, Depends"),
+  fixed = TRUE)
 
 ##### base in Imports, non-versioned #####
 desc <- desc::description$new("!new")
@@ -149,7 +165,7 @@ desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
 desc <- desc::desc_set_dep("R", type = "Depends", file = path_desc)
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = error_R_version, fixed = TRUE)
+  pattern = paste0(error_R_version, "'*'"), fixed = TRUE)
 
 ##### R Depends, versioned, patchlevel nonzero #####
 desc <- desc::description$new("!new")
@@ -178,13 +194,17 @@ expect_silent(expect_identical(
 # Need 'desc_set_deps()' instead of 'desc_set_dep()' to add the same dependency
 # twice as the same type instead of overwrite the first occurrence.
 desc <- desc::desc_set_deps(
-  rbind(df_R, data.frame(type = "Depends", package = "R", version = "<= 5.0.0")),
+  rbind(df_R,
+        df_tools_versioned,
+        data.frame(type = "Depends", package = "R", version = "<= 5.0.0")),
   file = path_desc)
 expect_warning(
   expect_identical(
     check_base_deps(path = my_tempdir),
-    rbind(df_R, data.frame(type = "Depends", package = "R", version = "<= 5.0.0"))
-  ), pattern = "Dependency 'R' occurs 2 times in the DESCRIPTION file",
+    rbind(df_R, df_tools_versioned,
+          data.frame(type = "Depends", package = "R", version = "<= 5.0.0"))
+  ), pattern = paste0("Dependency 'R' occurs 2 times in the DESCRIPTION file,",
+                      " with versions:\n'>= 4.0.0', '<= 5.0.0'"),
   strict = TRUE, fixed = TRUE)
 
 desc <- desc::description$new("!new")
@@ -195,7 +215,8 @@ expect_warning(
   expect_identical(
     check_base_deps(path = my_tempdir),
     rbind(df_R, df_R_patch, df_R_late_patch)
-  ), pattern = "Dependency 'R' occurs 3 times in the DESCRIPTION file",
+  ), pattern = paste0("Dependency 'R' occurs 3 times in the DESCRIPTION file,",
+                      " with versions:\n'>= 4.0.0', '>= 4.0.1', '<= 4.1.1'"),
   strict = TRUE, fixed = TRUE)
 expect_warning(
   expect_identical(
@@ -212,7 +233,7 @@ desc <- desc::desc_set_dep("utils", type = "Depends", file = path_desc)
 desc <- desc::desc_set_dep("R", type = "Depends", file = path_desc)
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = error_R_version, fixed = TRUE)
+  pattern = paste0(error_R_version, "'*'"), fixed = TRUE)
 
 ##### utils and R in Depends, utils non-versioned #####
 desc <- desc::description$new("!new")
@@ -235,7 +256,7 @@ desc <- desc::desc_set_dep(
 desc <- desc::desc_set_dep("R", type = "Depends", file = path_desc)
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = error_R_version, fixed = TRUE)
+  pattern = paste0(error_R_version, "'*'"), fixed = TRUE)
 
 ##### utils and R, same version #####
 desc <- desc::description$new("!new")
@@ -260,7 +281,7 @@ desc <- desc::desc_set_dep(
   "R", type = "Depends", version = ">= 3.6.0", file = path_desc)
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = paste0(error_R_early, "\n'utils'"), fixed = TRUE)
+  pattern = paste0(error_R_early, "R >= 3.6.0 with utils: >= 4.0.0"), fixed = TRUE)
 
 ##### utils and R, R later version #####
 desc <- desc::description$new("!new")
@@ -299,6 +320,7 @@ expect_silent(expect_identical(
 ))
 
 ##### multiple recommended, same version #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
 desc <- desc::desc_set_dep(
   "utils", type = "Depends", version = ">= 4.0.0", file = path_desc)
@@ -310,6 +332,7 @@ expect_silent(expect_identical(
 ))
 
 ##### multiple recommended, different version #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
 desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
 desc <- desc::desc_set_dep(
@@ -320,11 +343,12 @@ expect_warning(
   expect_identical(
     check_base_deps(path = my_tempdir),
     rbind(df_tools_versioned_late, df_utils_versioned)),
-  pattern = paste0(warn_pkg_version, "'tools', 'utils'"),
+  pattern = paste0(warn_pkg_version, "tools: >= 4.1.0; utils: >= 4.0.0"),
   strict = TRUE, fixed = TRUE
 )
 
 ##### multiple recommended, same version that are earlier than R #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
 desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
 desc <- desc::desc_set_dep(
@@ -338,38 +362,45 @@ expect_silent(expect_identical(
   rbind(df_R_late, df_tools_versioned, df_utils_versioned)
 ))
 
-##### multiple recommended, same version that are later than R #####
+##### multiple recommended, same version that are later than both R versions #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
-desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
-desc <- desc::desc_set_dep(
-  "R", type = "Depends", version = ">= 4.0.0", file = path_desc)
-desc <- desc::desc_set_dep(
-  "utils", type = "Depends", version = ">= 4.1.0", file = path_desc)
-desc <- desc::desc_set_dep(
-  "tools", type = "Depends", version = ">= 4.1.0", file = path_desc)
-expect_error(
-  check_base_deps(path = my_tempdir),
-  pattern = paste0(error_R_early, "\n'tools', 'utils'"), fixed = TRUE)
+desc <- desc::desc_set_deps(
+  rbind(data.frame(package = "checkinput", type = "Imports", version = "*"),
+        df_R,
+        data.frame(package = "utils", type = "Depends", version = ">= 4.1.0"),
+        df_tools_versioned_late,
+        data.frame(type = "Depends", package = "R", version = "<= 4.1.0")),
+  file = path_desc)
+expect_warning(
+  expect_error(
+    check_base_deps(path = my_tempdir),
+    pattern = paste0(error_R_early,
+                     "R >= 4.0.0, <= 4.1.0 with utils: >= 4.1.0; tools: >= 4.1.0"),
+    fixed = TRUE),
+  pattern = paste0("Dependency 'R' occurs 2 times in the DESCRIPTION file,",
+                   " with versions:\n'>= 4.0.0', '<= 4.1.0'"),
+  strict = TRUE, fixed = TRUE)
 
 ##### multiple recommended, different versions, some later than R #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
 desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
 desc <- desc::desc_set_dep(
   "R", type = "Depends", version = ">= 3.6.0", file = path_desc)
 desc <- desc::desc_set_dep(
   "utils", type = "Depends", version = ">= 4.0.0", file = path_desc)
-# Next lines are commented out because they lead to a mix of versioned and
-# non-versioned base-packages, which leads to the error 'invalid version
-# specification ‘*’', and thus a failing test:
-# desc <- desc::desc_set_dep(
-#   "stats", type = "Depends", file = path_desc)
+desc <- desc::desc_set_dep(
+  "stats", type = "Depends", file = path_desc)
 desc <- desc::desc_set_dep(
   "tools", type = "Depends", version = ">= 4.1.0", file = path_desc)
 expect_error(
   check_base_deps(path = my_tempdir),
-  pattern = paste0(error_R_early, "\n'tools', 'utils'"), fixed = TRUE)
+  pattern = paste0(error_R_early, "R >= 3.6.0 with tools: >= 4.1.0; utils: >= 4.0.0"),
+  fixed = TRUE)
 
 ##### multiple recommended, different versions, all earlier than R #####
+desc <- desc::description$new("!new")
 desc$write(file = path_desc)
 desc <- desc::desc_set_dep("checkinput", type = "Imports", file = path_desc)
 desc <- desc::desc_set_dep(
@@ -389,7 +420,8 @@ expect_warning(
     rbind(df_R_late,
           data.frame(type = "Depends", package = "stats", version = ">= 4"),
           df_tools_versioned, df_utils_versioned_early)),
-  pattern = paste0(warn_pkg_version, "'stats', 'tools', 'utils'"),
+  pattern = paste0(warn_pkg_version,
+                   "stats: >= 4; tools: >= 4.0.0; utils: >= 3.6.0"),
   strict = TRUE, fixed = TRUE)
 
 ##### utils in two different types #####

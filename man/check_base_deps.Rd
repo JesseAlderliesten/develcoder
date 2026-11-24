@@ -22,7 +22,7 @@ The data frame has the following columns:
 \itemize{
 \item \code{type} giving the type of dependency, e.g., \code{Imports}, \code{Depends}, \code{Suggests}
 \item \code{package} with \code{"R"} or the package name
-\item \code{version} giving the version specification, e.g., \code{">= 4.0.0"}, with \code{"*"}
+\item \code{version} giving the version specification, e.g., \code{">= 4.0.0"}, with \code{*}
 if no version is declared
 }
 }

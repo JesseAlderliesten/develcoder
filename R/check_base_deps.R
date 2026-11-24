@@ -43,7 +43,7 @@
 #'
 #' - `type` giving the type of dependency, e.g., `Imports`, `Depends`, `Suggests`
 #' - `package` with `"R"` or the package name
-#' - `version` giving the version specification, e.g., `">= 4.0.0"`, with `"*"`
+#' - `version` giving the version specification, e.g., `">= 4.0.0"`, with `*`
 #'   if no version is declared
 #'
 #' @examples
@@ -119,51 +119,6 @@ check_base_deps <- function(path = ".") {
          progutils::paste_quoted(path_desc))
   }
 
-  deps <- desc::desc_get_deps(file = path_desc)
-  if("base" %in% deps[, "package"]) {
-    stop("Do not list 'base' as dependency in the DESCRIPTION file. List 'R'",
-         " with a\nminimum version in field 'Depends' if you want to indicate",
-         " a minimum version of R.")
-  }
-
-  bool_dep_R <- deps[, "package"] == "R"
-  dep_R <- deps[bool_dep_R, , drop = FALSE]
-  nrow_dep_R <- nrow(dep_R)
-  min_base_version <- NULL
-  if(nrow_dep_R > 0L) {
-    if(any(dep_R[, "type"] != "Depends")) {
-      stop("Dependency 'R' should be in field 'Depends' of the DESCRIPTION",
-           " file, not in field ",
-           progutils::paste_quoted(unique(dep_R[, "type"])))
-    }
-
-    bool_min_R <- grepl(pattern = ">=", x = dep_R[, "version"], fixed = TRUE)
-    if(!any(bool_min_R)) {
-      print(dep_R)
-      stop("Indicate a minimum version number for 'R' if you\nlist",
-           " it in the DESCRIPTION file, e.g., 'R (>= 4.6)'.")
-    }
-
-    if(nrow_dep_R > 1L) {
-      print(dep_R)
-      warning("Dependency 'R' occurs ",  progutils::vect_to_char(nrow_dep_R),
-              " times in the DESCRIPTION file!")
-    }
-
-    # '.split_dependencies()' and '.split_op_version()' are not yet exported
-    # from 'tools' (but see https://bugs.r-project.org/show_bug.cgi?id=18639)
-    base_version_no_ops <- gsub("[[:space:]]|<|=|>", replacement = "",
-                                x = dep_R[, "version"])
-    min_base_version <- min(as.numeric_version(base_version_no_ops))
-    bool_patch_nonzero <- package_version(base_version_no_ops)$patch != 0L
-    if(any(bool_patch_nonzero)) {
-      warning("It is good practice to only use '0' as patch level for",
-              " dependencies\non R. You might want to adjust the following",
-              " versions:\n",
-              progutils::vect_to_char(dep_R[bool_patch_nonzero, "version"]))
-    }
-  }
-
   if(utils::packageVersion("tools") >= "4.4.0") {
     names_std <- unlist(tools::standard_package_names(), use.names = FALSE)
   } else {
@@ -175,52 +130,103 @@ check_base_deps <- function(path = ".") {
       "mgcv")
   }
 
+  deps <- desc::desc_get_deps(file = path_desc)
+  bool_dep_R <- deps[, "package"] == "R"
   bool_deps_std <- deps[, "package"] %in% names_std
+  deps_out <- deps[bool_dep_R | bool_deps_std, , drop = FALSE]
+  rownames(deps_out) <- NULL
+
+  types_per_pkg <- lapply(X = split(x = deps, f = deps[, "package"]),
+                          FUN = function(x) {unique(x[, "type"])})
+  bool_pkg_types <- lengths(types_per_pkg) > 1L
+  if(any(bool_pkg_types)) {
+    offending_deps <- types_per_pkg[bool_pkg_types]
+    stop("Each package should be listed in only one of the types of",
+         "\ndependencies. The following packages are listed in multiple types:\n",
+         progutils::vect_to_char(types_per_pkg)
+    )
+  }
+
+  n_dep_R <- length(which(bool_dep_R))
+  min_base_version <- NULL
+  if(n_dep_R > 0L) {
+    dep_R <- deps[bool_dep_R, , drop = FALSE]
+    if(any(deps[bool_dep_R, "type"] != "Depends")) {
+      stop("Dependency 'R' should be in field 'Depends' of the DESCRIPTION",
+           " file, not in field ",
+           progutils::paste_quoted(unique(deps[bool_dep_R, "type"])))
+    }
+
+    if(!any(grepl(pattern = ">=", x = deps[bool_dep_R, "version"], fixed = TRUE))) {
+      stop("Indicate a minimum version number for 'R' if you list",
+           " it in the\nDESCRIPTION file, e.g., 'R (>= 4.6)'. Currently listed",
+           " are version:\n",
+           progutils::paste_quoted(deps[bool_dep_R, "version"]))
+    }
+
+    if(n_dep_R > 1L) {
+      warning("Dependency 'R' occurs ", progutils::vect_to_char(n_dep_R),
+              " times in the DESCRIPTION file, with versions:\n",
+              progutils::paste_quoted(deps[bool_dep_R, "version"]))
+    }
+
+    # '.split_dependencies()' and '.split_op_version()' are not yet exported
+    # from 'tools' (but see https://bugs.r-project.org/show_bug.cgi?id=18639)
+    base_version_no_ops <- gsub("[[:space:]]|<|=|>", replacement = "",
+                                x = deps[bool_dep_R, "version"])
+    min_base_version <- min(as.numeric_version(base_version_no_ops))
+    bool_patch_nonzero <- package_version(base_version_no_ops)$patch != 0L
+    if(any(bool_patch_nonzero)) {
+      warning("It is good practice to only use '0' as patch level for",
+              " dependencies\non R. You might want to adjust the following",
+              " versions:\n",
+              progutils::vect_to_char(dep_R[bool_patch_nonzero, "version"]))
+    }
+  }
+
   if(any(bool_deps_std)) {
-    deps_in_std <- deps[bool_deps_std, , drop = FALSE]
-    rownames(deps_in_std) <- NULL
+    std_deps <- deps[bool_deps_std, , drop = FALSE]
+    rownames(std_deps) <- NULL
+
+    if("base" %in% std_deps[, "package"]) {
+      stop("Do not list package 'base' as dependency in the DESCRIPTION file.",
+           " List 'R' with a\nminimum version in field 'Depends' if you want",
+           " to indicate a minimum version of R.")
+    }
 
     # desc::desc_get_deps() uses version '*' for non-versioned dependencies.
-    bool_versioned <- deps_in_std[, "version"] != "*"
-    if(any(bool_versioned)) {
-
+    # Those can be ignored here when checking for versions that are too late or
+    # that differ from each other
+    std_deps_versioned <- std_deps[std_deps[, "version"] != "*", , drop = FALSE]
+    if(nrow(std_deps_versioned) > 0L) {
       if(!is.null(min_base_version)) {
         # '.split_dependencies()' and '.split_op_version()' are not yet exported
         # from 'tools' (but see https://bugs.r-project.org/show_bug.cgi?id=18639)
-        deps_std_version <- as.numeric_version(
-          gsub("[[:space:]]|<|=|>", replacement = "", x = deps_in_std[, "version"]))
+        std_deps_versioned_no_ops <- as.numeric_version(
+          gsub("[[:space:]]|<|=|>", replacement = "", x = std_deps_versioned[, "version"]))
 
-        # To do:
-        # - This leads to the error 'invalid version specification ‘*’' if
-        #   versioned and non-versioned base-packages are mixed in the
-        #   DESCRIPTION file
-        bool_R_early <- bool_versioned & deps_std_version > min_base_version
+        bool_R_early <- std_deps_versioned_no_ops > min_base_version
         if(any(bool_R_early)) {
-          print(deps_in_std[bool_R_early, , drop = FALSE])
+          std_deps_late <- std_deps_versioned[bool_R_early, "version"]
+          names(std_deps_late) <- std_deps_versioned[bool_R_early, "package"]
           stop("The DESCRIPTION file lists a declared minimum version of 'R'",
-               " that is\nearlier than declared minimum versions of base or",
-               " recommended packages:\n",
-               progutils::paste_quoted(deps_in_std[bool_R_early, "package"]))
+               " that\nis earlier than declared minimum versions of base or",
+               " recommended packages:\nR ",
+               progutils::vect_to_char(dep_R[, "version"]), " with ",
+               progutils::vect_to_char(std_deps_late, collapse = "; ")
+          )
         }
       }
 
-      if(length(unique(deps_in_std[bool_versioned, "version"])) > 1L) {
-        print(deps_in_std[bool_versioned, , drop = FALSE])
-        warning("The DESCRIPTION file lists base or recommended packages with",
-                " different declared minimum versions:\n",
-                progutils::paste_quoted(deps_in_std[bool_versioned, "package"]))
+      if(length(unique(std_deps_versioned[, "version"])) > 1L) {
+        std_deps_diff_version <- std_deps_versioned[, "version"]
+        names(std_deps_diff_version) <- std_deps_versioned[, "package"]
+        warning("Base or recommended packages in the DESCRIPTION\nfile declare",
+                " different minimum versions:\n",
+                progutils::vect_to_char(std_deps_diff_version, collapse = "; "))
       }
     }
   }
 
-  pkg_types <- lapply(X = split(x = deps, f = deps[, "package"]),
-                      FUN = function(x) {length(unique(x[, "type"]))})
-  if(any(unlist(pkg_types) > 1L)) {
-    print(deps)
-    stop("Each package should be listed in only one of the types of dependencies.")
-  }
-
-  deps_out <- deps[bool_dep_R | bool_deps_std, , drop = FALSE]
-  rownames(deps_out) <- NULL
   invisible(deps_out)
 }
