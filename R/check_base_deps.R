@@ -124,18 +124,12 @@ check_base_deps <- function(path = ".") {
          progutils::paste_quoted(path_desc))
   }
 
-  if(requireNamespace("tools",
-                      versionCheck = list(op = ">=", version = "4.4.0"),
-                      quietly = TRUE)) {
-    names_std <- unlist(tools::standard_package_names(), use.names = FALSE)
-  } else {
-    names_std <- c(
-      "base", "tools", "utils", "grDevices", "graphics", "stats", "datasets",
-      "methods", "grid", "splines", "stats4", "tcltk", "compiler", "parallel",
-      "MASS", "lattice", "Matrix", "nlme", "survival", "boot", "cluster",
-      "codetools", "foreign", "KernSmooth", "rpart", "class", "nnet", "spatial",
-      "mgcv")
-  }
+  names_std <- c(
+    "base", "tools", "utils", "grDevices", "graphics", "stats", "datasets",
+    "methods", "grid", "splines", "stats4", "tcltk", "compiler", "parallel",
+    "MASS", "lattice", "Matrix", "nlme", "survival", "boot", "cluster",
+    "codetools", "foreign", "KernSmooth", "rpart", "class", "nnet", "spatial",
+    "mgcv")
 
   deps <- desc::desc_get_deps(file = path_desc)
   bool_dep_R <- deps[, "package"] == "R"
