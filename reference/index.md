@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`check_base_deps()`](https://jessealderliesten.github.io/develcoder/reference/check_base_deps.md)
+  : Check base dependencies
 - [`check_tests()`](https://jessealderliesten.github.io/develcoder/reference/check_tests.md)
   : Check Tests
 - [`diagnose_test_files()`](https://jessealderliesten.github.io/develcoder/reference/diagnose_test_files.md)

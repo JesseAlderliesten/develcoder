@@ -164,10 +164,10 @@ withr::with_dir(new = tempdir_example, {
 unlink(tempdir_example, recursive = TRUE)
 }
 #> Warning: No file determining the used testing infrastructure exists:
-#> '/tmp/RtmposPqN2/check_tests1b4277fe8fbf/tests/tinytest.R',
-#> '/tmp/RtmposPqN2/check_tests1b4277fe8fbf/tests/testthat.R'
+#> '/tmp/Rtmp4rKr7e/check_tests1b543a8d1009/tests/tinytest.R',
+#> '/tmp/Rtmp4rKr7e/check_tests1b543a8d1009/tests/testthat.R'
 #> Warning: None of the test directories exist:
-#> '/tmp/RtmposPqN2/check_tests1b4277fe8fbf/inst/tinytest'
-#> '/tmp/RtmposPqN2/check_tests1b4277fe8fbf/tests/testthat'
-#> Warning: No function files found in folder '/tmp/RtmposPqN2/check_tests1b4277fe8fbf/R'.
+#> '/tmp/Rtmp4rKr7e/check_tests1b543a8d1009/inst/tinytest'
+#> '/tmp/Rtmp4rKr7e/check_tests1b543a8d1009/tests/testthat'
+#> Warning: No function files found in folder '/tmp/Rtmp4rKr7e/check_tests1b543a8d1009/R'.
 ```

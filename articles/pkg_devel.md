@@ -866,6 +866,9 @@ utils::aspell_package_vignettes(dir = getwd())
 #### DESCRIPTION
 
 Run
+[`develcoder::check_base_deps()`](https://jessealderliesten.github.io/develcoder/reference/check_base_deps.md)
+to check that base R packages are listed correctly in the DESCRIPTION
+file and run
 [`desc::desc_normalize()`](https://desc.r-lib.org/reference/desc_normalize.html)
 to normalize the DESCRIPTION file.
 
@@ -896,6 +899,7 @@ on versioning.
 
 ``` r
 
+develcoder::check_base_deps()
 desc::desc_normalize()
 usethis::use_version(which = NULL, push = FALSE)
 ```
@@ -997,6 +1001,15 @@ library(basename(getwd()), character.only = TRUE)
 utils::browseVignettes(package = basename(getwd()))
 ?progutils::reorder_levels
 ```
+
+After locally installing the updated package through
+`devtools::install(<pkg>)`, you can also check how a change in the
+updated package would affect a package that depends on it: open the
+project of the package that depends on it and check if its tests still
+pass through
+[`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+followed by
+[`tinytest::test_all()`](https://rdrr.io/pkg/tinytest/man/run_test_dir.html).
 
 ## Updating
 
